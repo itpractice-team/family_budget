@@ -1,10 +1,12 @@
 import './Logo.scss';
+import { NavLink } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 export default function Logo() {
   return (
-    <div className="logo">
-      <p>LOGO</p>
-    </div>
+    <NavLink to='/' className="logo">
+      LOGO
+    </NavLink>
+
   );
 }
