@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  align-items: center;
+  width: 1920px;
+  min-height: 76px;
+  padding: 0 160px;
+}
+
+.header__navigation {
+  width: 100%;
+  display: flex;
+}
+
+.header__menu {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
