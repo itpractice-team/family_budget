@@ -1,10 +1,10 @@
 import  "./Content.scss"
 
 // eslint-disable-next-line react/prop-types
-export default function Content({ children }) {
+export default function Content() {
   return (
     <main className="content">
-      {children}
+      <p>Преимущества</p>
     </main>
   );
 }
