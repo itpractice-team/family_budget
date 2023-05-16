@@ -23,7 +23,7 @@ function Popup({ isPopupOpen, children, formHeaderText, handleSubmit }) {
 
   return (
     <section
-      className={`popup ${popupClass} popup_open`}
+      className={`popup ${popupClass}`}
       onClick={closePopup}
       onKeyDown={closePopup}
       role="button"
