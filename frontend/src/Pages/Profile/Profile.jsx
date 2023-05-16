@@ -1,10 +1,11 @@
 import './Profile.scss';
+import Content from '../../Components/Content/Content';
 
 // eslint-disable-next-line react/prop-types
 export default function Profile() {
   return (
-    <div className="profile">
-      <p>спасибо, что используете наше приложение</p>
-    </div>
+    <Content>
+      <p>страница нашего любимого пользователя</p>
+    </Content>
   );
 }

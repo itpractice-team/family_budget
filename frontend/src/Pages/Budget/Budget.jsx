@@ -1,11 +1,13 @@
+import Content from '../../Components/Content/Content';
 import './Budget.scss';
+
 
 // eslint-disable-next-line react/prop-types
 export default function Budget() {
   return (
-    <div className="budget">
-      <p>скоро все увидите</p>
-    </div>
+    <Content>
+      скоро начнем подсчет вашего бюджета
+    </Content>
   );
 }
 
