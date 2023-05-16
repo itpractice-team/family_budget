@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__column-first">
         <p className="footer__title">Правильные финансовые решения каждый день</p>
-        <p className="footer__copyrights">&copy; 2023 Copyrights</p>
+        <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
       </div>
       <div className="footer__column-second">
         <p className="footer__text">Всегда готовы выслушать ваши вопросы<br />и предложения</p>
