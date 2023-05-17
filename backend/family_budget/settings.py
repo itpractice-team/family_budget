@@ -34,6 +34,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'family_budget.urls'
 
+AUTH_USER_MODEL = 'users.User'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
