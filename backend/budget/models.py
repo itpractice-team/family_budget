@@ -59,7 +59,6 @@ class Balance(models.Model):
         return f'Баланс пользователя {self.user}'
 
 
-
 class Currency(models.Model):
     '''Модель валют.'''
 
