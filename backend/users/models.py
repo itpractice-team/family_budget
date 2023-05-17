@@ -17,7 +17,6 @@ class User(AbstractUser):
         upload_to='static/users',
         verbose_name='Изображение',
         blank=True,
-        # default='static/users/avatar-photo.jpg'
     )
 
     class Meta:
