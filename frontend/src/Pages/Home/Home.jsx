@@ -1,4 +1,4 @@
-import Content from '../../components/Content/Content';
+import Content from '../../Components/Content/Content';
 
 export default function Main() {
   return <Content />;
