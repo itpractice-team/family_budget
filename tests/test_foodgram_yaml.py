@@ -42,9 +42,7 @@ class TestWorkflow:
             )
 
         assert (
-            re.search(r'on:\s*push:\s*branches:\s*-\smaster', family_budget)
-            or 'on: [push]' in family_budget
-            or 'on: push' in family_budget
+            re.search(r'on:\s*push:\s*branches:\s*-\smain', family_budget)
         ), f'Проверьте, что добавили действие при пуше в файл {filename}'
         assert 'pytest' in family_budget, (
             f'Проверьте, что добавили pytest в файл {filename}'

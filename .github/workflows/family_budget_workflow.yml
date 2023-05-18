@@ -1,6 +1,9 @@
 name: Family budget workflow
 
-on: [push] 
+on:
+  push:
+    branches: 
+      - main
 
 jobs:
   tests:
@@ -21,14 +24,7 @@ jobs:
     - name: Set up Python 
       uses: actions/setup-python@v2
       with:
-        python-version: 3.7
-
-    - name: Install for tests addions packets (ttf-mscorefonts,fontconfig and gettext)
-      run: | 
-        sudo apt-get update
-        echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-        sudo apt-get install -y ttf-mscorefonts-installer fontconfig gettext
-        sudo fc-cache -vr
+        python-version: 3.10
 
     - name: Install dependencies
       run: |
@@ -67,7 +63,6 @@ jobs:
 
   deploy:
     name: Deploy
-    if: ${{ github.ref == 'refs/heads/master' }}  
     runs-on: ubuntu-20.04
     needs: build_and_push_to_docker_hub    
     steps:

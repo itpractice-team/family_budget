@@ -2,7 +2,7 @@
 
 services:
   db:    
-    image: postgres:13.0-alpine
+    image: postgres:14.0-alpine
     restart: unless-stopped
     volumes:
       - postgres_db:/var/lib/postgresql/data/
