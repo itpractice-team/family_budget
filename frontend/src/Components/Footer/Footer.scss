@@ -1,0 +1,49 @@
+.footer {
+  background: #EAEBF5;
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  height: 238px;
+  padding: 56px 160px;
+}
+
+.footer__column-first {
+  max-width: 512px;
+}
+
+.footer__column-second {
+  padding: 24px;
+  max-width: 377px;
+}
+
+.footer__column-first,
+.footer__column-second {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__title {
+  font-weight: 900;
+  font-size: 29px;
+  line-height: 44px;
+  color: black;
+}
+
+.footer__copyrights {
+  font-family: 'Poppins';
+}
+
+.footer__text,
+.footer__email {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: black;
+}
+
+.footer__email {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
