@@ -1,13 +1,10 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
-// eslint-disable import/no-extraneous-dependencies
 // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import AuthForm from './AuthForm';
-import { useAuth } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 import { mockUser } from '../iAmBack/mockUser';
 import { setUser } from '../store/slices/loginSlice';
 
