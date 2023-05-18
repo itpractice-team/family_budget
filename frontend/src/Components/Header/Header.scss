@@ -1,7 +1,7 @@
 .header {
   display: flex;
   align-items: center;
-  min-height: 76px;
+  height: 76px;
   padding: 0 160px;
 }
 
@@ -22,7 +22,7 @@
 .header__menu-list {
   width: 463px;
   display: flex;
-justify-content: space-between;
+  justify-content: space-between;
   gap: 91px;
 }
 
