@@ -27,5 +27,8 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/button-has-type': 'off',
+    'react/jsx-no-bind': 'off',
   },
 };

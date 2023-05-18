@@ -1,9 +1,6 @@
-/* eslint-disable react/button-has-type */
 import { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 function AuthForm({ handleClick, message }) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');

@@ -1,8 +1,6 @@
-/* eslint-disable react/button-has-type */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useAuth } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
 function HomePage() {
   const dispatch = useDispatch();

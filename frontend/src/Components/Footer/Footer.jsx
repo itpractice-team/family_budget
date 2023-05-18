@@ -1,7 +1,7 @@
-import "./Footer.scss"
-import envelope from '../../Images/envelope.svg'
+import './Footer.scss';
 
 // eslint-disable-next-line react/prop-types
+
 export default function Footer() {
   return (
     <footer className="footer">

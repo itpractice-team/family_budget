@@ -1,3 +1,4 @@
+import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../Pages/Home/Home';
 import Budget from '../Pages/Budget/Budget';
@@ -10,7 +11,7 @@ import EditProfile from '../Pages/EditProfile/EditProfile';
 
 function App() {
   return (
-    <>
+    <div className="app">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,8 +21,9 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
       </Routes>
+
       <Footer />
-    </>
+    </div>
   );
 }
 
