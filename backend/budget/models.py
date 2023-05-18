@@ -21,7 +21,7 @@ class Category(models.Model):
     '''Модель категорий для трат.'''
 
     title = models.CharField('Название категории', max_length=50, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    # slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(
         'Описание категории трат', max_length=500, blank=True, null=True
     )
