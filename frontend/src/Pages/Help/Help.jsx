@@ -1,6 +1,5 @@
-import "./Help.scss"
+import './Help.scss';
 
-// eslint-disable-next-line react/prop-types
 export default function Help() {
   return (
     <div className="help">
@@ -8,5 +7,3 @@ export default function Help() {
     </div>
   );
 }
-
-

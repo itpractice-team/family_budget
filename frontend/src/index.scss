@@ -1,13 +1,12 @@
 @import './vendor/normalize.css';
 @import './vendor/fonts/fonts.css';
+
+// добавить шрифты через font
+
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-#root {
-  max-width: 1920px;
-  min-width: 320px;
-  margin: 0 auto;
-}
+// перенести стили в отдельную папку
 
 * {
   box-sizing: border-box;
@@ -16,9 +15,10 @@
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Noto Sans', serif;
+  margin: 0 auto;
+  font-family: 'Noto Sans', sans-serif;
+  max-width: 1920px;
+  min-width: 320px;
 }
 
 ul {
@@ -29,6 +29,7 @@ ul {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 button {
@@ -36,9 +37,12 @@ button {
   border: 0;
   background: transparent;
   cursor: pointer;
-  font-family: 'Noto Sans', serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
-p h1 h2 h3 {
+p,
+h1,
+h2,
+h3 {
   margin: 0;
 }
