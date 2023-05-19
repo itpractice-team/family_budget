@@ -3,6 +3,7 @@ name: Check with PEP8
 on:
   pull_request:
     branches:
+      - backend
       - develop
       - main
 

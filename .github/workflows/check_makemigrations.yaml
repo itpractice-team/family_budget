@@ -3,6 +3,7 @@ name: Check migrations
 on:
   pull_request:
     branches:
+      - backend
       - develop
       - main
 

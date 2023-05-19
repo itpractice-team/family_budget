@@ -3,6 +3,7 @@ name: Testing by pytest
 on:
   pull_request:
     branches:
+      - backend
       - develop
       - main
 
