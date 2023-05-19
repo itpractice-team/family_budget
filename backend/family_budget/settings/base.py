@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
@@ -7,7 +8,7 @@ load_dotenv()
 
 DEBUG = os.getenv("DEBUG", "FALSE").upper() == "TRUE"
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY", default=get_random_secret_key())
 

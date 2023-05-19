@@ -1,4 +1,4 @@
-from backend.family_budget import settings
+from backend.family_budget.settings import base as settings
 
 
 class TestSettings:

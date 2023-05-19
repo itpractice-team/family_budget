@@ -10,6 +10,7 @@ class TestRequirements:
                 f'{os.path.join(settings.BASE_DIR, "requirements.txt")}', "r"
             ) as f:
                 requirements = f.read()
+            print(os.path.join(settings.BASE_DIR))
         except FileNotFoundError:
             assert False, "Проверьте, что добавили файл requirements.txt"
 
