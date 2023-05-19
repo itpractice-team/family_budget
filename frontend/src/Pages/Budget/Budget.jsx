@@ -1,12 +1,14 @@
 import './Budget.scss';
 import Content from '../../Components/Content/Content';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
+import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 
 export default function Budget({
   openSpendingPopup,
   openEarningPopup,
   isSpendingPopupOpen,
   closePopup,
+  isEarningPopupOpen,
 }) {
   return (
     <Content>
@@ -24,6 +26,7 @@ export default function Budget({
         </div>
 
         <SpendingPopup isPopupOpen={isSpendingPopupOpen} closePopup={closePopup} />
+        <EarningPopup isPopupOpen={isEarningPopupOpen} closePopup={closePopup} />
       </section>
     </Content>
   );
