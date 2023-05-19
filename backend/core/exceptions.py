@@ -6,10 +6,10 @@ from rest_framework.views import exception_handler
 def core_exception_handler(exc, context):
     """Обработчик ошибок REST framework."""
     handlers = {
-        'ValidationError': _handle_validation_error,
-        'Http404': _handle_http404_error,
-        'PermissionDenied': _handle_denied_error,
-        'NotAuthenticated': _handle_not_authenticated_error,
+        "ValidationError": _handle_validation_error,
+        "Http404": _handle_http404_error,
+        "PermissionDenied": _handle_denied_error,
+        "NotAuthenticated": _handle_not_authenticated_error,
     }
     response = exception_handler(exc, context)
     if response is not None:

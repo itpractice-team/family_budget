@@ -8,7 +8,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -17,81 +16,315 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50, unique=True, verbose_name='Название категории')),
-                ('description', models.TextField(max_length=500, verbose_name='Описание категории трат')),
-                ('custom', models.BooleanField(default=False, verbose_name='Пользовательская категория')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to=settings.AUTH_USER_MODEL, verbose_name='Категории созданные пользователем')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=50, unique=True, verbose_name="Название категории"
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        max_length=500, verbose_name="Описание категории трат"
+                    ),
+                ),
+                (
+                    "custom",
+                    models.BooleanField(
+                        default=False, verbose_name="Пользовательская категория"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="categories",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Категории созданные пользователем",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Currency',
+            name="Currency",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50, unique=True, verbose_name='Полное название валюты')),
-                ('code', models.CharField(max_length=3, unique=True, verbose_name='Буквенный код валюты')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=50,
+                        unique=True,
+                        verbose_name="Полное название валюты",
+                    ),
+                ),
+                (
+                    "code",
+                    models.CharField(
+                        max_length=3, unique=True, verbose_name="Буквенный код валюты"
+                    ),
+                ),
             ],
             options={
-                'default_related_name': 'currencies',
+                "default_related_name": "currencies",
             },
         ),
         migrations.CreateModel(
-            name='UserCurrency',
+            name="UserCurrency",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('current', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='budget.currency', verbose_name='Валюта')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Валюта пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "current",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="budget.currency",
+                        verbose_name="Валюта",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Валюта пользователя",
+                    ),
+                ),
             ],
             options={
-                'default_related_name': 'user_currencies',
+                "default_related_name": "user_currencies",
             },
         ),
         migrations.CreateModel(
-            name='Spend',
+            name="Spend",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=70, verbose_name='Наименование расхода')),
-                ('created', models.DateTimeField(auto_now_add=True, validators=[budget.models.validate_date], verbose_name='Время создания записи')),
-                ('amount', models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(1000000)], verbose_name='Израсходованная сумма')),
-                ('description', models.TextField(blank=True, max_length=500, null=True, verbose_name='Комментарий к расходу')),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='budget.category', verbose_name='Категория расхода')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Траты пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=70, verbose_name="Наименование расхода"
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        validators=[budget.models.validate_date],
+                        verbose_name="Время создания записи",
+                    ),
+                ),
+                (
+                    "amount",
+                    models.PositiveIntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(1000000),
+                        ],
+                        verbose_name="Израсходованная сумма",
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True,
+                        max_length=500,
+                        null=True,
+                        verbose_name="Комментарий к расходу",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="budget.category",
+                        verbose_name="Категория расхода",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Траты пользователя",
+                    ),
+                ),
             ],
             options={
-                'default_related_name': 'spends',
+                "default_related_name": "spends",
             },
         ),
         migrations.CreateModel(
-            name='MoneyBox',
+            name="MoneyBox",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=254, verbose_name='Цель накопления')),
-                ('total', models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(10000000)], verbose_name='Сумма, которую необходимо накопить')),
-                ('accumulation', models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(10000000)], verbose_name='Уже накоплено')),
-                ('accumulated', models.BooleanField(default=False, verbose_name='Средств хватает чтобы закрыть цель')),
-                ('achieved', models.BooleanField(default=False, verbose_name='Цель достигнута/не достигнута')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='moneyboxes', to=settings.AUTH_USER_MODEL, verbose_name='Цель пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=254, verbose_name="Цель накопления"),
+                ),
+                (
+                    "total",
+                    models.PositiveIntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(10000000),
+                        ],
+                        verbose_name="Сумма, которую необходимо накопить",
+                    ),
+                ),
+                (
+                    "accumulation",
+                    models.PositiveIntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(10000000),
+                        ],
+                        verbose_name="Уже накоплено",
+                    ),
+                ),
+                (
+                    "accumulated",
+                    models.BooleanField(
+                        default=False, verbose_name="Средств хватает чтобы закрыть цель"
+                    ),
+                ),
+                (
+                    "achieved",
+                    models.BooleanField(
+                        default=False, verbose_name="Цель достигнута/не достигнута"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="moneyboxes",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Цель пользователя",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Income',
+            name="Income",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50, verbose_name='Наименование прихода')),
-                ('description', models.TextField(blank=True, max_length=500, null=True, verbose_name='Комментарий к приходу')),
-                ('amount', models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(1000000)], verbose_name='Оприходованная сумму')),
-                ('created', models.DateTimeField(auto_now_add=True, validators=[budget.models.validate_date], verbose_name='Время создания записи')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='incomes', to=settings.AUTH_USER_MODEL, verbose_name='Приходы пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=50, verbose_name="Наименование прихода"
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True,
+                        max_length=500,
+                        null=True,
+                        verbose_name="Комментарий к приходу",
+                    ),
+                ),
+                (
+                    "amount",
+                    models.PositiveIntegerField(
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(1000000),
+                        ],
+                        verbose_name="Оприходованная сумму",
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        validators=[budget.models.validate_date],
+                        verbose_name="Время создания записи",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="incomes",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Приходы пользователя",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Balance',
+            name="Balance",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.IntegerField(default=0, verbose_name='Баланс')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='balances', to=settings.AUTH_USER_MODEL, verbose_name='Баланс пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("balance", models.IntegerField(default=0, verbose_name="Баланс")),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="balances",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Баланс пользователя",
+                    ),
+                ),
             ],
         ),
     ]

@@ -12,12 +12,10 @@ def get_field_values_from_object(obj, *fields, **kwargs):
     if not fields:
         return None
     if not isinstance(obj, object):
-        raise TypeError(_('Unable to get field data'))
-    if kwargs.get('only_one_field'):
+        raise TypeError(_("Unable to get field data"))
+    if kwargs.get("only_one_field"):
         return getattr(obj, fields[0], None)
-    return (
-        getattr(obj, field) for field in fields if hasattr(obj, field)
-    )
+    return (getattr(obj, field) for field in fields if hasattr(obj, field))
 
 
 def get_from_objects_field_values(records, *fields, **kwargs):
@@ -25,9 +23,7 @@ def get_from_objects_field_values(records, *fields, **kwargs):
     Возвращает список, состоящий из кортежей значений полей fields
     списка объектов records.
     """
-    return [
-        get_field_values_from_object(obj, *fields, **kwargs) for obj in records
-    ]
+    return [get_field_values_from_object(obj, *fields, **kwargs) for obj in records]
 
 
 def get_field_values_from_dict(data, *fields, **kwargs):
@@ -40,10 +36,10 @@ def get_field_values_from_dict(data, *fields, **kwargs):
         field_values = []
         for key in fields:
             value = data[key]
-            if isinstance(value, object) and hasattr(value, 'id'):
+            if isinstance(value, object) and hasattr(value, "id"):
                 value = int(value.id)
             field_values.append(value)
-        if kwargs.get('only_one_field'):
+        if kwargs.get("only_one_field"):
             return field_values[0]
         return tuple(field_values)
     except (TypeError, KeyError, ValueError):
@@ -55,16 +51,12 @@ def get_from_dicts_field_values(records, *fields, **kwargs):
     Возвращает список, состоящий из кортежей значений полей fields
     из списка словарей records.
     """
-    return [
-        get_field_values_from_dict(data, *fields, **kwargs) for data in records
-    ]
+    return [get_field_values_from_dict(data, *fields, **kwargs) for data in records]
 
 
 def create_ordered_dicts_from_objects(objs, key):
     """Создает список словарей на основании списка объектов."""
-    return [
-        OrderedDict({key: obj}) for obj in objs
-    ]
+    return [OrderedDict({key: obj}) for obj in objs]
 
 
 def get_object_or_400(klass, *args, **kwargs):
