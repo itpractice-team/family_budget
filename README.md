@@ -6,6 +6,7 @@
 [![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/)
 [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
 ![Foodgram workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/family_budget_workflow.yml/badge.svg?event=push)
+
 ### Описание проекта:
 Контроль расходов - семейный бюджет
 
