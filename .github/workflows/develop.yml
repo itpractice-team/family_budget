@@ -1,5 +1,9 @@
 name: Develop workflow
 
+concurrency:
+  group: develop_deploy
+  cancel-in-progress: true
+
 on:
   push:
     branches: 

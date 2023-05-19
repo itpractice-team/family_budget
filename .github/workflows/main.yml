@@ -1,9 +1,14 @@
 name: Production workflow
 
+concurrency:
+  group: main_deploy
+  cancel-in-progress: true
+
 on:
-  push:
-    branches: 
+  pull_request:
+    branches:
       - main
+    types: [closed]
 
 jobs:
   tests:

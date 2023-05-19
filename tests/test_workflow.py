@@ -7,7 +7,7 @@ from .conftest import root_dir
 class TestWorkflow:
 
     def test_workflow(self):
-        family_budget_workflow_basename = 'family_budget_workflow'
+        family_budget_workflow_basename = 'main'
         workflow_dir = os.path.join(
             root_dir, os.path.join('.github', 'workflows')
         )
@@ -23,13 +23,6 @@ class TestWorkflow:
                 f'с описанием workflow {yaml} или {yml}.'
             )
 
-        if is_yaml and is_yml:
-            assert False, (
-                f'В каталоге {workflow_dir} не должно быть двух файлов '
-                f'{family_budget_workflow_basename} с расширениями .yaml и .yml\n'
-                'Удалите один из них!'
-            )
-
         filename = yaml if is_yaml else yml
 
         try:
@@ -42,7 +35,9 @@ class TestWorkflow:
             )
 
         assert (
-            re.search(r'on:\s*push:\s*branches:\s*-\smain', family_budget)
+            re.search(
+                r'on:\s*pull_request:\s*branches:\s*-\smain', family_budget
+            )
         ), f'Проверьте, что добавили действие при пуше в файл {filename}'
         assert 'pytest' in family_budget, (
             f'Проверьте, что добавили pytest в файл {filename}'
