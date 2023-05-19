@@ -1,9 +1,9 @@
-name: Family budget workflow
+name: Develop workflow
 
 on:
   push:
     branches: 
-      - main
+      - develop
 
 jobs:
   tests:
@@ -59,7 +59,7 @@ jobs:
           with:
             context: ./backend
             push: true
-            tags: ${{ secrets.BACKEND_IMAGE }}
+            tags: ${{ secrets.DEVELOP_BACKEND_IMAGE }}
 
   deploy:
     name: Deploy
@@ -76,14 +76,14 @@ jobs:
           script: |            
             echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} > .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
-            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker pull ${{ secrets.BACKEND_IMAGE }}
+            echo DB_NAME=${{ secrets.DEVELOP_DB_NAME }} >> .env
+            echo POSTGRES_USER=${{ secrets.DEVELOP_POSTGRES_USER }} >> .env
+            echo POSTGRES_PASSWORD=${{ secrets.DEVELOP_POSTGRES_PASSWORD }} >> .env
+            echo DB_HOST=${{ secrets.DEVELOP_DB_HOST }} >> .env
+            echo DB_PORT=${{ secrets.DEVELOP_DB_PORT }} >> .env
+            sudo docker pull ${{ secrets.DEVELOP_BACKEND_IMAGE }}
             sudo docker-compose stop
-            sudo docker rm ${{ secrets.BACKEND_CONTAINER_NAME }}
+            sudo docker rm ${{ secrets.DEVELOP_BACKEND_CONTAINER_NAME }}
             sudo docker-compose up -d
             sudo docker image prune -a -f
   
@@ -97,4 +97,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: ${{ github.workflow }} успешно выполнен!!!
+          message: ${{ github.workflow }} - размещение тестового релиза успешно выполнено!!!
