@@ -5,8 +5,8 @@
 [![Nginx](https://img.shields.io/badge/-NGINX-464646?style=flat-square&logo=NGINX)](https://nginx.org/ru/)
 [![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/)
 [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
-[![Production workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yml)
-[![Test workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yml)
+[![Production workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yaml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yaml)
+[![Test workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yaml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yaml)
 ### Описание проекта:
 Контроль расходов - семейный бюджет
 
