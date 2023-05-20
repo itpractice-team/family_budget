@@ -105,6 +105,19 @@ class Spend(models.Model):
         return self.title
 
 
+class CategoryIncome(models.Model):
+    """Модель Категорий для доходных средств."""
+
+    title = models.CharField("Название категории", max_length=150, unique=True)
+    slug = models.SlugField("Слаг для категории дохода")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="category_incomes",
+        verbose_name="Категория дохода пользователя",
+    )
+
+
 class Income(models.Model):
     """Модель прихода средств."""
 
@@ -115,7 +128,9 @@ class Income(models.Model):
     amount = models.PositiveIntegerField(
         "Оприходованная сумму", validators=COMMON_VALIDATOR
     )
-    created = models.DateTimeField("Время создания записи", validators=[validate_date])
+    created = models.DateTimeField(
+        "Время создания записи", validators=[validate_date], default=timezone.now()
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -161,3 +176,7 @@ class MoneyBox(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def is_collected(self):
+        return self.total == self.accumulation
