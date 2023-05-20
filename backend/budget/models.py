@@ -128,9 +128,7 @@ class Income(models.Model):
     amount = models.PositiveIntegerField(
         "Оприходованная сумму", validators=COMMON_VALIDATOR
     )
-    created = models.DateTimeField(
-        "Время создания записи", validators=[validate_date], default=timezone.now()
-    )
+    created = models.DateTimeField("Время создания записи", validators=[validate_date])
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
