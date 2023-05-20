@@ -9,7 +9,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -18,8 +17,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
+
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=50, unique=True, verbose_name='Название категории')),
                 ('description', models.TextField(blank=True, max_length=500, null=True, verbose_name='Описание категории трат')),
@@ -31,11 +31,31 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Currency',
+            name="Currency",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=50, unique=True, verbose_name='Полное название валюты')),
-                ('code', models.CharField(max_length=3, unique=True, verbose_name='Буквенный код валюты')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        max_length=50,
+                        unique=True,
+                        verbose_name="Полное название валюты",
+                    ),
+                ),
+                (
+                    "code",
+                    models.CharField(
+                        max_length=3, unique=True, verbose_name="Буквенный код валюты"
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'Валюта',
@@ -61,7 +81,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='MoneyBox',
+            name="MoneyBox",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=254, verbose_name='Цель накопления')),
@@ -78,7 +98,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Income',
+            name="Income",
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=50, verbose_name='Наименование прихода')),
@@ -102,11 +122,27 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Balance',
+            name="Balance",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('balance', models.IntegerField(default=0, verbose_name='Баланс')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='balances', to=settings.AUTH_USER_MODEL, verbose_name='Баланс пользователя')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("balance", models.IntegerField(default=0, verbose_name="Баланс")),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="balances",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Баланс пользователя",
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'Баланс',

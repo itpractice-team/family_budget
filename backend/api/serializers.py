@@ -18,13 +18,13 @@ class UserSerializer(UserCreateSerializer):
         model = User
 
         fields = (
-            'username',
-            'email',
-            'id',
-            'password',
-            'first_name',
-            'last_name',
-            'avatar',
+            "username",
+            "email",
+            "id",
+            "password",
+            "first_name",
+            "last_name",
+            "avatar",
         )
 
 
