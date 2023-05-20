@@ -27,4 +27,4 @@ jobs:
         pip install -r ./backend/requirements.txt
     -
       name: Make migrations
-      run: python ./backend/manage.py migrate --settings family_budget.settings.migrate_test --check
+      run: python ./backend/manage.py makemigrations --settings family_budget.settings.migrate_test --check --dry-run
