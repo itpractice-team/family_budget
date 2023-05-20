@@ -7,6 +7,7 @@
 [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
 [![Production workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yaml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/main.yaml)
 [![Test workflow](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yaml/badge.svg)](https://github.com/AcceleratorYandexPracticum/family_budget/actions/workflows/develop.yaml)
+
 ### Описание проекта:
 Контроль расходов - семейный бюджет
 
