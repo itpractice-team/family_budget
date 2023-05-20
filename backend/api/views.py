@@ -1,8 +1,8 @@
+from budget.models import CategoryIncome, Income, MoneyBox
 from rest_framework import viewsets
 
 from .permissions import IsAuthor
 from .serializers import CategoryIncomeSerializer, IncomeSerializer, MoneyBoxSerializer
-from budget.models import CategoryIncome, Income, MoneyBox
 
 
 class MoneyBoxViewSet(viewsets.ModelViewSet):

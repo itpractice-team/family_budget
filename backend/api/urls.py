@@ -1,6 +1,6 @@
 from django.urls import include, path
-from rest_framework import routers
 from djoser.views import UserViewSet
+from rest_framework import routers
 
 from .views import CategoryIncomeViewSet, IncomeViewSet, MoneyBoxViewSet
 

@@ -1,8 +1,7 @@
 import json
 
+from budget import models
 from django.core.management import BaseCommand
-
-from recipes import models
 
 EMPTY_ARGS_MESSAGE = '"--{arg}" argument was not provided'
 UNKNOW_MODEL_MESSAGE = "Unknow model {model} was provided"
