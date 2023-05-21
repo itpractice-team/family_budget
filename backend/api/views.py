@@ -1,8 +1,9 @@
-from budget.models import CategoryIncome, Income, MoneyBox
+from budget.models import CategoryIncome, Income, MoneyBox, Category, Spend
 from rest_framework import viewsets
 
 from .permissions import IsAuthor
-from .serializers import CategoryIncomeSerializer, IncomeSerializer, MoneyBoxSerializer
+from .serializers import (CategoryIncomeSerializer, IncomeSerializer, 
+                          MoneyBoxSerializer, CategorySerializer, SpendSerializer)
 
 
 class MoneyBoxViewSet(viewsets.ModelViewSet):
@@ -39,3 +40,21 @@ class CategoryIncomeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = (IsAuthor,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class SpendViewSet(viewsets.ModelViewSet):
+    queryset = Spend.objects.all()
+    serializer_class = SpendSerializer
+    permission_classes = (IsAuthor,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
+from slugify import slugify
 
 User = get_user_model()
 
@@ -28,8 +29,8 @@ class Category(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="categories",
-        verbose_name="Категории созданные пользователем",
+        related_name='categories',
+        verbose_name='Категории созданные пользователем',
     )
 
     class Meta:
@@ -38,6 +39,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 class Balance(models.Model):
