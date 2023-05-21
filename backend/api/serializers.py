@@ -28,13 +28,30 @@ class UserSerializer(UserCreateSerializer):
         )
 
 
+class CategoryIncomeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CategoryIncome
+        fields = ('id', 'title', 'description')
+
+
 class IncomeSerializer(serializers.ModelSerializer):
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=CategoryIncome.objects.all(),
+    )
+
     class Meta:
         model = Income
-        fields = ('id', 'title', 'amount', 'create',)
+        fields = ('id', 'title', 'amount', 'create', 'category')
 
 
 class MoneyBoxSerializer(serializers.ModelSerializer):
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+    )
+
     class Meta:
         model = MoneyBox
         fields = (
@@ -44,6 +61,7 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
             'accumulation',
             'is_collected',
             'achieved',
+            'category'
             'description',
         )
 
@@ -58,12 +76,6 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class CategoryIncomeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryIncome
-        fields = ("id", "title", "slug")
-
-
 class CategorySerializer(serializers.ModelSerializer):
     slug = serializers.ReadOnlyField()
 
@@ -73,9 +85,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SpendSerializer(serializers.ModelSerializer):
+
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
     )
+
     class Meta:
         model = Spend
         fields = (
