@@ -18,38 +18,51 @@ class UserSerializer(UserCreateSerializer):
         model = User
 
         fields = (
-            "username",
-            "email",
-            "id",
-            "password",
-            "first_name",
-            "last_name",
-            "avatar",
+            'username',
+            'email',
+            'id',
+            'password',
+            'first_name',
+            'last_name',
+            'avatar',
         )
+
+
+class CategoryIncomeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CategoryIncome
+        fields = ('id', 'title', 'description')
 
 
 class IncomeSerializer(serializers.ModelSerializer):
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=CategoryIncome.objects.all(),
+    )
+
     class Meta:
         model = Income
-        fields = (
-            "id",
-            "title",
-            "amount",
-            "create",
-        )
+        fields = ('id', 'title', 'amount', 'create', 'category')
 
 
 class MoneyBoxSerializer(serializers.ModelSerializer):
+
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+    )
+
     class Meta:
         model = MoneyBox
         fields = (
-            "id",
-            "title",
-            "total",
-            "accumulation",
-            "is_collected",
-            "achieved",
-            "description",
+            'id',
+            'title',
+            'total',
+            'accumulation',
+            'is_collected',
+            'achieved',
+            'category'
+            'description',
         )
 
     def update(self, instance, validated_data):
@@ -63,26 +76,21 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class CategoryIncomeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryIncome
-        fields = ("id", "title", "slug")
-
-
 class CategorySerializer(serializers.ModelSerializer):
     slug = serializers.ReadOnlyField()
 
     class Meta:
         model = Category
         fields = (
-            "id",
-            "slug",
-            "title",
-            "description",
+            'id',
+            'slug',
+            'title',
+            'description',
         )
 
 
 class SpendSerializer(serializers.ModelSerializer):
+
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
     )
@@ -90,18 +98,18 @@ class SpendSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spend
         fields = (
-            "id",
-            "title",
-            "amount",
-            "created",
-            "description",
-            "category",
+            'id',
+            'title',
+            'amount',
+            'created',
+            'description',
+            'category',
         )
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        category_id = data.get("category")
+        category_id = data.get('category')
         category = Category.objects.get(pk=category_id)
         category_serializer = CategorySerializer(category)
-        data["category"] = category_serializer.data
+        data['category'] = category_serializer.data
         return data

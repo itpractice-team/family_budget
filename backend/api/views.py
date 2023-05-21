@@ -1,14 +1,10 @@
 from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 from rest_framework import viewsets
+from rest_framework.decorators import action
 
 from .permissions import IsAuthor
-from .serializers import (
-    CategoryIncomeSerializer,
-    CategorySerializer,
-    IncomeSerializer,
-    MoneyBoxSerializer,
-    SpendSerializer,
-)
+from .serializers import (CategoryIncomeSerializer, IncomeSerializer,
+                          MoneyBoxSerializer, CategorySerializer, SpendSerializer)
 
 
 class MoneyBoxViewSet(viewsets.ModelViewSet):
@@ -21,6 +17,20 @@ class MoneyBoxViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=('post',))
+    def goal_achieved(self, request, pk=None):
+        moneybox = MoneyBox.objects.get(id=pk)
+        if moneybox.is_collected:
+            moneybox.achieved = True
+            moneybox.save()
+            Spend.objects.create(
+                title=moneybox.title,
+                amount=moneybox.total,
+                description=moneybox.description,
+                category=moneybox.category,
+                user=request.user
+            )
 
 
 class IncomeViewSet(viewsets.ModelViewSet):

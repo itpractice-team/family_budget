@@ -114,12 +114,14 @@ class CategoryIncome(models.Model):
     """Модель Категорий для доходных средств."""
 
     title = models.CharField("Название категории", max_length=150, unique=True)
-    slug = models.SlugField("Слаг для категории дохода")
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="category_incomes",
         verbose_name="Категория дохода пользователя",
+    )
+    description = models.TextField(
+        "Комментарий к категории дохода", max_length=500, blank=True, null=True
     )
 
 
@@ -134,16 +136,23 @@ class Income(models.Model):
         "Оприходованная сумму", validators=COMMON_VALIDATOR
     )
     created = models.DateTimeField("Время создания записи", validators=[validate_date])
+    category = models.ForeignKey(
+        CategoryIncome,
+        on_delete=models.SET_NULL,
+        verbose_name="Категория дохода",
+        blank=True,
+        null=True,
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="incomes",
         verbose_name="Приходы пользователя",
     )
 
     class Meta:
         verbose_name = "Приход средств"
         verbose_name_plural = "Приходы средств"
+        default_related_name = "incomes"
 
     def __str__(self):
         return self.title
@@ -159,12 +168,16 @@ class MoneyBox(models.Model):
     accumulation = models.PositiveIntegerField(
         "Уже накоплено", validators=MONEYBOX_VALIDATOR
     )
-    accumulated = models.BooleanField(
-        "Средств хватает чтобы закрыть цель", default=False
-    )
     achieved = models.BooleanField("Цель достигнута/не достигнута", default=False)
     description = models.TextField(
         "Комментарий к приходу", max_length=500, blank=True, null=True
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        verbose_name="Категория расхода",
+        blank=True,
+        null=True,
     )
     user = models.ForeignKey(
         User,
@@ -176,6 +189,7 @@ class MoneyBox(models.Model):
     class Meta:
         verbose_name = "Цель накопления"
         verbose_name_plural = "Цели накопления"
+        default_related_name = "moneyboxes"
 
     def __str__(self):
         return self.title
