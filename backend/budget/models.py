@@ -22,15 +22,14 @@ class Category(models.Model):
     """Модель категорий для трат."""
 
     title = models.CharField("Название категории", max_length=50, unique=True)
-    # slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(
         "Описание категории трат", max_length=500, blank=True, null=True
     )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='categories',
-        verbose_name='Категории созданные пользователем',
+        related_name="categories",
+        verbose_name="Категории созданные пользователем",
     )
 
     class Meta:
@@ -103,9 +102,9 @@ class Spend(models.Model):
     )
 
     class Meta:
+        default_related_name = "spends"
         verbose_name = "Расход средств"
         verbose_name_plural = "Расходы средств"
-        default_related_name = "spends"
 
     def __str__(self):
         return self.title
