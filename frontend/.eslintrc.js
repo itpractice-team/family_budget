@@ -32,5 +32,6 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/jsx-no-bind': 'off',
     'react/prop-types': 'off',
+    'no-useless-escape': 'off',
   },
 };
