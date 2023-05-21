@@ -16,7 +16,7 @@ class TestRequirements:
             "djangorestframework",
             "djoser",
             "gunicorn",
-            "Pillow",
+            "pillow",
             "pytest-django",
             "psycopg2-binary",
             "python-dotenv",
