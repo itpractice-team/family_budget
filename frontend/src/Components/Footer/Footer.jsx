@@ -1,6 +1,5 @@
 import './Footer.scss';
-
-// eslint-disable-next-line react/prop-types
+import envelope from '../../Images/envelope.svg';
 
 export default function Footer() {
   return (
@@ -10,9 +9,13 @@ export default function Footer() {
         <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
       </div>
       <div className="footer__column-second">
-        <p className="footer__text">Всегда готовы выслушать ваши вопросы<br />и предложения</p>
+        <p className="footer__text">
+          Всегда готовы выслушать ваши вопросы
+          <br />и предложения
+        </p>
         <p className="footer__email">
-          <img src={envelope} alt="Иконка почты" />example@mail.ru
+          <img src={envelope} alt="Иконка почты" />
+          example@mail.ru
         </p>
       </div>
     </footer>
