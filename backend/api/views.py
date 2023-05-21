@@ -1,4 +1,4 @@
-from budget.models import CategoryIncome, Income, MoneyBox, Category, Spend
+from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 from rest_framework import viewsets
 from rest_framework.decorators import action
 

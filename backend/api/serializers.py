@@ -1,4 +1,4 @@
-from budget.models import CategoryIncome, Income, MoneyBox, Category, Spend
+from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
@@ -66,12 +66,12 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        accumulation = validated_data.pop('accumulation', None)
+        accumulation = validated_data.pop("accumulation", None)
         if accumulation is not None:
             summa = instance.accumulation + accumulation
             if instance.total < summa:
                 ostotok = instance.total - instance.accumulation
-                raise ValidationError(f'Для достижения цели нужно всего {ostotok}')
+                raise ValidationError(f"Для достижения цели нужно всего {ostotok}")
             instance.accumulation = summa
         return super().update(instance, validated_data)
 
@@ -81,7 +81,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'slug', 'title', 'description',)
+        fields = (
+            'id',
+            'slug',
+            'title',
+            'description',
+        )
 
 
 class SpendSerializer(serializers.ModelSerializer):
