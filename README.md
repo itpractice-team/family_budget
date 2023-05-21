@@ -19,7 +19,7 @@
 ```
 - Устанавливаем Poetry версия 1.4.0
     curl -sSL https://install.python-poetry.org | python - --version 1.4.0
-- Добавляем Poetry в переменную среды ОС PATH
+- Добавляем Poetry в переменную среды PATH
     "$HOME/.local/bin" для Unix.
     "%APPDATA%\Python\Scripts" для Windows.
 ```
