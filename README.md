@@ -23,7 +23,7 @@
     "$HOME/.local/bin" для Unix.
     "%APPDATA%\Python\Scripts" для Windows.
 ```
-2. **Docker** \
+2. **Docker**
 3. Файлы **requirements** \
 Файлы редактировать вручную не нужно. Обновление происходит автоматически через pre-commit хуки.
 4. **pre-commit хуки** \
