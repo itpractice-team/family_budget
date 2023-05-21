@@ -41,7 +41,7 @@ class IncomeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Income
-        fields = ("id", "title", "amount", "create", "category")
+        fields = ("id", "title", "amount", "created", "category")
 
 
 class MoneyBoxSerializer(serializers.ModelSerializer):
@@ -58,7 +58,8 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
             "accumulation",
             "is_collected",
             "achieved",
-            "category" "description",
+            "category",
+            "description",
         )
 
     def update(self, instance, validated_data):

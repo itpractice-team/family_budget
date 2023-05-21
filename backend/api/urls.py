@@ -2,13 +2,7 @@ from django.urls import include, path
 from djoser.views import UserViewSet
 from rest_framework import routers
 
-from .views import (
-    CategoryIncomeViewSet,
-    CategoryViewSet,
-    IncomeViewSet,
-    MoneyBoxViewSet,
-    SpendViewSet,
-)
+from .views import CategoryIncomeViewSet, CategoryViewSet, IncomeViewSet, MoneyBoxViewSet, SpendViewSet
 
 app_name = "api"
 

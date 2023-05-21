@@ -14,21 +14,33 @@ SECRET_KEY = os.getenv("SECRET_KEY", default=get_random_secret_key())
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+THIRD_PARTY_APPS = [
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
+    "drf_spectacular",
+    "adminsortable2",
+    "phonenumber_field",
+    "drf_multiple_model",
+]
+
+LOCAL_APPS = [
     "users.apps.UsersConfig",
     "budget.apps.BudgetConfig",
     "api.apps.ApiConfig",
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -120,7 +132,11 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
+
 
 DJOSER = {
     "LOGIN_FIELD": "username",
@@ -134,6 +150,13 @@ DJOSER = {
         "user": ("rest_framework.permissions.IsAuthenticated",),
         "user_list": ("rest_framework.permissions.AllowAny",),
     },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Контроль расходов - семейный бюджет',
+    'DESCRIPTION': 'Сервис учета дохода/расхода семейного бюджета',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 if DEBUG:
