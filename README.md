@@ -16,13 +16,13 @@
 ### Предварительные требования:
 1. **Poetry** \
 Зависимости и пакеты управляются через **poetry**. Убедитесь, что **poetry** [установлен](https://python-poetry.org/docs/#osx--linux--bashonwindows-install-instructions) на вашем компьютере и ознакомьтесь с [документацией](https://python-poetry.org/docs/cli/).
-'''
+```
 - Устанавливаем Poetry версия 1.4.0
     curl -sSL https://install.python-poetry.org | python - --version 1.4.0
 - Добавляем Poetry в переменную среды ОС PATH
-    $HOME/.local/bin для Unix.
-    %APPDATA%\Python\Scripts для Windows.
-'''
+    "$HOME/.local/bin" для Unix.
+    "%APPDATA%\Python\Scripts" для Windows.
+```
 2. **Docker** \
 3. Файлы **requirements** \
 Файлы редактировать вручную не нужно. Обновление происходит автоматически через pre-commit хуки.
