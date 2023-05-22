@@ -38,9 +38,10 @@ export default function Header() {
             </button>
           </div>
           <div className="header__buttons">
-            <button type="button" className="header__button-login">
+            
+            <NavLink to="/signin"  className="header__button-login">
               Войти
-            </button>
+            </NavLink>
             <button type="button" className="header__button-registration">
               Регистрация
             </button>

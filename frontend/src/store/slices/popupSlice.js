@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const togglePopupSlice = createSlice({
-    name: 'togglePopup',
-    initialState: false, // Set the initial state to false
-    reducers: {
-      togglePopup: (state) => !state, // Toggle the state between true and false
-    },
+  name: 'togglePopup',
+  initialState: false,
+  reducers: {
+    togglePopup: (state) => !state.togglePopup,
+  },
   });
-  
   // Export the slice actions
   export const { togglePopup } = togglePopupSlice.actions;
   

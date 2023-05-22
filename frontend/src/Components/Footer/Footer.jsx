@@ -3,6 +3,7 @@ import './Footer.scss';
 // eslint-disable-next-line react/prop-types
 
 export default function Footer() {
+  const envelope = 'https://hz.jpg';
   return (
     <footer className="footer">
       <div className="footer__column-first">
