@@ -3,8 +3,9 @@ import { NavLink, useLocation } from 'react-router-dom';
 import './Header.scss';
 import Logo from '../Logo/Logo';
 import user from '../../Images/user.svg';
+import RegisterPopup from '../RegisterPopup/RegisterPopup';
 
-export default function Header() {
+export default function Header({ openRegisterPopup, isRegisterPopupOpen, closePopup }) {
   const location = useLocation();
   // const advantagesRef = useRef(null);
   // const howItWorksRef = useRef(null);
@@ -41,7 +42,11 @@ export default function Header() {
             <button type="button" className="header__button-login">
               Войти
             </button>
-            <button type="button" className="header__button-registration">
+            <button
+              type="button"
+              className="header__button-registration"
+              onClick={openRegisterPopup}
+            >
               Регистрация
             </button>
           </div>
@@ -72,6 +77,8 @@ export default function Header() {
           </NavLink>
         </>
       )}
+
+      <RegisterPopup isPopupOpen={isRegisterPopupOpen} closePopup={closePopup} />
     </header>
   );
 }

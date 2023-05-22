@@ -13,6 +13,7 @@ import EditProfile from '../Pages/EditProfile/EditProfile';
 function App() {
   const [isSpendingPopupOpen, setIsSpendingPopupOpen] = useState(false);
   const [isEarningPopupOpen, setIsEarningPopupOpen] = useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
 
   function openSpendingPopup() {
     setIsSpendingPopupOpen(true);
@@ -20,6 +21,10 @@ function App() {
 
   function openEarningPopup() {
     setIsEarningPopupOpen(true);
+  }
+
+  function openRegisterPopup() {
+    setIsRegisterPopupOpen(true);
   }
 
   function closePopup(event) {
@@ -30,12 +35,17 @@ function App() {
     ) {
       setIsSpendingPopupOpen('');
       setIsEarningPopupOpen('');
+      setIsRegisterPopupOpen('');
     }
   }
 
   return (
     <div className="app">
-      <Header />
+      <Header
+        openRegisterPopup={openRegisterPopup}
+        closePopup={closePopup}
+        isRegisterPopupOpen={isRegisterPopupOpen}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
