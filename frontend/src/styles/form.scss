@@ -4,6 +4,11 @@
   gap: 16px;
 }
 
+.form_profile {
+  gap: 32px;
+  max-width: 50%;
+}
+
 .form__header {
   font-family: 'Manrope', 'Arial', sans-serif;
   font-weight: 600;
@@ -13,6 +18,13 @@
   width: 100%;
 }
 
+.form__header_profile {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+  margin: 0 0 8px;
+}
+
 .form__button-wrapper {
   width: 100%;
   display: flex;
@@ -20,6 +32,14 @@
   gap: 32px;
   border-top: 1px #d2d5db solid;
   padding-top: 32px;
+}
+
+.form__button-wrapper_profile {
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  border: none;
+  padding: 0;
 }
 
 .form__button {
@@ -32,9 +52,12 @@
   border-radius: 20px;
 }
 
-.form__button_reset {
+.form__button_reset,
+.form__button_change {
   color: #303360;
   background-color: #eaebf5;
+  height: fit-content;
+  align-self: flex-end;
 }
 
 .form__button_submit {
@@ -77,7 +100,7 @@
 }
 
 .form__input {
-  padding: 12px 16px;
+  padding: 12px 20px;
   font-family: 'Open Sans', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -167,7 +190,17 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin-bottom: 24px;
+  margin: 0 0 24px;
+}
+
+.form__text_profile {
+  margin: 0;
+}
+
+.form__text_explanation {
+  color: #a0a0a0;
+  margin: 0;
+  margin: 16px 0 0;
 }
 
 .form__input-label_radio {
@@ -203,4 +236,66 @@
   display: inline-block;
   border: 3px solid white;
   outline: 2px solid #303360;
+}
+
+.form__img-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 41px;
+  width: 100%;
+}
+
+.form__img {
+  width: 100%;
+  max-width: 80px;
+}
+
+.form__image-description {
+  display: block;
+  max-width: 213px;
+}
+
+.form__button:focus-within {
+  outline: 2px black solid;
+}
+
+.form_hidden {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.form__header-block {
+  width: 100%;
+}
+
+.form__input-block {
+  display: flex;
+  gap: 8px;
+  max-width: calc(50% - 32px);
+  width: 100%;
+}
+
+.form__tooltip {
+  width: 24px;
+  height: 100%;
+  background-image: url(../Images/question.svg);
+  background-repeat: no-repeat;
+  background-position-y: 40px;
+}
+
+// lib style
+
+.react-tooltip {
+  background-color: #303360;
+  font-family: 'Noto Sans';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 16px 16px;
+  max-width: 340px;
+  border-radius: 8px;
+  z-index: 4;
+  opacity: 1;
 }
