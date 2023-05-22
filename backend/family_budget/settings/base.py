@@ -24,6 +24,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "corsheaders",
     "django_filters",
     "rest_framework",
     "rest_framework.authtoken",
@@ -98,6 +99,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r"^/api/.*$"
+
 LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Europe/Moscow"
@@ -119,24 +123,26 @@ AUTH_USER_MODEL = "users.User"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
-    "DEFAULT_FILTER_BACKENDS": [
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-    ],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 10,
-    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S",
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.LimitOffsetPagination",
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S",
+    'DEFAULT_SCHEMA_CLASS': "drf_spectacular.openapi.AutoSchema",
+    'TEST_REQUEST_DEFAULT_FORMAT': "json",
+    'EXCEPTION_HANDLER': 'core.exceptions.core_exception_handler',
 }
-
 
 DJOSER = {
     "LOGIN_FIELD": "username",
@@ -148,15 +154,16 @@ DJOSER = {
     },
     "PERMISSIONS": {
         "user": ("rest_framework.permissions.IsAuthenticated",),
-        "user_list": ("rest_framework.permissions.AllowAny",),
+        "user_list": ("rest_framework.permissions.IsAdminUser",),
     },
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Контроль расходов - семейный бюджет',
-    'DESCRIPTION': 'Сервис учета дохода/расхода семейного бюджета',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    "TITLE": "Контроль расходов - семейный бюджет",
+    "DESCRIPTION": "Сервис учета дохода/расхода семейного бюджета",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SCHEMA_PATH_PREFIX": "/api/",
 }
 
 if DEBUG:

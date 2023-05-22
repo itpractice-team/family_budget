@@ -7,7 +7,9 @@ from .conftest import root_dir
 class TestWorkflow:
     def test_workflow(self):
         family_budget_workflow_basename = "main"
-        workflow_dir = os.path.join(root_dir, os.path.join(".github", "workflows"))
+        workflow_dir = os.path.join(
+            root_dir, os.path.join(".github", "workflows")
+        )
         yaml = f"{family_budget_workflow_basename}.yaml"
         is_yaml = yaml in os.listdir(workflow_dir)
 
@@ -41,5 +43,6 @@ class TestWorkflow:
             "appleboy/ssh-action" in family_budget
         ), f"Проверьте, что добавили деплой в файл {filename}"
         assert "appleboy/telegram-action" in family_budget, (
-            "Проверьте, что настроили отправку telegram сообщения " f"в файл {filename}"
+            "Проверьте, что настроили отправку telegram сообщения "
+            f"в файл {filename}"
         )

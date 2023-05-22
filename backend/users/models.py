@@ -3,10 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """
-    Модель User.
-    Позволяет при создании запрашивать емейл и юзернейм.
-    """
+    """Модель User. Позволяет при создании запрашивать емейл и юзернейм."""
 
     email = models.EmailField(
         verbose_name="Электронная почта",

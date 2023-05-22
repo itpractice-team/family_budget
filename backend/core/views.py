@@ -27,7 +27,10 @@ def error_500(request):
     """Обработка 500 ошибки для внутренней ошибки на сервере."""
     message = _("Server error (500)")
     response = JsonResponse(
-        data={"message": message, "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
+        data={
+            "message": message,
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+        }
     )
     response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
     return response

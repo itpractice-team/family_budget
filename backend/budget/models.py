@@ -67,7 +67,9 @@ class Balance(models.Model):
 class Currency(models.Model):
     """Модель валют."""
 
-    title = models.CharField("Полное название валюты", unique=True, max_length=50)
+    title = models.CharField(
+        "Полное название валюты", unique=True, max_length=50
+    )
     code = models.CharField("Буквенный код валюты", unique=True, max_length=3)
 
     class Meta:
@@ -86,7 +88,9 @@ class Spend(models.Model):
         User, on_delete=models.CASCADE, verbose_name="Траты пользователя"
     )
     title = models.CharField("Наименование расхода", max_length=70)
-    created = models.DateTimeField("Время создания записи", validators=[validate_date])
+    created = models.DateTimeField(
+        "Время создания записи", validators=[validate_date]
+    )
     amount = models.PositiveIntegerField(
         "Израсходованная сумма", validators=COMMON_VALIDATOR
     )
@@ -135,7 +139,9 @@ class Income(models.Model):
     amount = models.PositiveIntegerField(
         "Оприходованная сумму", validators=COMMON_VALIDATOR
     )
-    created = models.DateTimeField("Время создания записи", validators=[validate_date])
+    created = models.DateTimeField(
+        "Время создания записи", validators=[validate_date]
+    )
     category = models.ForeignKey(
         CategoryIncome,
         on_delete=models.SET_NULL,
@@ -168,7 +174,9 @@ class MoneyBox(models.Model):
     accumulation = models.PositiveIntegerField(
         "Уже накоплено", validators=MONEYBOX_VALIDATOR
     )
-    achieved = models.BooleanField("Цель достигнута/не достигнута", default=False)
+    achieved = models.BooleanField(
+        "Цель достигнута/не достигнута", default=False
+    )
     description = models.TextField(
         "Комментарий к приходу", max_length=500, blank=True, null=True
     )

@@ -68,7 +68,9 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
             summa = instance.accumulation + accumulation
             if instance.total < summa:
                 ostotok = instance.total - instance.accumulation
-                raise ValidationError(f"Для достижения цели нужно всего {ostotok}")
+                raise ValidationError(
+                    f"Для достижения цели нужно всего {ostotok}"
+                )
             instance.accumulation = summa
         return super().update(instance, validated_data)
 

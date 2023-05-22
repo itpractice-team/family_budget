@@ -6,7 +6,9 @@ VALID_METHODS = ("get", "head", "options", "patch", "post", "put", "delete")
 def get_response_data(client, method, url, **kwargs):
     """Возвращает результат запроса к эндпоинту."""
     method = method.lower()
-    assert method in VALID_METHODS, f"Указан неизвестный метод для запроса {method}!"
+    assert (
+        method in VALID_METHODS
+    ), f"Указан неизвестный метод для запроса {method}!"
     params = kwargs.get("params")
     data = kwargs.get("data")
     request_method = getattr(client, method)

@@ -10,7 +10,11 @@ from .serializers import (
     UserResponseLoginSerializer,
     UserResponseSerializer,
 )
-from .utils import check_bad_request, check_not_authorized, check_with_validate_data
+from .utils import (
+    check_bad_request,
+    check_not_authorized,
+    check_with_validate_data,
+)
 
 
 class TestUsersAPI:
@@ -22,7 +26,8 @@ class TestUsersAPI:
 
     def test_settings(self):
         assert hasattr(settings, "REST_FRAMEWORK"), (
-            "Проверьте, что добавили настройку " "`REST_FRAMEWORK` в файл `settings.py`"
+            "Проверьте, что добавили настройку "
+            "`REST_FRAMEWORK` в файл `settings.py`"
         )
 
         assert "DEFAULT_AUTHENTICATION_CLASSES" in settings.REST_FRAMEWORK, (
@@ -69,7 +74,10 @@ class TestUsersAPI:
     @pytest.mark.django_db(transaction=True)
     def test_create_user_bad_request(self, client):
         check_bad_request(
-            client, "post", self.url_users, serializer=UserCreateRequestSerializer
+            client,
+            "post",
+            self.url_users,
+            serializer=UserCreateRequestSerializer,
         )
 
     @pytest.mark.django_db(transaction=True)
@@ -97,9 +105,16 @@ class TestUsersAPI:
     @pytest.mark.django_db(transaction=True)
     def test_set_user_password_valid_request(self, user_client):
         url = self.url_set_password
-        data = {"new_password": "Qwerty123@$@Qwerty756", "current_password": "1234567"}
+        data = {
+            "new_password": "Qwerty123@$@Qwerty756",
+            "current_password": "1234567",
+        }
         check_with_validate_data(
-            user_client, "post", url, data=data, code=status.HTTP_204_NO_CONTENT
+            user_client,
+            "post",
+            url,
+            data=data,
+            code=status.HTTP_204_NO_CONTENT,
         )
 
     @pytest.mark.django_db(transaction=True)
@@ -111,7 +126,10 @@ class TestUsersAPI:
     def test_set_user_password_bad_request(self, user_client):
         url = self.url_set_password
         check_bad_request(
-            user_client, "post", url, serializer=UserRequestNewPasswordSerializer
+            user_client,
+            "post",
+            url,
+            serializer=UserRequestNewPasswordSerializer,
         )
 
     @pytest.mark.django_db(transaction=True)
@@ -119,7 +137,11 @@ class TestUsersAPI:
         url = self.url_login
         data = {"email": user.email, "password": "1234567"}
         check_with_validate_data(
-            client, "post", url, data=data, serializer=UserResponseLoginSerializer
+            client,
+            "post",
+            url,
+            data=data,
+            serializer=UserResponseLoginSerializer,
         )
 
     @pytest.mark.django_db(transaction=True)

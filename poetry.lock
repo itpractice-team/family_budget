@@ -464,6 +464,21 @@ files = [
 Django = ">=4.0"
 
 [[package]]
+name = "django-cors-headers"
+version = "4.0.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django_cors_headers-4.0.0-py3-none-any.whl", hash = "sha256:e3cbd247a1a835da4cf71a70d4214378813ea7e08337778b82cb2c1bc19d28d6"},
+    {file = "django_cors_headers-4.0.0.tar.gz", hash = "sha256:a971cd4c75b29974068cc36b5c595698822f1e0edd5f1b32ea42ea37326ad4aa"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-debug-toolbar"
 version = "4.1.0"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -1922,4 +1937,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.1"
-content-hash = "b417795ea08d94f91cb013cbf42417a2c3d93272ec361caef5f0aed91c19aa4b"
+content-hash = "c0a7594e7804871bb9fe43b4e1952b3eb82546ccbf171956a39f1e474c99035a"
