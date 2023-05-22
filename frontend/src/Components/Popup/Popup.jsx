@@ -1,19 +1,8 @@
 import './Popup.scss';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-// eslint-disable-next-line react/prop-types
-function Popup({ isPopupOpen, children, formHeaderText, handleSubmit }) {
-  const [popupClass, setPopupClass] = useState(isPopupOpen ? 'popup_open' : '');
-
-  function closePopup(event) {
-    if (
-      event.key === 'Escape' ||
-      event.target.classList.contains('popup__close') ||
-      event.currentTarget === event.target
-    ) {
-      setPopupClass('');
-    }
-  }
+function Popup({ isPopupOpen, children, formHeaderText, handleSubmit, closePopup }) {
+  const popupClass = isPopupOpen ? 'popup_open' : '';
 
   useEffect(() => {
     document.addEventListener('keydown', closePopup);
@@ -37,13 +26,15 @@ function Popup({ isPopupOpen, children, formHeaderText, handleSubmit }) {
 
           {children}
 
-          <button type="reset" className="form__button form__button_reset">
-            Отменить
-          </button>
+          <div className="form__button-wrapper">
+            <button type="reset" className="form__button form__button_reset">
+              Отменить
+            </button>
 
-          <button type="submit" className="form__button form__button_submit">
-            Готово
-          </button>
+            <button type="submit" className="form__button form__button_submit">
+              Готово
+            </button>
+          </div>
         </form>
       </div>
     </section>
