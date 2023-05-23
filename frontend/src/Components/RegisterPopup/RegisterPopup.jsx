@@ -1,6 +1,7 @@
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
 import Popup from '../Popup/Popup';
+import { RegExLogin, RegExEmail, RegExName, RegExSurname, RegExPassword } from '../../utils/consts';
 
 export default function RegisterPopup({ isPopupOpen, closePopup }) {
   function handleSubmit(e) {
@@ -25,9 +26,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             placeholder="Ivan Petrov"
             id="RegisterPopup-login"
             required
-            max={25}
-            min={2}
-            pattern={/[\da-zA-Zа-яА-ЯЁё/_.+-]+/gi}
+            maxLength={25}
+            minLength={2}
+            pattern={RegExLogin}
           />
         </label>
 
@@ -54,9 +55,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             placeholder="example@mail.ru"
             id="RegisterPopup-email"
             required
-            min={7}
-            max={129}
-            pattern={/[\da-zA-Z_.-]+/gi}
+            minLength={7}
+            maxLength={129}
+            pattern={RegExEmail}
           />
         </label>
         <div
@@ -81,9 +82,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             type="text"
             placeholder="Иван"
             id="RegisterPopup-name"
-            min={2}
-            max={50}
-            pattern={/[^\d!@#$%|^&*\\\/()_+\n\t]+/gi}
+            minLength={2}
+            maxLength={50}
+            pattern={RegExName}
           />
         </label>
         <div
@@ -108,9 +109,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             type="text"
             placeholder="Петров"
             id="RegisterPopup-surname"
-            min={2}
-            max={50}
-            pattern={/[^\d!@#$%|^&*\\\/()_+\n\t]+/gi}
+            minLength={2}
+            maxLength={50}
+            pattern={RegExSurname}
           />
         </label>
       </div>
@@ -124,9 +125,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             placeholder="*******"
             id="RegisterPopup-password"
             required
-            min={8}
-            max={40}
-            pattern={/[\da-zA-Z_ .!"#$%&,-]+/gi}
+            minLength={8}
+            maxLength={40}
+            pattern={RegExPassword}
           />
         </label>
         <div
@@ -152,9 +153,9 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
             placeholder="*******"
             id="RegisterPopup-repeatPassword"
             required
-            min={8}
-            max={40}
-            pattern={/[\da-zA-Z_ .!"#$%&,-]+/gi}
+            minLength={8}
+            maxLength={40}
+            pattern={RegExPassword}
           />
         </label>
       </div>

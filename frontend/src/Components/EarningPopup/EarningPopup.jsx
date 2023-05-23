@@ -1,4 +1,5 @@
 import Popup from '../Popup/Popup';
+import { RegExEarnOperationName, RegExOperationAmount } from '../../utils/consts';
 
 export default function EarningPopup({ isPopupOpen, closePopup }) {
   function handleSubmit(e) {
@@ -47,6 +48,9 @@ export default function EarningPopup({ isPopupOpen, closePopup }) {
           id="EarningPopup-name"
           className="form__input form__input_text"
           placeholder="Название транзакции"
+          minLength={2}
+          maxLength={50}
+          pattern={RegExEarnOperationName}
         />
       </label>
 
@@ -58,6 +62,7 @@ export default function EarningPopup({ isPopupOpen, closePopup }) {
           id="EarningPopup-amount"
           className="form__input form__input_number"
           defaultValue="0"
+          pattern={RegExOperationAmount}
         />
       </label>
 
@@ -101,6 +106,8 @@ export default function EarningPopup({ isPopupOpen, closePopup }) {
           id="EarningPopup-comment"
           className="form__input form__input_textarea"
           placeholder="Место или заметка o событии"
+          minLength={2}
+          maxLength={100}
         />
       </label>
 

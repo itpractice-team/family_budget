@@ -1,0 +1,9 @@
+export const RegExLogin = '[da-zA-Zа-яА-ЯЁё/_.+-]+';
+export const RegExEmail = '[da-zA-Z_.@-]+';
+export const RegExName = '[^d!@#$%|^&*\\/()_+\n\t]+';
+export const RegExSurname = '[^d!@#$%|^&*\\/()_+\n\t]+';
+export const RegExPassword = '[da-zA-Z_ .!"#$%&,-]+';
+export const RegExPhone = '[d+()]+';
+export const RegExSpendOperationName = '[a-zA-Zа-яА-ЯЁё]+';
+export const RegExEarnOperationName = '[a-zA-Zа-яА-ЯЁё‐— -]+';
+export const RegExOperationAmount = '[d]+';
