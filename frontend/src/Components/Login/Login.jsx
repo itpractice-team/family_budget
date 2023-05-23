@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import useAuth from '../../hooks/useAuth';
@@ -9,40 +9,44 @@ import { setUser } from '../../store/slices/loginSlice';
 import { togglePopup } from '../../store/slices/popupSlice';
 import LoginForm from '../LoginForm/LoginForm';
 import Popup from '../Popup/Popup';
+import { authorize } from '../../utils/testApi';
 
 function Login() {
   const [message, setMessage] = useState('');
   const { isAuth } = useAuth();
   const dispatch = useDispatch();
-  const isPopupOpen = useSelector((state) => state.togglePopup); 
 
   // dispatch(togglePopup());
   useEffect(() => {
     dispatch(togglePopup());
-    console.log('LOGIN')
   }, []);
 
-  useEffect(()=>{
-    console.log('inLogin', isPopupOpen);
-  }, [isPopupOpen]);
-  const handleLogin = (email, password) => {
-    if (email === mockUser.email && password === mockUser.password) {
+  const handleLogin = ({loginOrEmail, password}) => {
+    // console.log('InLogon', 'logormail', loginOrEmail, 'pass', password, 'mock', mockUser )
+    // if ((loginOrEmail === mockUser.email || loginOrEmail === mockUser.userName) && password === mockUser.password) {
+      authorize(loginOrEmail, password)
+      .then((user) => {
+      console.log(user )
        dispatch(
         setUser({
-          email: mockUser.email,
+          email: user.email,
           name: mockUser.name,
-          token: mockUser.token,
-          phone: mockUser.phone,
-          currency: mockUser.currency,
+          token: user.token,
+          // phone: mockUser.phone,
+          // currency: mockUser.currency,
         })
       );
       dispatch(togglePopup());
-
-      setMessage('Вы успешно авторизировались!');
-    } else {
-      setMessage('Что-то пошло не так! Попробуйте ещё раз.');
-    }
-  };
+      localStorage.setItem("jwt", user.token);
+      setMessage("Вы успешно авторизировались!");
+    })
+    // } else {
+      
+    .catch((err) => {
+      console.log('InLogonFalse', loginOrEmail, password )
+      setMessage("Что-то пошло не так! Попробуйте ещё раз.", err);
+    })
+  }
 
   return !isAuth ? (
     <Popup>

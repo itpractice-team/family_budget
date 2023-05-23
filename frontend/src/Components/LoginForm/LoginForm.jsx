@@ -2,21 +2,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import './LoginForm.scss';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
 
-function LoginForm({onLogin}) {
+function LoginForm({ onLogin }) {
   const [message, setMessage] = useState('');
-  const [formDIsable, setFormDisable] = useState(true);
+  // const [formDIsable, setFormDisable] = useState(true);
 
   const onSubmit = (loginData) => {
-    if (!loginData.email || !loginData.password) {
-      setFormDisable(true);
+    if (!loginData.loginOrEmail || !loginData.password) {
       return setMessage('Email или пароль не верные!');
     }
-    setFormDisable(false);
     onLogin(loginData);
   };
 
@@ -36,13 +35,12 @@ function LoginForm({onLogin}) {
         <input
           {...register('loginOrEmail')}
           className="login-form__input"
-          disabled={formDIsable}
           id="login-email"
           placeholder="Логин или e-mail"
         />
         <span
           className={`login-form__valid-error 
-                        ${errors.email ? 'login-form__valid-error_active' : ''}`}
+                        ${errors.loginOrEmail ? 'login-form__valid-error_active' : ''}`}
         >
           {errors?.loginOrEmail && errors?.loginOrEmail?.message}
         </span>
@@ -52,7 +50,6 @@ function LoginForm({onLogin}) {
           {...register('password')}
           type="password"
           className="login-form__input"
-          disabled={formDIsable}
           id="login-password"
           placeholder="Пароль"
         />
@@ -67,10 +64,8 @@ function LoginForm({onLogin}) {
       </div>
 
       <button
-        className={`login-form__button ${
-          (!isValid || formDIsable) && 'login-form__button_disabled'
-        }`}
-        disabled={!isValid || formDIsable}
+        className={`login-form__button ${(!isValid || !errors) && 'login-form__button_disabled'}`}
+        disabled={!isValid || !errors}
         type="submit"
         aria-label="Кнопка авторизации"
       >

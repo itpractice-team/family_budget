@@ -10,7 +10,6 @@ function Popup({ children }) {
   const dispatch = useDispatch();
   const isPopupOpen = useSelector((state) => state.togglePopup); 
   const [popupClass, setPopupClass] = useState('');
-  console.log(isPopupOpen);
   function closePopup(event) {
     if (
       event.key === 'Escape' ||

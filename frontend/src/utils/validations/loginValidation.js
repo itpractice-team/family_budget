@@ -4,7 +4,9 @@ import * as yup from 'yup';
 const loginValidation = yup.object().shape({
     loginOrEmail: yup
       .string()
-      .required('Поле Пароль не может быть пустым')
+      .required('Поле Логин или Email не может быть пустым')
+      .min(4, 'Поле Логин или Email не может быть короче 4 символов')
+      .max(100, 'Поле Логин или Email не может быть длиннее 100 символов')
       .test(
         'loginOrEmail',
         'Введите правильный логин или адрес электронной почты',
