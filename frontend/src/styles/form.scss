@@ -342,3 +342,20 @@
   z-index: 4;
   opacity: 1;
 }
+
+.form__password-reliability-block {
+  width: 100%;
+  display: flex;
+}
+
+.form__password-reliability {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.form__password-reliability_ok {
+  background-color: #6fdd8e;
+}
