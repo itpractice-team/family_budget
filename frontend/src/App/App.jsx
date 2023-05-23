@@ -14,6 +14,7 @@ function App() {
   const [isSpendingPopupOpen, setIsSpendingPopupOpen] = useState(false);
   const [isEarningPopupOpen, setIsEarningPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
   function openSpendingPopup() {
     setIsSpendingPopupOpen(true);
@@ -27,15 +28,30 @@ function App() {
     setIsRegisterPopupOpen(true);
   }
 
+  function openLoginPopup() {
+    setIsLoginPopupOpen(true);
+  }
+
   function closePopup(event) {
     if (
       event.key === 'Escape' ||
       event.target.classList.contains('popup__close') ||
       event.currentTarget === event.target
     ) {
-      setIsSpendingPopupOpen('');
-      setIsEarningPopupOpen('');
-      setIsRegisterPopupOpen('');
+      setIsSpendingPopupOpen(false);
+      setIsEarningPopupOpen(false);
+      setIsRegisterPopupOpen(false);
+      setIsLoginPopupOpen(false);
+    }
+  }
+
+  function redirectAuthorizationPopup() {
+    if (isLoginPopupOpen) {
+      setIsLoginPopupOpen(false);
+      setIsRegisterPopupOpen(true);
+    } else if (isRegisterPopupOpen) {
+      setIsLoginPopupOpen(true);
+      setIsRegisterPopupOpen(false);
     }
   }
 
@@ -45,6 +61,9 @@ function App() {
         openRegisterPopup={openRegisterPopup}
         closePopup={closePopup}
         isRegisterPopupOpen={isRegisterPopupOpen}
+        openLoginPopup={openLoginPopup}
+        isLoginPopupOpen={isLoginPopupOpen}
+        redirectAuthorizationPopup={redirectAuthorizationPopup}
       />
       <Routes>
         <Route path="/" element={<Home />} />
