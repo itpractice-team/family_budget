@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Popup from '../Popup/Popup';
 import { RegExLogin, RegExEmail, RegExName, RegExSurname, RegExPassword } from '../../utils/consts';
 
-export default function RegisterPopup({ isPopupOpen, closePopup }) {
+export default function RegisterPopup({ isPopupOpen, closePopup, redirectAuthorizationPopup }) {
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -167,10 +167,10 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
       </label>
 
       <p>
-        {/* вызвать попап авторизации */}У вас уже есть аккаунт?&nbsp;
-        <NavLink to="/">
-          <button type="button">Войти</button>
-        </NavLink>
+        У вас уже есть аккаунт?&nbsp;
+        <button type="button" onClick={redirectAuthorizationPopup}>
+          Войти
+        </button>
       </p>
     </Popup>
   );
