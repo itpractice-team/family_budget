@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import Content from '../../Components/Content/Content';
 import avatar from '../../Images/avatar.svg';
+import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
 import {
   RegExLogin,
   RegExEmail,
@@ -12,7 +13,11 @@ import {
   RegExPhone,
 } from '../../utils/consts';
 
-export default function Profile() {
+export default function Profile({
+  closePopup,
+  isPasswordChangePopupOpen,
+  openPasswordChangePopup,
+}) {
   // eslint-disable-next-line no-unused-vars
   const [disable, setDisable] = useState(true);
 
@@ -256,6 +261,8 @@ export default function Profile() {
           </button>
         </div>
       </form>
+
+      <PasswordChangePopup isPopupOpen={isPasswordChangePopupOpen} closePopup={closePopup} />
     </Content>
   );
 }

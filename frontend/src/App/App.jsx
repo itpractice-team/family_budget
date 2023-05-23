@@ -13,6 +13,7 @@ import EditProfile from '../Pages/EditProfile/EditProfile';
 function App() {
   const [isSpendingPopupOpen, setIsSpendingPopupOpen] = useState(false);
   const [isEarningPopupOpen, setIsEarningPopupOpen] = useState(false);
+  const [isPasswordChangePopupOpen, setIsPasswordChangePopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
 
@@ -22,6 +23,10 @@ function App() {
 
   function openEarningPopup() {
     setIsEarningPopupOpen(true);
+  }
+
+  function openPasswordChangePopup() {
+    setIsPasswordChangePopupOpen(true);
   }
 
   function openRegisterPopup() {
@@ -40,6 +45,7 @@ function App() {
     ) {
       setIsSpendingPopupOpen(false);
       setIsEarningPopupOpen(false);
+      setIsPasswordChangePopupOpen(false);
       setIsRegisterPopupOpen(false);
       setIsLoginPopupOpen(false);
     }
@@ -81,7 +87,16 @@ function App() {
         />
         <Route path="/statistic" element={<Statistic />} />
         <Route path="/help" element={<Help />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              isPasswordChangePopupOpen={isPasswordChangePopupOpen}
+              openPasswordChangePopup={openPasswordChangePopup}
+              closePopup={closePopup}
+            />
+          }
+        />
         <Route path="/editprofile" element={<EditProfile />} />
       </Routes>
 
