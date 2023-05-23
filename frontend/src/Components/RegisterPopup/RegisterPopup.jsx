@@ -1,4 +1,5 @@
 import { Tooltip } from 'react-tooltip';
+import { NavLink } from 'react-router-dom';
 import Popup from '../Popup/Popup';
 
 export default function RegisterPopup({ isPopupOpen, closePopup }) {
@@ -143,13 +144,13 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
       </div>
 
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor="RegisterPopup-password">
+        <label className="form__input-label" htmlFor="RegisterPopup-repeatPassword">
           Введите пароль повторно
           <input
             className="form__input"
             type="password"
             placeholder="*******"
-            id="RegisterPopup-password"
+            id="RegisterPopup-repeatPassword"
             required
             min={8}
             max={40}
@@ -158,12 +159,18 @@ export default function RegisterPopup({ isPopupOpen, closePopup }) {
         </label>
       </div>
 
-      <label htmlFor="RegisterPopup-confirm">
-        Я даю своё согласие на обработку персональных данных и ознакомился с Политикой о
-        конфиденциальности
-        <input type="checkbox" id="RegisterPopup-confirm" />
-        <p>У вас уже есть аккаунт?</p>
+      <label htmlFor="RegisterPopup-confirm" className="form__checkbox-label form__text">
+        Я даю своё согласие на обработку персональных данных и ознакомился c
+        <NavLink to="/"> Политикой o конфиденциальности </NavLink>
+        <input type="checkbox" id="RegisterPopup-confirm" className="form__checkbox" />
       </label>
+
+      <p>
+        {/* вызвать попап авторизации */}У вас уже есть аккаунт?&nbsp;
+        <NavLink to="/">
+          <button type="button">Войти</button>
+        </NavLink>
+      </p>
     </Popup>
   );
 }

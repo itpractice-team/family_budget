@@ -238,6 +238,49 @@
   outline: 2px solid #303360;
 }
 
+.form__checkbox-label {
+  cursor: pointer;
+  padding-left: 40px;
+  margin: 0;
+  position: relative;
+}
+
+.form__checkbox {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: -5px;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+}
+
+.form__checkbox:hover {
+  opacity: 0.5;
+}
+
+.form__checkbox::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  display: inline-block;
+  border: 2px solid #303360;
+  border-radius: 6px;
+}
+
+.form__checkbox:checked::after {
+  content: '';
+  background-image: url(../Images/Icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px auto;
+}
+
+.form__checkbox:checked {
+  opacity: 1;
+}
+
 .form__img-block {
   display: flex;
   align-items: flex-start;
