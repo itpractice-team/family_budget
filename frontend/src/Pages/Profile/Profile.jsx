@@ -3,6 +3,14 @@ import { useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import Content from '../../Components/Content/Content';
 import avatar from '../../Images/avatar.svg';
+import {
+  RegExLogin,
+  RegExEmail,
+  RegExName,
+  RegExSurname,
+  RegExPassword,
+  RegExPhone,
+} from '../../utils/consts';
 
 export default function Profile() {
   // eslint-disable-next-line no-unused-vars
@@ -51,9 +59,9 @@ export default function Profile() {
               placeholder="Ivan Petrov"
               id="Profile-login"
               required
-              max={25}
-              min={2}
-              pattern={/[\da-zA-Zа-яА-ЯЁё/_.+-]+/gi}
+              maxLength={25}
+              minLength={2}
+              pattern={RegExLogin}
               disabled={disable}
             />
           </label>
@@ -81,9 +89,9 @@ export default function Profile() {
               placeholder="example@mail.ru"
               id="Profile-email"
               required
-              min={7}
-              max={129}
-              pattern={/[\da-zA-Z_.-]+/gi}
+              minLength={7}
+              maxLength={129}
+              pattern={RegExEmail}
               disabled={disable}
             />
           </label>
@@ -110,9 +118,9 @@ export default function Profile() {
               placeholder="*******"
               id="Profile-password"
               required
-              min={8}
-              max={40}
-              pattern={/[\da-zA-Z_ .!"#$%&,-]+/gi}
+              minLength={8}
+              maxLength={40}
+              pattern={RegExPassword}
               disabled={disable}
             />
           </label>
@@ -130,7 +138,11 @@ export default function Profile() {
           />
         </div>
 
-        <button className="form__button form__button_change" type="button">
+        <button
+          className="form__button form__button_change"
+          type="button"
+          onClick={openPasswordChangePopup}
+        >
           Сменить пароль
         </button>
 
@@ -142,9 +154,9 @@ export default function Profile() {
               type="text"
               placeholder="Иван"
               id="Profile-name"
-              min={2}
-              max={50}
-              pattern={/[^\d!@#$%|^&*\\\/()_+\n\t]+/gi}
+              minLength={2}
+              maxLength={50}
+              pattern={RegExName}
               disabled={disable}
             />
           </label>
@@ -170,9 +182,9 @@ export default function Profile() {
               type="text"
               placeholder="Петров"
               id="Profile-surname"
-              min={2}
-              max={50}
-              pattern={/[^\d!@#$%|^&*\\\/()_+\n\t]+/gi}
+              minLength={2}
+              maxLength={50}
+              pattern={RegExSurname}
               disabled={disable}
             />
           </label>
@@ -199,7 +211,7 @@ export default function Profile() {
               placeholder="+7 987 654 32 10"
               id="Profile-phone"
               disabled={disable}
-              pattern={/[\d+()]+/gi}
+              pattern={RegExPhone}
             />
           </label>
           <div
