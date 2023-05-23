@@ -32,9 +32,10 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "budget.apps.BudgetConfig",
     "api.apps.ApiConfig",
+    "corsheaders",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [    
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -42,6 +43,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "family_budget.urls"
@@ -90,7 +92,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://127.0.0.1").split(",")
+
 CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_URLS_REGEX = r"^/api/.*$"
 
 LANGUAGE_CODE = "ru"
