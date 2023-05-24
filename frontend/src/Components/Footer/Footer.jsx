@@ -3,7 +3,6 @@ import './Footer.scss';
 // eslint-disable-next-line react/prop-types
 
 export default function Footer() {
-  const envelope = 'https://hz.jpg';
   return (
     <footer className="footer">
       <div className="footer__column-first">
@@ -13,7 +12,7 @@ export default function Footer() {
       <div className="footer__column-second">
         <p className="footer__text">Всегда готовы выслушать ваши вопросы<br />и предложения</p>
         <p className="footer__email">
-          <img src={envelope} alt="Иконка почты" />example@mail.ru
+          {/* <img src={envelope} alt="Иконка почты" />example@mail.ru */}
         </p>
       </div>
     </footer>

@@ -1,13 +1,9 @@
 import './Content.scss';
-import PropTypes from 'prop-types';
 
-export default function Content({children}) {
+export default function Content() {
   return (
     <main className="content">
-      {children}
+      {/* {children} */}
     </main>
   );
 }
-Content.propTypes = {
-  children: PropTypes.node.isRequired,
-};

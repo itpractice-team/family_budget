@@ -8,7 +8,6 @@ import Profile from '../Pages/Profile/Profile';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
 import EditProfile from '../Pages/EditProfile/EditProfile';
-import Login from '../Components/Login/Login';
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<Login />} />
         <Route path="/budget" element={<Budget />} />
         <Route path="/statistic" element={<Statistic />} />
         <Route path="/help" element={<Help />} />
