@@ -1,10 +1,18 @@
-import { React } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Header.scss';
 import Logo from '../Logo/Logo';
 import user from '../../Images/user.svg';
+import RegisterPopup from '../RegisterPopup/RegisterPopup';
+import LoginPopup from '../LoginPopup/LoginPopup';
 
-export default function Header() {
+export default function Header({
+  openRegisterPopup,
+  isRegisterPopupOpen,
+  closePopup,
+  openLoginPopup,
+  isLoginPopupOpen,
+  redirectAuthorizationPopup,
+}) {
   const location = useLocation();
   // const advantagesRef = useRef(null);
   // const howItWorksRef = useRef(null);
@@ -38,10 +46,14 @@ export default function Header() {
             </button>
           </div>
           <div className="header__buttons">
-            <button type="button" className="header__button-login">
+            <button type="button" className="header__button-login" onClick={openLoginPopup}>
               Войти
             </button>
-            <button type="button" className="header__button-registration">
+            <button
+              type="button"
+              className="header__button-registration"
+              onClick={openRegisterPopup}
+            >
               Регистрация
             </button>
           </div>
@@ -72,6 +84,17 @@ export default function Header() {
           </NavLink>
         </>
       )}
+
+      <RegisterPopup
+        isPopupOpen={isRegisterPopupOpen}
+        closePopup={closePopup}
+        redirectAuthorizationPopup={redirectAuthorizationPopup}
+      />
+      <LoginPopup
+        isPopupOpen={isLoginPopupOpen}
+        closePopup={closePopup}
+        redirectAuthorizationPopup={redirectAuthorizationPopup}
+      />
     </header>
   );
 }

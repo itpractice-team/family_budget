@@ -1,0 +1,32 @@
+.budget__button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 395px;
+  gap: 9px;
+}
+
+.budget__add-button {
+  display: inline-block;
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #f0b216;
+  background-color: #303360;
+}
+
+.budget__add-button::before {
+  content: '';
+  background-image: url(../../Images/add__5.svg);
+  background-size: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  vertical-align: middle;
+}

@@ -41,8 +41,9 @@
   background-color: white;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
-  padding: 40px;
+  padding: 30px;
   box-sizing: border-box;
+
   max-width: 400px;
   min-width: 380px;
   width: 100%;
@@ -73,52 +74,4 @@
   position: absolute;
   top: 0;
   right: 0;
-}
-
-.form {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.form__header {
-  font-family: 'Manrope', 'Arial', sans-serif;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 33px;
-  margin: 0 0 32px;
-  width: 100%;
-}
-
-.form__button {
-  font-family: 'Arial', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 20px;
-  padding: 10px 20px;
-  border-radius: 4px;
-}
-
-.form__button_reset {
-  color: #2c2d2e;
-  background-color: rgba(0, 16, 61, 0.06);
-  max-width: 50%;
-}
-
-.form__button_reset:disabled {
-  background: rgba(0, 16, 61, 0.06);
-  opacity: 0.48;
-  cursor: not-allowed;
-}
-
-.form__button_submit {
-  color: white;
-  background-color: #000000;
-  max-width: 50%;
-  margin-left: auto;
-}
-
-.form__button_submit:disabled {
-  opacity: 0.48;
-  cursor: not-allowed;
 }
