@@ -1,0 +1,115 @@
+.login-form {
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // align-content: space-between;
+    margin: 0;
+}
+.login-form__greeting {
+    align-self: flex-start;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 40px;
+}
+.login-form__input-box {
+    position: relative;
+    width: 300px;
+    height: 120px;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+.login-form__input {
+    width: 100%;
+    color: black;
+    height: 46px;
+    background-color: white;
+    border: 1px solid #828282;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 0;
+    padding-left: 15px;
+}
+.login-form__input:hover {
+  border: 1px solid #BDBDBD;
+}
+.login-form__button {
+    width: 300px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    border: none;
+    transition: opacity 0.5s linear;
+    margin: 0;
+}
+.login-form__button_disabled {
+  pointer-events: none;
+  border: 1px solid rgba(230, 95, 95, 0.2);
+  background-color: rgba(230, 95, 95, 0);
+  color: rgba(230, 95, 95, 20%);
+}
+
+.login-form__button:hover {
+  cursor: pointer;
+  opacity: 80%;
+}
+.login-form__button_label {
+    text-align: center;
+}
+.login-form__label {
+    display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    color: #8b8b8b;
+    align-items: center;
+    margin: 0;
+}
+.login-form__login-link {
+    color: #4285f4;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.5s linear;
+    margin: 0;
+}
+  .login-form__login-link:hover {
+    cursor: pointer;
+    opacity: 80%;
+    margin-left: 3px;
+  }
+  
+  .login-form__valid-error {
+    font-size: 10px;
+    font-weight: 400;
+    color: rgb(243, 11, 11);
+    opacity: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 32px;
+    position: absolute;
+    border: 0;
+    transition: 0.3s;
+    margin: 0;
+  }
+  
+  .login-form__valid-error_active {
+    opacity: 1;
+  }
+  
+  .login-form__compare-message {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(197, 166, 166);
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 150px;
+    position: absolute;
+    border: 0;
+    transition: 0.3s;
+  }
+  

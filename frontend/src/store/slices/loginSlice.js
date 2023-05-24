@@ -1,8 +1,14 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  id: null,
   email: null,
   userName: null,
+  firstName: null,
+  lastName: null,
+  avatar: null,
+  token: null,
 };
 
 const userSlice = createSlice({
@@ -10,18 +16,23 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
-      const { email, name } = action.payload;
-      return {
-        ...state,
-        email,
-        userName: name,
-      };
+      state.id = action.payload.id;
+      state.email = action.payload.email;
+      state.userName = action.payload.username;
+      state.firstName = action.payload.first_name || '';
+      state.LastName = action.payload.last_name || '';
+      state.avatar = action.payload.avatar || '';
+      state.token = action.payload.token;
     },
     removeUser(state) {
       return {
         ...state,
         email: null,
         userName: null,
+        firstName: null,
+        lastName: null,
+        avatar: null,
+        token: null,
       };
     },
   },
