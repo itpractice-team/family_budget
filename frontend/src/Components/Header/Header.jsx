@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Header.scss';
-import Modal from '../Modal/Modal';
+import Popup from '../Popup/Popup';
 import Logo from '../Logo/Logo';
 import user from '../../Images/user.svg';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
@@ -86,15 +86,15 @@ export default function Header() {
       )}
 
       {isRegisterPopupOpen && (
-        <Modal onClose={closeRegisterPopup}>
+        <Popup onClose={closeRegisterPopup}>
           <RegisterPopup />
-        </Modal>
+        </Popup>
       )}
 
       {isLoginPopupOpen && (
-        <Modal onClose={closeLoginPopup}>
+        <Popup onClose={closeLoginPopup}>
           <LoginPopup />
-        </Modal>
+        </Popup>
       )}
     </header>
   );
