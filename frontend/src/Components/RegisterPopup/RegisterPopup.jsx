@@ -1,22 +1,19 @@
+import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
-import Popup from '../Popup/Popup';
 import { RegExLogin, RegExEmail, RegExName, RegExSurname, RegExPassword } from '../../utils/consts';
+import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 
-export default function RegisterPopup({ isPopupOpen, closePopup, redirectAuthorizationPopup }) {
-  function handleSubmit(e) {
-    e.preventDefault();
+export default function RegisterPopup() {
+  const dispatch = useDispatch();
 
-    // call serialize & submit functions
-  }
+  const handleEnterClick = () => {
+    dispatch(toggleRegisterPopup(false));
+    dispatch(toggleLoginPopup(true));
+  };
 
   return (
-    <Popup
-      isPopupOpen={isPopupOpen}
-      closePopup={closePopup}
-      formHeaderText="Регистрация"
-      handleSubmit={handleSubmit}
-    >
+    <>
       <div className="form__input-block">
         <label className="form__input-label" htmlFor="RegisterPopup-login">
           Логин
@@ -168,10 +165,10 @@ export default function RegisterPopup({ isPopupOpen, closePopup, redirectAuthori
 
       <p>
         У вас уже есть аккаунт?&nbsp;
-        <button type="button" onClick={redirectAuthorizationPopup}>
+        <button type="button" onClick={handleEnterClick}>
           Войти
         </button>
       </p>
-    </Popup>
+    </>
   );
 }
