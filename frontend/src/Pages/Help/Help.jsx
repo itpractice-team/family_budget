@@ -1,10 +1,9 @@
-import "./Help.scss";
-import Content from '../../Components/Content/Content';
+import './Help.scss';
 
 export default function Help() {
   return (
-    <Content>
+    <section className="help">
       <p>Мы обязательно вам поможем</p>
-    </Content>
+    </section>
   );
 }

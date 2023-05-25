@@ -1,5 +1,5 @@
-import Content from '../../Components/Content/Content';
+import './Home.scss';
 
-export default function Main() {
-  return <Content />;
+export default function Main({ children }) {
+  return <main className="content">{children}</main>;
 }

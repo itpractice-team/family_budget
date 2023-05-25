@@ -1,9 +1,7 @@
 import './Profile.scss';
 import { useState } from 'react';
 import { Tooltip } from 'react-tooltip';
-import Content from '../../Components/Content/Content';
 import avatar from '../../Images/avatar.svg';
-import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
 import {
   RegExLogin,
   RegExEmail,
@@ -13,11 +11,7 @@ import {
   RegExPhone,
 } from '../../utils/consts';
 
-export default function Profile({
-  closePopup,
-  isPasswordChangePopupOpen,
-  openPasswordChangePopup,
-}) {
+export default function Profile() {
   // eslint-disable-next-line no-unused-vars
   const [disable, setDisable] = useState(true);
 
@@ -26,7 +20,7 @@ export default function Profile({
   }
 
   return (
-    <Content>
+    <section className="profile">
       <form className="form form_profile" onSubmit={hanldeSubmit}>
         <div className="form__header-block">
           <h1 className="form__header_profile">Настройки профиля</h1>
@@ -143,11 +137,7 @@ export default function Profile({
           />
         </div>
 
-        <button
-          className="form__button form__button_change"
-          type="button"
-          onClick={openPasswordChangePopup}
-        >
+        <button className="form__button form__button_change" type="button">
           Сменить пароль
         </button>
 
@@ -262,7 +252,7 @@ export default function Profile({
         </div>
       </form>
 
-      <PasswordChangePopup isPopupOpen={isPasswordChangePopupOpen} closePopup={closePopup} />
-    </Content>
+      {/* <PasswordChangePopup isPopupOpen={isPasswordChangePopupOpen} closePopup={closePopup} /> */}
+    </section>
   );
 }
