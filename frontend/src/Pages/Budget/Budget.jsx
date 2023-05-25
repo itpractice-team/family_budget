@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
 import './Budget.scss';
-import Modal from '../../Components/Modal/Modal';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
@@ -36,17 +35,9 @@ export default function Budget() {
           Добавить доход
         </button>
       </div>
-      {isSpendingPopupOpen && (
-        <Modal onClose={closeSpendingPopup}>
-          <SpendingPopup />
-        </Modal>
-      )}
+      {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
 
-      {isEarningPopupOpen && (
-        <Modal onClose={closeEarningPopup}>
-          <EarningPopup />
-        </Modal>
-      )}
+      {isEarningPopupOpen && <EarningPopup onClose={closeEarningPopup} />}
     </section>
   );
 }

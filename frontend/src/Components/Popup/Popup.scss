@@ -101,6 +101,46 @@
 
 .popup_l {
   max-width: 1056px;
+
+  .form {
+    gap: 16px;
+  }
+
+  .form__header {
+    margin: 0 0 24px;
+  }
+
+  .form__input-block {
+    max-width: 312px;
+  }
+
+  .form__radiogroup {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 45px;
+
+    .form__text {
+      margin: 0 0 16px;
+      color: #1e1d24;
+    }
+
+    .form__text_label {
+      width: 100%;
+      font-family: 'Noto Sans', 'Arial', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: #1e1d24;
+    }
+  }
+
+  .form__button-wrapper {
+    margin-top: 8px;
+    padding-top: 32px;
+    border-top: 1px #d2d5db solid;
+  }
 }
 
 .popup_m {
