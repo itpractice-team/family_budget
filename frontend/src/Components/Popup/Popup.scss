@@ -88,7 +88,7 @@
   background-color: white;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
-  padding: 30px;
+  padding: 40px;
 
   max-width: 400px;
   min-width: 380px;
@@ -97,6 +97,43 @@
   // to show popup skroll if height is not enough
   max-height: 100vh;
   overflow-y: auto;
+}
+
+.popup_l {
+  max-width: 1056px;
+}
+
+.popup_m {
+  max-width: 784px;
+
+  .form {
+    gap: 24px 32px;
+  }
+
+  .form__header {
+    margin: 0 0 16px;
+  }
+
+  .form__input-block {
+    max-width: 334px;
+  }
+
+  .form__button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    margin-top: 16px;
+    padding: 0;
+  }
+}
+
+.popup_s {
+  max-width: 512px;
+}
+
+.popup_xs {
+  max-width: 376px;
 }
 
 // hide default scrollbar to customize

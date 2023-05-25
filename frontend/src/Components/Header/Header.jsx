@@ -85,11 +85,7 @@ export default function Header() {
         </>
       )}
 
-      {isRegisterPopupOpen && (
-        <Popup onClose={closeRegisterPopup}>
-          <RegisterPopup />
-        </Popup>
-      )}
+      {isRegisterPopupOpen && <RegisterPopup onClose={closeRegisterPopup} />}
 
       {isLoginPopupOpen && (
         <Popup onClose={closeLoginPopup}>

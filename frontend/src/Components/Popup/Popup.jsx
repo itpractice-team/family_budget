@@ -67,7 +67,7 @@ import { useNavigate } from 'react-router-dom';
 import './Popup.scss';
 import PopupOverlay from '../PopupOverlay/PopupOverlay';
 
-export default function Popup({ children, onClose }) {
+export default function Popup({ children, onClose, popupSize }) {
   const navigate = useNavigate();
   const closeModal = () => {
     // eslint-disable-next-line no-unused-expressions
@@ -91,7 +91,7 @@ export default function Popup({ children, onClose }) {
   return createPortal(
     <>
       <PopupOverlay onClose={closeModal} />
-      <div className="popup">
+      <div className={`${popupSize} popup`}>
         <button type="button" className="popup__close" aria-label="Закрыть" onClick={closeModal} />
         {children}
       </div>

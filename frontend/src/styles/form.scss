@@ -29,9 +29,11 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 32px;
-  border-top: 1px #d2d5db solid;
   padding-top: 32px;
+
+  // border-top: 1px #d2d5db solid;
 }
 
 .form__button-wrapper_profile {
@@ -190,7 +192,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0 0 24px;
+  margin: 0;
 }
 
 .form__text_profile {
