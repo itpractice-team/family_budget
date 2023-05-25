@@ -80,8 +80,8 @@ export default function LoginPopup({ onClose }) {
           />
         </div>
 
-        <div className="form__button-wrapper">
-          <button type="submit" className="form__button form__button_submit">
+        <div className="form__button-wrapper form__button-wrapper_single">
+          <button type="submit" className="form__button form__button_submit form__button_single">
             Войти
           </button>
 
