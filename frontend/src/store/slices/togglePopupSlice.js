@@ -30,7 +30,7 @@ const togglePopupSlice = createSlice({
     },
     togglePasswordChangePopup: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
-      state.isLoginPopupOpen = payload;
+      state.isPasswordChangePopupOpen = payload;
     },
   },
 });
