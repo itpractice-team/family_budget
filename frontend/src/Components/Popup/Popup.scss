@@ -110,10 +110,6 @@
     gap: 24px 32px;
   }
 
-  .form__header {
-    margin: 0 0 16px;
-  }
-
   .form__input-block {
     max-width: 334px;
   }
@@ -123,13 +119,40 @@
     display: flex;
     justify-content: space-between;
     gap: 32px;
-    margin-top: 16px;
-    padding: 0;
   }
 }
 
 .popup_s {
   max-width: 512px;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .form__button-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .form__button_submit {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 20px;
+  }
+
+  .form__text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .form__button_text {
+    margin: 0 auto;
+    display: block;
+    border-bottom: 1px solid #303360;
+    margin-top: 8px;
+  }
 }
 
 .popup_xs {

@@ -1,7 +1,7 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 }
 
 .form_profile {
@@ -14,7 +14,7 @@
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
-  margin: 0 0 32px;
+  margin: 0 0 16px;
   width: 100%;
 }
 
@@ -33,6 +33,8 @@
   gap: 32px;
   padding-top: 32px;
 
+  margin-top: 16px;
+  padding: 0;
   // border-top: 1px #d2d5db solid;
 }
 
@@ -67,6 +69,10 @@
   background-color: #303360;
 }
 
+.form__button_text {
+  color: #303360;
+}
+
 .form__button:disabled {
   opacity: 0.48;
   cursor: not-allowed;
@@ -82,7 +88,7 @@
   width: 100%;
   display: block;
   position: relative;
-  max-width: 320px;
+  // max-width: 320px;
 }
 
 .form__input-label_arr::after {

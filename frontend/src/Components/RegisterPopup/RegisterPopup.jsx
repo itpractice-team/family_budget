@@ -176,13 +176,13 @@ export default function RegisterPopup({ onClose }) {
         <div className="form__button-wrapper">
           <p className="form__text">
             {'У вас уже есть аккаунт? '}
-            <button type="button" onClick={handleEnterClick}>
+            <button type="button" className="form__button_text" onClick={handleEnterClick}>
               Войти
             </button>
           </p>
 
           <button type="submit" className="form__button form__button_submit">
-            Готово
+            Зарегестрироваться
           </button>
         </div>
       </form>
