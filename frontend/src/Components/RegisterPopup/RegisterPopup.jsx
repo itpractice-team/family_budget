@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
+import { RegExLogin, RegExEmail, RegExName, RegExSurname, RegExPassword } from '../../utils/consts';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
-import { registerUser } from '../../store/slices/registerSlice';
+import Popup from '../Popup/Popup';
 
-export default function RegisterPopup() {
+export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const handleEnterClick = () => {
@@ -13,52 +13,29 @@ export default function RegisterPopup() {
     dispatch(toggleLoginPopup(true));
   };
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    password: '',
-    confirmPassword: '',
-  });
+  function handleSubmit(e) {
+    e.preventDefault();
 
-  // eslint-disable-next-line camelcase
-  const { username, email, first_name, last_name, password } = formData;
-
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleRegistration = (evt) => {
-    evt.preventDefault();
-    // Проверка на совпадение паролей
-    // if (password === formData.confirmPassword) {
-    // Отправка данных регистрации пользователя
-    // eslint-disable-next-line camelcase
-    dispatch(registerUser({ username, email, first_name, last_name, password }));
-    // } else {
-    // Пока такая обработка ошибки при несовпадении паролей
-    //   console.log('Пароли не совпадают');
-    // }
-  };
+    // call serialize & submit functions
+  }
 
   return (
-    <>
-      <form onSubmit={handleRegistration}>
+    <Popup onClose={onClose} popupSize="popup_m">
+      <form className="form" onSubmit={handleSubmit}>
+        <h2 className="form__header">Регистрация</h2>
+
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RegisterPopup-login">
             Логин
             <input
-              id="RegisterPopup-login"
-              name="username"
               className="form__input"
               type="text"
-              placeholder="Ввести логин"
-              value={username}
-              onChange={handleChange}
+              placeholder="Ivan Petrov"
+              id="RegisterPopup-login"
               required
               maxLength={25}
               minLength={2}
+              pattern={RegExLogin}
             />
           </label>
 
@@ -80,16 +57,14 @@ export default function RegisterPopup() {
           <label className="form__input-label" htmlFor="RegisterPopup-email">
             E-mail
             <input
-              id="RegisterPopup-email"
-              name="email"
               className="form__input"
               type="email"
-              placeholder="Ввести e-mail"
-              value={email}
-              onChange={handleChange}
+              placeholder="example@mail.ru"
+              id="RegisterPopup-email"
               required
               minLength={7}
               maxLength={129}
+              pattern={RegExEmail}
             />
           </label>
           <div
@@ -110,16 +85,13 @@ export default function RegisterPopup() {
           <label className="form__input-label" htmlFor="RegisterPopup-name">
             Имя
             <input
-              id="RegisterPopup-name"
-              name="first_name"
               className="form__input"
               type="text"
-              placeholder="Ввести имя"
-              // eslint-disable-next-line camelcase
-              value={first_name}
-              onChange={handleChange}
+              placeholder="Иван"
+              id="RegisterPopup-name"
               minLength={2}
               maxLength={50}
+              pattern={RegExName}
             />
           </label>
           <div
@@ -140,16 +112,13 @@ export default function RegisterPopup() {
           <label className="form__input-label" htmlFor="RegisterPopup-surname">
             Фамилия
             <input
-              id="RegisterPopup-surname"
-              name="last_name"
               className="form__input"
               type="text"
-              placeholder="Ввести фамилию"
-              // eslint-disable-next-line camelcase
-              value={last_name}
-              onChange={handleChange}
+              placeholder="Петров"
+              id="RegisterPopup-surname"
               minLength={2}
               maxLength={50}
+              pattern={RegExSurname}
             />
           </label>
         </div>
@@ -158,16 +127,14 @@ export default function RegisterPopup() {
           <label className="form__input-label" htmlFor="RegisterPopup-password">
             Пароль
             <input
-              id="RegisterPopup-password"
-              name="password"
               className="form__input"
               type="password"
-              placeholder="Ввести пароль"
-              value={password}
-              onChange={handleChange}
+              placeholder="*******"
+              id="RegisterPopup-password"
               required
               minLength={8}
               maxLength={40}
+              pattern={RegExPassword}
             />
           </label>
           <div
@@ -188,16 +155,14 @@ export default function RegisterPopup() {
           <label className="form__input-label" htmlFor="RegisterPopup-repeatPassword">
             Введите пароль повторно
             <input
-              id="RegisterPopup-repeatPassword"
-              name="confirmPassword"
               className="form__input"
               type="password"
-              placeholder="Повторить пароль"
-              value={formData.confirmPassword}
-              onChange={handleChange}
+              placeholder="*******"
+              id="RegisterPopup-repeatPassword"
               required
               minLength={8}
               maxLength={40}
+              pattern={RegExPassword}
             />
           </label>
         </div>
@@ -207,16 +172,20 @@ export default function RegisterPopup() {
           <NavLink to="/"> Политикой o конфиденциальности </NavLink>
           <input type="checkbox" id="RegisterPopup-confirm" className="form__checkbox" />
         </label>
-        <button type="submit" className="form__button form__button_submit">
-          Готово
-        </button>
+
+        <div className="form__button-wrapper">
+          <p className="form__text">
+            {'У вас уже есть аккаунт? '}
+            <button type="button" className="form__button_text" onClick={handleEnterClick}>
+              Войти
+            </button>
+          </p>
+
+          <button type="submit" className="form__button form__button_submit">
+            Зарегестрироваться
+          </button>
+        </div>
       </form>
-      <p>
-        У вас уже есть аккаунт?&nbsp;
-        <button type="button" onClick={handleEnterClick}>
-          Войти
-        </button>
-      </p>
-    </>
+    </Popup>
   );
 }

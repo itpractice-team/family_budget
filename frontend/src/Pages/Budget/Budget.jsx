@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
 import './Budget.scss';
-import Popup from '../../Components/Popup/Popup';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
@@ -29,24 +28,16 @@ export default function Budget() {
     <section className="budget">
       <div className="budget__button-wrapper">
         <button type="button" className="budget__add-button" onClick={handleSpendingClick}>
-          Расход
+          Добавить расход
         </button>
 
         <button type="button" className="budget__add-button" onClick={handleEarningClick}>
-          Доход
+          Добавить доход
         </button>
       </div>
-      {isSpendingPopupOpen && (
-        <Popup onClose={closeSpendingPopup}>
-          <SpendingPopup />
-        </Popup>
-      )}
+      {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
 
-      {isEarningPopupOpen && (
-        <Popup onClose={closeEarningPopup}>
-          <EarningPopup />
-        </Popup>
-      )}
+      {isEarningPopupOpen && <EarningPopup onClose={closeEarningPopup} />}
     </section>
   );
 }
