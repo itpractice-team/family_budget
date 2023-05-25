@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux';
 import './Profile.scss';
 import { useState } from 'react';
 import { Tooltip } from 'react-tooltip';
@@ -12,22 +13,31 @@ import {
   RegExPassword,
   RegExPhone,
 } from '../../utils/consts';
+import { togglePasswordChangePopup } from '../../store/slices/togglePopupSlice';
 
-export default function Profile({
-  closePopup,
-  isPasswordChangePopupOpen,
-  openPasswordChangePopup,
-}) {
+export default function Profile() {
   // eslint-disable-next-line no-unused-vars
   const [disable, setDisable] = useState(true);
 
-  function hanldeSubmit(e) {
+  const dispatch = useDispatch();
+
+  const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
+
+  const handlePasswordChangeClick = () => {
+    dispatch(togglePasswordChangePopup(true));
+  };
+
+  const closePasswordChangePopup = () => {
+    dispatch(togglePasswordChangePopup(false));
+  };
+
+  function handleSubmit(e) {
     e.preventDefault();
   }
 
   return (
     <Content>
-      <form className="form form_profile" onSubmit={hanldeSubmit}>
+      <form className="form form_profile" onSubmit={handleSubmit}>
         <div className="form__header-block">
           <h1 className="form__header_profile">Настройки профиля</h1>
           <p className="form__text form__text_profile">
@@ -146,7 +156,7 @@ export default function Profile({
         <button
           className="form__button form__button_change"
           type="button"
-          onClick={openPasswordChangePopup}
+          onClick={handlePasswordChangeClick}
         >
           Сменить пароль
         </button>
@@ -262,7 +272,7 @@ export default function Profile({
         </div>
       </form>
 
-      <PasswordChangePopup isPopupOpen={isPasswordChangePopupOpen} closePopup={closePopup} />
+      {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
     </Content>
   );
 }

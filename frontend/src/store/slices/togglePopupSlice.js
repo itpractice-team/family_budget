@@ -5,6 +5,7 @@ const initialState = {
   isOpenEarningPopup: false,
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
+  isPasswordChangePopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -27,10 +28,19 @@ const togglePopupSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.isLoginPopupOpen = payload;
     },
+    togglePasswordChangePopup: (state, { payload }) => {
+      // eslint-disable-next-line no-param-reassign
+      state.isLoginPopupOpen = payload;
+    },
   },
 });
 
-export const { toggleSpendingPopup, toggleEarningPopup, toggleRegisterPopup, toggleLoginPopup } =
-  togglePopupSlice.actions;
+export const {
+  toggleSpendingPopup,
+  toggleEarningPopup,
+  toggleRegisterPopup,
+  toggleLoginPopup,
+  togglePasswordChangePopup,
+} = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;
