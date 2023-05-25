@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const registerUserAPI = async (userData) => {
   try {
-    const response = await fetch('https://familybudget.ddns.net/api', {
+    const response = await fetch('https://familybudget.ddns.net/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

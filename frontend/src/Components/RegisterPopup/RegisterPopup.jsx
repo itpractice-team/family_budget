@@ -2,13 +2,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
-import {
-  RegExLogin,
-  RegExEmail,
-  RegExName,
-  RegExSurname,
-  // RegExPassword
-} from '../../utils/consts';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import { registerUser } from '../../store/slices/registerSlice';
 
@@ -66,7 +59,6 @@ export default function RegisterPopup() {
               required
               maxLength={25}
               minLength={2}
-              pattern={RegExLogin}
             />
           </label>
 
@@ -98,7 +90,6 @@ export default function RegisterPopup() {
               required
               minLength={7}
               maxLength={129}
-              pattern={RegExEmail}
             />
           </label>
           <div
@@ -129,7 +120,6 @@ export default function RegisterPopup() {
               onChange={handleChange}
               minLength={2}
               maxLength={50}
-              pattern={RegExName}
             />
           </label>
           <div
@@ -160,7 +150,6 @@ export default function RegisterPopup() {
               onChange={handleChange}
               minLength={2}
               maxLength={50}
-              pattern={RegExSurname}
             />
           </label>
         </div>
@@ -179,7 +168,6 @@ export default function RegisterPopup() {
               required
               minLength={8}
               maxLength={40}
-              // pattern={RegExPassword}
             />
           </label>
           <div
@@ -210,7 +198,6 @@ export default function RegisterPopup() {
               required
               minLength={8}
               maxLength={40}
-              // pattern={RegExPassword}
             />
           </label>
         </div>
