@@ -8,6 +8,7 @@ import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
 import EditProfile from '../Pages/EditProfile/EditProfile';
 
+
 function App() {
   return (
     <>
