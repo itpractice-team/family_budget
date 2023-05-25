@@ -1,10 +1,9 @@
 import './Statistic.scss';
-import Content from '../../Components/Content/Content';
 
 export default function Statistic() {
   return (
-    <Content>
+    <section className="statistic">
       <p>графики скоро будут готовы</p>
-    </Content>
+    </section>
   );
 }

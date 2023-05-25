@@ -8,18 +8,25 @@
 
 // перенести стили в отдельную папку
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-family: 'Noto Sans', sans-serif;
+  max-width: 1920px;
+  min-width: 320px;
+}
+
 * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0 auto;
-  font-family: 'Noto Sans', sans-serif;
-  max-width: 1920px;
-  min-width: 320px;
-}
+// body {
+
+// }
 
 ul {
   margin: 0;

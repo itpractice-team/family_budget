@@ -1,20 +1,8 @@
-import Popup from '../Popup/Popup';
 import { RegExSpendOperationName, RegExOperationAmount } from '../../utils/consts';
 
-export default function SpendingPopup({ isPopupOpen, closePopup }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    // call serialize & submit functions
-  }
-
+export default function SpendingPopup() {
   return (
-    <Popup
-      isPopupOpen={isPopupOpen}
-      closePopup={closePopup}
-      formHeaderText="Ha что потратили?"
-      handleSubmit={handleSubmit}
-    >
+    <>
       <label className="form__input-label" htmlFor="SpendingPopup-date">
         Дата
         <input
@@ -127,6 +115,6 @@ export default function SpendingPopup({ isPopupOpen, closePopup }) {
           />
         </label>
       </fieldset>
-    </Popup>
+    </>
   );
 }

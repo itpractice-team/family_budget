@@ -1,3 +1,8 @@
+.budget {
+  display: flex;
+  flex-grow: 1;
+  padding: 60px 160px;
+}
 .budget__button-wrapper {
   display: flex;
   justify-content: space-between;
@@ -16,6 +21,8 @@
   border-radius: 20px;
   color: #f0b216;
   background-color: #303360;
+  width: 134px;
+  height: 52px;
 }
 
 .budget__add-button::before {

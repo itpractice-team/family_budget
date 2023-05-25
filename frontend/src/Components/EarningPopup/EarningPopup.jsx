@@ -1,20 +1,8 @@
-import Popup from '../Popup/Popup';
 import { RegExEarnOperationName, RegExOperationAmount } from '../../utils/consts';
 
-export default function EarningPopup({ isPopupOpen, closePopup }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    // call serialize & submit functions
-  }
-
+export default function EarningPopup() {
   return (
-    <Popup
-      isPopupOpen={isPopupOpen}
-      closePopup={closePopup}
-      formHeaderText="Добавить доход"
-      handleSubmit={handleSubmit}
-    >
+    <>
       <label className="form__input-label" htmlFor="EarningPopup-date">
         Дата
         <input
@@ -139,6 +127,6 @@ export default function EarningPopup({ isPopupOpen, closePopup }) {
           />
         </label>
       </fieldset>
-    </Popup>
+    </>
   );
 }
