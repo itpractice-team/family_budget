@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import './index.scss';
 import App from './App/App';
-// import './firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLBaseElement);
 
