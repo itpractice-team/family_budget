@@ -1,33 +1,33 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Header.scss';
+import Popup from '../Popup/Popup';
 import Logo from '../Logo/Logo';
 import user from '../../Images/user.svg';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
+import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 
-export default function Header({
-  openRegisterPopup,
-  isRegisterPopupOpen,
-  closePopup,
-  openLoginPopup,
-  isLoginPopupOpen,
-  redirectAuthorizationPopup,
-}) {
+export default function Header() {
   const location = useLocation();
-  // const advantagesRef = useRef(null);
-  // const howItWorksRef = useRef(null);
+  const dispatch = useDispatch();
 
-  // function handleScrollTodvantages() {
-  //   advantagesRef.current.scrollIntoView({
-  //     behavior: 'smooth',
-  //   });
-  // }
+  const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
+  const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
 
-  // function handleScrollToHowItWorks() {
-  //   howItWorksRef.current.scrollIntoView({
-  //     behavior: 'smooth',
-  //   });
-  // }
+  const handleRegisterClick = () => {
+    dispatch(toggleRegisterPopup(true));
+  };
+  const handleLoginClick = () => {
+    dispatch(toggleLoginPopup(true));
+  };
+
+  const closeRegisterPopup = () => {
+    dispatch(toggleRegisterPopup(false));
+  };
+  const closeLoginPopup = () => {
+    dispatch(toggleLoginPopup(false));
+  };
 
   return (
     <header className="header">
@@ -46,13 +46,13 @@ export default function Header({
             </button>
           </div>
           <div className="header__buttons">
-            <button type="button" className="header__button-login" onClick={openLoginPopup}>
+            <button type="button" className="header__button-login" onClick={handleLoginClick}>
               Войти
             </button>
             <button
               type="button"
               className="header__button-registration"
-              onClick={openRegisterPopup}
+              onClick={handleRegisterClick}
             >
               Регистрация
             </button>
@@ -85,16 +85,17 @@ export default function Header({
         </>
       )}
 
-      <RegisterPopup
-        isPopupOpen={isRegisterPopupOpen}
-        closePopup={closePopup}
-        redirectAuthorizationPopup={redirectAuthorizationPopup}
-      />
-      <LoginPopup
-        isPopupOpen={isLoginPopupOpen}
-        closePopup={closePopup}
-        redirectAuthorizationPopup={redirectAuthorizationPopup}
-      />
+      {isRegisterPopupOpen && (
+        <Popup onClose={closeRegisterPopup}>
+          <RegisterPopup />
+        </Popup>
+      )}
+
+      {isLoginPopupOpen && (
+        <Popup onClose={closeLoginPopup}>
+          <LoginPopup />
+        </Popup>
+      )}
     </header>
   );
 }

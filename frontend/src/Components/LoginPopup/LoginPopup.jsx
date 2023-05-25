@@ -1,21 +1,18 @@
+import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import Popup from '../Popup/Popup';
 import { RegExLogin, RegExPassword } from '../../utils/consts';
+import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 
-export default function LoginPopup({ isPopupOpen, closePopup, redirectAuthorizationPopup }) {
-  function handleSubmit(e) {
-    e.preventDefault();
+export default function LoginPopup() {
+  const dispatch = useDispatch();
 
-    // call serialize & submit functions
-  }
+  const handleRegistrationClick = () => {
+    dispatch(toggleLoginPopup(false));
+    dispatch(toggleRegisterPopup(true));
+  };
 
   return (
-    <Popup
-      isPopupOpen={isPopupOpen}
-      closePopup={closePopup}
-      formHeaderText="Авторизация"
-      handleSubmit={handleSubmit}
-    >
+    <>
       <div className="form__input-block">
         <label className="form__input-label" htmlFor="LoginPopup-login">
           Логин
@@ -75,10 +72,10 @@ export default function LoginPopup({ isPopupOpen, closePopup, redirectAuthorizat
 
       <p>
         У вас ещё нет аккаунта?&nbsp;
-        <button type="button" onClick={redirectAuthorizationPopup}>
+        <button type="button" onClick={handleRegistrationClick}>
           Зарегистрироваться
         </button>
       </p>
-    </Popup>
+    </>
   );
 }

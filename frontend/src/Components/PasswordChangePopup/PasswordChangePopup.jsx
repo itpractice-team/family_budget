@@ -1,21 +1,9 @@
 import { Tooltip } from 'react-tooltip';
-import Popup from '../Popup/Popup';
 import { RegExPassword } from '../../utils/consts';
 
-export default function PasswordChangePopup({ isPopupOpen, closePopup }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    // call serialize & submit functions
-  }
-
+export default function PasswordChangePopup() {
   return (
-    <Popup
-      isPopupOpen={isPopupOpen}
-      closePopup={closePopup}
-      formHeaderText="Изменение пароля "
-      handleSubmit={handleSubmit}
-    >
+    <>
       <p className="form__text form__text_explanation">
         После изменения пароля произойдёт выход из аккаунта на всех устройствах, сайтах и
         приложениях, где вошли c текущим паролем
@@ -109,6 +97,6 @@ export default function PasswordChangePopup({ isPopupOpen, closePopup }) {
           place="bottom"
         />
       </div>
-    </Popup>
+    </>
   );
 }
