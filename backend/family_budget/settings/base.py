@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+DEBUG = False
+
+ALLOWED_HOSTS = ["127.0.0.1", "localhost",]
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY", default=get_random_secret_key())

@@ -4,7 +4,7 @@ from .base import *  # noqa
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv("PRODUCTION_HOSTS", "127.0.0.1").split(",")
+ALLOWED_HOSTS += os.getenv("PRODUCTION_HOSTS", "backend").split(",")
 
 CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS = list(
     map(lambda url: f'https://{url}', ALLOWED_HOSTS)

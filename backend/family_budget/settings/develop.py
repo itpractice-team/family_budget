@@ -6,11 +6,11 @@ from .base import *  # noqa
 
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("DEVELOP_HOSTS").split(",")
+ALLOWED_HOSTS += os.getenv("DEVELOP_HOSTS", "backend").split(",")
 
-CORS_ALLOWED_ORIGINS = ["127.0.0.1", "localhost",]
-
-CSRF_TRUSTED_ORIGINS = ["127.0.0.1", "localhost",]
+CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS = list(
+    map(lambda url: f'http://{url}', ALLOWED_HOSTS)
+)
 
 MIDDLEWARE += [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
