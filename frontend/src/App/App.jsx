@@ -6,7 +6,6 @@ import Help from '../Pages/Help/Help';
 import Profile from '../Pages/Profile/Profile';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
-import EditProfile from '../Pages/EditProfile/EditProfile';
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
         <Route path="/statistic" element={<Statistic />} />
         <Route path="/help" element={<Help />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/editprofile" element={<EditProfile />} />
       </Routes>
       <Footer />
     </>
