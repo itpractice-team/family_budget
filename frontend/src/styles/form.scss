@@ -14,7 +14,7 @@
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
-  margin: 0 0 16px;
+  margin: 0 0 8px;
   width: 100%;
 }
 
@@ -32,6 +32,12 @@
   align-items: center;
   gap: 32px;
   padding: 0;
+}
+
+.form__button-wrapper_single {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
 }
 
 .form__button-wrapper_profile {
@@ -67,6 +73,12 @@
 
 .form__button_text {
   color: #303360;
+}
+
+.form__button_single {
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 20px;
 }
 
 .form__button:disabled {
@@ -203,7 +215,7 @@
 .form__text_explanation {
   color: #a0a0a0;
   margin: 0;
-  margin: 16px 0 0;
+  margin: 0;
 }
 
 .form__input-label_radio {
