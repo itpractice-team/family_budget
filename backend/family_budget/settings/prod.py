@@ -8,7 +8,7 @@ DEBUG = False
 
 ALLOWED_HOSTS += os.getenv("PRODUCTION_HOSTS", "backend").split(",")
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = list(
     map(lambda url: f'https://{url}', ALLOWED_HOSTS)
