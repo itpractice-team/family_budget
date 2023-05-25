@@ -8,22 +8,10 @@ DEBUG = False
 
 ALLOWED_HOSTS += os.getenv("PRODUCTION_HOSTS", "backend").split(",")
 
-CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS = list(
-    map(lambda url: f'https://{url}', ALLOWED_HOSTS)
-)
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = (
-    *default_headers,
-    "Sec-CH-UA",
-    "Sec-CH-UA-Arch",
-    "Sec-CH-UA-Bitness",
-    "Sec-CH-UA-Full-Version",
-    "Sec-CH-UA-Full-Version-List",
-    "Sec-CH-UA-Mobile",
-    "Sec-CH-UA-Model",
-    "Sec-CH-UA-Platform",
-    "Sec-CH-UA-Platform-Version",
-    "Referer",
+CSRF_TRUSTED_ORIGINS = list(
+    map(lambda url: f'https://{url}', ALLOWED_HOSTS)
 )
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
