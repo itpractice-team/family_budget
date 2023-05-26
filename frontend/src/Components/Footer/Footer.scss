@@ -1,8 +1,9 @@
 .footer {
-  background: #EAEBF5;
+  background: #eaebf5;
   display: flex;
-  gap: 100px;
   align-items: center;
+  flex-shrink: 0;
+  gap: 100px;
   height: 238px;
   padding: 56px 160px;
 }

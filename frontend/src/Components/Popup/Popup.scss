@@ -1,48 +1,16 @@
 .popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-
-  transition: visibility 0s, opacity 0.5s ease;
-
-  visibility: hidden;
-  opacity: 0;
-}
-
-.popup_open {
-  visibility: visible;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   opacity: 1;
-}
-
-.popup::after {
-  content: '';
-  position: fixed;
-  background-color: black;
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
-.popup__wrapper {
-  position: fixed;
-  z-index: 2;
-
+  z-index: 7;
   display: flex;
   justify-content: center;
   background-color: white;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
-  padding: 30px;
-  box-sizing: border-box;
+  padding: 40px;
 
   max-width: 400px;
   min-width: 380px;
@@ -53,8 +21,107 @@
   overflow-y: auto;
 }
 
+.popup_l {
+  max-width: 1056px;
+
+  .form {
+    gap: 16px;
+  }
+
+  .form__header {
+    margin: 0 0 24px;
+  }
+
+  .form__input-block {
+    max-width: 312px;
+  }
+
+  .form__radiogroup {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 45px;
+
+    .form__text {
+      margin: 0 0 16px;
+      color: #1e1d24;
+    }
+
+    .form__text_label {
+      width: 100%;
+      font-family: 'Noto Sans', 'Arial', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: #1e1d24;
+    }
+  }
+
+  .form__button-wrapper {
+    margin-top: 8px;
+    padding-top: 32px;
+    border-top: 1px #d2d5db solid;
+  }
+}
+
+.popup_m {
+  max-width: 784px;
+
+  .form {
+    gap: 24px 32px;
+  }
+
+  .form__input-block {
+    max-width: 334px;
+  }
+
+  .form__button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+  }
+}
+
+.popup_s {
+  max-width: 512px;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .form__button-wrapper {
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .form__button-wrapper_single {
+    justify-content: center;
+  }
+
+  .form__text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .form__button_text {
+    margin: 0 auto;
+    display: block;
+    border-bottom: 1px solid #303360;
+    margin-top: 8px;
+  }
+}
+
+.popup_xs {
+  max-width: 376px;
+}
+
 // hide default scrollbar to customize
-.popup__wrapper::-webkit-scrollbar {
+.popup::-webkit-scrollbar {
   display: none;
 }
 
