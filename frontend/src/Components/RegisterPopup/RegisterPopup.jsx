@@ -39,15 +39,16 @@ export default function RegisterPopup({ onClose }) {
     // Отправка данных регистрации пользователя
     // eslint-disable-next-line camelcase
     dispatch(registerUser({ username, email, first_name, last_name, password }));
-    if (isRegistration) {
-      dispatch(toggleRegisterPopup(false));
-      dispatch(toggleLoginPopup(true));
-    }
     // } else {
     // Пока такая обработка ошибки при несовпадении паролей
     //   console.log('Пароли не совпадают');
     // }
   };
+
+  if (isRegistration) {
+    dispatch(toggleRegisterPopup(false));
+    dispatch(toggleLoginPopup(true));
+  }
 
   return (
     <Popup onClose={onClose} popupSize="popup_m">
