@@ -1,40 +1,67 @@
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
-import { RegExLogin, RegExPassword } from '../../utils/consts';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
+import { loginUser } from '../../store/slices/loginSlice';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const isLogin = useSelector((state) => state.login.data);
 
   const handleRegistrationClick = () => {
     dispatch(toggleLoginPopup(false));
     dispatch(toggleRegisterPopup(true));
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
 
-    // call serialize & submit functions
+  // eslint-disable-next-line camelcase
+  const { username, password } = formData;
+
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  };
+
+  const handleLogin = (evt) => {
+    evt.preventDefault();
+    dispatch(loginUser(formData));
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(toggleLoginPopup(false));
+    }
+  }, [isLogin, dispatch]);
+
+  if (isLogin) {
+    return <Navigate to="/budget" />;
   }
 
   return (
     <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleLogin}>
         <h2 className="form__header">Авторизация</h2>
 
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="LoginPopup-login">
             Логин
             <input
+              id="LoginPopup-login"
+              name="username"
               className="form__input"
               type="text"
-              placeholder="Ivan Petrov"
-              id="LoginPopup-login"
+              placeholder="Логин"
+              value={username}
+              onChange={handleChange}
               required
               maxLength={25}
               minLength={2}
-              pattern={RegExLogin}
             />
           </label>
 
@@ -56,14 +83,16 @@ export default function LoginPopup({ onClose }) {
           <label className="form__input-label" htmlFor="LoginPopup-password">
             Пароль
             <input
+              id="LoginPopup-password"
+              name="password"
               className="form__input"
               type="password"
-              placeholder="*******"
-              id="LoginPopup-password"
+              placeholder="Пароль"
+              value={password}
+              onChange={handleChange}
               required
               minLength={8}
               maxLength={40}
-              pattern={RegExPassword}
             />
           </label>
           <div
