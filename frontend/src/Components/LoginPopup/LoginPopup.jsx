@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react-hooks/rules-of-hooks */
+import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import loginValidation from '../../utils/validations/loginValidation';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
@@ -16,20 +21,20 @@ export default function LoginPopup({ onClose }) {
     dispatch(toggleRegisterPopup(true));
   };
 
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   username: '',
+  //   password: '',
+  // });
 
   // eslint-disable-next-line camelcase
-  const { username, password } = formData;
+  // const { username, password } = formData;
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
+  // const handleChange = (evt) => {
+  //   setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  // };
 
-  const handleLogin = (evt) => {
-    evt.preventDefault();
+  const handleLogin = (formData) => {
+    // evt.preventDefault();
     dispatch(loginUser(formData));
   };
 
@@ -42,27 +47,42 @@ export default function LoginPopup({ onClose }) {
   if (isLogin) {
     return <Navigate to="/budget" />;
   }
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+  } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(loginValidation),
+  });
 
   return (
     <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleLogin}>
+      <form className="form" onSubmit={handleSubmit(handleLogin)}>
         <h2 className="form__header">Авторизация</h2>
 
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="LoginPopup-login">
             Логин
             <input
+            {...register('username')}
               id="LoginPopup-login"
               name="username"
               className="form__input"
               type="text"
               placeholder="Логин"
-              value={username}
-              onChange={handleChange}
-              required
-              maxLength={25}
-              minLength={2}
+              // value={username}
+              // onChange={handleChange}
+              // required
+              // maxLength={25}
+              // minLength={2}
             />
+            <span
+          className={`form__valid-message 
+                        ${errors.username ? 'form__valid-message_active' : ''}`}
+        >
+        {errors?.username && errors?.username?.message}
+      </span>
           </label>
 
           <div
@@ -83,17 +103,25 @@ export default function LoginPopup({ onClose }) {
           <label className="form__input-label" htmlFor="LoginPopup-password">
             Пароль
             <input
+             {...register('password')}
               id="LoginPopup-password"
               name="password"
               className="form__input"
               type="password"
               placeholder="Пароль"
-              value={password}
-              onChange={handleChange}
-              required
-              minLength={8}
-              maxLength={40}
+              // value={password}
+              // onChange={handleChange}
+              // required
+              // minLength={8}
+              // maxLength={40}
+
             />
+            <span
+          className={`form__valid-message 
+                        ${errors.password ? 'form__valid-message_active' : ''}`}
+        >
+          {errors?.password && errors?.password?.message}
+        </span>
           </label>
           <div
             className="form__tooltip"
@@ -110,7 +138,9 @@ export default function LoginPopup({ onClose }) {
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_single">
-          <button type="submit" className="form__button form__button_submit form__button_single">
+          <button type="submit" className={`form__button form__button_submit form__button_single 
+          ${(!isValid || !errors) && 'form__button:disabled'}`}
+          >
             Войти
           </button>
 
