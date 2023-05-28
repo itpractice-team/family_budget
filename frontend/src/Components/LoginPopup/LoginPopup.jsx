@@ -9,7 +9,7 @@ import { loginUser } from '../../store/slices/loginSlice';
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  const isLogin = useSelector((state) => state.login.data);
+  const isLogin = useSelector((state) => state.login.login);
 
   const handleRegistrationClick = () => {
     dispatch(toggleLoginPopup(false));

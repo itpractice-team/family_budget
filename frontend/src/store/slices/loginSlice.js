@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getCookie, setCookie } from '../../utils/cookies';
 
 export const loginUserAPI = async (userData) => {
   try {
@@ -12,7 +13,7 @@ export const loginUserAPI = async (userData) => {
     });
 
     if (!response.ok) {
-      throw new Error('Registration failed');
+      throw new Error('Authorization failed');
     }
 
     const data = await response.json();
@@ -22,9 +23,9 @@ export const loginUserAPI = async (userData) => {
   }
 };
 
-export const loginUser = createAsyncThunk('user/login', async (userData) => {
+export const loginUser = createAsyncThunk('user/login', async ({ username, password }) => {
   try {
-    const response = await loginUserAPI(userData);
+    const response = await loginUserAPI({ username, password });
     return response;
   } catch (error) {
     throw new Error(error.message);
@@ -32,7 +33,8 @@ export const loginUser = createAsyncThunk('user/login', async (userData) => {
 });
 
 const initialState = {
-  data: null,
+  // eslint-disable-next-line no-unneeded-ternary
+  login: getCookie('token') ? true : false,
   loading: false,
   error: null,
 };
@@ -50,7 +52,11 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        // eslint-disable-next-line camelcase
+        const { auth_token } = action.payload;
+        // eslint-disable-next-line camelcase
+        setCookie('token', auth_token);
+        state.login = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

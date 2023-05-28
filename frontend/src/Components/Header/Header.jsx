@@ -12,7 +12,7 @@ export default function Header() {
 
   const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
   const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
-  const isLogin = useSelector((state) => state.login.data);
+  const isLogin = useSelector((state) => state.login.login);
 
   const handleRegisterClick = () => {
     dispatch(toggleRegisterPopup(true));

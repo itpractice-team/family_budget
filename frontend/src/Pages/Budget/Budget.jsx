@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import './Budget.scss';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
@@ -9,6 +10,9 @@ export default function Budget() {
 
   const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
   const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
+  const isLogin = useSelector((state) => state.login.login);
+
+  useEffect(() => {}, [isLogin, dispatch]);
 
   const handleSpendingClick = () => {
     dispatch(toggleSpendingPopup(true));
