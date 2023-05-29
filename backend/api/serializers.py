@@ -1,27 +1,42 @@
 from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 from django.contrib.auth import get_user_model
-from djoser.serializers import UserCreateSerializer
+from djoser.serializers import (
+    TokenSerializer,
+    UserCreateSerializer,
+    UserSerializer,
+)
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 User = get_user_model()
 
 
-class UserSerializer(UserCreateSerializer):
-    email = serializers.EmailField()
-    username = serializers.CharField()
-    first_name = serializers.CharField(allow_blank=True, required=False)
-    last_name = serializers.CharField(allow_blank=True, required=False)
-    avatar = serializers.ImageField(required=False)
+class CustomUserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        fields = UserCreateSerializer.Meta.fields + (
+            "first_name",
+            "last_name",
+            "avatar",
+        )
 
-    class Meta:
-        model = User
 
-        fields = (
-            "username",
-            "email",
-            "id",
-            "password",
+class CustomUserSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + (
+            "first_name",
+            "last_name",
+            "avatar",
+        )
+
+
+class CustomTokenSerializer(TokenSerializer):
+
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    avatar = serializers.ImageField(source="user.avatar")
+
+    class Meta(TokenSerializer.Meta):
+        fields = TokenSerializer.Meta.fields + (
             "first_name",
             "last_name",
             "avatar",

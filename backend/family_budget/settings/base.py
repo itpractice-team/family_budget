@@ -141,9 +141,10 @@ DJOSER = {
     "HIDE_USERS": False,
     "SET_PASSWORD_RETYPE": True,
     "SERIALIZERS": {
-        "user_create": "api.serializers.UserSerializer",
-        "user": "api.serializers.UserSerializer",
-        "current_user": "api.serializers.UserSerializer",
+        "user_create": "api.serializers.CustomUserCreateSerializer",
+        "user": "api.serializers.CustomUserSerializer",
+        "current_user": "api.serializers.CustomUserSerializer",
+        'token': 'api.serializers.CustomTokenSerializer',
     },
     "PERMISSIONS": {
         "user": ("rest_framework.permissions.IsAuthenticated",),
