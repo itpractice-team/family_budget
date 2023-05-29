@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/rules-of-hooks */
 import {  useEffect } from 'react';
@@ -21,32 +22,16 @@ export default function LoginPopup({ onClose }) {
     dispatch(toggleRegisterPopup(true));
   };
 
-  // const [formData, setFormData] = useState({
-  //   username: '',
-  //   password: '',
-  // });
-
-  // const handleChange = (evt) => {
-  //   setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  // };
-
   const handleLogin = (formData) => {
-    // evt.preventDefault();
-    console.log('formdataa',formData)
     dispatch(loginUser(formData));
   };
 
   useEffect(() => {
     if (isLogin) {
-      console.log('islogin', isLogin)
       dispatch(toggleLoginPopup(false));
     }
   }, [isLogin, dispatch]);
-
-  if (isLogin) {
-    console.log('ifislogin',isLogin)
-    return <Navigate to="/budget" />;
-  }
+  
   const {
     register,
     formState: { errors, isValid },
@@ -56,6 +41,9 @@ export default function LoginPopup({ onClose }) {
     resolver: yupResolver(loginValidation),
   });
 
+  if (isLogin) {
+  return <Navigate to="/budget" />;
+}
   return (
     <Popup onClose={onClose} popupSize="popup_s">
       <form className="form" onSubmit={handleSubmit(handleLogin)}>
