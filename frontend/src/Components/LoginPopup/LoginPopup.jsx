@@ -21,20 +21,7 @@ export default function LoginPopup({ onClose }) {
     dispatch(toggleRegisterPopup(true));
   };
 
-  // const [formData, setFormData] = useState({
-  //   username: '',
-  //   password: '',
-  // });
-
-  // eslint-disable-next-line camelcase
-  // const { username, password } = formData;
-
-  // const handleChange = (evt) => {
-  //   setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  // };
-
   const handleLogin = (formData) => {
-    // evt.preventDefault();
     dispatch(loginUser(formData));
   };
 
@@ -50,7 +37,6 @@ export default function LoginPopup({ onClose }) {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(loginValidation),
@@ -58,7 +44,7 @@ export default function LoginPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleSubmit(handleLogin)}>
+      <form className="form" onSubmit={handleLogin}>
         <h2 className="form__header">Авторизация</h2>
 
         <div className="form__input-block">
@@ -71,11 +57,6 @@ export default function LoginPopup({ onClose }) {
               className="form__input"
               type="text"
               placeholder="Логин"
-              // value={username}
-              // onChange={handleChange}
-              // required
-              // maxLength={25}
-              // minLength={2}
             />
             <span
           className={`form__valid-message 
@@ -109,12 +90,6 @@ export default function LoginPopup({ onClose }) {
               className="form__input"
               type="password"
               placeholder="Пароль"
-              // value={password}
-              // onChange={handleChange}
-              // required
-              // minLength={8}
-              // maxLength={40}
-
             />
             <span
           className={`form__valid-message 
@@ -140,6 +115,7 @@ export default function LoginPopup({ onClose }) {
         <div className="form__button-wrapper form__button-wrapper_single">
           <button type="submit" className={`form__button form__button_submit form__button_single 
           ${(!isValid || !errors) && 'form__button:disabled'}`}
+          disabled={!isValid}
           >
             Войти
           </button>

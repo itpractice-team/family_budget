@@ -83,7 +83,8 @@
 }
 
 .form__button:disabled {
-  opacity: 0.48;
+  pointer-events: none;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -192,21 +193,21 @@
 }
 
 .form__valid-message {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   color: rgb(243, 11, 11);
   opacity: 0;
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 32px;
+  top: 82px;
   position: absolute;
   border: 0;
   transition: 0.3s;
   margin: 0;
 }
 
-.form__valid-message__active {
+.form__valid-message_active {
   opacity: 1;
 }
 
