@@ -1,9 +1,10 @@
 import './Statistic.scss';
+import Loader from '../../Components/Loader/Loader';
 
 export default function Statistic() {
   return (
     <section className="statistic">
-      <p>графики скоро будут готовы</p>
+      <Loader />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 }
 
 .form_profile {
@@ -30,9 +30,15 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 32px;
-  border-top: 1px #d2d5db solid;
-  padding-top: 32px;
+  padding: 0;
+}
+
+.form__button-wrapper_single {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
 }
 
 .form__button-wrapper_profile {
@@ -65,6 +71,16 @@
   background-color: #303360;
 }
 
+.form__button_text {
+  color: #303360;
+}
+
+.form__button_single {
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 20px;
+}
+
 .form__button:disabled {
   opacity: 0.48;
   cursor: not-allowed;
@@ -79,7 +95,7 @@
   width: 100%;
   display: block;
   position: relative;
-  max-width: 320px;
+  // max-width: 320px;
 }
 
 .form__input-label_arr::after {
@@ -177,7 +193,6 @@
   display: flex;
   border: none;
   width: 100%;
-  margin: 16px 0 24px;
   padding: 0;
   gap: 45px;
 }
@@ -187,7 +202,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0 0 24px;
+  margin: 0;
 }
 
 .form__text_profile {
@@ -197,7 +212,7 @@
 .form__text_explanation {
   color: #a0a0a0;
   margin: 0;
-  margin: 16px 0 0;
+  margin: 0;
 }
 
 .form__input-label_radio {

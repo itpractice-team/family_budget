@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Header.scss';
-import Popup from '../Popup/Popup';
 import Logo from '../Logo/Logo';
 import user from '../../Images/user.svg';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
@@ -9,11 +8,11 @@ import LoginPopup from '../LoginPopup/LoginPopup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 
 export default function Header() {
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
   const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
+  const isLogin = useSelector((state) => state.login.login);
 
   const handleRegisterClick = () => {
     dispatch(toggleRegisterPopup(true));
@@ -32,7 +31,7 @@ export default function Header() {
   return (
     <header className="header">
       <Logo />
-      {location.pathname === '/' ? (
+      {!isLogin ? (
         <nav className="header__home-menu">
           <div className="header__home-links">
             <button type="button" className="header__home-link">
@@ -85,17 +84,9 @@ export default function Header() {
         </>
       )}
 
-      {isRegisterPopupOpen && (
-        <Popup onClose={closeRegisterPopup}>
-          <RegisterPopup />
-        </Popup>
-      )}
+      {isRegisterPopupOpen && <RegisterPopup onClose={closeRegisterPopup} />}
 
-      {isLoginPopupOpen && (
-        <Popup onClose={closeLoginPopup}>
-          <LoginPopup />
-        </Popup>
-      )}
+      {isLoginPopupOpen && <LoginPopup onClose={closeLoginPopup} />}
     </header>
   );
 }

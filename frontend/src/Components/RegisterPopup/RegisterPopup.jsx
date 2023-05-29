@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
+import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
 
-export default function RegisterPopup() {
+export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const isRegistration = useSelector((state) => state.registration.data);
 
   const handleEnterClick = () => {
     dispatch(toggleRegisterPopup(false));
@@ -42,9 +45,16 @@ export default function RegisterPopup() {
     // }
   };
 
+  if (isRegistration) {
+    dispatch(toggleRegisterPopup(false));
+    dispatch(toggleLoginPopup(true));
+  }
+
   return (
-    <>
-      <form onSubmit={handleRegistration}>
+    <Popup onClose={onClose} popupSize="popup_m">
+      <form className="form" onSubmit={handleRegistration}>
+        <h2 className="form__header">Регистрация</h2>
+
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RegisterPopup-login">
             Логин
@@ -207,16 +217,20 @@ export default function RegisterPopup() {
           <NavLink to="/"> Политикой o конфиденциальности </NavLink>
           <input type="checkbox" id="RegisterPopup-confirm" className="form__checkbox" />
         </label>
-        <button type="submit" className="form__button form__button_submit">
-          Готово
-        </button>
+
+        <div className="form__button-wrapper">
+          <p className="form__text">
+            {'У вас уже есть аккаунт? '}
+            <button type="button" className="form__button_text" onClick={handleEnterClick}>
+              Войти
+            </button>
+          </p>
+
+          <button type="submit" className="form__button form__button_submit">
+            Зарегестрироваться
+          </button>
+        </div>
       </form>
-      <p>
-        У вас уже есть аккаунт?&nbsp;
-        <button type="button" onClick={handleEnterClick}>
-          Войти
-        </button>
-      </p>
-    </>
+    </Popup>
   );
 }

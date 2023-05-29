@@ -39,7 +39,7 @@ const initialState = {
 };
 
 const registrationSlice = createSlice({
-  name: 'user',
+  name: 'register',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

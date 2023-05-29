@@ -10,7 +10,6 @@ import loginValidation from '../../utils/validations/loginValidation';
 
 function LoginForm({ onLogin }) {
   const [message, setMessage] = useState('');
-  // const [formDIsable, setFormDisable] = useState(true);
 
   const onSubmit = (loginData) => {
     if (!loginData.loginOrEmail || !loginData.password) {

@@ -1,43 +1,68 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getCookie, setCookie } from '../../utils/cookies';
 
-const initialState = {
-  id: null,
-  email: null,
-  userName: null,
-  firstName: null,
-  lastName: null,
-  avatar: null,
-  token: null,
+export const loginUserAPI = async (userData) => {
+  try {
+    const response = await fetch('https://familybudget.ddns.net/api/auth/token/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Authorization failed');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-const userSlice = createSlice({
-  name: 'user',
+export const loginUser = createAsyncThunk('user/login', async ({ username, password }) => {
+  try {
+    const response = await loginUserAPI({ username, password });
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
+const initialState = {
+  // eslint-disable-next-line no-unneeded-ternary
+  login: getCookie('token') ? true : false,
+  loading: false,
+  error: null,
+};
+
+const loginSlice = createSlice({
+  name: 'login',
   initialState,
-  reducers: {
-    setUser(state, action) {
-      state.id = action.payload.id;
-      state.email = action.payload.email;
-      state.userName = action.payload.username;
-      state.firstName = action.payload.first_name || '';
-      state.LastName = action.payload.last_name || '';
-      state.avatar = action.payload.avatar || '';
-      state.token = action.payload.token;
-    },
-    removeUser(state) {
-      return {
-        ...state,
-        email: null,
-        userName: null,
-        firstName: null,
-        lastName: null,
-        avatar: null,
-        token: null,
-      };
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    // Обработка действий, созданных createAsyncThunk
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        // eslint-disable-next-line camelcase
+        const { auth_token } = action.payload;
+        // eslint-disable-next-line camelcase
+        setCookie('token', auth_token);
+        state.login = true;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
-
-export default userSlice.reducer;
+export const loginReducer = loginSlice.reducer;

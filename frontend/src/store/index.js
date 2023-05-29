@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/loginSlice';
-import togglePopupReducer from './slices/popupSlice';
 import { popupReducer } from './slices/togglePopupSlice';
 import { registrationReducer } from './slices/registerSlice';
+import { loginReducer } from './slices/loginSlice';
+import { getUserReducer } from './slices/profileSlice';
 
 const store = configureStore({
   reducer: {
-    registration: registrationReducer,
-    user: userReducer,
-    togglePopup: togglePopupReducer,
     popup: popupReducer,
+    registration: registrationReducer,
+    login: loginReducer,
+    user: getUserReducer,
   },
 });
 
