@@ -1,9 +1,5 @@
 @import './vendor/normalize.css';
 @import './vendor/fonts/fonts.css';
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 @import url('./styles/form.scss');
 
 // перенести стили в отдельную папку
@@ -13,7 +9,7 @@
   flex-direction: column;
   min-height: 100vh;
   margin: 0 auto;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'NotoSans', sans-serif;
   max-width: 1920px;
   min-width: 320px;
 }
@@ -23,10 +19,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-// body {
-
-// }
 
 ul {
   margin: 0;
@@ -44,7 +36,7 @@ button {
   border: 0;
   background: transparent;
   cursor: pointer;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'NotoSans', sans-serif;
 }
 
 p,
