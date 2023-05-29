@@ -30,6 +30,8 @@ export default function Profile() {
     setDisable(false);
   };
 
+  const buttonText = disable ? 'Изменить данные' : 'Сохранить данные';
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -248,8 +250,10 @@ export default function Profile() {
                 className="profile__button btn-edit-profile"
                 type="submit"
                 onClick={handleEnableInputs}
+                // eslint-disable-next-line camelcase
+                disabled={!disable && !username && !email && !first_name && !last_name}
               >
-                Изменить данные
+                {buttonText}
               </button>
               <button className="profile__button btn-delete-profile" type="button">
                 Удалить профиль
