@@ -21,7 +21,17 @@ export default function LoginPopup({ onClose }) {
     dispatch(toggleRegisterPopup(true));
   };
 
+  // const [formData, setFormData] = useState({
+  //   username: '',
+  //   password: '',
+  // });
+
+  // const handleChange = (evt) => {
+  //   setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  // };
+
   const handleLogin = (formData) => {
+    // evt.preventDefault();
     dispatch(loginUser(formData));
   };
 
@@ -37,6 +47,7 @@ export default function LoginPopup({ onClose }) {
   const {
     register,
     formState: { errors, isValid },
+    // handleSubmit,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(loginValidation),
@@ -57,6 +68,11 @@ export default function LoginPopup({ onClose }) {
               className="form__input"
               type="text"
               placeholder="Логин"
+              // value={username}
+              // onChange={handleChange}
+              // required
+              // maxLength={25}
+              // minLength={2}
             />
             <span
           className={`form__valid-message 
