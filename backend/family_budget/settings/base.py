@@ -139,10 +139,10 @@ REST_FRAMEWORK = {
 DJOSER = {
     "LOGIN_FIELD": "username",
     "HIDE_USERS": False,
+    "SET_PASSWORD_RETYPE": True,
     "SERIALIZERS": {
         "user_create": "api.serializers.UserSerializer",
         "user": "api.serializers.UserSerializer",
-        "current_user": "api.serializers.UserSerializer",
     },
     "PERMISSIONS": {
         "user": ("rest_framework.permissions.IsAuthenticated",),
