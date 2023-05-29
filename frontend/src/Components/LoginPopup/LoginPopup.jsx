@@ -32,22 +32,25 @@ export default function LoginPopup({ onClose }) {
 
   const handleLogin = (formData) => {
     // evt.preventDefault();
+    console.log('formdataa',formData)
     dispatch(loginUser(formData));
   };
 
   useEffect(() => {
     if (isLogin) {
+      console.log('islogin', isLogin)
       dispatch(toggleLoginPopup(false));
     }
   }, [isLogin, dispatch]);
 
   if (isLogin) {
+    console.log('ifislogin',isLogin)
     return <Navigate to="/budget" />;
   }
   const {
     register,
     formState: { errors, isValid },
-    // handleSubmit,
+    handleSubmit,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(loginValidation),
@@ -55,7 +58,7 @@ export default function LoginPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleLogin}>
+      <form className="form" onSubmit={handleSubmit(handleLogin)}>
         <h2 className="form__header">Авторизация</h2>
 
         <div className="form__input-block">
@@ -68,11 +71,6 @@ export default function LoginPopup({ onClose }) {
               className="form__input"
               type="text"
               placeholder="Логин"
-              // value={username}
-              // onChange={handleChange}
-              // required
-              // maxLength={25}
-              // minLength={2}
             />
             <span
           className={`form__valid-message 
