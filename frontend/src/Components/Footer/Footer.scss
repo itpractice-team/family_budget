@@ -25,20 +25,25 @@
 }
 
 .footer__title {
-  font-weight: 900;
-  font-size: 29px;
-  line-height: 44px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
   color: black;
 }
 
 .footer__copyrights {
-  font-family: 'Poppins';
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .footer__text,
 .footer__email {
+  font-family: 'NotoSans', sans-serif;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   color: black;
 }
