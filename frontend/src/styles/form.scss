@@ -20,7 +20,6 @@
 }
 
 .form__header_profile {
-  font-weight: 500;
   font-size: 32px;
   line-height: 40px;
   margin: 0 0 8px;
@@ -51,6 +50,7 @@
 
 .form__button {
   font-family: 'NotoSans', sans-serif;
+  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   padding: 10px 20px;
@@ -89,12 +89,11 @@
   font-family: 'NotoSans', sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 24px;
   color: #1e1d24;
   width: 100%;
   display: block;
   position: relative;
-  // max-width: 320px;
 }
 
 .form__input-label_arr::after {
@@ -115,7 +114,6 @@
 
 .form__input {
   font-family: 'NotoSans', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -199,7 +197,6 @@
 
 .form__text {
   font-family: 'NotoSans', sans-serif;
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -344,6 +341,7 @@
 // lib style
 
 .react-tooltip {
+  background-color: #303360;
   font-family: 'NotoSans', sans-serif;
   font-weight: 400;
   font-size: 14px;
