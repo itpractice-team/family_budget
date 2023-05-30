@@ -48,6 +48,7 @@ const registerValidation = yup.object().shape({
     confirmPassword: yup
     .string()
     .required('Поле Повторить пароль не может быть пустым')
+    .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
     .min(8, 'Пароль не может быть короче 8 символов')
     .max(40, 'Пароль не может быть длиннее 40 символов')
     .test(

@@ -56,7 +56,7 @@ export default function RegisterPopup({ onClose }) {
     dispatch(toggleRegisterPopup(false));
     dispatch(toggleLoginPopup(true));
   }
-  
+
   // useEffect(() => {
   //   const subscription = watch((value) => {
   //     if (value.password != value.repeatPassword) {
