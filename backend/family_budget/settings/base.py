@@ -140,10 +140,12 @@ DJOSER = {
     "LOGIN_FIELD": "username",
     "HIDE_USERS": False,
     "SET_PASSWORD_RETYPE": True,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
     "SERIALIZERS": {
         "user_create": "api.serializers.CustomUserCreateSerializer",
         "user": "api.serializers.CustomUserSerializer",
         "current_user": "api.serializers.CustomUserSerializer",
+        "user_delete": "api.serializers.CustomDeleteUserSerializer",
         'token': 'api.serializers.CustomTokenSerializer',
     },
     "PERMISSIONS": {

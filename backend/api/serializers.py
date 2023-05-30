@@ -22,6 +22,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 
 class CustomUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
+        read_only_fields = None
         fields = UserSerializer.Meta.fields + (
             "first_name",
             "last_name",
@@ -29,14 +30,20 @@ class CustomUserSerializer(UserSerializer):
         )
 
 
+class CustomDeleteUserSerializer(serializers.Serializer):
+    pass
+
+
 class CustomTokenSerializer(TokenSerializer):
 
+    id = serializers.IntegerField(source="user.id")
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
     avatar = serializers.ImageField(source="user.avatar")
 
     class Meta(TokenSerializer.Meta):
         fields = TokenSerializer.Meta.fields + (
+            "id",
             "first_name",
             "last_name",
             "avatar",
