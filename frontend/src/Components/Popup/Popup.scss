@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 .popup {
   position: fixed;
   top: 50%;
@@ -48,12 +50,7 @@
     }
 
     .form__text_label {
-      width: 100%;
-      font-family: 'Noto Sans', 'Arial', sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
+      @include text-small-web;
       color: #1e1d24;
     }
   }

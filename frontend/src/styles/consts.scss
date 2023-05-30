@@ -1,0 +1,62 @@
+$ubuntu-font: 'Ubuntu', sans-serif;
+$noto-sans-font: 'NotoSans', sans-serif;
+
+@mixin font-styles($font-family) {
+  font-family: $font-family;
+}
+
+@mixin h2-web {
+  @include font-styles($ubuntu-font);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: #101828;
+}
+
+@mixin h3-web {
+  @include font-styles($ubuntu-font);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #101828;
+}
+
+@mixin text-large-web {
+  @include font-styles($noto-sans-font);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  color: #101828;
+}
+
+@mixin text-large-web-bold {
+  @include font-styles($noto-sans-font);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #101828;
+}
+
+@mixin text-medium-web {
+  @include font-styles($noto-sans-font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #101828;
+}
+
+@mixin text-medium-web-bold {
+  @include font-styles($noto-sans-font);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  color: #101828;
+}
+
+@mixin text-small-web {
+  @include font-styles($noto-sans-font);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #101828;
+}
