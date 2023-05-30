@@ -1,3 +1,5 @@
+@import '../styles/consts.scss';
+
 .form {
   display: flex;
   flex-wrap: wrap;
@@ -11,10 +13,7 @@
 }
 
 .form__header {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 500;
-  font-size: 28px;
-  line-height: 34px;
+  @include h3-web;
   margin: 0 0 8px;
   width: 100%;
 }
@@ -49,10 +48,7 @@
 }
 
 .form__button {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
   padding: 10px 20px;
   border-radius: 20px;
 }
@@ -86,10 +82,7 @@
 }
 
 .form__input-label {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
   color: #1e1d24;
   width: 100%;
   display: block;
@@ -113,10 +106,7 @@
 }
 
 .form__input {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
   padding: 12px 20px;
   margin-top: 8px;
   width: 100%;
@@ -196,10 +186,7 @@
 }
 
 .form__text {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
   margin: 0;
 }
 
@@ -341,11 +328,8 @@
 // lib style
 
 .react-tooltip {
+  @include text-small-web;
   background-color: #303360;
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
   padding: 16px 16px;
   max-width: 340px;
   border-radius: 8px;

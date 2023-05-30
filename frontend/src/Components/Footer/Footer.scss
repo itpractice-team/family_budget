@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 .footer {
   background: #eaebf5;
   display: flex;
@@ -25,27 +27,17 @@
 }
 
 .footer__title {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 500;
-  font-size: 28px;
-  line-height: 34px;
-  color: black;
+  @include h3-web;
 }
 
 .footer__copyrights {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
 }
 
 .footer__text,
 .footer__email {
-  font-family: 'NotoSans', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: black;
+  @include text-small-web;
+  color: #1e1d24;
 }
 
 .footer__email {

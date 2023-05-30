@@ -1,0 +1,55 @@
+@mixin h2-web {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: #101828;
+}
+
+@mixin h3-web {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #101828;
+}
+
+@mixin text-large-web {
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  color: #101828;
+}
+
+@mixin text-large-web-bold {
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #101828;
+}
+
+@mixin text-medium-web {
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #101828;
+}
+
+@mixin text-medium-web-bold {
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  color: #101828;
+}
+
+@mixin text-small-web {
+  font-family: 'NotoSans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #101828;
+}

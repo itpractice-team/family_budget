@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 // Button primary
 $color-primary: #f0b216;
 $color-primary-hover: #f9c136;
@@ -168,9 +170,6 @@ $bg-color-fiat-pressed: #f4f4f4;
 
   .button-text {
     // Styles for the button text
-    font-family: 'NotoSans', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+    @include text-medium-web;
   }
 }

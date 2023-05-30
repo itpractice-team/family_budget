@@ -1,6 +1,6 @@
 @import './vendor/normalize.css';
 @import './vendor/fonts/fonts.css';
-@import url('./styles/form.scss');
+@import './styles/form.scss';
 
 // перенести стили в отдельную папку
 
@@ -36,7 +36,6 @@ button {
   border: 0;
   background: transparent;
   cursor: pointer;
-  font-family: 'NotoSans', sans-serif;
 }
 
 p,
