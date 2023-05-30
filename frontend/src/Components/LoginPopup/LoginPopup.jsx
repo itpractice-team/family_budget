@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/rules-of-hooks */
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -31,7 +31,7 @@ export default function LoginPopup({ onClose }) {
       dispatch(toggleLoginPopup(false));
     }
   }, [isLogin, dispatch]);
-  
+
   const {
     register,
     formState: { errors, isValid },
@@ -42,8 +42,8 @@ export default function LoginPopup({ onClose }) {
   });
 
   if (isLogin) {
-  return <Navigate to="/budget" />;
-}
+    return <Navigate to="/budget" />;
+  }
   return (
     <Popup onClose={onClose} popupSize="popup_s">
       <form className="form" onSubmit={handleSubmit(handleLogin)}>
@@ -53,7 +53,7 @@ export default function LoginPopup({ onClose }) {
           <label className="form__input-label" htmlFor="LoginPopup-login">
             Логин
             <input
-            {...register('username')}
+              {...register('username')}
               id="LoginPopup-login"
               name="username"
               className="form__input"
@@ -61,11 +61,11 @@ export default function LoginPopup({ onClose }) {
               placeholder="Логин"
             />
             <span
-          className={`form__valid-message 
+              className={`form__valid-message 
                         ${errors.username ? 'form__valid-message_active' : ''}`}
-        >
-        {errors?.username && errors?.username?.message}
-      </span>
+            >
+              {errors?.username && errors?.username?.message}
+            </span>
           </label>
 
           <div
@@ -86,7 +86,7 @@ export default function LoginPopup({ onClose }) {
           <label className="form__input-label" htmlFor="LoginPopup-password">
             Пароль
             <input
-             {...register('password')}
+              {...register('password')}
               id="LoginPopup-password"
               name="password"
               className="form__input"
@@ -94,11 +94,11 @@ export default function LoginPopup({ onClose }) {
               placeholder="Пароль"
             />
             <span
-          className={`form__valid-message 
+              className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}
-        >
-          {errors?.password && errors?.password?.message}
-        </span>
+            >
+              {errors?.password && errors?.password?.message}
+            </span>
           </label>
           <div
             className="form__tooltip"
@@ -115,9 +115,11 @@ export default function LoginPopup({ onClose }) {
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_single">
-          <button type="submit" className={`form__button form__button_submit form__button_single 
+          <button
+            type="submit"
+            className={`form__button form__button_submit form__button_single 
           ${(!isValid || !errors) && 'form__button:disabled'}`}
-          disabled={!isValid}
+            disabled={!isValid}
           >
             Войти
           </button>
