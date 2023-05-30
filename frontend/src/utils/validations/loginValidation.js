@@ -4,17 +4,15 @@
 import * as yup from 'yup';
 
 const loginValidation = yup.object().shape({
-  loginOrEmail: yup
+  username: yup
     .string()
-    .required('Поле Логин или Email не может быть пустым')
-    .min(2, 'Поле Логин или Email не может быть короче 2 символов')
-    .max(40, 'Поле Логин или Email не может быть длиннее 40 символов')
-    .test('loginOrEmail', 'Введите правильный логин или адрес электронной почты', (value) => {
+    .required('Поле Логин не может быть пустым')
+    .min(2, 'Поле Логин не может быть короче 2 символов')
+    .max(40, 'Поле Логин не может быть длиннее 25 символов')
+    .test('username', 'Введите правильный логин', (value) => {
       // Check if it is login
       const isLogin = /^[a-zA-Z0-9_./+-]+$/.test(value);
-      // Check if it is email
-      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      if (!isLogin && !isEmail) {
+      if (!isLogin) {
         return false;
       }
       return true;
