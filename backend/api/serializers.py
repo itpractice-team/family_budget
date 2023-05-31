@@ -1,4 +1,3 @@
-from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 from django.contrib.auth import get_user_model
 from djoser.serializers import (
     TokenSerializer,
@@ -8,6 +7,8 @@ from djoser.serializers import (
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
+from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
 
 User = get_user_model()
 

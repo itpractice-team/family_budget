@@ -21,7 +21,7 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 line_length = 79
-known_django=["corsheaders","django","drf_extra_fields","rest_framework"]
+known_django=["corsheaders","django","djoser","drf_extra_fields","rest_framework"]
 known_thirdparty=["api","core","users","family_budget","budget"]
 sections=["FUTURE","STDLIB","DJANGO","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
 
