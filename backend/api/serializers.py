@@ -5,13 +5,18 @@ from djoser.serializers import (
     UserCreateSerializer,
     UserSerializer,
 )
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 User = get_user_model()
 
 
-class CustomUserCreateSerializer(UserCreateSerializer):
+class AvatarMixin(serializers.Serializer):
+    avatar = Base64ImageField(max_length=None, use_url=True, required=False)
+
+
+class CustomUserCreateSerializer(AvatarMixin, UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         fields = UserCreateSerializer.Meta.fields + (
             "first_name",
@@ -20,7 +25,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         )
 
 
-class CustomUserSerializer(UserSerializer):
+class CustomUserSerializer(AvatarMixin, UserSerializer):
     class Meta(UserSerializer.Meta):
         read_only_fields = None
         fields = UserSerializer.Meta.fields + (

@@ -165,5 +165,5 @@ cython_debug/
 # Local History for Visual Studio Code
 .history/
 
-/media
-/static
+media/
+static/

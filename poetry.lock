@@ -631,6 +631,26 @@ djet = ["djet (>=0.3.0,<0.4.0)"]
 webauthn = ["webauthn (<1.0)"]
 
 [[package]]
+name = "drf-extra-fields"
+version = "3.5.0"
+description = "Additional fields for Django Rest Framework."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "drf-extra-fields-3.5.0.tar.gz", hash = "sha256:7ef731f6e258a83321168ca7eaa9d70ef25273621fef11ce3f7ffcea6b3a834d"},
+    {file = "drf_extra_fields-3.5.0-py3-none-any.whl", hash = "sha256:d50bab5ab5e34bc76ec4fccf16d615d8dbd18143df82e582b3e338c75b7cff05"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+djangorestframework = ">=3.9.2"
+filetype = ">=1.2.0"
+
+[package.extras]
+base64imagefield = ["Pillow (>=6.2.1)"]
+
+[[package]]
 name = "drf-spectacular"
 version = "0.26.2"
 description = "Sane and flexible OpenAPI 3 schema generation for Django REST framework"
@@ -684,6 +704,18 @@ files = [
 [package.extras]
 docs = ["furo (>=2023.3.27)", "sphinx (>=6.1.3)", "sphinx-autodoc-typehints (>=1.23,!=1.23.4)"]
 testing = ["covdefaults (>=2.3)", "coverage (>=7.2.3)", "diff-cover (>=7.5)", "pytest (>=7.3.1)", "pytest-cov (>=4)", "pytest-mock (>=3.10)", "pytest-timeout (>=2.1)"]
+
+[[package]]
+name = "filetype"
+version = "1.2.0"
+description = "Infer file type and MIME type of any file/buffer. No external dependencies."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "filetype-1.2.0-py2.py3-none-any.whl", hash = "sha256:7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25"},
+    {file = "filetype-1.2.0.tar.gz", hash = "sha256:66b56cd6474bf41d8c54660347d37afcc3f7d1970648de365c102ef77548aadb"},
+]
 
 [[package]]
 name = "flake8"
@@ -1937,4 +1969,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.1"
-content-hash = "c0a7594e7804871bb9fe43b4e1952b3eb82546ccbf171956a39f1e474c99035a"
+content-hash = "0f2347824e2bbcd2239208c48030f16a56871de31d2662604632cb78f1164c72"
