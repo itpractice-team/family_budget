@@ -74,8 +74,10 @@ const registerValidation = yup.object().shape({
     .test('not-all-digits', 'Пароль не может состоять только из цифр', function (value) {
       return !/^\d+$/.test(value);
     }),
+    agree: 
+    yup
+    .boolean()
+    .oneOf([true]),
 });
 
 export default registerValidation;
-
-/* ; */ // Функция для сравнения вводимых паролей. Просто добавь в код:) ну и стейты тоже.
