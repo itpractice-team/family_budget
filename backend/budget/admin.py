@@ -1,6 +1,5 @@
+from budget.models import Category, Currency
 from django.contrib import admin
-
-from .models import Category, Currency
 
 
 @admin.register(Category)
