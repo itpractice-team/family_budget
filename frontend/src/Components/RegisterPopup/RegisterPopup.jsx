@@ -11,7 +11,6 @@ import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/RegisterValidation';
 
 export default function RegisterPopup({ onClose }) {
-  // const [disableButton, setDisableButton] = useState(true);
   const dispatch = useDispatch();
 
   const isRegistration = useSelector((state) => state.registration.data);
@@ -21,55 +20,14 @@ export default function RegisterPopup({ onClose }) {
     dispatch(toggleLoginPopup(true));
   };
 
-  // const [formData, setFormData] = useState({
-  //   username: '',
-  //   email: '',
-  //   first_name: '',
-  //   last_name: '',
-  //   password: '',
-  //   confirmPassword: '',
-  // });
-
-  // eslint-disable-next-line camelcase
-  // const { username, email, first_name, last_name, password } = formData;
-
-  // const handleChange = (evt) => {
-  //   setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  // };
-
   const handleRegistration = (userData) => {
-    // evt.preventDefault();
-    // Проверка на совпадение паролей
-    // if (password === formData.confirmPassword) {
-    // Отправка данных регистрации пользователя
-    // eslint-disable-next-line camelcase
-    // dispatch(registerUser({ username, email, first_name, last_name, password }));
-    
     dispatch(registerUser(userData));
-    // } else {
-    // Пока такая обработка ошибки при несовпадении паролей
-    //   console.log('Пароли не совпадают');
-    // }
   };
 
   if (isRegistration) {
     dispatch(toggleRegisterPopup(false));
     dispatch(toggleLoginPopup(true));
   }
-
-  // useEffect(() => {
-  //   const subscription = watch((value) => {
-  //     if (value.password != value.repeatPassword) {
-  //       setMessage("Пароли не совпадают!");
-  //       setDisableButton(true);
-  //       return;
-  //     } else 
-  //     if (disableButton) {
-  //       setDisableButton(false);
-  //     }
-  //   });
-  //   return () => subscription.unsubscribe();
-  // }, [watch]);
 
   const {
     register,
@@ -78,8 +36,12 @@ export default function RegisterPopup({ onClose }) {
     watch,
   } = useForm({
     mode: 'onChange',
-    resolver: yupResolver(registerValidation),
+    resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
   });
+
+  // useEffect(()=>{
+  //   console.log('validation', isValid);
+  // }, [isValid])
   const password = useRef({});
   password.current = watch('password', ''); 
 

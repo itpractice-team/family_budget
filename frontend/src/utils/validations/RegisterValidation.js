@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 
@@ -8,7 +10,7 @@ const registerValidation = yup.object().shape({
     .string()
     .required('Поле E-mail не может быть пустым')
     .email('Введите корректный E-mail'),
-    username: yup
+  username: yup
     .string()
     .required('Поле Логин не может быть пустым')
     .min(2, 'Поле Логин не может быть короче 2 символов')
@@ -21,13 +23,23 @@ const registerValidation = yup.object().shape({
       }
       return true;
     }),
-    first_name: yup
+  first_name: yup
     .string()
-    .min(2, 'Поле Имя не может быть короче 2 символов')
+    .test('first_name', (value) => {
+      if (!value || value.trim().length === 0) {
+        return true;
+      }
+      return value.length > 0;
+    })
     .max(25, 'Поле Имя не может быть длиннее 25 символов'),
-    last_name: yup
+  last_name: yup
     .string()
-    .min(2, 'Поле Фамилия не может быть короче 2 символов')
+    .test('last_name', (value) => {
+      if (!value || value.trim().length === 0) {
+        return true;
+      }
+      return value.length > 0;
+    })
     .max(25, 'Поле Фамилия не может быть длиннее 25 символов'),
   password: yup
     .string()
@@ -45,7 +57,7 @@ const registerValidation = yup.object().shape({
     .test('not-all-digits', 'Пароль не может состоять только из цифр', function (value) {
       return !/^\d+$/.test(value);
     }),
-    confirmPassword: yup
+  confirmPassword: yup
     .string()
     .required('Поле Повторить пароль не может быть пустым')
     .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
