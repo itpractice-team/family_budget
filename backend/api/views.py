@@ -1,3 +1,6 @@
+from rest_framework import viewsets
+from rest_framework.decorators import action
+
 from api.permissions import IsAuthor
 from api.serializers import (
     CategoryIncomeSerializer,
@@ -7,8 +10,6 @@ from api.serializers import (
     SpendSerializer,
 )
 from budget.models import Category, CategoryIncome, Income, MoneyBox, Spend
-from rest_framework import viewsets
-from rest_framework.decorators import action
 
 
 class MoneyBoxViewSet(viewsets.ModelViewSet):
