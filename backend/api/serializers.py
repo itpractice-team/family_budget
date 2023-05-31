@@ -45,7 +45,7 @@ class CustomTokenSerializer(TokenSerializer):
     id = serializers.IntegerField(source="user.id")
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
-    avatar = serializers.ImageField(source="user.avatar")
+    avatar = serializers.ImageField(source="user.avatar", use_url=True)
 
     class Meta(TokenSerializer.Meta):
         fields = TokenSerializer.Meta.fields + (
@@ -54,6 +54,13 @@ class CustomTokenSerializer(TokenSerializer):
             "last_name",
             "avatar",
         )
+
+    def to_representation(self, instance):
+        self
+        token_info = super().to_representation(instance)
+        if "request" not in self.context:
+            token_info["avatar"] = "127.0.0.1/" + token_info["avatar"]
+        return token_info
 
 
 class CategoryIncomeSerializer(serializers.ModelSerializer):
