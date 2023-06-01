@@ -41,6 +41,12 @@
   gap: 32px;
 }
 
+.profile__avatar-image {
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+}
+
 .profile__avatar-edit {
   display: flex;
   flex-direction: column;

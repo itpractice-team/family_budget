@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Tooltip } from 'react-tooltip';
 import './Profile.scss';
-import avatar from '../../Images/avatar.svg';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
 import { togglePasswordChangePopup } from '../../store/slices/togglePopupSlice';
-import { getUser, updateUser } from '../../store/slices/profileSlice';
+import { getUser, updateUser, deleteUser } from '../../store/slices/userSlice';
+import { logoutUser } from '../../store/slices/loginSlice';
 
 export default function Profile() {
   const [disable, setDisable] = useState(true);
@@ -57,10 +57,15 @@ export default function Profile() {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  function handleUpdateProfile(e) {
-    e.preventDefault();
+  function handleUpdateProfile(evt) {
+    evt.preventDefault();
     dispatch(updateUser(formData));
   }
+
+  const handleDeleteProfile = useCallback(() => {
+    dispatch(deleteUser());
+    dispatch(logoutUser());
+  }, [dispatch]);
 
   return (
     <>
@@ -70,7 +75,7 @@ export default function Profile() {
           <p className="profile__text">Здесь можно менять настройки, как душе угодно</p>
           <form className="profile__data" onSubmit={handleUpdateProfile}>
             <div className="profile__avatar">
-              <img src={avatar} alt="Иконка аватара" />
+              <img src={userData.avatar} className="profile__avatar-image" alt="Иконка аватара" />
               <div className="profile__avatar-edit">
                 <button className="profile__button" type="button">
                   Загрузить новое фото
@@ -255,7 +260,11 @@ export default function Profile() {
               >
                 {buttonText}
               </button>
-              <button className="profile__button btn-delete-profile" type="button">
+              <button
+                className="profile__button btn-delete-profile"
+                type="button"
+                onClick={handleDeleteProfile}
+              >
                 Удалить профиль
               </button>
             </div>
