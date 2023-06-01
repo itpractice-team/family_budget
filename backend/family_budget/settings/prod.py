@@ -10,11 +10,9 @@ ALLOWED_HOSTS += os.getenv("PRODUCTION_HOSTS", "backend").split(",")
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = list(
-    map(lambda url: f'https://{url}', ALLOWED_HOSTS)
-)
+CSRF_TRUSTED_ORIGINS = list(map(lambda url: f"https://{url}", ALLOWED_HOSTS))
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

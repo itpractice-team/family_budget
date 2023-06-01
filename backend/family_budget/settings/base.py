@@ -8,7 +8,10 @@ load_dotenv()
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost",]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -107,34 +110,34 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    'DEFAULT_FILTER_BACKENDS': [
+    "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
-    'DEFAULT_PAGINATION_CLASS': "rest_framework.pagination.LimitOffsetPagination",
-    'PAGE_SIZE': 10,
-    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S",
-    'DEFAULT_SCHEMA_CLASS': "drf_spectacular.openapi.AutoSchema",
-    'TEST_REQUEST_DEFAULT_FORMAT': "json",
-    'EXCEPTION_HANDLER': 'core.exceptions.core_exception_handler',
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "EXCEPTION_HANDLER": "core.exceptions.core_exception_handler",
 }
 
 DJOSER = {
@@ -147,7 +150,7 @@ DJOSER = {
         "user": "api.serializers.CustomUserSerializer",
         "current_user": "api.serializers.CustomUserSerializer",
         "user_delete": "api.serializers.CustomDeleteUserSerializer",
-        'token': 'api.serializers.CustomTokenSerializer',
+        "token": "api.serializers.CustomTokenSerializer",
     },
     "PERMISSIONS": {
         "user": ("rest_framework.permissions.IsAuthenticated",),
