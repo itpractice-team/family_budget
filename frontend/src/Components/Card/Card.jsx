@@ -2,7 +2,16 @@ import './Card.scss';
 import React from 'react';
 
 function SpendingCard({ header, text, bank, amount, categoryImg, bankLogo, spending }) {
-  const textStyle = spending ? 'card__amount_spending' : 'card__amount_earn';
+  let textStyle = '';
+  let mathSign = '';
+
+  if (spending) {
+    textStyle = 'card__amount_spending';
+    mathSign = '-';
+  } else {
+    textStyle = 'card__amount_earn';
+    mathSign = '+';
+  }
 
   return (
     <li className="card">
@@ -20,7 +29,10 @@ function SpendingCard({ header, text, bank, amount, categoryImg, bankLogo, spend
       </div>
 
       <div className="card__block">
-        <p className={`card__amount ${textStyle}`}>{amount}</p>
+        <p className={`card__amount ${textStyle}`}>
+          {mathSign}
+          {amount}
+        </p>
       </div>
 
       <div className="card__block card__button-block">
