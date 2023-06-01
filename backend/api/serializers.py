@@ -54,13 +54,6 @@ class CustomTokenSerializer(TokenSerializer):
             "avatar",
         )
 
-    def to_representation(self, instance):
-        self
-        token_info = super().to_representation(instance)
-        if "request" not in self.context:
-            token_info["avatar"] = "127.0.0.1/" + token_info["avatar"]
-        return token_info
-
 
 class CategoryIncomeSerializer(serializers.ModelSerializer):
     class Meta:
