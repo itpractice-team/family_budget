@@ -112,6 +112,7 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     slug = serializers.ReadOnlyField()
+    icon = Base64ImageField(max_length=None, use_url=True, required=False)
 
     class Meta:
         model = Category
@@ -119,7 +120,9 @@ class CategorySerializer(serializers.ModelSerializer):
             "id",
             "slug",
             "title",
-            "description",
+            "icon",
+            "color",
+            # "description",
         )
 
 
