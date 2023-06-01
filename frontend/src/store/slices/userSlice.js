@@ -45,9 +45,30 @@ export const updateUserAPI = async (userData) => {
   }
 };
 
-export const getUser = createAsyncThunk('user/getData', async (userData) => {
+export const deleteUserAPI = async () => {
   try {
-    const response = await getUserAPI(userData);
+    const response = await fetch('https://familybudget.ddns.net/api/users/me/', {
+      method: 'DELETE',
+      headers: {
+        authorization: `Token ${getCookie('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Delete user data failed');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const getUser = createAsyncThunk('user/getData', async () => {
+  try {
+    const response = await getUserAPI();
     return response;
   } catch (error) {
     throw new Error(error.message);
@@ -63,9 +84,18 @@ export const updateUser = createAsyncThunk('user/updateData', async (userData) =
   }
 });
 
+export const deleteUser = createAsyncThunk('user/deleteData', async () => {
+  try {
+    const response = await deleteUserAPI();
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
 const initialState = {
   user: {
-    // "id": 38,
+    id: '',
     username: '',
     email: '',
     first_name: '',
@@ -76,7 +106,7 @@ const initialState = {
   error: null,
 };
 
-const getUserSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
@@ -106,8 +136,20 @@ const getUserSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = { ...action.payload };
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const getUserReducer = getUserSlice.reducer;
+export const userReducer = userSlice.reducer;
