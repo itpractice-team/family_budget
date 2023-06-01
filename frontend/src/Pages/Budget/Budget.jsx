@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Budget.scss';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
-import SpendingCard from '../../Components/Card/Card';
+import SpendingList from '../../Components/SpendingList/SpendingList';
 
 // mock data
 import cat from '../../Images/cat-ic-24.svg';
@@ -12,69 +12,64 @@ import Vector from '../../Images/Vector.svg';
 
 const spend = [
   {
+    date: '02 апреля 2023',
+    weekDay: 'воскресенье',
     id: 1,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: true,
+    cards: [
+      {
+        id: 1,
+        header: 'Вкусняшки коту',
+        text: 'Sheba с креветками',
+        bank: 'Тинькофф',
+        amount: '40₽',
+        categoryImg: cat,
+        bankLogo: Vector,
+        spending: true,
+      },
+      {
+        id: 2,
+        header: 'Вкусняшки коту',
+        text: 'Sheba с креветками',
+        bank: 'Тинькофф',
+        amount: '40₽',
+        categoryImg: cat,
+        bankLogo: Vector,
+        spending: false,
+      },
+    ],
   },
   {
+    date: '02 апреля 2023',
+    weekDay: 'воскресенье',
     id: 2,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: false,
-  },
-  {
-    id: 3,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: true,
-  },
-  {
-    id: 4,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: false,
-  },
-  {
-    id: 5,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: true,
-  },
-  {
-    id: 6,
-    header: 'Вкусняшки коту',
-    text: 'Sheba с креветками',
-    bank: 'Тинькофф',
-    amount: '-40₽',
-    categoryImg: cat,
-    bankLogo: Vector,
-    spending: false,
+    cards: [
+      {
+        id: 1,
+        header: 'Вкусняшки коту',
+        text: 'Sheba с креветками',
+        bank: 'Тинькофф',
+        amount: '40₽',
+        categoryImg: cat,
+        bankLogo: Vector,
+        spending: true,
+      },
+      {
+        id: 2,
+        header: 'Вкусняшки коту',
+        text: 'Sheba с креветками',
+        bank: 'Тинькофф',
+        amount: '40₽',
+        categoryImg: cat,
+        bankLogo: Vector,
+        spending: false,
+      },
+    ],
   },
 ];
 
 export default function Budget() {
   const dispatch = useDispatch();
+  const [timeInterval, setTimeInterval] = useState('');
 
   const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
   const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
@@ -98,32 +93,107 @@ export default function Budget() {
     dispatch(toggleEarningPopup(false));
   };
 
+  function getTodayDate(event) {
+    const today = new Date();
+    let date = '';
+    let formatter = null;
+
+    switch (event.currentTarget.value) {
+      case 'today':
+        formatter = new Intl.DateTimeFormat('ru', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+        });
+
+        date = formatter.format(today);
+        setTimeInterval(date);
+
+        break;
+
+      case 'week':
+        break;
+
+      case 'mounth':
+        formatter = new Intl.DateTimeFormat('ru', {
+          year: 'numeric',
+          month: 'long',
+        });
+
+        date = formatter.format(today);
+        setTimeInterval(date);
+
+        break;
+
+      case 'year':
+        formatter = new Intl.DateTimeFormat('ru', {
+          year: 'numeric',
+        });
+
+        date = formatter.format(today);
+        setTimeInterval(date);
+
+        break;
+
+      case 'all':
+        setTimeInterval('Вся история');
+
+        break;
+
+      default:
+        setTimeInterval('Выберите время');
+
+        break;
+    }
+  }
+
+  function showCalendar() {
+    // modal & calendar
+  }
+
   return (
     <section className="budget">
       <section className="budget__spending">
         <div className="budget__filtration">
-          {/* filtration here */}
+          <div className="budget__filtration-wrapper">
+            <select className="budget__select" onChange={getTodayDate}>
+              <option value="today" className="budget__option">
+                {`Сегодня ${timeInterval}`}
+              </option>
+              <option value="week" className="budget__option">
+                {timeInterval ? `На этой неделе ${timeInterval}` : 'Неделя'}
+              </option>
+              <option value="mounth" className="budget__option">
+                {timeInterval ? `${timeInterval}` : 'Месяц'}
+              </option>
+              <option value="year" className="budget__option">
+                {timeInterval ? `В году ${timeInterval}` : 'Год'}
+              </option>
+              <option value="all" className="budget__option">
+                {timeInterval ? `В году ${timeInterval}` : 'Вся история'}
+              </option>
+            </select>
+
+            <button type="button" className="budget__filtration-button" onClick={showCalendar}>
+              По дате
+            </button>
+          </div>
 
           <div className="budget__button-wrapper">
             <button type="button" className="budget__add-button" onClick={handleSpendingClick}>
-              Добавить расход
+              Расход
             </button>
 
             <button type="button" className="budget__add-button" onClick={handleEarningClick}>
-              Добавить доход
+              Доход
             </button>
           </div>
         </div>
 
-        <div>{/* insert date */}</div>
-
-        {/* replace spend to props */}
-        <ul className="budget__spending-list">
-          {spend &&
-            spend.map((card) => {
-              return <SpendingCard {...card} key={card.id} />;
-            })}
-        </ul>
+        {spend &&
+          spend.map((day) => {
+            return <SpendingList {...day} key={day.id} />;
+          })}
       </section>
 
       {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
