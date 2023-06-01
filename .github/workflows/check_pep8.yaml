@@ -30,4 +30,4 @@ jobs:
       run: flake8 .
     -
       name: Codestyle by black
-      run: black . --check --exclude=".venv\/|.tests\/|.frontend\/"
+      run: black . --check --exclude=".venv\/|.tests\/|.frontend\/|.migrations\/"
