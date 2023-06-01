@@ -9,7 +9,7 @@ class CategoryAdmin(admin.ModelAdmin):
         "id",
         "user",
         "title",
-        "description",
+        # "description",
     )
 
 

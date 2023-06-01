@@ -28,7 +28,7 @@ class Category(models.Model):
     #     "Описание категории трат", max_length=500, blank=True, null=True
     # )
     icon = models.ImageField(
-        verbose_name="Иконка расхода", blank=False, upload_to="budget/"
+        verbose_name="Иконка расхода", blank=True, upload_to="budget/"
     )
     color = ColorField(
         format="hex", verbose_name="Цвет категории расхода", unique=True
