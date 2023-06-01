@@ -1,11 +1,13 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
 import Logo from '../Logo/Logo';
-import user from '../../Images/user.svg';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
+import { logoutUser } from '../../store/slices/loginSlice';
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ export default function Header() {
   const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
   const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
   const isLogin = useSelector((state) => state.login.login);
+  const { avatar } = useSelector((state) => state.login.user);
 
   const handleRegisterClick = () => {
     dispatch(toggleRegisterPopup(true));
@@ -27,6 +30,10 @@ export default function Header() {
   const closeLoginPopup = () => {
     dispatch(toggleLoginPopup(false));
   };
+
+  const handleLogout = useCallback(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
 
   return (
     <header className="header">
@@ -79,8 +86,9 @@ export default function Header() {
             </ul>
           </nav>
           <NavLink to="/profile" className="header__profile-link">
-            <img src={user} className="header__profile-icon" alt="Иконка личного кабинета" />
+            <img src={avatar} className="header__profile-icon" alt="Аватар" />
           </NavLink>
+          <button className="btn__exit" type="button" onClick={handleLogout} />
         </>
       )}
 

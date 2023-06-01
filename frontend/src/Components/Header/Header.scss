@@ -8,7 +8,7 @@
 .header__home-menu,
 .header__menu {
   display: flex;
-  width: 100%;
+  // width: 100%;
   align-items: center;
   justify-content: space-between;
 }
@@ -20,6 +20,7 @@
 }
 
 .header__menu-list {
+  margin-right: 777px;
   width: 463px;
   display: flex;
   justify-content: space-between;
@@ -50,22 +51,26 @@
   height: 44px;
   background: #303360;
   border-radius: 20px;
-  color: #F0B216;
+  color: #f0b216;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
 }
 
-.header__profile-link {
-  padding: 10px;
-  background: #303360;
-  border-radius: 20px;
-  width: 40px;
-  height: 40px;
-}
+// .header__profile-link {
+//   border-radius: 20px;
+//   width: 40px;
+//   height: 40px;
+// }
 
 .header__profile-icon {
-  width: 20px;
-  height: 20px;
-  background: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.btn__exit {
+  background-image: url(../../Images/exit.svg);
+  width: 40px;
+  height: 40px;
 }
