@@ -1,7 +1,28 @@
+@import '../../styles/consts.scss';
+
 .budget {
   display: flex;
-  flex-grow: 1;
   padding: 60px 160px;
+  flex-grow: 1;
+  gap: 32px;
+}
+
+.budget__spending {
+  border-radius: 20px;
+  background-color: white;
+  width: 100%;
+  max-width: 920px;
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.budget__spending-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 12px;
 }
 
 .budget__button-wrapper {
@@ -12,12 +33,8 @@
 }
 
 .budget__add-button {
+  @include text-medium-web;
   display: inline-block;
-  font-family: 'NotoSans', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
   padding: 10px 20px;
   border-radius: 20px;
   color: #f0b216;
