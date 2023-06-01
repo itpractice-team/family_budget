@@ -1,10 +1,14 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
+import registerValidation from '../../utils/validations/RegisterValidation';
 import Loader from '../Loader/Loader';
 
 export default function RegisterPopup({ onClose }) {
@@ -18,33 +22,8 @@ export default function RegisterPopup({ onClose }) {
     dispatch(toggleLoginPopup(true));
   };
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  // eslint-disable-next-line camelcase
-  const { username, email, first_name, last_name, password } = formData;
-
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleRegistration = (evt) => {
-    evt.preventDefault();
-    // Проверка на совпадение паролей
-    // if (password === formData.confirmPassword) {
-    // Отправка данных регистрации пользователя
-    // eslint-disable-next-line camelcase
-    dispatch(registerUser({ username, email, first_name, last_name, password }));
-    // } else {
-    // Пока такая обработка ошибки при несовпадении паролей
-    //   console.log('Пароли не совпадают');
-    // }
+  const handleRegistration = (userData) => {
+    dispatch(registerUser(userData));
   };
 
   if (isRegistration) {
@@ -52,28 +31,45 @@ export default function RegisterPopup({ onClose }) {
     dispatch(toggleLoginPopup(true));
   }
 
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    watch,
+  } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
+  });
+
+  // useEffect(()=>{
+  //   console.log('validation', isValid);
+  // }, [isValid])
+  const password = useRef({});
+  password.current = watch('password', '');
+
   return (
     <Popup onClose={onClose} popupSize="popup_m">
-      <form className="form" onSubmit={handleRegistration}>
+      <form className="form" onSubmit={handleSubmit(handleRegistration)}>
         <h2 className="form__header">Регистрация</h2>
 
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RegisterPopup-login">
             Логин
             <input
+              {...register('username')}
               id="RegisterPopup-login"
               name="username"
               className="form__input"
               type="text"
               placeholder="Ввести логин"
-              value={username}
-              onChange={handleChange}
-              required
-              maxLength={25}
-              minLength={2}
             />
           </label>
-
+          <span
+            className={`form__valid-message 
+                        ${errors.username ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.username && errors?.username?.message}
+          </span>
           <div
             className="form__tooltip"
             data-tooltip-id="login"
@@ -92,18 +88,20 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-email">
             E-mail
             <input
+              {...register('email')}
               id="RegisterPopup-email"
               name="email"
               className="form__input"
               type="email"
               placeholder="Ввести e-mail"
-              value={email}
-              onChange={handleChange}
-              required
-              minLength={7}
-              maxLength={129}
             />
           </label>
+          <span
+            className={`form__valid-message 
+                        ${errors.email ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.email && errors?.email?.message}
+          </span>
           <div
             className="form__tooltip"
             data-tooltip-id="email"
@@ -122,18 +120,20 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-name">
             Имя
             <input
+              {...register('first_name')}
               id="RegisterPopup-name"
               name="first_name"
               className="form__input"
               type="text"
               placeholder="Ввести имя"
-              // eslint-disable-next-line camelcase
-              value={first_name}
-              onChange={handleChange}
-              minLength={2}
-              maxLength={50}
             />
           </label>
+          <span
+            className={`form__valid-message 
+                        ${errors.first_name ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.first_name && errors?.first_name?.message}
+          </span>
           <div
             className="form__tooltip"
             data-tooltip-id="name"
@@ -152,36 +152,39 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-surname">
             Фамилия
             <input
+              {...register('last_name')}
               id="RegisterPopup-surname"
               name="last_name"
               className="form__input"
               type="text"
               placeholder="Ввести фамилию"
-              // eslint-disable-next-line camelcase
-              value={last_name}
-              onChange={handleChange}
-              minLength={2}
-              maxLength={50}
             />
           </label>
+          <span
+            className={`form__valid-message 
+                        ${errors.last_name ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.last_name && errors?.last_name?.message}
+          </span>
         </div>
 
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RegisterPopup-password">
             Пароль
             <input
+              {...register('password')}
               id="RegisterPopup-password"
               name="password"
               className="form__input"
               type="password"
-              placeholder="Ввести пароль"
-              value={password}
-              onChange={handleChange}
-              required
-              minLength={8}
-              maxLength={40}
             />
           </label>
+          <span
+            className={`form__valid-message 
+                        ${errors.password ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.password && errors?.password?.message}
+          </span>
           <div
             className="form__tooltip"
             data-tooltip-id="password"
@@ -200,18 +203,20 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-repeatPassword">
             Введите пароль повторно
             <input
+              {...register('confirmPassword')}
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
               type="password"
               placeholder="Повторить пароль"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              minLength={8}
-              maxLength={40}
             />
           </label>
+          <span
+            className={`form__valid-message 
+                        ${errors.confirmPassword ? 'form__valid-message_active' : ''}`}
+          >
+            {errors?.confirmPassword && errors?.confirmPassword?.message}
+          </span>
         </div>
 
         <label htmlFor="RegisterPopup-confirm" className="form__checkbox-label form__text">
@@ -230,8 +235,13 @@ export default function RegisterPopup({ onClose }) {
           {isLoading ? (
             <Loader />
           ) : (
-            <button type="submit" className="form__button form__button_submit">
-              Зарегестрироваться
+            <button
+              type="submit"
+              className={`form__button form__button_submit
+          ${(!isValid || !errors) && 'form__button:disabled'}`}
+              disabled={!isValid}
+            >
+              Зарегистрироваться
             </button>
           )}
         </div>

@@ -17,7 +17,8 @@
     "react-tooltip": "^5.13.0",
     "react-transition-group": "^4.4.5",
     "redux": "^4.2.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

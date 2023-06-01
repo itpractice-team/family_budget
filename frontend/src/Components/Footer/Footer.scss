@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 .footer {
   background: #eaebf5;
   display: flex;
@@ -25,22 +27,17 @@
 }
 
 .footer__title {
-  font-weight: 900;
-  font-size: 29px;
-  line-height: 44px;
-  color: black;
+  @include h3-web;
 }
 
 .footer__copyrights {
-  font-family: 'Poppins';
+  @include text-medium-web;
 }
 
 .footer__text,
 .footer__email {
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 20px;
-  color: black;
+  @include text-small-web;
+  color: #1e1d24;
 }
 
 .footer__email {

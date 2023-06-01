@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 .header {
   display: flex;
   align-items: center;
@@ -34,9 +36,7 @@
 .header__home-link,
 .header__home-button,
 .header__menu-link {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
   color: #303360;
 }
 
@@ -46,15 +46,12 @@
 }
 
 .header__button-registration {
-  font-family: 'Noto Sans';
+  @include text-medium-web;
   width: 140px;
   height: 44px;
   background: #303360;
   border-radius: 20px;
   color: #f0b216;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
 }
 
 // .header__profile-link {
