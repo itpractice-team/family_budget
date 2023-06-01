@@ -5,11 +5,13 @@ import { Tooltip } from 'react-tooltip';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
+import Loader from '../Loader/Loader';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const isLogin = useSelector((state) => state.login.login);
+  const isLoading = useSelector((store) => store.login.loading);
 
   const handleRegistrationClick = () => {
     dispatch(toggleLoginPopup(false));
@@ -110,10 +112,13 @@ export default function LoginPopup({ onClose }) {
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_single">
-          <button type="submit" className="form__button form__button_submit form__button_single">
-            Войти
-          </button>
-
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <button type="submit" className="form__button form__button_submit form__button_single">
+              Войти
+            </button>
+          )}
           <div>
             <p className="form__text">У вас ещё нет аккаунта? </p>
             <button type="button" className="form__button_text" onClick={handleRegistrationClick}>

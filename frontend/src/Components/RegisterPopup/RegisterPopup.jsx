@@ -5,11 +5,13 @@ import { NavLink } from 'react-router-dom';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
+import Loader from '../Loader/Loader';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const isRegistration = useSelector((state) => state.registration.data);
+  const isLoading = useSelector((store) => store.registration.loading);
 
   const handleEnterClick = () => {
     dispatch(toggleRegisterPopup(false));
@@ -225,10 +227,13 @@ export default function RegisterPopup({ onClose }) {
               Войти
             </button>
           </p>
-
-          <button type="submit" className="form__button form__button_submit">
-            Зарегестрироваться
-          </button>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <button type="submit" className="form__button form__button_submit">
+              Зарегестрироваться
+            </button>
+          )}
         </div>
       </form>
     </Popup>
