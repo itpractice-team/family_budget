@@ -464,6 +464,21 @@ files = [
 Django = ">=4.0"
 
 [[package]]
+name = "django-colorfield"
+version = "0.8.0"
+description = "simple color field for your models with a nice color-picker in the admin-interface."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-colorfield-0.8.0.tar.gz", hash = "sha256:e50423af639858d01c39980eed9970f7ae475610bf0709b81f6b21a3dc9c3f92"},
+    {file = "django_colorfield-0.8.0-py3-none-any.whl", hash = "sha256:b7a25e2c430f4e80726ab171805d0d76d1f82cc7ff3799d60c2682f50d2ca03c"},
+]
+
+[package.dependencies]
+Pillow = ">=9.0.0"
+
+[[package]]
 name = "django-cors-headers"
 version = "4.0.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
@@ -1969,4 +1984,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.1"
-content-hash = "0f2347824e2bbcd2239208c48030f16a56871de31d2662604632cb78f1164c72"
+content-hash = "a8e891f9c538f65f56c67554835d883904c4b267b4d95d067c91f58d91a49ad2"

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "budget.apps.BudgetConfig",
     "api.apps.ApiConfig",
     "corsheaders",
+    "colorfield",
 ]
 
 MIDDLEWARE = [

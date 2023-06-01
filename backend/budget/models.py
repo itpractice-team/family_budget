@@ -5,6 +5,8 @@ from django.db import models
 from django.utils import timezone
 from slugify import slugify
 
+from colorfield.fields import ColorField
+
 User = get_user_model()
 
 COMMON_VALIDATOR = [MinValueValidator(1), MaxValueValidator(1_000_000)]
@@ -22,8 +24,14 @@ class Category(models.Model):
     """Модель категорий для трат."""
 
     title = models.CharField("Название категории", max_length=50, unique=True)
-    description = models.TextField(
-        "Описание категории трат", max_length=500, blank=True, null=True
+    # description = models.TextField(
+    #     "Описание категории трат", max_length=500, blank=True, null=True
+    # )
+    icon = models.ImageField(
+        verbose_name="Иконка расхода", blank=True, upload_to="budget/"
+    )
+    color = ColorField(
+        format="hex", verbose_name="Цвет категории расхода", unique=True
     )
     user = models.ForeignKey(
         User,
