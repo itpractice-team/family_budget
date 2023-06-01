@@ -4,6 +4,7 @@ import './Budget.scss';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
+import { getUser } from '../../store/slices/userSlice';
 
 export default function Budget() {
   const dispatch = useDispatch();
@@ -13,6 +14,10 @@ export default function Budget() {
   const isLogin = useSelector((state) => state.login.login);
 
   useEffect(() => {}, [isLogin, dispatch]);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   const handleSpendingClick = () => {
     dispatch(toggleSpendingPopup(true));
