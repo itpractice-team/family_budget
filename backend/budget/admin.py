@@ -5,12 +5,7 @@ from budget.models import Category, Currency
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "user",
-        "title",
-        "description",
-    )
+    list_display = ("id", "user", "title")
 
 
 @admin.register(Currency)
