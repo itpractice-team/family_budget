@@ -10,7 +10,6 @@ exclude = '''
     | build
     | migrations
     | frontend
-    | backend/family_budget/settings/
   )/
 )
 '''
