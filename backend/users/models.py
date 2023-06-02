@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import EmailValidator, MinLengthValidator
 from django.db import models
 
 
@@ -7,8 +8,9 @@ class User(AbstractUser):
 
     email = models.EmailField(
         verbose_name="Электронная почта",
-        max_length=150,
+        max_length=129,
         unique=True,
+        validators=[EmailValidator, MinLengthValidator],
     )
     avatar = models.ImageField(
         upload_to="users",
