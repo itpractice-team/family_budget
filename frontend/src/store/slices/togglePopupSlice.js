@@ -6,6 +6,9 @@ const initialState = {
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
   isPasswordChangePopupOpen: false,
+  isAvatarUploaderPopupOpen: false,
+  isConfirmationPopupOpen: false,
+  isInfoPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -13,24 +16,28 @@ const togglePopupSlice = createSlice({
   initialState,
   reducers: {
     toggleSpendingPopup: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.isSpendingPopupOpen = payload;
     },
     toggleEarningPopup: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.isEarningPopupOpen = payload;
     },
     toggleRegisterPopup: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.isRegisterPopupOpen = payload;
     },
     toggleLoginPopup: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.isLoginPopupOpen = payload;
     },
     togglePasswordChangePopup: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
       state.isPasswordChangePopupOpen = payload;
+    },
+    toggleAvatarUploaderPopup: (state, { payload }) => {
+      state.isAvatarUploaderPopupOpen = payload;
+    },
+    toggleConfirmationPopup: (state, { payload }) => {
+      state.isConfirmationPopupOpen = payload;
+    },
+    toggleInfoPopup: (state, { payload }) => {
+      state.isInfoPopupOpen = payload;
     },
   },
 });
@@ -41,6 +48,9 @@ export const {
   toggleRegisterPopup,
   toggleLoginPopup,
   togglePasswordChangePopup,
+  toggleAvatarUploaderPopup,
+  toggleConfirmationPopup,
+  toggleInfoPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;

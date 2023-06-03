@@ -102,6 +102,7 @@ const initialState = {
     last_name: '',
     avatar: null,
   },
+  isFetched: false,
   loading: false,
   error: null,
 };
@@ -109,9 +110,16 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    resetUser: (state) => {
+      state.user = initialState.user;
+      state.isFetched = false;
+    },
+    clearUser: (state) => {
+      state.user = initialState.user;
+    },
+  },
   extraReducers: (builder) => {
-    // Обработка действий, созданных createAsyncThunk
     builder
       .addCase(getUser.pending, (state) => {
         state.loading = true;
@@ -119,6 +127,7 @@ const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.isFetched = true;
         state.user = { ...action.payload };
       })
       .addCase(getUser.rejected, (state, action) => {
@@ -131,6 +140,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.isFetched = true;
         state.user = { ...action.payload };
       })
       .addCase(updateUser.rejected, (state, action) => {
@@ -151,5 +161,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { resetUser, clearUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

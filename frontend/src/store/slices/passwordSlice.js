@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCookie } from '../../utils/cookies';
+import { getCookie, deleteCookie } from '../../utils/cookies';
 
 export const changePasswordAPI = async (formData) => {
   try {
@@ -17,32 +17,28 @@ export const changePasswordAPI = async (formData) => {
       throw new Error('Change password failed');
     }
 
-    const data = await response.json();
-    return data;
+    deleteCookie('token');
+
+    return {};
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const changePassword = createAsyncThunk(
-  'changePassword',
-  // eslint-disable-next-line camelcase
-  async (formData) => {
-    try {
-      // eslint-disable-next-line camelcase
-      const response = await changePasswordAPI(formData);
-      return response;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  },
-);
+export const changePassword = createAsyncThunk('changePassword', async (formData) => {
+  try {
+    const response = await changePasswordAPI(formData);
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
 
 const initialState = {
-  // eslint-disable-next-line no-unneeded-ternary
   data: null,
   loading: false,
   error: null,
+  isSuccess: false,
 };
 
 const passwordSlice = createSlice({
@@ -58,6 +54,7 @@ const passwordSlice = createSlice({
       .addCase(changePassword.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.isSuccess = true;
       })
       .addCase(changePassword.rejected, (state, action) => {
         state.loading = false;

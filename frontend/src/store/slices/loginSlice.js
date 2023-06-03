@@ -24,6 +24,28 @@ export const loginUserAPI = async (userData) => {
   }
 };
 
+export const logoutUserAPI = async () => {
+  try {
+    const response = await fetch('https://familybudget.ddns.net/api/auth/token/logout/', {
+      method: 'POST',
+      headers: {
+        authorization: `Token ${getCookie('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Logout failed');
+    }
+
+    deleteCookie('token');
+
+    return {};
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 export const loginUser = createAsyncThunk('user/login', async ({ username, password }) => {
   try {
     const response = await loginUserAPI({ username, password });
@@ -33,32 +55,31 @@ export const loginUser = createAsyncThunk('user/login', async ({ username, passw
   }
 });
 
+export const logoutUser = createAsyncThunk('user/logout', async () => {
+  try {
+    const response = await logoutUserAPI();
+    return response;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
 const initialState = {
   // eslint-disable-next-line no-unneeded-ternary
   login: getCookie('token') ? true : false,
-  user: {
-    id: '',
-    first_name: '',
-    last_name: '',
-    avatar: null,
-  },
   loading: false,
   error: null,
 };
 
-const loginSlice = createSlice({
+export const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    logoutUser(state) {
-      state.loading = false;
-      state.error = null;
-      deleteCookie('token');
-      state.login = false;
+    setLogin: (state, { payload }) => {
+      state.login = payload;
     },
   },
   extraReducers: (builder) => {
-    // Обработка действий, созданных createAsyncThunk
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -66,13 +87,7 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        const { id, first_name, last_name, avatar } = action.payload;
-        state.user = {
-          id,
-          first_name,
-          last_name,
-          avatar,
-        };
+
         const { auth_token } = action.payload;
         setCookie('token', auth_token);
         state.login = true;
@@ -80,10 +95,23 @@ const loginSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        deleteCookie('token');
+        state.login = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { logoutUser } = loginSlice.actions;
+export const { setLogin } = loginSlice.actions;
 
 export const loginReducer = loginSlice.reducer;
