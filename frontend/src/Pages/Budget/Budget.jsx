@@ -5,19 +5,20 @@ import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
 import { getUser } from '../../store/slices/userSlice';
+import Button from '../../ui/Button/Button';
 
 export default function Budget() {
   const dispatch = useDispatch();
 
   const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
   const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
-  const isLogin = useSelector((state) => state.login.login);
-
-  useEffect(() => {}, [isLogin, dispatch]);
+  const isFetched = useSelector((state) => state.user.isFetched);
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    if (!isFetched) {
+      dispatch(getUser());
+    }
+  }, [dispatch, isFetched]);
 
   const handleSpendingClick = () => {
     dispatch(toggleSpendingPopup(true));
@@ -36,13 +37,20 @@ export default function Budget() {
   return (
     <section className="budget">
       <div className="budget__button-wrapper">
-        <button type="button" className="budget__add-button" onClick={handleSpendingClick}>
-          Добавить расход
-        </button>
-
-        <button type="button" className="budget__add-button" onClick={handleEarningClick}>
-          Добавить доход
-        </button>
+        <Button
+          variant="secondary"
+          type="icon-text"
+          text="Расход"
+          size="medium"
+          onClick={handleSpendingClick}
+        />
+        <Button
+          variant="secondary"
+          type="icon-text"
+          text="Доход"
+          size="medium"
+          onClick={handleEarningClick}
+        />
       </div>
       {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
 
