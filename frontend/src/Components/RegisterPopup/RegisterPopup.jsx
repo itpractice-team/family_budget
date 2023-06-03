@@ -41,9 +41,6 @@ export default function RegisterPopup({ onClose }) {
     resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
   });
 
-  // useEffect(()=>{
-  //   console.log('validation', isValid);
-  // }, [isValid])
   const password = useRef({});
   password.current = watch('password', '');
 
@@ -63,13 +60,13 @@ export default function RegisterPopup({ onClose }) {
               type="text"
               placeholder="Ввести логин"
             />
+            <span
+              className={`form__valid-message 
+                          ${errors.username ? 'form__valid-message_active' : ''}`}
+            >
+              {errors?.username && errors?.username?.message}
+            </span>
           </label>
-          <span
-            className={`form__valid-message 
-                        ${errors.username ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.username && errors?.username?.message}
-          </span>
           <div
             className="form__tooltip"
             data-tooltip-id="login"
@@ -95,13 +92,13 @@ export default function RegisterPopup({ onClose }) {
               type="email"
               placeholder="Ввести e-mail"
             />
-          </label>
-          <span
-            className={`form__valid-message 
+            <span
+              className={`form__valid-message 
                         ${errors.email ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.email && errors?.email?.message}
-          </span>
+            >
+              {errors?.email && errors?.email?.message}
+            </span>
+          </label>
           <div
             className="form__tooltip"
             data-tooltip-id="email"
@@ -127,13 +124,13 @@ export default function RegisterPopup({ onClose }) {
               type="text"
               placeholder="Ввести имя"
             />
-          </label>
-          <span
-            className={`form__valid-message 
+            <span
+              className={`form__valid-message 
                         ${errors.first_name ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.first_name && errors?.first_name?.message}
-          </span>
+            >
+              {errors?.first_name && errors?.first_name?.message}
+            </span>
+          </label>
           <div
             className="form__tooltip"
             data-tooltip-id="name"
@@ -159,13 +156,13 @@ export default function RegisterPopup({ onClose }) {
               type="text"
               placeholder="Ввести фамилию"
             />
-          </label>
-          <span
-            className={`form__valid-message 
+            <span
+              className={`form__valid-message 
                         ${errors.last_name ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.last_name && errors?.last_name?.message}
-          </span>
+            >
+              {errors?.last_name && errors?.last_name?.message}
+            </span>
+          </label>
         </div>
 
         <div className="form__input-block">
@@ -178,13 +175,13 @@ export default function RegisterPopup({ onClose }) {
               className="form__input"
               type="password"
             />
-          </label>
-          <span
-            className={`form__valid-message 
+            <span
+              className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.password && errors?.password?.message}
-          </span>
+            >
+              {errors?.password && errors?.password?.message}
+            </span>
+          </label>
           <div
             className="form__tooltip"
             data-tooltip-id="password"
@@ -210,19 +207,24 @@ export default function RegisterPopup({ onClose }) {
               type="password"
               placeholder="Повторить пароль"
             />
-          </label>
-          <span
-            className={`form__valid-message 
+            <span
+              className={`form__valid-message 
                         ${errors.confirmPassword ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.confirmPassword && errors?.confirmPassword?.message}
-          </span>
+            >
+              {errors?.confirmPassword && errors?.confirmPassword?.message}
+            </span>
+          </label>
         </div>
 
         <label htmlFor="RegisterPopup-confirm" className="form__checkbox-label form__text">
           Я даю своё согласие на обработку персональных данных и ознакомился c
           <NavLink to="/"> Политикой o конфиденциальности </NavLink>
-          <input type="checkbox" id="RegisterPopup-confirm" className="form__checkbox" />
+          <input
+            {...register('agree')}
+            type="checkbox"
+            id="RegisterPopup-confirm"
+            className="form__checkbox"
+          />
         </label>
 
         <div className="form__button-wrapper">
