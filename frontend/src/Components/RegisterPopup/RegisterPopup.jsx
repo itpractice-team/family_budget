@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {  useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
@@ -9,11 +9,13 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/RegisterValidation';
+import Loader from '../Loader/Loader';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const isRegistration = useSelector((state) => state.registration.data);
+  const isLoading = useSelector((store) => store.registration.loading);
 
   const handleEnterClick = () => {
     dispatch(toggleRegisterPopup(false));
@@ -38,9 +40,9 @@ export default function RegisterPopup({ onClose }) {
     mode: 'onChange',
     resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
   });
-  
+
   const password = useRef({});
-  password.current = watch('password', ''); 
+  password.current = watch('password', '');
 
   return (
     <Popup onClose={onClose} popupSize="popup_m">
@@ -51,7 +53,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-login">
             Логин
             <input
-            {...register('username')}
+              {...register('username')}
               id="RegisterPopup-login"
               name="username"
               className="form__input"
@@ -59,11 +61,11 @@ export default function RegisterPopup({ onClose }) {
               placeholder="Ввести логин"
             />
             <span
-                className={`form__valid-message 
+              className={`form__valid-message 
                           ${errors.username ? 'form__valid-message_active' : ''}`}
-              >
-                {errors?.username && errors?.username?.message}
-              </span>
+            >
+              {errors?.username && errors?.username?.message}
+            </span>
           </label>
           <div
             className="form__tooltip"
@@ -83,7 +85,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-email">
             E-mail
             <input
-            {...register('email')}
+              {...register('email')}
               id="RegisterPopup-email"
               name="email"
               className="form__input"
@@ -115,7 +117,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-name">
             Имя
             <input
-            {...register('first_name')}
+              {...register('first_name')}
               id="RegisterPopup-name"
               name="first_name"
               className="form__input"
@@ -147,7 +149,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-surname">
             Фамилия
             <input
-            {...register('last_name')}
+              {...register('last_name')}
               id="RegisterPopup-surname"
               name="last_name"
               className="form__input"
@@ -167,7 +169,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-password">
             Пароль
             <input
-            {...register('password')}
+              {...register('password')}
               id="RegisterPopup-password"
               name="password"
               className="form__input"
@@ -198,7 +200,7 @@ export default function RegisterPopup({ onClose }) {
           <label className="form__input-label" htmlFor="RegisterPopup-repeatPassword">
             Введите пароль повторно
             <input
-            {...register('confirmPassword')}
+              {...register('confirmPassword')}
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
@@ -217,12 +219,12 @@ export default function RegisterPopup({ onClose }) {
         <label htmlFor="RegisterPopup-confirm" className="form__checkbox-label form__text">
           Я даю своё согласие на обработку персональных данных и ознакомился c
           <NavLink to="/"> Политикой o конфиденциальности </NavLink>
-          <input 
-          {...register('agree')}
-          type="checkbox" 
-          id="RegisterPopup-confirm" 
-          className="form__checkbox"
-           />
+          <input
+            {...register('agree')}
+            type="checkbox"
+            id="RegisterPopup-confirm"
+            className="form__checkbox"
+          />
         </label>
 
         <div className="form__button-wrapper">
@@ -232,14 +234,18 @@ export default function RegisterPopup({ onClose }) {
               Войти
             </button>
           </p>
-
-          <button type="submit" 
-          className={`form__button form__button_submit
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <button
+              type="submit"
+              className={`form__button form__button_submit
           ${(!isValid || !errors) && 'form__button:disabled'}`}
-            disabled={!isValid}
-          >
-            Зарегестрироваться
-          </button>
+              disabled={!isValid}
+            >
+              Зарегистрироваться
+            </button>
+          )}
         </div>
       </form>
     </Popup>

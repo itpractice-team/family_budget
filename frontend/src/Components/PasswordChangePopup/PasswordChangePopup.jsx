@@ -1,15 +1,50 @@
+/* eslint-disable camelcase */
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { RegExPassword } from '../../utils/consts';
 import Popup from '../Popup/Popup';
+import { changePassword } from '../../store/slices/passwordSlice';
+import Loader from '../Loader/Loader';
+import Button from '../../ui/Button/Button';
+import { togglePasswordChangePopup, toggleInfoPopup } from '../../store/slices/togglePopupSlice';
+import { RequirementsPassword } from '../../utils/consts';
+import { clearUser } from '../../store/slices/userSlice';
+import { setLogin } from '../../store/slices/loginSlice';
 
 export default function PasswordChangePopup({ onClose }) {
-  function handleSubmit(e) {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((store) => store.password.loading);
+
+  const [formData, setFormData] = useState({
+    current_password: '',
+    new_password: '',
+    re_new_password: '',
+  });
+
+  const { current_password, new_password, re_new_password } = formData;
+
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  };
+
+  function handleСancel(evt) {
+    evt.preventDefault();
+    dispatch(togglePasswordChangePopup(false));
+  }
+
+  function handleChangePassword(evt) {
+    evt.preventDefault();
+    dispatch(changePassword(formData)).then(() => {
+      dispatch(clearUser());
+      dispatch(setLogin(false));
+      dispatch(toggleInfoPopup(true));
+      dispatch(togglePasswordChangePopup(false));
+    });
   }
 
   return (
     <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleChangePassword}>
         <h2 className="form__header">Изменение пароля </h2>
 
         <p className="form__text form__text_explanation">
@@ -21,20 +56,22 @@ export default function PasswordChangePopup({ onClose }) {
           <label className="form__input-label" htmlFor="PasswordChangePopup-oldPassword">
             Текущий пароль
             <input
+              id="PasswordChangePopup-oldPassword"
+              name="current_password"
               className="form__input"
               type="password"
-              placeholder="*******"
-              id="PasswordChangePopup-oldPassword"
+              placeholder="Ввести текущий пароль"
+              value={current_password}
+              onChange={handleChange}
               required
               minLength={8}
               maxLength={40}
-              pattern={RegExPassword}
             />
           </label>
           <div
             className="form__tooltip"
             data-tooltip-id="password"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
+            data-tooltip-content={RequirementsPassword}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -49,20 +86,19 @@ export default function PasswordChangePopup({ onClose }) {
           <label className="form__input-label" htmlFor="PasswordChangePopup-newPassword">
             Новый пароль
             <input
+              id="PasswordChangePopup-newPassword"
+              name="new_password"
               className="form__input"
               type="password"
-              placeholder="*******"
-              id="PasswordChangePopup-newPassword"
-              required
-              minLength={8}
-              maxLength={40}
-              pattern={RegExPassword}
+              placeholder="Ввести новый пароль"
+              value={new_password}
+              onChange={handleChange}
             />
           </label>
           <div
             className="form__tooltip"
             data-tooltip-id="password"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
+            data-tooltip-content={RequirementsPassword}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -82,20 +118,19 @@ export default function PasswordChangePopup({ onClose }) {
           <label className="form__input-label" htmlFor="PasswordChangePopup-repeatPassword">
             Новый пароль ещё раз
             <input
+              id="PasswordChangePopup-repeatPassword"
+              name="re_new_password"
               className="form__input"
               type="password"
-              placeholder="*******"
-              id="PasswordChangePopup-repeatPassword"
-              required
-              minLength={8}
-              maxLength={40}
-              pattern={RegExPassword}
+              placeholder="Ввести новый пароль еще раз"
+              value={re_new_password}
+              onChange={handleChange}
             />
           </label>
           <div
             className="form__tooltip"
             data-tooltip-id="password"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
+            data-tooltip-content={RequirementsPassword}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -106,14 +141,25 @@ export default function PasswordChangePopup({ onClose }) {
           />
         </div>
 
-        <div className="form__button-wrapper">
-          <button type="reset" className="form__button form__button_reset">
-            Отменить
-          </button>
-
-          <button type="submit" className="form__button form__button_submit">
-            Изменить пароль
-          </button>
+        <div className="form__button-wrapper form__button-wrapper_profile">
+          <Button
+            variant="secondary"
+            type="text"
+            text="Отменить"
+            size="medium"
+            onClick={handleСancel}
+          />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Button
+              variant="primary"
+              type="text"
+              text="Изменить пароль"
+              size="medium"
+              onClick={handleChangePassword}
+            />
+          )}
         </div>
       </form>
     </Popup>

@@ -1,7 +1,9 @@
 import './Button.scss';
 
-export default function Button({ variant, type, text, size, disabled, onClick }) {
-  const buttonClasses = `button ${variant} ${size} ${disabled ? 'disabled' : ''} ${type === 'icon' ? 'rounded' : ''}`;
+export default function Button({ variant, type, text, size, disabled, extraClass, onClick }) {
+  const buttonClasses = `button ${extraClass} ${variant} ${size} ${disabled ? 'disabled' : ''} ${
+    type === 'icon' ? 'rounded' : ''
+  }`;
 
   return (
     <button className={buttonClasses} disabled={disabled} onClick={onClick}>
@@ -12,7 +14,7 @@ export default function Button({ variant, type, text, size, disabled, onClick })
           <span className="button-text">{text}</span>
         </>
       )}
-      {type === 'icon' && <span className="button-icon" > </span>}
+      {type === 'icon' && <span className="button-icon"> </span>}
     </button>
   );
 }

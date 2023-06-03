@@ -1,17 +1,22 @@
-import React from 'react';
+/* eslint-disable no-unused-expressions */
+import React, { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import './Popup.scss';
 import PopupOverlay from '../PopupOverlay/PopupOverlay';
 
 export default function Popup({ children, onClose, popupSize }) {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const nodeRef = useRef(null);
+
   const closeModal = () => {
-    // eslint-disable-next-line no-unused-expressions
     onClose ? onClose() : navigate.goBack();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setIsOpen(true);
     function onKeyDown(evt) {
       if (evt.key === 'Escape') {
         closeModal();
@@ -28,10 +33,24 @@ export default function Popup({ children, onClose, popupSize }) {
   return createPortal(
     <>
       <PopupOverlay onClose={closeModal} />
-      <div className={`${popupSize} popup`}>
-        <button type="button" className="popup__close" aria-label="Закрыть" onClick={closeModal} />
-        {children}
-      </div>
+      <CSSTransition
+        in={isOpen}
+        timeout={300}
+        classNames="modal"
+        unmountOnExit
+        onExited={closeModal}
+        nodeRef={nodeRef}
+      >
+        <div className={`${popupSize} popup`} ref={nodeRef}>
+          <button
+            type="button"
+            className="popup__close"
+            aria-label="Закрыть"
+            onClick={closeModal}
+          />
+          {children}
+        </div>
+      </CSSTransition>
     </>,
     document.getElementById('modals'),
   );

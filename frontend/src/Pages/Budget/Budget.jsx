@@ -4,6 +4,8 @@ import './Budget.scss';
 import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
 import EarningPopup from '../../Components/EarningPopup/EarningPopup';
 import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
+import { getUser } from '../../store/slices/userSlice';
+import Button from '../../ui/Button/Button';
 import SpendingList from '../../Components/SpendingList/SpendingList';
 
 // mock data
@@ -73,9 +75,13 @@ export default function Budget() {
 
   const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
   const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
-  const isLogin = useSelector((state) => state.login.login);
+  const isFetched = useSelector((state) => state.user.isFetched);
 
-  useEffect(() => {}, [isLogin, dispatch]);
+  useEffect(() => {
+    if (!isFetched) {
+      dispatch(getUser());
+    }
+  }, [dispatch, isFetched]);
 
   const handleSpendingClick = () => {
     dispatch(toggleSpendingPopup(true));
@@ -180,13 +186,20 @@ export default function Budget() {
           </div>
 
           <div className="budget__button-wrapper">
-            <button type="button" className="budget__add-button" onClick={handleSpendingClick}>
-              Расход
-            </button>
-
-            <button type="button" className="budget__add-button" onClick={handleEarningClick}>
-              Доход
-            </button>
+            <Button
+              variant="secondary"
+              type="icon-text"
+              text="Расход"
+              size="medium"
+              onClick={handleSpendingClick}
+            />
+            <Button
+              variant="secondary"
+              type="icon-text"
+              text="Доход"
+              size="medium"
+              onClick={handleEarningClick}
+            />
           </div>
         </div>
 

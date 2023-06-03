@@ -1,12 +1,20 @@
+import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { RegExEarnOperationName, RegExOperationAmount } from '../../utils/consts';
 import Popup from '../Popup/Popup';
+import Button from '../../ui/Button/Button';
+import { toggleEarningPopup } from '../../store/slices/togglePopupSlice';
 
 export default function EarningPopup({ onClose }) {
+  const dispatch = useDispatch();
+
   function handleSubmit(e) {
     e.preventDefault();
+  }
 
-    // call serialize & submit functions
+  function handleСancel(evt) {
+    evt.preventDefault();
+    dispatch(toggleEarningPopup(false));
   }
 
   return (
@@ -234,14 +242,15 @@ export default function EarningPopup({ onClose }) {
           </label>
         </fieldset>
 
-        <div className="form__button-wrapper">
-          <button type="reset" className="form__button form__button_reset">
-            Отменить
-          </button>
-
-          <button type="submit" className="form__button form__button_submit">
-            Готово
-          </button>
+        <div className="form__button-wrapper form__button-wrapper_profile">
+          <Button
+            variant="secondary"
+            type="text"
+            text="Отменить"
+            size="medium"
+            onClick={handleСancel}
+          />
+          <Button variant="primary" type="text" text="Готово" size="medium" />
         </div>
       </form>
     </Popup>
