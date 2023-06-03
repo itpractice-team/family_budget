@@ -6,7 +6,15 @@
   gap: 24px;
 }
 
+.form_single {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form_profile {
+  background-color: #ffffff;
+  border-radius: 16px;
   gap: 32px;
   max-width: 50%;
   padding: 40px 40px;
@@ -308,6 +316,7 @@
 .form__img {
   width: 100%;
   max-width: 80px;
+  border-radius: 40px;
 }
 
 .form__image-description {
@@ -345,9 +354,7 @@
   background-position-y: 40px;
 }
 
-// lib style
-
-.react-tooltip {
+.form__input-block .react-tooltip {
   @include text-small-web;
   background-color: #303360;
   padding: 16px 16px;
@@ -356,6 +363,8 @@
   z-index: 4;
   opacity: 1;
 }
+
+// lib style
 
 .form__password-reliability-block {
   width: 100%;
