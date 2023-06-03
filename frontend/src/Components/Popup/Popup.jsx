@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { CSSTransition } from 'react-transition-group';
 import './Popup.scss';
 import PopupOverlay from '../PopupOverlay/PopupOverlay';
@@ -12,7 +12,6 @@ export default function Popup({ children, onClose, popupSize }) {
   const nodeRef = useRef(null);
 
   const closeModal = () => {
-    // eslint-disable-next-line no-unused-expressions
     onClose ? onClose() : navigate.goBack();
   };
 
