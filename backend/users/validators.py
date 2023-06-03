@@ -1,9 +1,31 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import _lazy_re_compile
+from django.core.validators import RegexValidator, _lazy_re_compile
+from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
 
 PASSWORD_CHARS_RE = _lazy_re_compile(r"^[a-zA-Z\d!\"#$%&., ]+\Z")
+
+
+simple_name_re = _lazy_re_compile(r"^([^\W\d_]|[\s-])+$")
+validate_simple_name = RegexValidator(
+    simple_name_re,
+    _(
+        "Enter a valid `name` value consisting of only letters "
+        "and symbols `-`."
+    ),
+    "invalid",
+)
+
+
+@deconstructible
+class UnicodeUsernameValidator(RegexValidator):
+    regex = r"^[a-zA-Z\d_.+-]+\Z"
+    message = _(
+        "Enter a valid username. This value may contain only letters(a-z), "
+        "numbers, and ./+/-/_ characters."
+    )
+    flags = 0
 
 
 class PasswordCharValidator:
