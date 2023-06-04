@@ -5,14 +5,12 @@
 
 import * as yup from 'yup';
 
-const registerValidation = yup.object().shape({
+const profileValidation = yup.object().shape({
   email: yup
     .string()
-    .required('Поле E-mail не может быть пустым')
     .email('Введите корректный E-mail'),
   username: yup
     .string()
-    .required('Поле Логин не может быть пустым')
     .min(2, 'Поле Логин не может быть короче 2 символов')
     .max(25, 'Поле Логин не может быть длиннее 25 символов')
     .test('login', 'Введите правильный логин', (value) => {
@@ -43,7 +41,6 @@ const registerValidation = yup.object().shape({
     .max(25, 'Поле Фамилия не может быть длиннее 25 символов'),
   password: yup
     .string()
-    .required('Поле Пароль не может быть пустым')
     .min(8, 'Пароль не может быть короче 8 символов')
     .max(40, 'Пароль не может быть длиннее 40 символов')
     .test(
@@ -57,27 +54,6 @@ const registerValidation = yup.object().shape({
     .test('not-all-digits', 'Пароль не может состоять только из цифр', function (value) {
       return !/^\d+$/.test(value);
     }),
-  confirmPassword: yup
-    .string()
-    .required('Поле Повторить пароль не может быть пустым')
-    .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
-    .min(8, 'Пароль не может быть короче 8 символов')
-    .max(40, 'Пароль не может быть длиннее 40 символов')
-    .test(
-      'special-characters',
-      'Пароль должен содержать хотя бы один спецсимвол',
-      function (value) {
-        const pattern = /^(?=.*[^a-zA-Z0-9])[\w\W]+$/;
-        return pattern.test(value);
-      },
-    )
-    .test('not-all-digits', 'Пароль не может состоять только из цифр', function (value) {
-      return !/^\d+$/.test(value);
-    }),
-    agree: 
-    yup
-    .boolean()
-    .oneOf([true]),
 });
 
-export default registerValidation;
+export default profileValidation;

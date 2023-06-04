@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable camelcase */
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -22,6 +23,7 @@ import {
 import Button from '../../ui/Button/Button';
 import defaultAvatar from '../../Images/avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
+import profileValidation from '../../utils/validations/profileValidation';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -35,6 +37,10 @@ export default function Profile() {
   const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
   const userData = useSelector((state) => state.user.user);
   const isFetched = useSelector((state) => state.user.isFetched);
+
+  
+  const [disableButton, setDisableButton] = useState(true);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (!isFetched) {
@@ -74,28 +80,28 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   username: '',
+  //   email: '',
+  //   first_name: '',
+  //   last_name: '',
+  // });
 
-  useEffect(() => {
-    if (userData) {
-      setFormData({
-        username: userData.username || '',
-        email: userData.email || '',
-        first_name: userData.first_name || '',
-        last_name: userData.last_name || '',
-      });
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData) {
+  //     setFormData({
+  //       username: userData.username || '',
+  //       email: userData.email || '',
+  //       first_name: userData.first_name || '',
+  //       last_name: userData.last_name || '',
+  //     });
+  //   }
+  // }, [userData]);
 
-  const { username, email, first_name, last_name } = formData;
+  // const { username, email, first_name, last_name } = formData;
 
   const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    // setFormData({ ...formData, [evt.target.name]: evt.target.value });
     setIsFormDirty(true);
   };
 
@@ -109,9 +115,45 @@ export default function Profile() {
     }
   }
 
+  
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    watch,
+  } = useForm({
+    mode: 'onChange', 
+    defaultValues: {
+      username: userData.username || '',
+        email: userData.email || '',
+        first_name: userData.first_name || '',
+        last_name: userData.last_name || '',
+    },
+    resolver: yupResolver(profileValidation, { criteriaMode: 'all' }),
+  });
+
+  /// /// looking for changes ///////////
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (
+        userData.username === value.username && 
+        userData.email === value.email &&
+        userData.first_name === value.first_name &&
+        userData.last_name === value.last_name
+        ) {
+        setMessage("Необходимо внести изменения");
+        setDisableButton(true);
+        return;
+      } else if (disableButton) {
+        setDisableButton(false);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   return (
     <section className="profile-page">
-      <form className="form form_profile" onSubmit={handleUpdateProfile}>
+      <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
         <div className="form__header-block">
           <h1 className="form__header_profile">Настройки профиля</h1>
           <p className="form__text form__text_profile">
@@ -147,8 +189,6 @@ export default function Profile() {
               className="form__input"
               type="text"
               placeholder="Ввести логин"
-              value={username}
-              onChange={handleChange}
               disabled={disable}
             />
           </label>
@@ -177,8 +217,6 @@ export default function Profile() {
               className="form__input"
               type="email"
               placeholder="Ввести e-mail"
-              value={email}
-              onChange={handleChange}
               disabled={disable}
             />
           </label>
@@ -240,8 +278,6 @@ export default function Profile() {
               className="form__input"
               type="text"
               placeholder="Ввести имя"
-              value={first_name}
-              onChange={handleChange}
               disabled={disable}
             />
           </label>
@@ -268,8 +304,6 @@ export default function Profile() {
               className="form__input"
               type="text"
               placeholder="Ввести фамилию"
-              value={last_name}
-              onChange={handleChange}
               disabled={disable}
             />
           </label>
@@ -301,10 +335,11 @@ export default function Profile() {
           {isEditing && (
             <Button
               variant="primary"
-              type="text"
+              // type="text"
               text="Сохранить данные"
               size="medium"
-              onClick={handleUpdateProfile}
+              // onClick={handleUpdateProfile}
+              type="submit"
               disabled={disable || !isFormDirty}
             />
           )}
