@@ -2,6 +2,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
 import {
