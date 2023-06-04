@@ -1,3 +1,6 @@
+/* eslint-disable no-else-return */
+/* eslint-disable no-useless-return */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable camelcase */
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,15 +33,15 @@ export default function Profile() {
 
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [isFormDirty, setIsFormDirty] = useState(false);
+  // const [isFormDirty, setIsFormDirty] = useState(false);
 
   const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
   const isAvatarUploaderPopupOpen = useSelector((state) => state.popup.isAvatarUploaderPopupOpen);
   const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
   const userData = useSelector((state) => state.user.user);
+  console.log(userData)
   const isFetched = useSelector((state) => state.user.isFetched);
 
-  
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
 
@@ -73,6 +76,41 @@ export default function Profile() {
   const closeConfirmationPopup = () => {
     dispatch(toggleConfirmationPopup(false));
   };
+  
+    const {
+      register,
+      formState: { errors, isValid },
+      handleSubmit,
+      watch,
+    } = useForm({
+      mode: 'onChange',
+      defaultValues: {
+        username: userData.username || '',
+        email: userData.email || '',
+        first_name: userData.first_name || '',
+        last_name: userData.last_name || '',
+      },
+      resolver: yupResolver(profileValidation),
+    });
+  
+    /// /// looking for changes ///////////
+    useEffect(() => {
+      const subscription = watch((value) => {
+        if (
+          userData.username === value.username &&
+          userData.email === value.email &&
+          userData.first_name === value.first_name &&
+          userData.last_name === value.last_name
+        ) {
+          setMessage('Необходимо внести изменения');
+          setDisableButton(true);
+          return;
+        } else if (disableButton) {
+          setDisableButton(false);
+        }
+      });
+      return () => subscription.unsubscribe();
+    }, [watch]);
 
   const handleEnableInputs = (evt) => {
     evt.preventDefault();
@@ -80,76 +118,13 @@ export default function Profile() {
     setIsEditing(true);
   };
 
-  // const [formData, setFormData] = useState({
-  //   username: '',
-  //   email: '',
-  //   first_name: '',
-  //   last_name: '',
-  // });
-
-  // useEffect(() => {
-  //   if (userData) {
-  //     setFormData({
-  //       username: userData.username || '',
-  //       email: userData.email || '',
-  //       first_name: userData.first_name || '',
-  //       last_name: userData.last_name || '',
-  //     });
-  //   }
-  // }, [userData]);
-
-  // const { username, email, first_name, last_name } = formData;
-
-  const handleChange = (evt) => {
-    // setFormData({ ...formData, [evt.target.name]: evt.target.value });
-    setIsFormDirty(true);
-  };
-
-  function handleUpdateProfile(evt) {
-    evt.preventDefault();
+  function handleUpdateProfile(formData) {
     if (isEditing) {
       dispatch(updateUser(formData));
       setDisable(true);
       setIsEditing(false);
-      setIsFormDirty(false);
     }
   }
-
-  
-  const {
-    register,
-    formState: { errors, isValid },
-    handleSubmit,
-    watch,
-  } = useForm({
-    mode: 'onChange', 
-    defaultValues: {
-      username: userData.username || '',
-        email: userData.email || '',
-        first_name: userData.first_name || '',
-        last_name: userData.last_name || '',
-    },
-    resolver: yupResolver(profileValidation, { criteriaMode: 'all' }),
-  });
-
-  /// /// looking for changes ///////////
-  useEffect(() => {
-    const subscription = watch((value) => {
-      if (
-        userData.username === value.username && 
-        userData.email === value.email &&
-        userData.first_name === value.first_name &&
-        userData.last_name === value.last_name
-        ) {
-        setMessage("Необходимо внести изменения");
-        setDisableButton(true);
-        return;
-      } else if (disableButton) {
-        setDisableButton(false);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
 
   return (
     <section className="profile-page">
@@ -184,6 +159,7 @@ export default function Profile() {
           <label className="form__input-label" htmlFor="Profile-login">
             Логин
             <input
+              {...register('username')}
               id="Profile-login"
               name="username"
               className="form__input"
@@ -191,6 +167,12 @@ export default function Profile() {
               placeholder="Ввести логин"
               disabled={disable}
             />
+            <span
+              className={`form__valid-message 
+                          ${errors.username ? 'form__valid-message_active' : ''}`}
+            >
+              {errors?.username && errors?.username?.message}
+            </span>
           </label>
 
           <div
@@ -212,13 +194,20 @@ export default function Profile() {
           <label className="form__input-label" htmlFor="Profile-email">
             E-mail
             <input
+              {...register('email')}
               id="Profile-email"
               name="email"
               className="form__input"
               type="email"
-              placeholder="Ввести e-mail"
+              // placeholder="Ввести e-mail"
               disabled={disable}
             />
+            <span
+              className={`form__valid-message 
+                        ${errors.email ? 'form__valid-message_active' : ''}`}
+            >
+              {errors?.email && errors?.email?.message}
+            </span>
           </label>
           <div
             className="form__tooltip"
@@ -273,6 +262,7 @@ export default function Profile() {
           <label className="form__input-label" htmlFor="Profile-name">
             Имя
             <input
+              {...register('first_name')}
               id="Profile-name"
               name="first_name"
               className="form__input"
@@ -280,6 +270,12 @@ export default function Profile() {
               placeholder="Ввести имя"
               disabled={disable}
             />
+            <span
+              className={`form__valid-message 
+                        ${errors.first_name ? 'form__valid-message_active' : ''}`}
+            >
+              {errors?.first_name && errors?.first_name?.message}
+            </span>
           </label>
           <div
             className="form__tooltip"
@@ -299,6 +295,7 @@ export default function Profile() {
           <label className="form__input-label" htmlFor="Profile-surname">
             Фамилия
             <input
+              {...register('last_name')}
               id="Profile-surname"
               name="last_name"
               className="form__input"
@@ -306,6 +303,12 @@ export default function Profile() {
               placeholder="Ввести фамилию"
               disabled={disable}
             />
+            <span
+              className={`form__valid-message 
+                        ${errors.last_name ? 'form__valid-message_active' : ''}`}
+            >
+              {errors?.last_name && errors?.last_name?.message}
+            </span>
           </label>
           <div
             className="form__tooltip"
@@ -322,7 +325,7 @@ export default function Profile() {
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_profile">
-          {!isEditing && (
+          {!isEditing ? 
             <Button
               variant="primary"
               type="text"
@@ -330,19 +333,19 @@ export default function Profile() {
               size="medium"
               onClick={handleEnableInputs}
               disabled={false}
-            />
-          )}
-          {isEditing && (
+            /> : 
             <Button
+            className={`${(!isValid || !errors) && 'form__button:disabled'}`}
+              disabled={!isValid || disableButton}
               variant="primary"
-              // type="text"
+              // type="submit"
+              type="text"
               text="Сохранить данные"
               size="medium"
               // onClick={handleUpdateProfile}
-              type="submit"
-              disabled={disable || !isFormDirty}
+              // disabled={disable || !isFormDirty}
             />
-          )}
+          }
           <Button
             variant="fiat"
             type="text"
@@ -350,6 +353,7 @@ export default function Profile() {
             size="medium"
             onClick={handleConfirmationPopupClick}
           />
+          <span className="profile__compare-message">{message}</span>
         </div>
         {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
         {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
