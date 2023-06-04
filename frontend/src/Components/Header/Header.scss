@@ -1,5 +1,9 @@
 @import '../../styles/consts.scss';
 
+.div {
+  position: relative;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -7,62 +11,46 @@
   padding: 0 160px;
 }
 
-.header__home-menu,
+.header__content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .header__menu {
   display: flex;
-  width: 100%;
+  gap: 80px;
   align-items: center;
   justify-content: space-between;
-}
-
-.header__home-links {
-  width: 459px;
-  display: flex;
-  gap: 66px;
-}
-
-.header__menu-list {
-  width: 463px;
-  display: flex;
-  justify-content: space-between;
-  gap: 91px;
 }
 
 .header__buttons {
   display: flex;
 }
 
-.header__home-link,
 .header__home-button,
 .header__menu-link {
   @include text-medium-web;
   color: #303360;
-}
-
-.header__button-login {
-  width: 89px;
-  height: 44px;
-}
-
-.header__button-registration {
-  @include text-medium-web;
-  width: 140px;
-  height: 44px;
-  background: #303360;
+  padding: 5px 15px;
   border-radius: 20px;
-  color: #f0b216;
 }
 
-.header__profile-link {
-  padding: 10px;
-  background: #303360;
+.header__menu-link_active {
+  @include text-medium-web-bold;
+  color: #303360;
+  background-color: #f4f4f4;
+  padding: 5px 15px;
   border-radius: 20px;
-  width: 40px;
-  height: 40px;
+}
+
+.header__menu-link:hover {
+  color: #4a4e92;
 }
 
 .header__profile-icon {
-  width: 20px;
-  height: 20px;
-  background: transparent;
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
 }

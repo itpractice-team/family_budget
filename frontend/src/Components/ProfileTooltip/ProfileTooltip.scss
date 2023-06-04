@@ -1,0 +1,40 @@
+.profile-tooltip {
+  background: #ffffff;
+  border: 1px solid #f4f4f4;
+  border-radius: 16px;
+  width: 376px;
+  height: 196px;
+  padding: 40px;
+  display: grid;
+  gap: 32px;
+  position: absolute;
+  top: 40px;
+  left: 953px;
+}
+
+.profile-tooltip--hidden {
+  display: none;
+}
+
+.profile-tooltip__user-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-tooltip__user-icon {
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+}
+
+.profile-tooltip__user-name {
+  margin-right: 63px;
+}
+
+.profile-tooltip__btn-exit {
+  background-image: url(../../Images/exit.svg);
+  width: 40px;
+  height: 40px;
+}
