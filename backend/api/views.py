@@ -1,22 +1,31 @@
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
-from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api.permissions import IsAuthor
 from api.serializers import (
-    AccountSerializer,
     AccountIconCreteSerializer,
+    AccountSerializer,
     AcountIconGetSerializer,
-    CategorySerializer,
-    CategoryIconGetSerializer,
     CategoryIconCreateSerializer,
+    CategoryIconGetSerializer,
+    CategorySerializer,
     IncomeSerializer,
     MoneyBoxSerializer,
     SpendSerializer,
 )
-from budget.models import Account, AccountIcon, Category, CategoryIcon, Income, MoneyBox, Spend
+from budget.models import (
+    Account,
+    AccountIcon,
+    Category,
+    CategoryIcon,
+    Income,
+    MoneyBox,
+    Spend,
+)
+
 User = get_user_model()
 
 
@@ -49,7 +58,7 @@ class MoneyBoxViewSet(viewsets.ModelViewSet):
 class IncomeViewSet(viewsets.ModelViewSet):
     serializer_class = IncomeSerializer
     permission_classes = (IsAuthor,)
-    http_method_names = ['get']
+    http_method_names = ["get"]
 
     def get_queryset(self):
         user = self.request.user
@@ -57,12 +66,12 @@ class IncomeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-    
+
 
 class SpendViewSet(viewsets.ModelViewSet):
     serializer_class = SpendSerializer
     permission_classes = (IsAuthor,)
-    http_method_names = ['get']
+    http_method_names = ["get"]
 
     def get_queryset(self):
         user = self.request.user
@@ -107,30 +116,32 @@ class AccountViewSet(viewsets.ModelViewSet):
         return Account.objects.filter(user=user)
 
     @action(
-        detail=True, url_path="add_spend",
-        methods=["POST"], url_name="add_spend",
+        detail=True,
+        url_path="add_spend",
+        methods=["POST"],
+        url_name="add_spend",
         permission_classes=(IsAuthor,),
         serializer_class=SpendSerializer,
     )
     def add_spend(self, request, *args, **kwargs):
         user = request.user
-        account = get_object_or_404(Account, id=kwargs['pk'])
+        account = get_object_or_404(Account, id=kwargs["pk"])
         request_data = request.data
-        amount = request_data.get('amount')
+        amount = request_data.get("amount")
 
         if account.user != user:
             return Response(
                 {"error": "Нельзя производить опрации не со своим счетом."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         if amount > account.balance:
             return Response(
                 {"error": "Сумма траты не может превышать сумму счёта."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
-        
-        category_data = request_data.pop('category')
+
+        category_data = request_data.pop("category")
         category = Category.objects.get(id=category_data)
 
         new_spend = Spend.objects.create(**request_data, user=user)
@@ -142,21 +153,28 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = SpendSerializer(new_spend)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
     @action(
-        detail=True, methods=["POST"],
-        url_name='add_income', url_path='add_income',
-        permission_classes=(IsAuthor,)
+        detail=True,
+        methods=["POST"],
+        url_name="add_income",
+        url_path="add_income",
+        permission_classes=(IsAuthor,),
     )
     def add_income(self, request, *args, **kwargs):
         user = request.user
-        account = get_object_or_404(Account, id=kwargs['pk'])
+        account = get_object_or_404(Account, id=kwargs["pk"])
         request_data = request.data
+
+        if account.user != user:
+            return Response(
+                {"error": "Нельзя производить опрации не со своим счетом."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         serializer = IncomeSerializer(data=request_data)
         serializer.is_valid(raise_exception=True)
 
-        amount = request_data.get('amount')
+        amount = request_data.get("amount")
         new_income = Income.objects.create(**request_data, user=user)
         account.balance += amount
         account.save()
@@ -164,11 +182,10 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = IncomeSerializer(new_income)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        
 
 class AccountIconViewSet(viewsets.ModelViewSet):
     queryset = AccountIcon.objects.all()
-    
+
     def get_serializer_class(self):
         if self.request.method == ["GET"]:
             return AcountIconGetSerializer
