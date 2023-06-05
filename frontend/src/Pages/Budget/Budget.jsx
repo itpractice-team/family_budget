@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import './Budget.scss';
@@ -7,6 +8,7 @@ import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togg
 import { getUser } from '../../store/slices/userSlice';
 import Button from '../../ui/Button/Button';
 import SpendingList from '../../Components/SpendingList/SpendingList';
+import LeftBlock from '../../Components/LeftBlock /LeftBlock';
 
 // mock data
 import cat from '../../Images/cat-ic-24.svg';
@@ -159,6 +161,7 @@ export default function Budget() {
 
   return (
     <section className="budget">
+      <LeftBlock />
       <section className="budget__spending">
         <div className="budget__filtration">
           <div className="budget__filtration-wrapper">
