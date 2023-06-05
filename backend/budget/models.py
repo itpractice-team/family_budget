@@ -19,7 +19,8 @@ def validate_date(value):
 
 
 class BaseIcon(models.Model):
-    """Модель иконки"""
+    """Модель иконки."""
+
     title = models.CharField(max_length=100)
     image = models.ImageField(
         upload_to=None,
@@ -36,6 +37,7 @@ class BaseIcon(models.Model):
 
 class AccountIcon(BaseIcon):
     """Модель иконки счета."""
+
     image = models.ImageField(
         upload_to="account_icons",
     )
@@ -43,6 +45,7 @@ class AccountIcon(BaseIcon):
 
 class CategoryIcon(BaseIcon):
     """Модель иконки категории."""
+
     image = models.ImageField(
         upload_to="category_icons",
     )
@@ -91,7 +94,7 @@ class Category(models.Model):
         max_length=7,
         unique=True,
         blank=True,
-        verbose_name="Цвет категории расхода", 
+        verbose_name="Цвет категории расхода",
     )
     user = models.ForeignKey(
         User,
@@ -119,7 +122,9 @@ class Category(models.Model):
 #     title = models.CharField(
 #         "Полное название валюты", unique=True, max_length=50
 #     )
-#     code = models.CharField("Буквенный код валюты", unique=True, max_length=3)
+#     code = models.CharField(
+#         "Буквенный код валюты", unique=True, max_length=3
+#     )
 
 #     class Meta:
 #         verbose_name = "Валюта"
@@ -166,7 +171,9 @@ class Spend(models.Model):
 # class CategoryIncome(models.Model):
 #     """Модель Категорий для доходных средств."""
 
-#     title = models.CharField("Название категории", max_length=150, unique=True)
+#     title = models.CharField(
+#       "Название категории", max_length=150, unique=True
+#     )
 #     user = models.ForeignKey(
 #         User,
 #         on_delete=models.CASCADE,
@@ -174,7 +181,10 @@ class Spend(models.Model):
 #         verbose_name="Категория дохода пользователя",
 #     )
 #     description = models.TextField(
-#         "Комментарий к категории дохода", max_length=500, blank=True, null=True
+#         "Комментарий к категории дохода",
+#         max_length=500,
+#         blank=True,
+#         null=True
 #     )
 
 

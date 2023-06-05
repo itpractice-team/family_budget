@@ -2,10 +2,10 @@ from django.urls import include, path
 from rest_framework import routers
 
 from api.views import (
-    AccountViewSet,
     AccountIconViewSet,
-    CategoryViewSet,
+    AccountViewSet,
     CategoryIconViewSet,
+    CategoryViewSet,
     IncomeViewSet,
     MoneyBoxViewSet,
     SpendViewSet,
@@ -24,7 +24,9 @@ router_v1.register(
     "account_icons", AccountIconViewSet, basename="account_icons"
 )
 router_v1.register("categories", CategoryViewSet, basename="categories")
-router_v1.register("category_icons", CategoryIconViewSet, basename="category_icons")
+router_v1.register(
+    "category_icons", CategoryIconViewSet, basename="category_icons"
+)
 router_v1.register("spends", SpendViewSet, basename="spends")
 
 urlpatterns = [

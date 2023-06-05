@@ -1,4 +1,3 @@
-import re
 from django.contrib.auth import get_user_model
 from djoser.serializers import (
     TokenSerializer,
@@ -9,7 +8,15 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from budget.models import Account, AccountIcon, Category, CategoryIcon, Income, MoneyBox, Spend
+from budget.models import (
+    Account,
+    AccountIcon,
+    Category,
+    CategoryIcon,
+    Income,
+    MoneyBox,
+    Spend,
+)
 
 User = get_user_model()
 
@@ -65,9 +72,9 @@ class AccountIconCreteSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "image", "slug")
 
     def validate_image(self, image):
-        if image == None:
+        if image is None:
             raise serializers.ValidationError(
-                'Поле `image` должно быть в формате Base64'
+                "Поле `image` должно быть в формате Base64"
             )
         return image
 
@@ -106,11 +113,12 @@ class CategoryIconCreateSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "image", "slug")
 
     def validate_image(self, image):
-        if image == None:
+        if image is None:
             raise serializers.ValidationError(
-                'Поле `image` должно быть в формате Base64'
+                "Поле `image` должно быть в формате Base64"
             )
         return image
+
 
 class CategoryIconGetSerializer(serializers.ModelSerializer):
     class Meta:
@@ -127,7 +135,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("id", "title", "icon", "color", "slug")
-    
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
         icon_id = data.get("icon")
@@ -169,7 +177,6 @@ class MoneyBoxSerializer(serializers.ModelSerializer):
             "achieved",
             "category",
         )
-
 
     def update(self, instance, validated_data):
         accumulated = validated_data.pop("accumulated", None)
