@@ -38,7 +38,7 @@ export default function ProfileTooltip({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   return (
-    <div ref={tooltipRef} className={`profile-tooltip${isOpen ? '' : ' profile-tooltip--hidden'}`}>
+    <div ref={tooltipRef} className={`profile-tooltip ${isOpen ? '' : 'profile-tooltip_hidden'}`}>
       <div className="profile-tooltip__user-data">
         <img
           src={avatar === null ? defaultAvatar : avatar}
