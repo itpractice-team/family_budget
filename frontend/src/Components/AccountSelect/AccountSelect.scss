@@ -1,0 +1,24 @@
+.account-select__list {
+  position: absolute;
+  top: 250px;
+  left: 266px;
+  z-index: 11;
+  width: 376px;
+  background: #ffffff;
+  border: 1px solid #f4f4f4;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.custom-select__list_hidden {
+  display: none;
+}
+
+.button__account {
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
