@@ -5,8 +5,6 @@ from django.db import models
 from django.utils import timezone
 from slugify import slugify
 
-from colorfield.fields import ColorField
-
 User = get_user_model()
 
 COMMON_VALIDATOR = [MinValueValidator(1), MaxValueValidator(1_000_000)]
@@ -20,18 +18,80 @@ def validate_date(value):
     return value
 
 
+class BaseIcon(models.Model):
+    """Модель иконки"""
+    title = models.CharField(max_length=100)
+    image = models.ImageField(
+        upload_to=None,
+    )
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        blank=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class AccountIcon(BaseIcon):
+    """Модель иконки счета."""
+    image = models.ImageField(
+        upload_to="account_icons",
+    )
+
+
+class CategoryIcon(BaseIcon):
+    """Модель иконки категории."""
+    image = models.ImageField(
+        upload_to="category_icons",
+    )
+
+
+class Account(models.Model):
+    """Модель счета пользователя."""
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="balances",
+        verbose_name="Баланс пользователя",
+    )
+    title = models.CharField("Название", max_length=70)
+    icon = models.ForeignKey(
+        AccountIcon,
+        on_delete=models.CASCADE,
+        related_name="accounts",
+        verbose_name="Иконка",
+        null=True,
+    )
+    balance = models.IntegerField("Баланс", default=0)
+
+    class Meta:
+        verbose_name = "Счет"
+        verbose_name_plural = "Счета"
+
+    def __str__(self):
+        return f"Счета пользователя {self.user}"
+
+
 class Category(models.Model):
     """Модель категорий для трат."""
 
     title = models.CharField("Название категории", max_length=50, unique=True)
-    # description = models.TextField(
-    #     "Описание категории трат", max_length=500, blank=True, null=True
-    # )
-    icon = models.ImageField(
-        verbose_name="Иконка расхода", blank=True, upload_to="budget/"
+    slug = models.SlugField(max_length=100, unique=True)
+    icon = models.ForeignKey(
+        CategoryIcon,
+        on_delete=models.CASCADE,
+        related_name="categories",
+        verbose_name="Иконка",
+        null=True,
     )
-    color = ColorField(
-        format="hex", verbose_name="Цвет категории расхода", unique=True
+    color = models.CharField(
+        max_length=7,
+        unique=True,
+        blank=True,
+        verbose_name="Цвет категории расхода", 
     )
     user = models.ForeignKey(
         User,
@@ -53,40 +113,21 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
 
-class Balance(models.Model):
-    """Модель актуального состояния средств."""
+# class Currency(models.Model):
+#     """Модель валют."""
 
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="balances",
-        verbose_name="Баланс пользователя",
-    )
-    balance = models.IntegerField("Баланс", default=0)
+#     title = models.CharField(
+#         "Полное название валюты", unique=True, max_length=50
+#     )
+#     code = models.CharField("Буквенный код валюты", unique=True, max_length=3)
 
-    class Meta:
-        verbose_name = "Баланс"
-        verbose_name_plural = "Балансы"
+#     class Meta:
+#         verbose_name = "Валюта"
+#         verbose_name_plural = "Валюты"
+#         default_related_name = "currencies"
 
-    def __str__(self):
-        return f"Баланс пользователя {self.user}"
-
-
-class Currency(models.Model):
-    """Модель валют."""
-
-    title = models.CharField(
-        "Полное название валюты", unique=True, max_length=50
-    )
-    code = models.CharField("Буквенный код валюты", unique=True, max_length=3)
-
-    class Meta:
-        verbose_name = "Валюта"
-        verbose_name_plural = "Валюты"
-        default_related_name = "currencies"
-
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
 
 class Spend(models.Model):
@@ -122,19 +163,19 @@ class Spend(models.Model):
         return self.title
 
 
-class CategoryIncome(models.Model):
-    """Модель Категорий для доходных средств."""
+# class CategoryIncome(models.Model):
+#     """Модель Категорий для доходных средств."""
 
-    title = models.CharField("Название категории", max_length=150, unique=True)
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="category_incomes",
-        verbose_name="Категория дохода пользователя",
-    )
-    description = models.TextField(
-        "Комментарий к категории дохода", max_length=500, blank=True, null=True
-    )
+#     title = models.CharField("Название категории", max_length=150, unique=True)
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="category_incomes",
+#         verbose_name="Категория дохода пользователя",
+#     )
+#     description = models.TextField(
+#         "Комментарий к категории дохода", max_length=500, blank=True, null=True
+#     )
 
 
 class Income(models.Model):
@@ -150,13 +191,13 @@ class Income(models.Model):
     created = models.DateTimeField(
         "Время создания записи", validators=[validate_date]
     )
-    category = models.ForeignKey(
-        CategoryIncome,
-        on_delete=models.SET_NULL,
-        verbose_name="Категория дохода",
-        blank=True,
-        null=True,
-    )
+    # category = models.ForeignKey(
+    #     CategoryIncome,
+    #     on_delete=models.SET_NULL,
+    #     verbose_name="Категория дохода",
+    #     blank=True,
+    #     null=True,
+    # )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -179,15 +220,15 @@ class MoneyBox(models.Model):
     total = models.PositiveIntegerField(
         "Сумма, которую необходимо накопить", validators=MONEYBOX_VALIDATOR
     )
-    accumulation = models.PositiveIntegerField(
+    accumulated = models.PositiveIntegerField(
         "Уже накоплено", validators=MONEYBOX_VALIDATOR
     )
     achieved = models.BooleanField(
         "Цель достигнута/не достигнута", default=False
     )
-    description = models.TextField(
-        "Комментарий к приходу", max_length=500, blank=True, null=True
-    )
+    # description = models.TextField(
+    #     "Комментарий к приходу", max_length=500, blank=True, null=True
+    # )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
@@ -212,4 +253,4 @@ class MoneyBox(models.Model):
 
     @property
     def is_collected(self):
-        return self.total == self.accumulation
+        return self.total == self.accumulated
