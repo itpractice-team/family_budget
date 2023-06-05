@@ -191,6 +191,7 @@ export default function Budget() {
               type="icon-text"
               text="Расход"
               size="medium"
+              extraClass="button__budget"
               onClick={handleSpendingClick}
             />
             <Button
@@ -198,6 +199,7 @@ export default function Budget() {
               type="icon-text"
               text="Доход"
               size="medium"
+              extraClass="button__budget"
               onClick={handleEarningClick}
             />
           </div>
