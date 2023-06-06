@@ -309,15 +309,15 @@
 
 .form__img-block {
   display: flex;
-  align-items: flex-start;
-  gap: 41px;
+  align-items: center;
+  gap: 32px;
   width: 100%;
 }
 
 .form__img {
-  width: 100%;
-  max-width: 80px;
-  border-radius: 40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
 }
 
 .form__image-description {
