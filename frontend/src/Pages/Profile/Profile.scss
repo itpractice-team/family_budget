@@ -172,8 +172,10 @@
   justify-content: space-between;
 }
 
-// .profile {
-//   display: flex;
-//   flex-grow: 1;
-//   padding: 0 160px 50px 160px;
-// }
+.profile__error-message {
+  position: absolute;
+  top: 10px;
+  top: 50px;
+  left: 22%;
+  color: red;
+}

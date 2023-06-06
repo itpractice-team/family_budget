@@ -39,21 +39,6 @@ const profileValidation = yup.object().shape({
       return value.length > 0;
     })
     .max(25, 'Поле Фамилия не может быть длиннее 25 символов'),
-  password: yup
-    .string()
-    .min(8, 'Пароль не может быть короче 8 символов')
-    .max(40, 'Пароль не может быть длиннее 40 символов')
-    .test(
-      'special-characters',
-      'Пароль должен содержать хотя бы один спецсимвол',
-      function (value) {
-        const pattern = /^(?=.*[^a-zA-Z0-9])[\w\W]+$/;
-        return pattern.test(value);
-      },
-    )
-    .test('not-all-digits', 'Пароль не может состоять только из цифр', function (value) {
-      return !/^\d+$/.test(value);
-    }),
 });
 
 export default profileValidation;
