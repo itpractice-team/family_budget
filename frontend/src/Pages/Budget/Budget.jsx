@@ -14,8 +14,7 @@ import Vector from '../../Images/Vector.svg';
 
 const spend = [
   {
-    date: '02 апреля 2023',
-    weekDay: 'воскресенье',
+    date: Date.now(),
     id: 1,
     cards: [
       {
@@ -23,7 +22,7 @@ const spend = [
         header: 'Вкусняшки коту',
         text: 'Sheba с креветками',
         bank: 'Тинькофф',
-        amount: '40₽',
+        amount: '40',
         categoryImg: cat,
         bankLogo: Vector,
         spending: true,
@@ -33,7 +32,7 @@ const spend = [
         header: 'Вкусняшки коту',
         text: 'Sheba с креветками',
         bank: 'Тинькофф',
-        amount: '40₽',
+        amount: '40',
         categoryImg: cat,
         bankLogo: Vector,
         spending: false,
@@ -41,8 +40,7 @@ const spend = [
     ],
   },
   {
-    date: '02 апреля 2023',
-    weekDay: 'воскресенье',
+    date: Date.now(),
     id: 2,
     cards: [
       {
@@ -50,7 +48,7 @@ const spend = [
         header: 'Вкусняшки коту',
         text: 'Sheba с креветками',
         bank: 'Тинькофф',
-        amount: '40₽',
+        amount: '40',
         categoryImg: cat,
         bankLogo: Vector,
         spending: true,
@@ -60,7 +58,7 @@ const spend = [
         header: 'Вкусняшки коту',
         text: 'Sheba с креветками',
         bank: 'Тинькофф',
-        amount: '40₽',
+        amount: '40',
         categoryImg: cat,
         bankLogo: Vector,
         spending: false,
@@ -101,7 +99,9 @@ export default function Budget() {
 
   function getTodayDate(event) {
     const today = new Date();
-    let date = '';
+    let previousDate = new Date();
+    let dateString = '';
+    let previousDateString = '';
     let formatter = null;
 
     switch (event.currentTarget.value) {
@@ -112,12 +112,30 @@ export default function Budget() {
           day: 'numeric',
         });
 
-        date = formatter.format(today);
-        setTimeInterval(date);
+        dateString = formatter.format(today);
+        setTimeInterval(dateString);
 
         break;
 
       case 'week':
+        formatter = new Intl.DateTimeFormat('ru', {
+          month: 'long',
+        });
+
+        dateString = formatter.format(today);
+
+        // вычисления даты 7 дней назад
+        previousDate.setDate(previousDate.getDate() - 7);
+
+        if (previousDate.getDate() > today.getDate()) {
+          previousDateString = `${previousDate.getDate()}, ${formatter.format(previousDate)}`;
+        }
+
+        setTimeInterval(`${previousDateString}‒${today.getDate()}, ${dateString}`);
+
+        // сброс значения
+        previousDate = new Date();
+
         break;
 
       case 'mounth':
@@ -126,8 +144,8 @@ export default function Budget() {
           month: 'long',
         });
 
-        date = formatter.format(today);
-        setTimeInterval(date);
+        dateString = formatter.format(today);
+        setTimeInterval(dateString);
 
         break;
 
@@ -136,8 +154,8 @@ export default function Budget() {
           year: 'numeric',
         });
 
-        date = formatter.format(today);
-        setTimeInterval(date);
+        dateString = formatter.format(today);
+        setTimeInterval(dateString);
 
         break;
 
