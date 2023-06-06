@@ -31,7 +31,7 @@ function SpendingCard({ header, text, bank, amount, categoryImg, bankLogo, spend
       <div className="card__block">
         <p className={`card__amount ${textStyle}`}>
           {mathSign}
-          {amount}
+          {amount}₽
         </p>
       </div>
 
