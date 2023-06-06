@@ -1,8 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable camelcase */
-/* eslint-disable func-names */
-/* eslint-disable prefer-arrow-callback */
-
 import * as yup from 'yup';
 
 const profileValidation = yup.object().shape({
