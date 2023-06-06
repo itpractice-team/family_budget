@@ -128,12 +128,8 @@ export default function Profile() {
               type="text"
               text="Изменить фото"
               size="medium"
-              extraClass="button__change-avatar"
               onClick={handleAvatarUploaderClick}
             />
-            <p className="form__text form__text_explanation">
-              Размер изображения не&nbsp;должен превышать 5 мб, формат jpg и png
-            </p>
           </div>
         </div>
         <div className="form__input-block">
