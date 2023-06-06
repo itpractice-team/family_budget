@@ -5,6 +5,11 @@ import AccountSelect from '../AccountSelect/AccountSelect';
 export default function Account() {
   const [selectedOption, setSelectedOption] = useState('Тинькофф');
   const [isListOpen, setIsListOpen] = useState(false);
+  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState(false);
+
+  const closeAddAccountPopup = () => {
+    setIsAddAccountPopupOpen(false);
+  };
 
   const handleOptionChange = (value) => {
     setSelectedOption(value);
@@ -28,7 +33,12 @@ export default function Account() {
         </button>
       </div>
       {isListOpen && (
-        <AccountSelect handleOptionChange={handleOptionChange} selectedOption={selectedOption} />
+        <AccountSelect
+          handleOptionChange={handleOptionChange}
+          selectedOption={selectedOption}
+          isAddAccountPopupOpen={isAddAccountPopupOpen}
+          onClose={closeAddAccountPopup}
+        />
       )}
     </section>
   );
