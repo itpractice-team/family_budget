@@ -1,20 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isOpenSpendingPopup: false,
-  isOpenEarningPopup: false,
+  isSpendingPopupOpen: false,
+  isEarningPopupOpen: false,
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
   isPasswordChangePopupOpen: false,
   isAvatarUploaderPopupOpen: false,
   isConfirmationPopupOpen: false,
   isInfoPopupOpen: false,
+  isAccountsPopupOpen: false,
+  isAddAccountPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
   name: 'togglePopup',
   initialState,
   reducers: {
+    toggleInfoPopup: (state, { payload }) => {
+      state.isInfoPopupOpen = payload;
+    },
     toggleSpendingPopup: (state, { payload }) => {
       state.isSpendingPopupOpen = payload;
     },
@@ -36,8 +41,11 @@ const togglePopupSlice = createSlice({
     toggleConfirmationPopup: (state, { payload }) => {
       state.isConfirmationPopupOpen = payload;
     },
-    toggleInfoPopup: (state, { payload }) => {
-      state.isInfoPopupOpen = payload;
+    toggleAccountsPopup: (state, { payload }) => {
+      state.isAccountsPopupOpen = payload;
+    },
+    toggleAddAccountPopup: (state, { payload }) => {
+      state.isAddAccountPopupOpen = payload;
     },
   },
 });
@@ -51,6 +59,8 @@ export const {
   toggleAvatarUploaderPopup,
   toggleConfirmationPopup,
   toggleInfoPopup,
+  toggleAccountsPopup,
+  toggleAddAccountPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;

@@ -9,6 +9,7 @@ import { getUser } from '../../store/slices/userSlice';
 import Button from '../../ui/Button/Button';
 import SpendingList from '../../Components/SpendingList/SpendingList';
 import LeftBlock from '../../Components/LeftBlock /LeftBlock';
+import RightBlock from '../../Components/RightBlock/RightBlock';
 
 // mock data
 import cat from '../../Images/cat-ic-24.svg';
@@ -213,6 +214,7 @@ export default function Budget() {
             return <SpendingList {...day} key={day.id} />;
           })}
       </section>
+      <RightBlock />
 
       {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
 

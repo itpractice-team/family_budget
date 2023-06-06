@@ -1,0 +1,33 @@
+@import '../../styles/consts.scss';
+
+.template {
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  height: min-content;
+}
+
+.template__title {
+  @include text-large-web-bold;
+  margin-bottom: 8px;
+}
+
+.template__plug {
+  display: grid;
+  gap: 8px;
+}
+
+.template__plug-icon {
+  justify-self: center;
+}
+
+.template__plug-subtitle {
+  @include text-small-web;
+  color: #8c8d91;
+}
+
+.template__button {
+  margin-top: 16px;
+  padding: 10px 7.5px;
+  border-radius: 20px;
+}
