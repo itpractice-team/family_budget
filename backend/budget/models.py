@@ -1,8 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    MaxValueValidator,
+    MinValueValidator,
+    validate_slug,
+)
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 
 User = get_user_model()
@@ -18,37 +23,46 @@ def validate_date(value):
     return value
 
 
-class BaseIcon(models.Model):
-    """Модель иконки."""
+def image_directory_path(instance, filename):
+    return f"{instance.image_directory}/{filename}"
 
-    title = models.CharField(max_length=100)
-    image = models.ImageField(
-        upload_to=None,
-    )
+
+class DafaultBaseModelDirectory(models.Model):
+    """Базовая модель справочников."""
+
+    image_directory = "image"
+    name = models.CharField(_("name"), max_length=150, unique=True)
+    image = models.ImageField(_("image"), upload_to=image_directory_path)
     slug = models.SlugField(
-        max_length=100,
+        _("slug"),
         unique=True,
-        blank=True,
+        max_length=50,
+        validators=[validate_slug],
+        help_text=_("Required. Enter slug tag, please."),
+        error_messages={
+            "unique": _("A tag with that slug already exists."),
+        },
     )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
 
 
-class AccountIcon(BaseIcon):
-    """Модель иконки счета."""
+class DafaultFinance(DafaultBaseModelDirectory):
+    """Модель дефолтного справочника для доходов."""
 
-    image = models.ImageField(
-        upload_to="account_icons",
-    )
+    image_directory = "finance"
 
 
-class CategoryIcon(BaseIcon):
-    """Модель иконки категории."""
+class DefaultCategory(DafaultBaseModelDirectory):
+    """Модель дефолтного справочника для категорий."""
 
-    image = models.ImageField(
-        upload_to="category_icons",
-    )
+    image_directory = "category"
 
 
 class Account(models.Model):
@@ -61,13 +75,21 @@ class Account(models.Model):
         verbose_name="Баланс пользователя",
     )
     title = models.CharField("Название", max_length=70)
-    icon = models.ForeignKey(
-        AccountIcon,
-        on_delete=models.CASCADE,
-        related_name="accounts",
-        verbose_name="Иконка",
-        null=True,
-    )
+    # ingredients = models.ManyToManyField(
+    #     Ingredient,
+    #     verbose_name=_("ingredients"),
+    #     blank=True,
+    #     through="RecipeIngredient",
+    #     related_name="recipes",
+    # )
+
+    # icon = models.ForeignKey(
+    #     AccountIcon,
+    #     on_delete=models.CASCADE,
+    #     related_name="accounts",
+    #     verbose_name="Иконка",
+    #     null=True,
+    # )
     balance = models.IntegerField("Баланс", default=0)
 
     class Meta:
@@ -78,18 +100,62 @@ class Account(models.Model):
         return f"Счета пользователя {self.user}"
 
 
+class RecipeIngredient(models.Model):
+    """Модель ингридиентов рецепта."""
+
+    # recipe = models.ForeignKey(
+    #     Recipe,
+    #     verbose_name=_("recipe"),
+    #     on_delete=models.CASCADE,
+    #     related_name="recipe_ingredients",
+    # )
+    # ingredient = models.ForeignKey(
+    #     Ingredient,
+    #     verbose_name=_("ingredient"),
+    #     on_delete=models.CASCADE,
+    #     related_name="ingredient_recipes",
+    # )
+    amount = models.PositiveSmallIntegerField(
+        _("amount"),
+        validators=[
+            MinValueValidator(
+                1,
+                message=_(
+                    "The minimum quantity of an ingredient in a recipe is 1"
+                ),
+            )
+        ],
+    )
+
+    class Meta:
+        """Метаданные модели ингридиентов рецепта."""
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["recipe", "ingredient"],
+                name="unique_recipe_ingredient",
+            )
+        ]
+        verbose_name = _("recipe ingredient")
+        verbose_name_plural = _("recipe ingredients")
+
+    def __str__(self):
+        """Метод возвращает информацию по ингридиенту рецепта."""
+        return f"{self.ingredient} - {self.amount}"
+
+
 class Category(models.Model):
     """Модель категорий для трат."""
 
     title = models.CharField("Название категории", max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
-    icon = models.ForeignKey(
-        CategoryIcon,
-        on_delete=models.CASCADE,
-        related_name="categories",
-        verbose_name="Иконка",
-        null=True,
-    )
+    # icon = models.ForeignKey(
+    #     CategoryIcon,
+    #     on_delete=models.CASCADE,
+    #     related_name="categories",
+    #     verbose_name="Иконка",
+    #     null=True,
+    # )
     color = models.CharField(
         max_length=7,
         unique=True,
@@ -114,25 +180,6 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
-
-
-# class Currency(models.Model):
-#     """Модель валют."""
-
-#     title = models.CharField(
-#         "Полное название валюты", unique=True, max_length=50
-#     )
-#     code = models.CharField(
-#         "Буквенный код валюты", unique=True, max_length=3
-#     )
-
-#     class Meta:
-#         verbose_name = "Валюта"
-#         verbose_name_plural = "Валюты"
-#         default_related_name = "currencies"
-
-#     def __str__(self):
-#         return self.title
 
 
 class Spend(models.Model):
