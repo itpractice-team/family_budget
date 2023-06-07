@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import './Budget.scss';
