@@ -7,7 +7,7 @@ import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togg
 import { getUser } from '../../store/slices/userSlice';
 import Button from '../../ui/Button/Button';
 import SpendingList from '../../Components/SpendingList/SpendingList';
-import LeftBlock from '../../Components/LeftBlock /LeftBlock';
+import LeftBlock from '../../Components/LeftBlock/LeftBlock';
 import RightBlock from '../../Components/RightBlock/RightBlock';
 
 // mock data
