@@ -5,25 +5,15 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 100px;
-  height: 238px;
-  padding: 56px 160px;
+  min-height: 180px;
+  padding: 38px 160px;
 }
 
-.footer__column-first {
-  max-width: 512px;
-}
-
-.footer__column-second {
-  padding: 24px;
-  max-width: 377px;
-}
-
-.footer__column-first,
-.footer__column-second {
+.footer__content {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-width: 376px;
 }
 
 .footer__title {
@@ -34,14 +24,3 @@
   @include text-medium-web;
 }
 
-.footer__text,
-.footer__email {
-  @include text-small-web;
-  color: #1e1d24;
-}
-
-.footer__email {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}

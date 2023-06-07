@@ -1,6 +1,7 @@
 @import '../../styles/consts.scss';
 
 .account {
+  position: relative;
   padding: 21px 24px 33px 24px;
   width: 100%;
   height: 128px;
@@ -11,6 +12,8 @@
 }
 
 .account__title {
+  @include h3-web;
+  color: #1E1D24;
 }
 
 .account__selected-content {
