@@ -99,64 +99,68 @@ export default function Budget() {
 
   function getTodayDate(event) {
     const today = new Date();
-    let previousDate = new Date();
-    let dateString = '';
+
+    const previousDate = new Date();
     let previousDateString = '';
-    let formatter = null;
+
+    const monthFormatter = new Intl.DateTimeFormat('ru', {
+      month: 'long',
+    });
+
+    const monthFormatedToday = monthFormatter.format(today);
 
     switch (event.currentTarget.value) {
       case 'today':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        });
-
-        dateString = formatter.format(today);
-        setTimeInterval(dateString);
+        // месяцы начинаются с 0, нужно добавить 1, чтобы получить текущий
+        setTimeInterval(`Сегодня: ${today.getFullYear()} ${monthFormatedToday} ${today.getDate()}`);
 
         break;
 
       case 'week':
-        formatter = new Intl.DateTimeFormat('ru', {
-          month: 'long',
-        });
-
-        dateString = formatter.format(today);
-
         // вычисления даты 7 дней назад
         previousDate.setDate(previousDate.getDate() - 7);
 
         if (previousDate.getDate() > today.getDate()) {
-          previousDateString = `${previousDate.getDate()}, ${formatter.format(previousDate)}`;
+          previousDateString = `${monthFormatter.format(previousDate)} ${previousDate.getDate()}`;
+        } else {
+          previousDateString = `${previousDate.getDate()}`;
         }
 
-        setTimeInterval(`${previousDateString}‒${today.getDate()}, ${dateString}`);
-
-        // сброс значения
-        previousDate = new Date();
+        setTimeInterval(
+          `На этой неделе: ${previousDateString} ‒ ${monthFormatedToday} ${today.getDate()}`,
+        );
 
         break;
 
       case 'mounth':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-          month: 'long',
-        });
+        // вычисления даты месяц назад
+        previousDate.setMonth(previousDate.getMonth() - 1);
 
-        dateString = formatter.format(today);
-        setTimeInterval(dateString);
+        if (previousDate.getFullYear() < today.getFullYear()) {
+          previousDateString = `${previousDate.getFullYear()} ${monthFormatter.format(
+            previousDate,
+          )} ${previousDate.getDate()}`;
+        } else {
+          previousDateString = `${monthFormatter.format(previousDate)} ${previousDate.getDate()}`;
+        }
+
+        setTimeInterval(
+          `В этом месяце: ${previousDateString} ‒ ${monthFormatedToday} ${today.getDate()}`,
+        );
 
         break;
 
       case 'year':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-        });
+        // вычисления даты месяц назад
+        previousDate.setFullYear(previousDate.getFullYear() - 1);
 
-        dateString = formatter.format(today);
-        setTimeInterval(dateString);
+        previousDateString = `${previousDate.getFullYear()} ${monthFormatter.format(
+          previousDate,
+        )} ${previousDate.getDate()}`;
 
+        setTimeInterval(
+          `За год: ${previousDateString} ‒ ${previousDate.getFullYear()} ${monthFormatedToday} ${today.getDate()}`,
+        );
         break;
 
       case 'all':
@@ -165,7 +169,7 @@ export default function Budget() {
         break;
 
       default:
-        setTimeInterval('Выберите время');
+        setTimeInterval('Выберите период');
 
         break;
     }
@@ -182,19 +186,19 @@ export default function Budget() {
           <div className="budget__filtration-wrapper">
             <select className="budget__select" onChange={getTodayDate}>
               <option value="today" className="budget__option">
-                {`Сегодня ${timeInterval}`}
+                Сегодня
               </option>
               <option value="week" className="budget__option">
-                {timeInterval ? `На этой неделе ${timeInterval}` : 'Неделя'}
+                Неделя
               </option>
               <option value="mounth" className="budget__option">
-                {timeInterval ? `${timeInterval}` : 'Месяц'}
+                Месяц
               </option>
               <option value="year" className="budget__option">
-                {timeInterval ? `В году ${timeInterval}` : 'Год'}
+                Год
               </option>
               <option value="all" className="budget__option">
-                {timeInterval ? `В году ${timeInterval}` : 'Вся история'}
+                Вся история
               </option>
             </select>
 
