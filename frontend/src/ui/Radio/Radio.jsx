@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Radio.scss';
 
 export default function Radio({ text, icon, value, onChange, disabled, extraClass }) {
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
@@ -23,9 +24,9 @@ export default function Radio({ text, icon, value, onChange, disabled, extraClas
         onChange={handleChange}
         disabled={disabled}
       />
-      <span className="radio__circle" />
+      <span className="radio__circle"> </span>
       {icon && <img src={icon} alt="Icon" className="radio__icon" />}
-      {text && <span className="radio__label">{text}</span>}
+      {text && <span className="radio__text">{text}</span>}
     </label>
   );
 }
