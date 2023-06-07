@@ -72,6 +72,7 @@ const spend = [
 export default function Budget() {
   const dispatch = useDispatch();
   const [timeInterval, setTimeInterval] = useState('');
+  const [isFieldset, setIsFieldset] = useState('');
 
   const isIncomePopupOpen = useSelector((state) => state.popup.isIncomePopupOpen);
   const isSpendPopupOpen = useSelector((state) => state.popup.isSpendPopupOpen);
@@ -111,7 +112,7 @@ export default function Budget() {
 
     const monthFormatedToday = monthFormatter.format(today);
 
-    switch (event.currentTarget.value) {
+    switch (event.target.value) {
       case 'today':
         // месяцы начинаются с 0, нужно добавить 1, чтобы получить текущий
         setTimeInterval(`Сегодня: ${today.getFullYear()} ${monthFormatedToday} ${today.getDate()}`);
@@ -181,29 +182,97 @@ export default function Budget() {
     // modal & calendar
   }
 
+  function showSelect() {
+    return isFieldset ? setIsFieldset('') : setIsFieldset('budget__select-fieldset_open');
+  }
+
   return (
     <section className="budget">
       <LeftBlock />
       <section className="budget__spending">
         <div className="budget__filtration">
           <div className="budget__filtration-wrapper">
-            <select className="budget__select" onChange={getTodayDate}>
-              <option value="today" className="budget__option">
-                Сегодня
-              </option>
-              <option value="week" className="budget__option">
-                Неделя
-              </option>
-              <option value="mounth" className="budget__option">
-                Месяц
-              </option>
-              <option value="year" className="budget__option">
-                Год
-              </option>
-              <option value="all" className="budget__option">
-                Вся история
-              </option>
-            </select>
+            <div className={`budget__select ${isFieldset}`}>
+              <button className="budget__select-button" type="button" onClick={showSelect}>
+                {timeInterval || 'На этой неделе'}
+              </button>
+
+              <fieldset
+                className="budget__select-fieldset"
+                onChange={getTodayDate}
+                name="timePeriod"
+              >
+                <label
+                  className="form__input-label form__input-label_radio budget__select-option"
+                  htmlFor="select-today"
+                >
+                  Сегодня
+                  <input
+                    type="radio"
+                    id="select-today"
+                    className="form__radio"
+                    value="today"
+                    name="timePeriod"
+                  />
+                </label>
+
+                <label
+                  className="form__input-label form__input-label_radio budget__select-option"
+                  htmlFor="select-week"
+                >
+                  Неделя
+                  <input
+                    type="radio"
+                    id="select-week"
+                    className="form__radio"
+                    value="week"
+                    name="timePeriod"
+                  />
+                </label>
+
+                <label
+                  className="form__input-label form__input-label_radio budget__select-option"
+                  htmlFor="select-mounth"
+                >
+                  Месяц
+                  <input
+                    type="radio"
+                    id="select-mounth"
+                    className="form__radio"
+                    value="mounth"
+                    name="timePeriod"
+                  />
+                </label>
+
+                <label
+                  className="form__input-label form__input-label_radio budget__select-option"
+                  htmlFor="select-year"
+                >
+                  Год
+                  <input
+                    type="radio"
+                    id="select-year"
+                    className="form__radio"
+                    value="year"
+                    name="timePeriod"
+                  />
+                </label>
+
+                <label
+                  className="form__input-label form__input-label_radio budget__select-option"
+                  htmlFor="select-all"
+                >
+                  Вся история
+                  <input
+                    type="radio"
+                    id="select-all"
+                    className="form__radio"
+                    value="all"
+                    name="timePeriod"
+                  />
+                </label>
+              </fieldset>
+            </div>
 
             <button type="button" className="budget__filtration-button" onClick={showCalendar}>
               По дате
