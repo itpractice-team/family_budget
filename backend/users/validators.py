@@ -18,6 +18,22 @@ validate_simple_name = RegexValidator(
 )
 
 
+color_hex_code_re = _lazy_re_compile(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
+validate_color_hex_code = RegexValidator(
+    color_hex_code_re,
+    _(
+        "The valid hexadecimal color code "
+        "must satisfy the following conditions:"
+        "1. It should start from ‘#’ symbol."
+        "2. It should be followed by the letters from a-f, A-F "
+        "and/or digits from 0-9."
+        "3. The length of the hexadecimal color code should be either 6 or 3, "
+        "excluding ‘#’ symbol."
+    ),
+    "invalid",
+)
+
+
 @deconstructible
 class UnicodeUsernameValidator(RegexValidator):
     regex = r"^[a-zA-Z\d_.+-]+\Z"

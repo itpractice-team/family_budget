@@ -10,6 +10,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 
+from colorfield.fields import ColorField
+from core.validators import validate_color_hex_code
+
 User = get_user_model()
 
 COMMON_VALIDATOR = [MinValueValidator(1), MaxValueValidator(1_000_000)]
@@ -27,20 +30,19 @@ def image_directory_path(instance, filename):
     return f"{instance.image_directory}/{filename}"
 
 
-class DafaultBaseModelDirectory(models.Model):
+class BaseDirectoryModel(models.Model):
     """Базовая модель справочников."""
 
-    image_directory = "image"
     name = models.CharField(_("name"), max_length=150, unique=True)
-    image = models.ImageField(_("image"), upload_to=image_directory_path)
+    blocked = models.BooleanField(_("blocked"), default=True)
     slug = models.SlugField(
         _("slug"),
         unique=True,
         max_length=50,
         validators=[validate_slug],
-        help_text=_("Required. Enter slug tag, please."),
+        help_text=_("Required. Enter slug, please."),
         error_messages={
-            "unique": _("A tag with that slug already exists."),
+            "unique": _("A with that slug already exists."),
         },
     )
 
@@ -53,95 +55,174 @@ class DafaultBaseModelDirectory(models.Model):
         abstract = True
 
 
-class DafaultFinance(DafaultBaseModelDirectory):
-    """Модель дефолтного справочника для доходов."""
+class IconMixin(models.Model):
+    """Модель иконок для категорий доходов/расходов."""
 
-    image_directory = "finance"
+    image_directory = "icon"
+    image = models.ImageField(_("image"), upload_to=image_directory_path)
+
+    class Meta:
+        abstract = True
 
 
-class DefaultCategory(DafaultBaseModelDirectory):
-    """Модель дефолтного справочника для категорий."""
+class Icon(IconMixin, models.Model):
+    """Модель иконок для категорий доходов/расходов."""
 
     image_directory = "category"
 
 
-class Account(models.Model):
-    """Модель счета пользователя."""
+class Finance(BaseDirectoryModel, IconMixin):
+    """Модель справочника для источника дохода/списания(счет)."""
 
+    image_directory = "finance"
+
+
+class Category(BaseDirectoryModel):
+    """Модель cправочника для категорий."""
+
+    pass
+
+
+class Budget(models.Model):
+    """Модель бюджета пользователя."""
+
+    name = models.CharField(
+        _("name"),
+        max_length=200,
+        help_text=_("Required. Enter name budget, please."),
+    )
+    pub_date = models.DateTimeField(
+        _("public date"), default=timezone.now, db_index=True
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="balances",
-        verbose_name="Баланс пользователя",
+        related_name="budgets",
+        verbose_name=_("User budgets"),
     )
-    title = models.CharField("Название", max_length=70)
-    # ingredients = models.ManyToManyField(
-    #     Ingredient,
-    #     verbose_name=_("ingredients"),
-    #     blank=True,
-    #     through="RecipeIngredient",
-    #     related_name="recipes",
-    # )
-
-    # icon = models.ForeignKey(
-    #     AccountIcon,
-    #     on_delete=models.CASCADE,
-    #     related_name="accounts",
-    #     verbose_name="Иконка",
-    #     null=True,
-    # )
-    balance = models.IntegerField("Баланс", default=0)
+    categories = models.ManyToManyField(
+        Category,
+        verbose_name=_("categories"),
+        blank=True,
+        through="BudgetCategories",
+        related_name="budgets",
+    )
+    description = models.TextField(
+        _("Budget description"),
+        blank=True,
+    )
 
     class Meta:
-        verbose_name = "Счет"
-        verbose_name_plural = "Счета"
+        verbose_name = _("budget")
+        verbose_name_plural = _("budgets")
 
     def __str__(self):
-        return f"Счета пользователя {self.user}"
+        return f"Бюджет пользователя {self.user}"
 
 
-class RecipeIngredient(models.Model):
-    """Модель ингридиентов рецепта."""
+class IncomeExpenses(models.IntegerChoices):
+    """Модель выбора дохода/расхода."""
 
-    # recipe = models.ForeignKey(
-    #     Recipe,
-    #     verbose_name=_("recipe"),
-    #     on_delete=models.CASCADE,
-    #     related_name="recipe_ingredients",
-    # )
-    # ingredient = models.ForeignKey(
-    #     Ingredient,
-    #     verbose_name=_("ingredient"),
-    #     on_delete=models.CASCADE,
-    #     related_name="ingredient_recipes",
-    # )
-    amount = models.PositiveSmallIntegerField(
-        _("amount"),
-        validators=[
-            MinValueValidator(
-                1,
-                message=_(
-                    "The minimum quantity of an ingredient in a recipe is 1"
-                ),
-            )
-        ],
+    INCOME = 0, _("Income")
+    EXPENSES = 1, _("Expenses")
+    __empty__ = _("(Unknown)")
+
+
+class BudgetCategories(models.Model):
+    """Модель категорий дохода/расхода для бюджета."""
+
+    budget = models.ForeignKey(
+        Budget,
+        verbose_name=_("budget"),
+        on_delete=models.CASCADE,
+        related_name="budget_categories",
+    )
+    category = models.ForeignKey(
+        Category,
+        verbose_name=_("category"),
+        on_delete=models.CASCADE,
+        related_name="category_budgets",
+    )
+    income_expenses = models.IntegerField(
+        verbose_name=_("type"),
+        choices=IncomeExpenses.choices,
+    )
+    icon = models.ForeignKey(
+        Icon,
+        verbose_name=_("icon"),
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="icon_categories",
+    )
+    color = ColorField(
+        _("color HEX-code"),
+        max_length=7,
+        blank=True,
+        validators=[validate_color_hex_code],
+        help_text=_("Not required. Enter HEX-code color, please."),
     )
 
     class Meta:
-        """Метаданные модели ингридиентов рецепта."""
+        """Метаданные модели категорий бюджета."""
 
         constraints = [
             models.UniqueConstraint(
-                fields=["recipe", "ingredient"],
-                name="unique_recipe_ingredient",
+                fields=["budget", "category", "income_expenses"],
+                name="unique_budget_categories",
             )
         ]
-        verbose_name = _("recipe ingredient")
-        verbose_name_plural = _("recipe ingredients")
+        verbose_name = _("budget category")
+        verbose_name_plural = _("budget categories")
 
     def __str__(self):
-        """Метод возвращает информацию по ингридиенту рецепта."""
-        return f"{self.ingredient} - {self.amount}"
+        """Метод возвращает информацию по категориям бюджета."""
+        return f"{self.category} (тип {self.income_expenses})"
+
+
+class BudgetFinances(models.Model):
+    """Модель источников финансирования дохода/расхода для бюджета."""
+
+    budget = models.ForeignKey(
+        Budget,
+        verbose_name=_("budget"),
+        on_delete=models.CASCADE,
+        related_name="budget_categories",
+    )
+    finance = models.ForeignKey(
+        Finance,
+        verbose_name=_("finance"),
+        on_delete=models.CASCADE,
+        related_name="finance_budgets",
+    )
+    balance = models.IntegerField(
+        verbose_name=_("balance"),
+        max_digits=15,
+        decimal_places=2,
+        null=True,
+    )
+    color = ColorField(
+        _("color HEX-code"),
+        max_length=7,
+        blank=True,
+        validators=[validate_color_hex_code],
+        help_text=_("Not required. Enter HEX-code color, please."),
+    )
+
+    class Meta:
+        """Метаданные модели категорий бюджета."""
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["budget", "category", "income_expenses"],
+                name="unique_budget_categories",
+            )
+        ]
+        verbose_name = _("budget category")
+        verbose_name_plural = _("budget categories")
+
+    def __str__(self):
+        """Метод возвращает информацию по категориям бюджета."""
+        return f"{self.category} (тип {self.income_expenses})"
 
 
 class Category(models.Model):
