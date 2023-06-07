@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "npx eslint .",
-    "storybook": "start-storybook"
+    "sb": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
@@ -38,7 +39,8 @@
       "plugin:jsx-a11y/recommended",
       "plugin:import/recommended",
       "airbnb",
-      "prettier"
+      "prettier",
+      "plugin:storybook/recommended"
     ],
     "parserOptions": {
       "sourceType": "module"
@@ -67,13 +69,26 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.18",
+    "@storybook/addon-interactions": "^7.0.18",
+    "@storybook/addon-links": "^7.0.18",
+    "@storybook/blocks": "^7.0.18",
+    "@storybook/preset-create-react-app": "^7.0.18",
+    "@storybook/react": "^7.0.18",
+    "@storybook/react-webpack5": "^7.0.18",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "eslint": "^8.39.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.12",
     "prettier": "^2.8.8",
-    "sass": "^1.62.1"
+    "prop-types": "^15.8.1",
+    "sass": "^1.62.1",
+    "storybook": "^7.0.18",
+    "webpack": "^5.84.1"
   }
 }
