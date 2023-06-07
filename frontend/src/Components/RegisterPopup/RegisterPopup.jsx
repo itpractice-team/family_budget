@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
-import registerValidation from '../../utils/validations/RegisterValidation';
+import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
 
 export default function RegisterPopup({ onClose }) {
