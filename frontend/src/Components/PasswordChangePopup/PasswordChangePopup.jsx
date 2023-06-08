@@ -34,7 +34,6 @@ export default function PasswordChangePopup({ onClose }) {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -62,11 +61,6 @@ export default function PasswordChangePopup({ onClose }) {
               className="form__input"
               type="password"
               placeholder="Введите текущий пароль"
-              value={current_password}
-              onChange={handleChange}
-              required
-              minLength={8}
-              maxLength={40}
             />
             <span
               className={`form__valid-message 
@@ -87,8 +81,6 @@ export default function PasswordChangePopup({ onClose }) {
               className="form__input form__input_password-new"
               type="password"
               placeholder="Введите новый пароль"
-              value={new_password}
-              onChange={handleChange}
             />
             <span
               className={`form__valid-message 
@@ -126,8 +118,6 @@ export default function PasswordChangePopup({ onClose }) {
               className="form__input"
               type="password"
               placeholder="Введите новый пароль еще раз"
-              value={re_new_password}
-              onChange={handleChange}
             />
             <span
               className={`form__valid-message 

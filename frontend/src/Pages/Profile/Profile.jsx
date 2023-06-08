@@ -75,7 +75,6 @@ export default function Profile() {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -258,7 +257,7 @@ export default function Profile() {
               </span>
             </label>
             <div
-              className="ooltip tooltip-profile-page"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="name"
               data-tooltip-content={RequirementsNameAndSurname}
             />
@@ -294,7 +293,7 @@ export default function Profile() {
               </span>
             </label>
             <div
-              className="ooltip tooltip-profile-page"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="surname"
               data-tooltip-content={RequirementsNameAndSurname}
             />
