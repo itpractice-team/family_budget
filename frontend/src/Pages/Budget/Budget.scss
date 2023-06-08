@@ -35,23 +35,73 @@
 }
 
 .budget__select {
-  @include text-small-web;
-  color: #1e1d24;
   border: 1px solid #303360;
   border-radius: 50px;
+
+  position: relative;
+
+  width: 100%;
+  max-width: fit-content;
+}
+
+.budget__select-fieldset_open {
+  background-color: #13164a;
+
+  .budget__select-fieldset {
+    opacity: 1;
+    width: max-content;
+    height: fit-content;
+    display: block;
+    visibility: visible;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .budget__select-button {
+    color: #ffbb10;
+    background-image: url(../../Images/chevron-up-ic-24.svg);
+  }
+}
+
+.budget__select-button {
+  @include text-small-web;
+  color: #1e1d24;
+  border-radius: 50px;
+
   padding: 4px 36px 4px 16px;
-  appearance: none;
   background-image: url(../../Images/chevron-down.svg);
   background-repeat: no-repeat;
   background-size: 20px;
   background-position-x: calc(100% - 4px);
   background-position-y: center;
-  transition: 0.5s linear;
 }
 
-.budget__select:hover {
-  opacity: 0.5;
-  cursor: pointer;
+.budget__select-fieldset {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  background-color: white;
+  padding: 40px;
+  max-width: 376px;
+  transition: 0.2s linear;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.budget__select-option {
+  width: 100%;
 }
 
 .budget__filtration-button {
