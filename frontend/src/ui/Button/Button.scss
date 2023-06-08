@@ -223,10 +223,10 @@ $bg-color-fiat-pressed: #f4f4f4;
 
 .button {
   // Common button styles
-  max-width: 328px;
+  max-width: 432px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   cursor: pointer;
   transition: all 0.5s;
