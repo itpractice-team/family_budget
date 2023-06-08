@@ -2,16 +2,21 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import (
     MaxValueValidator,
+    MinLengthValidator,
     MinValueValidator,
     validate_slug,
 )
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 
 from colorfield.fields import ColorField
-from core.validators import validate_color_hex_code
+from core.validators import (
+    validate_color_hex_code,
+    validate_letter_or_blank_space,
+)
 
 User = get_user_model()
 
@@ -33,8 +38,29 @@ def image_directory_path(instance, filename):
 class BaseDirectoryModel(models.Model):
     """Базовая модель справочников."""
 
-    name = models.CharField(_("name"), max_length=150, unique=True)
-    blocked = models.BooleanField(_("blocked"), default=True)
+    name = models.CharField(
+        _("name"),
+        max_length=25,
+        validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
+    )
+    description = models.TextField(_("description"))
+
+    class Meta:
+        abstract = True
+        constraints = [
+            models.UniqueConstraint(
+                Lower("name"),
+                name="%(class)s_name_unique",
+                violation_error_message=(
+                    "Наименование должно быть уникальным!"
+                ),
+            ),
+        ]
+
+
+class SlugMixin(models.Model):
+    """Модель микшена для slug справочников."""
+
     slug = models.SlugField(
         _("slug"),
         unique=True,
@@ -56,7 +82,7 @@ class BaseDirectoryModel(models.Model):
 
 
 class IconMixin(models.Model):
-    """Модель иконок для категорий доходов/расходов."""
+    """Модель микшена для иконок."""
 
     image_directory = "icon"
     image = models.ImageField(_("image"), upload_to=image_directory_path)
@@ -70,17 +96,46 @@ class Icon(IconMixin, models.Model):
 
     image_directory = "category"
 
+    class Meta:
+        verbose_name = _("Icon")
+        verbose_name_plural = _("Icons")
 
-class Finance(BaseDirectoryModel, IconMixin):
+    def __str__(self):
+        """Метод возвращает информацию по иконке."""
+        return self.image
+
+
+class Finance(BaseDirectoryModel, IconMixin, SlugMixin):
     """Модель справочника для источника дохода/списания(счет)."""
 
     image_directory = "finance"
+
+    class Meta:
+        verbose_name = _("Finance")
+        verbose_name_plural = _("Finances")
+
+    def __str__(self):
+        """Метод возвращает информацию по источнику финансирования."""
+        return self.name
 
 
 class Category(BaseDirectoryModel):
     """Модель cправочника для категорий."""
 
-    pass
+    image = models.ForeignKey(
+        Icon,
+        on_delete=models.SET_NULL,
+        related_name="categories",
+        verbose_name=_("Icon"),
+    )
+
+    class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
+
+    def __str__(self):
+        """Метод возвращает информацию по категории."""
+        return self.name
 
 
 class Budget(models.Model):
@@ -113,10 +168,11 @@ class Budget(models.Model):
     )
 
     class Meta:
-        verbose_name = _("budget")
-        verbose_name_plural = _("budgets")
+        verbose_name = _("Budget")
+        verbose_name_plural = _("Budgets")
 
     def __str__(self):
+        """Возвращает информацию по бюджету пользователя."""
         return f"Бюджет пользователя {self.user}"
 
 
@@ -128,31 +184,18 @@ class IncomeExpenses(models.IntegerChoices):
     __empty__ = _("(Unknown)")
 
 
-class BudgetCategories(models.Model):
+class BudgetCategories(Category):
     """Модель категорий дохода/расхода для бюджета."""
 
     budget = models.ForeignKey(
         Budget,
         verbose_name=_("budget"),
         on_delete=models.CASCADE,
-        related_name="budget_categories",
+        related_name="categories",
     )
-    category = models.ForeignKey(
-        Category,
-        verbose_name=_("category"),
-        on_delete=models.CASCADE,
-        related_name="category_budgets",
-    )
-    income_expenses = models.IntegerField(
+    type_category = models.IntegerField(
         verbose_name=_("type"),
         choices=IncomeExpenses.choices,
-    )
-    icon = models.ForeignKey(
-        Icon,
-        verbose_name=_("icon"),
-        null=True,
-        on_delete=models.CASCADE,
-        related_name="icon_categories",
     )
     color = ColorField(
         _("color HEX-code"),
@@ -167,8 +210,12 @@ class BudgetCategories(models.Model):
 
         constraints = [
             models.UniqueConstraint(
-                fields=["budget", "category", "income_expenses"],
+                fields=["name", "budget", "income_expenses"],
                 name="unique_budget_categories",
+                violation_error_message=(
+                    "Наименование категории для бюджета "
+                    "должно быть уникальным!"
+                ),
             )
         ]
         verbose_name = _("budget category")
@@ -194,10 +241,10 @@ class BudgetFinances(models.Model):
         on_delete=models.CASCADE,
         related_name="finance_budgets",
     )
-    balance = models.IntegerField(
+    balance = models.DecimalField(
         verbose_name=_("balance"),
         max_digits=15,
-        decimal_places=2,
+        decimal_places=0,
         null=True,
     )
     color = ColorField(
