@@ -45,15 +45,13 @@ export default function PasswordChangePopup({ onClose }) {
   newPassword.current = watch('new_password', '');
 
   return (
-    <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form" onSubmit={handleSubmit(handleChangePassword)}>
-        <h2 className="form__header">Изменение пароля </h2>
-
-        <p className="form__text form__text_explanation">
-          После изменения пароля произойдёт выход из аккаунта на всех устройствах, сайтах и
-          приложениях, где вошли c текущим паролем
-        </p>
-
+    <Popup
+      onClose={onClose}
+      popupSize="popup_s"
+      title="Изменение пароля"
+      subtitle="После изменения пароля, все активные сеансы на всех устройствах, сайтах и приложениях будут автоматически завершены"
+    >
+      <form className="form" onSubmit={handleChangePassword}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="PasswordChangePopup-oldPassword">
             Текущий пароль
@@ -63,27 +61,20 @@ export default function PasswordChangePopup({ onClose }) {
               name="current_password"
               className="form__input"
               type="password"
-              placeholder="Ввести текущий пароль"
+              placeholder="Введите текущий пароль"
+              value={current_password}
+              onChange={handleChange}
+              required
+              minLength={8}
+              maxLength={40}
             />
             <span
-            className={`form__valid-message 
+              className={`form__valid-message 
                       ${errors.current_password ? 'form__valid-message_active' : ''}`}
-          >
-            {errors?.current_password && errors?.current_password?.message}
-          </span>
+            >
+              {errors?.current_password && errors?.current_password?.message}
+            </span>
           </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="password"
-            data-tooltip-content={RequirementsPassword}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="password"
-            place="bottom"
-          />
         </div>
 
         <div className="form__input-block">
@@ -93,11 +84,13 @@ export default function PasswordChangePopup({ onClose }) {
               {...register('new_password')}
               id="PasswordChangePopup-newPassword"
               name="new_password"
-              className="form__input"
+              className="form__input form__input_password-new"
               type="password"
-              placeholder="Ввести новый пароль"
+              placeholder="Введите новый пароль"
+              value={new_password}
+              onChange={handleChange}
             />
-          <span
+            <span
               className={`form__valid-message 
                         ${errors.new_password ? 'form__valid-message_active' : ''}`}
             >
@@ -105,7 +98,7 @@ export default function PasswordChangePopup({ onClose }) {
             </span>
           </label>
           <div
-            className="form__tooltip"
+            className=" tooltip tooltip-change-password"
             data-tooltip-id="password"
             data-tooltip-content={RequirementsPassword}
           />
@@ -132,27 +125,17 @@ export default function PasswordChangePopup({ onClose }) {
               name="re_new_password"
               className="form__input"
               type="password"
-              placeholder="Ввести новый пароль еще раз"
+              placeholder="Введите новый пароль еще раз"
+              value={re_new_password}
+              onChange={handleChange}
             />
             <span
-                className={`form__valid-message 
+              className={`form__valid-message 
                           ${errors.re_new_password ? 'form__valid-message_active' : ''}`}
-              >
-                {errors?.re_new_password && errors?.re_new_password?.message}
-              </span>
+            >
+              {errors?.re_new_password && errors?.re_new_password?.message}
+            </span>
           </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="password"
-            data-tooltip-content={RequirementsPassword}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="password"
-            place="bottom"
-          />
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_profile">

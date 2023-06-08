@@ -21,11 +21,10 @@ export default function ConfirmationPopup({ onClose }) {
   };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form form_single" onSubmit={handleDeleteProfile}>
-        <h2 className="form__header">Подтверждение удаления</h2>
-        <p className="form__text">Вы действительно хотите удалить профиль?</p>
-        <div className="form__button-wrapper form__button-wrapper_profile">
+    <Popup onClose={onClose} popupSize="popup_s" title="Подтверждение удаления">
+      <form className="form form_confirmation" onSubmit={handleDeleteProfile}>
+        <p className="form__text_confirmation">Вы действительно хотите удалить профиль?</p>
+        <div className="form__button-wrapper">
           <Button
             variant="secondary"
             type="text"
