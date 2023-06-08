@@ -61,7 +61,7 @@
 
   .budget__select-button {
     color: #ffbb10;
-    background-image: url(../../Images/chevron-up-ic-24.svg);
+    background-image: url(../../Images/chevron-up.svg);
   }
 }
 
@@ -96,6 +96,7 @@
   margin: 0;
 
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 8px;
 }
