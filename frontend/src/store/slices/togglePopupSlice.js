@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isSpendingPopupOpen: false,
-  isEarningPopupOpen: false,
+  isSpendPopupOpen: false,
+  isIncomePopupOpen: false,
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
   isPasswordChangePopupOpen: false,
   isAvatarUploaderPopupOpen: false,
   isConfirmationPopupOpen: false,
   isInfoPopupOpen: false,
-  isAccountsPopupOpen: false,
-  isAddAccountPopupOpen: false,
+  isAccountPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -20,11 +19,11 @@ const togglePopupSlice = createSlice({
     toggleInfoPopup: (state, { payload }) => {
       state.isInfoPopupOpen = payload;
     },
-    toggleSpendingPopup: (state, { payload }) => {
-      state.isSpendingPopupOpen = payload;
+    toggleSpendPopup: (state, { payload }) => {
+      state.isSpendPopupOpen = payload;
     },
-    toggleEarningPopup: (state, { payload }) => {
-      state.isEarningPopupOpen = payload;
+    toggleIncomePopup: (state, { payload }) => {
+      state.isIncomePopupOpen = payload;
     },
     toggleRegisterPopup: (state, { payload }) => {
       state.isRegisterPopupOpen = payload;
@@ -41,26 +40,22 @@ const togglePopupSlice = createSlice({
     toggleConfirmationPopup: (state, { payload }) => {
       state.isConfirmationPopupOpen = payload;
     },
-    toggleAccountsPopup: (state, { payload }) => {
-      state.isAccountsPopupOpen = payload;
-    },
-    toggleAddAccountPopup: (state, { payload }) => {
-      state.isAddAccountPopupOpen = payload;
+    toggleAccountPopup: (state, { payload }) => {
+      state.isAccountPopupOpen = payload;
     },
   },
 });
 
 export const {
-  toggleSpendingPopup,
-  toggleEarningPopup,
+  toggleSpendPopup,
+  toggleIncomePopup,
   toggleRegisterPopup,
   toggleLoginPopup,
   togglePasswordChangePopup,
   toggleAvatarUploaderPopup,
   toggleConfirmationPopup,
   toggleInfoPopup,
-  toggleAccountsPopup,
-  toggleAddAccountPopup,
+  toggleAccountPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;
