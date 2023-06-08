@@ -1,7 +1,11 @@
-/* eslint-disable camelcase */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/jsx-props-no-spreading */
+
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip';
+import { useForm, useWatch } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
 import {
@@ -19,19 +23,22 @@ import {
 import Button from '../../ui/Button/Button';
 import defaultAvatar from '../../Images/avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
+import profileValidation from '../../utils/validations/profileValidation';
 
 export default function Profile() {
   const dispatch = useDispatch();
 
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [isFormDirty, setIsFormDirty] = useState(false);
 
   const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
   const isAvatarUploaderPopupOpen = useSelector((state) => state.popup.isAvatarUploaderPopupOpen);
   const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
   const userData = useSelector((state) => state.user.user);
   const isFetched = useSelector((state) => state.user.isFetched);
+
+  const [disableButton, setDisableButton] = useState(true);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (!isFetched) {
@@ -65,44 +72,56 @@ export default function Profile() {
     dispatch(toggleConfirmationPopup(false));
   };
 
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    setValue,
+    control,
+  } = useForm({
+    mode: 'onChange',
+    defaultValue: userData,
+    resolver: yupResolver(profileValidation),
+  });
+
+  /// /// default values ///////////
+  useEffect(() => {
+    if (userData) {
+      setValue('username', userData.username || '');
+      setValue('email', userData.email || '');
+      setValue('first_name', userData.first_name || '');
+      setValue('last_name', userData.last_name || '');
+    }
+  }, [userData, setValue]);
+
+  const watchedValues = useWatch({ control });
+  useEffect(() => {
+    // Проверка изменений полей
+    if (
+      userData.username === watchedValues.username &&
+      userData.email === watchedValues.email &&
+      userData.first_name === watchedValues.first_name &&
+      userData.last_name === watchedValues.last_name
+    ) {
+      setMessage('Для сохранения необходимо внести изменения');
+      setDisableButton(true);
+    } else {
+      setMessage('');
+      setDisableButton(false);
+    }
+  }, [userData, watchedValues]);
+
   const handleEnableInputs = (evt) => {
     evt.preventDefault();
     setDisable(false);
     setIsEditing(true);
   };
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    first_name: '',
-    last_name: '',
-  });
-
-  useEffect(() => {
-    if (userData) {
-      setFormData({
-        username: userData.username || '',
-        email: userData.email || '',
-        first_name: userData.first_name || '',
-        last_name: userData.last_name || '',
-      });
-    }
-  }, [userData]);
-
-  const { username, email, first_name, last_name } = formData;
-
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-    setIsFormDirty(true);
-  };
-
-  function handleUpdateProfile(evt) {
-    evt.preventDefault();
+  function handleUpdateProfile(formData) {
     if (isEditing) {
       dispatch(updateUser(formData));
       setDisable(true);
       setIsEditing(false);
-      setIsFormDirty(false);
     }
   }
 
@@ -129,16 +148,25 @@ export default function Profile() {
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
               <input
+                {...register('username', {
+                  value: userData.username || '',
+                  shouldUnregister: true,
+                })}
                 id="Profile-login"
                 name="username"
                 className="form__input"
                 type="text"
                 placeholder="Введите логин"
-                value={username}
-                onChange={handleChange}
                 disabled={disable}
               />
+              <span
+                className={`form__valid-message 
+                          ${errors.username ? 'form__valid-message_active' : ''}`}
+              >
+                {errors?.username && errors?.username?.message}
+              </span>
             </label>
+
             <div
               className="tooltip tooltip-profile-page"
               data-tooltip-id="login"
@@ -156,15 +184,20 @@ export default function Profile() {
             <label className="form__input-label" htmlFor="Profile-email">
               E-mail
               <input
+                {...register('email', { value: userData.email || '', shouldUnregister: true })}
                 id="Profile-email"
                 name="email"
                 className="form__input"
                 type="email"
                 placeholder="Введите e-mail"
-                value={email}
-                onChange={handleChange}
                 disabled={disable}
               />
+              <span
+                className={`form__valid-message 
+                        ${errors.email ? 'form__valid-message_active' : ''}`}
+              >
+                {errors?.email && errors?.email?.message}
+              </span>
             </label>
             <div
               className="tooltip tooltip-profile-page"
@@ -206,18 +239,26 @@ export default function Profile() {
             <label className="form__input-label" htmlFor="Profile-name">
               Имя
               <input
+                {...register('first_name', {
+                  value: userData.first_name || '',
+                  shouldUnregister: true,
+                })}
                 id="Profile-name"
                 name="first_name"
                 className="form__input"
                 type="text"
                 placeholder="Введите имя"
-                value={first_name}
-                onChange={handleChange}
                 disabled={disable}
               />
+              <span
+                className={`form__valid-message 
+                        ${errors.first_name ? 'form__valid-message_active' : ''}`}
+              >
+                {errors?.first_name && errors?.first_name?.message}
+              </span>
             </label>
             <div
-              className="tooltip tooltip-profile-page"
+              className="ooltip tooltip-profile-page"
               data-tooltip-id="name"
               data-tooltip-content={RequirementsNameAndSurname}
             />
@@ -234,18 +275,26 @@ export default function Profile() {
             <label className="form__input-label" htmlFor="Profile-surname">
               Фамилия
               <input
+                {...register('last_name', {
+                  value: userData.last_name || '',
+                  shouldUnregister: true,
+                })}
                 id="Profile-surname"
                 name="last_name"
                 className="form__input"
                 type="text"
                 placeholder="Введите фамилию"
-                value={last_name}
-                onChange={handleChange}
                 disabled={disable}
               />
+              <span
+                className={`form__valid-message 
+                        ${errors.last_name ? 'form__valid-message_active' : ''}`}
+              >
+                {errors?.last_name && errors?.last_name?.message}
+              </span>
             </label>
             <div
-              className="tooltip tooltip-profile-page"
+              className="ooltip tooltip-profile-page"
               data-tooltip-id="surname"
               data-tooltip-content={RequirementsNameAndSurname}
             />
@@ -259,24 +308,21 @@ export default function Profile() {
           </div>
 
           <div className="form__button-wrapper">
-            {!isEditing && (
+            {!isEditing ? (
               <Button
                 variant="primary"
                 type="text"
                 text="Изменить данные"
                 size="medium"
                 onClick={handleEnableInputs}
-                disabled={false}
               />
-            )}
-            {isEditing && (
+            ) : (
               <Button
+                disabled={!isValid || disableButton}
                 variant="primary"
                 type="text"
                 text="Сохранить данные"
                 size="medium"
-                onClick={handleUpdateProfile}
-                disabled={disable || !isFormDirty}
               />
             )}
             <Button
@@ -286,6 +332,7 @@ export default function Profile() {
               size="medium"
               onClick={handleConfirmationPopupClick}
             />
+            {isEditing && <span className="profile__error-message">{message}</span>}
           </div>
           {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
           {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}

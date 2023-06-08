@@ -1,7 +1,6 @@
-/* eslint-disable consistent-return */
-/* eslint-disable camelcase */
-/* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
+
 
 import * as yup from 'yup';
 
