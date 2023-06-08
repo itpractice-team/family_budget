@@ -116,25 +116,3 @@
   display: flex;
   gap: 32px;
 }
-
-.budget__add-button {
-  @include text-medium-web;
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 20px;
-  color: #303360;
-  background-color: #eaebf5;
-}
-
-.budget__add-button::before {
-  content: '';
-  background-image: url(../../Images/add__5.svg);
-  background-size: 16px;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 4px;
-  vertical-align: middle;
-}
