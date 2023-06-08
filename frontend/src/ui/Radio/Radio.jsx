@@ -5,11 +5,6 @@ export default function Radio({ text, icon, value, isChecked, onChange, disabled
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
   const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Generate a unique ID
 
-  const handleChange = (e) => {
-    const { checked } = e.target;
-    onChange(checked);
-  };
-
   return (
     <label className={radioClasses} htmlFor={inputId}>
       <input
@@ -19,7 +14,7 @@ export default function Radio({ text, icon, value, isChecked, onChange, disabled
         name="radio-group"
         value={value}
         checked={isChecked}
-        onChange={handleChange}
+        onChange={onChange}
         disabled={disabled}
       />
       <span className="radio__circle"> </span>
