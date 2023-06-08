@@ -7,7 +7,7 @@ import { logoutUser } from '../../store/slices/loginSlice';
 import { resetUser } from '../../store/slices/userSlice';
 import './ProfileTooltip.scss';
 import Button from '../../ui/Button/Button';
-import defaultAvatar from '../../Images/avatar-size-s.svg';
+import defaultAvatar from '../../Images/avatar.svg';
 
 export default function ProfileTooltip({ isOpen, onClose }) {
   const dispatch = useDispatch();
