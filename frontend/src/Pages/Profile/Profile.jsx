@@ -14,7 +14,6 @@ import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUplo
 import {
   RequirementsLogin,
   RequirementsEmail,
-  RequirementsPassword,
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
@@ -109,211 +108,190 @@ export default function Profile() {
 
   return (
     <section className="profile-page">
-      <form className="form form_profile" onSubmit={handleUpdateProfile}>
-        <div className="form__header-block">
-          <h1 className="form__header_profile">Настройки профиля</h1>
-          <p className="form__text form__text_profile">
-            Здесь можно менять настройки, как душе угодно
-          </p>
-        </div>
-        <div className="form__img-block">
+      <div className="profile-settings">
+        <h1 className="profile-settings__title">Настройки профиля</h1>
+        <div className="profile-settings__avatar-block">
           <img
             src={userData.avatar === null ? defaultAvatar : userData.avatar}
-            className="form__img"
+            className="profile-settings__avatar"
             alt="Аватар"
           />
-          <div className="form__image-description">
-            <Button
-              variant="secondary"
-              type="text"
-              text="Изменить фото"
-              size="medium"
-              onClick={handleAvatarUploaderClick}
+          <Button
+            variant="secondary"
+            type="text"
+            text="Изменить фото"
+            size="medium"
+            onClick={handleAvatarUploaderClick}
+          />
+        </div>
+        <form className="form form_profile" onSubmit={handleUpdateProfile}>
+          <div className="form__input-block">
+            <label className="form__input-label" htmlFor="Profile-login">
+              Логин
+              <input
+                id="Profile-login"
+                name="username"
+                className="form__input"
+                type="text"
+                placeholder="Введите логин"
+                value={username}
+                onChange={handleChange}
+                disabled={disable}
+              />
+            </label>
+            <div
+              className="tooltip tooltip-profile-page"
+              data-tooltip-id="login"
+              data-tooltip-content={RequirementsLogin}
+            />
+            <Tooltip
+              data-tooltip-variant="info"
+              className="react-tooltip"
+              classNameArrow="react-tooltip-arrow"
+              id="login"
+              place="bottom"
             />
           </div>
-        </div>
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="Profile-login">
-            Логин
-            <input
-              id="Profile-login"
-              name="username"
-              className="form__input"
-              type="text"
-              placeholder="Ввести логин"
-              value={username}
-              onChange={handleChange}
-              disabled={disable}
+          <div className="form__input-block">
+            <label className="form__input-label" htmlFor="Profile-email">
+              E-mail
+              <input
+                id="Profile-email"
+                name="email"
+                className="form__input"
+                type="email"
+                placeholder="Введите e-mail"
+                value={email}
+                onChange={handleChange}
+                disabled={disable}
+              />
+            </label>
+            <div
+              className="tooltip tooltip-profile-page"
+              data-tooltip-id="email"
+              data-tooltip-content={RequirementsEmail}
             />
-          </label>
-
-          <div
-            className="form__tooltip"
-            // className="profile__tooltip"
-            data-tooltip-id="login"
-            data-tooltip-content={RequirementsLogin}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="login"
-            place="bottom"
-          />
-        </div>
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="Profile-email">
-            E-mail
-            <input
-              id="Profile-email"
-              name="email"
-              className="form__input"
-              type="email"
-              placeholder="Ввести e-mail"
-              value={email}
-              onChange={handleChange}
-              disabled={disable}
+            <Tooltip
+              data-tooltip-variant="info"
+              className="react-tooltip"
+              classNameArrow="react-tooltip-arrow"
+              id="email"
+              place="bottom"
             />
-          </label>
-          <div
-            className="form__tooltip"
-            // className="profile__tooltip"
-            data-tooltip-id="email"
-            data-tooltip-content={RequirementsEmail}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="email"
-            place="bottom"
-          />
-        </div>
+          </div>
 
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="Profile-password">
-            Пароль
-            <input
-              id="Profile-password"
-              className="form__input"
-              type="password"
-              placeholder="*******"
-              disabled
-            />
-          </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="password"
-            data-tooltip-content={RequirementsPassword}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="password"
-            place="bottom"
-          />
-        </div>
+          <div className="form__input-block">
+            <label className="form__input-label" htmlFor="Profile-password">
+              Пароль
+              <input
+                id="Profile-password"
+                className="form__input"
+                type="password"
+                placeholder="*******"
+                disabled
+              />
+            </label>
+          </div>
 
-        <Button
-          variant="secondary"
-          type="text"
-          text="Сменить пароль"
-          size="medium"
-          extraClass="button__change-password"
-          onClick={handlePasswordChangeClick}
-        />
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="Profile-name">
-            Имя
-            <input
-              id="Profile-name"
-              name="first_name"
-              className="form__input"
-              type="text"
-              placeholder="Ввести имя"
-              value={first_name}
-              onChange={handleChange}
-              disabled={disable}
-            />
-          </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="name"
-            data-tooltip-content={RequirementsNameAndSurname}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="name"
-            place="bottom"
-          />
-        </div>
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="Profile-surname">
-            Фамилия
-            <input
-              id="Profile-surname"
-              name="last_name"
-              className="form__input"
-              type="text"
-              placeholder="Ввести фамилию"
-              value={last_name}
-              onChange={handleChange}
-              disabled={disable}
-            />
-          </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="surname"
-            data-tooltip-content={RequirementsNameAndSurname}
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="surname"
-            place="bottom"
-          />
-        </div>
-
-        <div className="form__button-wrapper form__button-wrapper_profile">
-          {!isEditing && (
-            <Button
-              variant="primary"
-              type="text"
-              text="Изменить данные"
-              size="medium"
-              onClick={handleEnableInputs}
-              disabled={false}
-            />
-          )}
-          {isEditing && (
-            <Button
-              variant="primary"
-              type="text"
-              text="Сохранить данные"
-              size="medium"
-              onClick={handleUpdateProfile}
-              disabled={disable || !isFormDirty}
-            />
-          )}
           <Button
-            variant="fiat"
+            variant="secondary"
             type="text"
-            text="Удалить профиль"
+            text="Сменить пароль"
             size="medium"
-            onClick={handleConfirmationPopupClick}
+            extraClass="button__change-password"
+            onClick={handlePasswordChangeClick}
           />
-        </div>
-        {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
-        {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
-        {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
-      </form>
+
+          <div className="form__input-block">
+            <label className="form__input-label" htmlFor="Profile-name">
+              Имя
+              <input
+                id="Profile-name"
+                name="first_name"
+                className="form__input"
+                type="text"
+                placeholder="Введите имя"
+                value={first_name}
+                onChange={handleChange}
+                disabled={disable}
+              />
+            </label>
+            <div
+              className="tooltip tooltip-profile-page"
+              data-tooltip-id="name"
+              data-tooltip-content={RequirementsNameAndSurname}
+            />
+            <Tooltip
+              data-tooltip-variant="info"
+              className="react-tooltip"
+              classNameArrow="react-tooltip-arrow"
+              id="name"
+              place="bottom"
+            />
+          </div>
+
+          <div className="form__input-block">
+            <label className="form__input-label" htmlFor="Profile-surname">
+              Фамилия
+              <input
+                id="Profile-surname"
+                name="last_name"
+                className="form__input"
+                type="text"
+                placeholder="Введите фамилию"
+                value={last_name}
+                onChange={handleChange}
+                disabled={disable}
+              />
+            </label>
+            <div
+              className="tooltip tooltip-profile-page"
+              data-tooltip-id="surname"
+              data-tooltip-content={RequirementsNameAndSurname}
+            />
+            <Tooltip
+              data-tooltip-variant="info"
+              className="react-tooltip"
+              classNameArrow="react-tooltip-arrow"
+              id="surname"
+              place="bottom"
+            />
+          </div>
+
+          <div className="form__button-wrapper">
+            {!isEditing && (
+              <Button
+                variant="primary"
+                type="text"
+                text="Изменить данные"
+                size="medium"
+                onClick={handleEnableInputs}
+                disabled={false}
+              />
+            )}
+            {isEditing && (
+              <Button
+                variant="primary"
+                type="text"
+                text="Сохранить данные"
+                size="medium"
+                onClick={handleUpdateProfile}
+                disabled={disable || !isFormDirty}
+              />
+            )}
+            <Button
+              variant="fiat"
+              type="text"
+              text="Удалить профиль"
+              size="medium"
+              onClick={handleConfirmationPopupClick}
+            />
+          </div>
+          {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
+          {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
+          {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+        </form>
+      </div>
     </section>
   );
 }
