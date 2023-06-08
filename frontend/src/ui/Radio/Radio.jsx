@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Radio.scss';
 
-export default function Radio({ text, icon, value, onChange, disabled, extraClass }) {
+export default function Radio({ text, icon, value, isChecked, onChange, disabled, extraClass }) {
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
   const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Generate a unique ID
-  const [isChecked, setChecked] = useState(false);
 
   const handleChange = (e) => {
     const { checked } = e.target;
-    setChecked(checked);
-    onChange();
+    onChange(checked);
   };
 
   return (
@@ -35,6 +33,7 @@ Radio.defaultProps = {
   text: '',
   icon: '',
   value: '',
+  isChecked: false,
   onChange: () => {},
   disabled: false,
   extraClass: '',
