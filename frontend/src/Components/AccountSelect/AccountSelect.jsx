@@ -3,7 +3,7 @@ import React from 'react';
 import './AccountSelect.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../ui/Button/Button';
-import { toggleAccountsPopup } from '../../store/slices/togglePopupSlice';
+import { toggleAccountPopup } from '../../store/slices/togglePopupSlice';
 import AccountsPopup from '../AccountsPopup/AccountsPopup';
 
 export default function AccountSelect({ handleOptionChange, selectedOption, onClose }) {
@@ -11,7 +11,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption, onCl
 
   const isAccountsPopupOpen = useSelector((state) => state.popup.isAccountsPopupOpen);
 
-  const options = ['Тинькофф', 'ВТБ', 'СБЕР'];
+  const options = ['Тинькофф', 'СБЕР', 'Наличные', 'Другой счёт'];
 
   const handleSelectOption = (value) => {
     handleOptionChange(value);
@@ -19,12 +19,12 @@ export default function AccountSelect({ handleOptionChange, selectedOption, onCl
 
   const handleAccountsClick = (evt) => {
     evt.preventDefault();
-    dispatch(toggleAccountsPopup(true));
+    dispatch(toggleAccountPopup(true));
     onClose();
   };
 
   const closeAccountsPopup = () => {
-    dispatch(toggleAccountsPopup(false));
+    dispatch(toggleAccountPopup(false));
     onClose();
   };
 
