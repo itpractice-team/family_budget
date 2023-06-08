@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRef } from 'react';
+import { useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
@@ -10,10 +10,14 @@ import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
+import Eye from '../../ui/Eye/Eye';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
-
+  const [eye, setEye] = useState(false);
+  const handleEye = () => {
+    setEye(!eye);
+  }
   const isRegistration = useSelector((state) => state.registration.data);
   const isLoading = useSelector((store) => store.registration.loading);
 
@@ -173,8 +177,9 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-password"
               name="password"
               className="form__input"
-              type="password"
+              type={eye ? 'text' : 'password'}
             />
+            <Eye handleEye={handleEye}/>
             <span
               className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}
@@ -204,9 +209,10 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
-              type="password"
+              type={eye ? 'text' : 'password'}
               placeholder="Повторить пароль"
             />
+            <Eye handleEye={handleEye}/>
             <span
               className={`form__valid-message 
                         ${errors.confirmPassword ? 'form__valid-message_active' : ''}`}
