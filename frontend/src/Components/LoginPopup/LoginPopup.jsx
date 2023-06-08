@@ -4,7 +4,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
@@ -12,6 +11,7 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
+import Button from '../../ui/Button/Button';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -47,10 +47,8 @@ export default function LoginPopup({ onClose }) {
     return <Navigate to="/budget" />;
   }
   return (
-    <Popup onClose={onClose} popupSize="popup_s">
+    <Popup onClose={onClose} popupSize="popup_s" title="Авторизация">
       <form className="form" onSubmit={handleSubmit(handleLogin)}>
-        <h2 className="form__header">Авторизация</h2>
-
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="LoginPopup-login">
             Логин
@@ -60,7 +58,7 @@ export default function LoginPopup({ onClose }) {
               name="username"
               className="form__input"
               type="text"
-              placeholder="Логин"
+              placeholder="Введите логин"
             />
             <span
               className={`form__valid-message 
@@ -69,19 +67,6 @@ export default function LoginPopup({ onClose }) {
               {errors?.username && errors?.username?.message}
             </span>
           </label>
-
-          <div
-            className="form__tooltip"
-            data-tooltip-id="login"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, _, ., +, -, без пробелов, минимальное количество символов - 2, максимальное - 25"
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="login"
-            place="bottom"
-          />
         </div>
 
         <div className="form__input-block">
@@ -93,7 +78,7 @@ export default function LoginPopup({ onClose }) {
               name="password"
               className="form__input"
               type="password"
-              placeholder="Пароль"
+              placeholder="Введите пароль"
             />
             <span
               className={`form__valid-message 
@@ -102,38 +87,30 @@ export default function LoginPopup({ onClose }) {
               {errors?.password && errors?.password?.message}
             </span>
           </label>
-          <div
-            className="form__tooltip"
-            data-tooltip-id="password"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
-          />
-          <Tooltip
-            data-tooltip-variant="info"
-            className="react-tooltip"
-            classNameArrow="react-tooltip-arrow"
-            id="password"
-            place="bottom"
-          />
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_single">
           {isLoading ? (
-            <Loader />
+            <Loader extraClass="loader-login" />
           ) : (
-            <button
-              type="submit"
-              className={`form__button form__button_submit form__button_single 
-          ${(!isValid || !errors) && 'form__button:disabled'}`}
+            <Button
+              variant="primary"
+              type="text"
+              text="Войти"
+              size="large"
+              extraClass="form__button_single"
               disabled={!isValid}
-            >
-              Войти
-            </button>
+            />
           )}
-          <div>
-            <p className="form__text">У вас ещё нет аккаунта? </p>
-            <button type="button" className="form__button_text" onClick={handleRegistrationClick}>
-              Зарегистрироваться
-            </button>
+          <div className="form__button-wrapper-login">
+            <p className="form__text">У вас ещё нет аккаунта?</p>
+            <Button
+              variant="fiat"
+              type="text"
+              text="Зарегистрироваться"
+              size="small"
+              onClick={handleRegistrationClick}
+            />
           </div>
         </div>
       </form>
