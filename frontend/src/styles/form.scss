@@ -3,42 +3,139 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 24px 32px;
 }
 
-.form_single {
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+.form_add-operation {
+  gap: 13px;
+}
+
+.form_confirmation {
+  gap: 24px;
+
+  .form__text_confirmation {
+    @include text-large-web;
+  }
 }
 
 .form_profile {
-  background-color: #ffffff;
-  border-radius: 16px;
-  gap: 32px;
-  max-width: 50%;
-  padding: 40px 40px;
+  gap: 22px 65px;
 }
 
-.form__header {
-  @include h3-web;
-  margin: 0 0 8px;
+.form__input-block {
+  position: relative;
+  display: flex;
+  max-width: calc((100% - 96px) / 2);
   width: 100%;
 }
 
-.form__header_profile {
-  font-size: 32px;
-  line-height: 40px;
-  margin: 0 0 8px;
+.form__input-label {
+  @include text-small-web;
+  color: #1e1d24;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.form__input-label_divider::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 24px;
+  background-color: #bdbdbd;
+  position: absolute;
+  top: 46px;
+  right: 46px;
+}
+
+.form__input {
+  @include text-medium-web;
+  padding: 16px 20px;
+  margin: 8px 8px 0 0;
+  width: 100%;
+  border: 1px solid #d2d5db;
+  border-radius: 100px;
+  color: #1e1d24;
+
+  &[type='number']::-webkit-outer-spin-button,
+  &[type='number']::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  &[type='date']::-webkit-calendar-picker-indicator {
+    display: none;
+    background-image: url(../Images/calendar.svg);
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}
+
+.form__input_password-new {
+  width: 400px;
+}
+
+.form__input_sum {
+  background-image: url(../Images/rub.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position-x: calc(100% - 18px);
+  background-position-y: center;
+}
+
+.tooltip {
+  width: 24px;
+  height: 24px;
+  background-image: url(../Images/help.svg);
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 44px;
+}
+
+.tooltip-change-password {
+  left: calc(100% - 22px);
+}
+
+.tooltip-profile-page {
+  left: 313px;
+}
+
+.tooltip-registration {
+  left: 313px;
+}
+
+.form__input-block .react-tooltip {
+  @include text-small-web;
+  background-color: #303360;
+  padding: 16px 16px;
+  max-width: 340px;
+  border-radius: 8px;
+  z-index: 4;
+  opacity: 1;
 }
 
 .form__button-wrapper {
+  margin-top: 8px;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  gap: 32px;
-  padding: 0;
+}
+
+.form__button-wrapper-login {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form__button-wrapper-register {
+  display: flex;
+  align-items: center;
 }
 
 .form__button-wrapper_single {
@@ -47,96 +144,25 @@
   gap: 24px;
 }
 
-.form__button-wrapper_profile {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  gap: 0;
-  border: none;
-  padding: 0;
+.form__button-wrapper_add-operation {
+  margin-top: 18px;
 }
 
-.form__button {
+.form__text_confirm-register {
+  @include text-small-web;
+}
+
+.form__text {
   @include text-medium-web;
-  padding: 10px 20px;
-  border-radius: 20px;
 }
 
-.form__button_reset,
-.form__button_change {
-  color: #303360;
-  background-color: #eaebf5;
-  height: fit-content;
-  align-self: flex-end;
-}
-
-.form__button_submit {
-  color: #f0b216;
-  background-color: #303360;
-}
-
-.form__button_text {
-  color: #303360;
-}
+// ExtraClass
 
 .form__button_single {
   width: 100%;
-  max-width: 100%;
-  padding: 14px 20px;
 }
 
-.form__button:disabled {
-  pointer-events: none;
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.form__input-label {
-  @include text-medium-web;
-  color: #1e1d24;
-  width: 100%;
-  display: block;
-  position: relative;
-}
-
-.form__input-label_arr::after {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 24px;
-  background-color: #bdbdbd;
-
-  position: absolute;
-  top: 40px;
-  right: 50px;
-}
-
-.form__input-label_textarea {
-  max-width: 100%;
-}
-
-.form__input {
-  @include text-medium-web;
-  padding: 12px 20px;
-  margin-top: 8px;
-  width: 100%;
-  border: 1px solid #d2d5db;
-  border-radius: 100px;
-  color: #1e1d24;
-}
-
-.form__input_date::-webkit-calendar-picker-indicator {
-  display: none;
-  background-image: url(../Images/calendar.svg);
-  background-size: 20px;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-  cursor: pointer;
-}
+// выпадающий список
 
 .form__input_select {
   appearance: none;
@@ -155,18 +181,10 @@
   color: #333333;
 }
 
-.form__input_number {
-  color: #333333;
-  background-image: url(../Images/chevron-down.svg);
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position-x: calc(100% - 16px);
-  background-position-y: center;
-}
+// конверт
 
-.form__input_number::-webkit-outer-spin-button,
-.form__input_number::-webkit-inner-spin-button {
-  display: none;
+.form__input-label_textarea {
+  max-width: 100%;
 }
 
 .form__input_textarea {
@@ -185,6 +203,8 @@
 .form__input_textarea::-webkit-resizer {
   display: none;
 }
+
+// сообщения об ошибках ввода
 
 .form__valid-message {
   font-size: 11px;
@@ -205,6 +225,8 @@
   opacity: 1;
 }
 
+// радио
+
 .form__radiogroup {
   position: relative;
   display: flex;
@@ -214,22 +236,7 @@
   gap: 45px;
 }
 
-.form__text {
-  @include text-medium-web;
-  margin: 0;
-}
-
-.form__text_profile {
-  margin: 0;
-}
-
-.form__text_explanation {
-  color: #a0a0a0;
-  margin: 0;
-  margin: 0;
-}
-
-.form__input-label_radio {
+.form__text .form__input-label_radio {
   cursor: pointer;
   padding-left: 40px;
   margin: 0;
@@ -264,10 +271,11 @@
   outline: 2px solid #303360;
 }
 
+// чекбокс
+
 .form__checkbox-label {
   cursor: pointer;
   padding-left: 40px;
-  margin: 0;
   position: relative;
 }
 
@@ -275,10 +283,10 @@
   cursor: pointer;
   position: absolute;
   left: 0;
-  top: -5px;
+  top: -7px;
   appearance: none;
-  width: 24px;
-  height: 24px;
+  width: 21px;
+  height: 21px;
 }
 
 .form__checkbox:hover {
@@ -304,64 +312,6 @@
 }
 
 .form__checkbox:checked {
-  opacity: 1;
-}
-
-.form__img-block {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  width: 100%;
-}
-
-.form__img {
-  width: 120px;
-  height: 120px;
-  border-radius: 100px;
-}
-
-.form__image-description {
-  display: block;
-  max-width: 213px;
-}
-
-.form__button:focus-within {
-  outline: 2px black solid;
-}
-
-.form_hidden {
-  opacity: 0;
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-.form__header-block {
-  width: 100%;
-}
-
-.form__input-block {
-  display: flex;
-  gap: 8px;
-  max-width: calc(50% - 32px);
-  width: 100%;
-}
-
-.form__tooltip {
-  width: 24px;
-  height: 100%;
-  background-image: url(../Images/question.svg);
-  background-repeat: no-repeat;
-  background-position-y: 40px;
-}
-
-.form__input-block .react-tooltip {
-  @include text-small-web;
-  background-color: #303360;
-  padding: 16px 16px;
-  max-width: 340px;
-  border-radius: 8px;
-  z-index: 4;
   opacity: 1;
 }
 
