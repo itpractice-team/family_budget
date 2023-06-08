@@ -1,3 +1,5 @@
+@import '../../styles/consts.scss';
+
 .profile-page {
   background-color: #f4f4f4;
   display: flex;
@@ -6,170 +8,32 @@
   padding: 70px 160px 50px 160px;
 }
 
-.profile {
+.profile-settings {
   background-color: #ffffff;
-  padding: 40px 40px;
   max-width: 784px;
+  padding: 40px;
   border-radius: 16px;
+}
+
+.profile-settings__title {
+  @include h2-web;
+  margin-bottom: 24px;
+}
+
+.profile-settings__avatar-block {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.profile-settings__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
 }
 
 .button__change-password {
   height: 44px;
   margin-top: 39px;
-}
-
-.profile__title {
-  font-family: 'Ubuntu';
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 40px;
-  color: #1e1d24;
-}
-
-.profile__text {
-  margin: 8px 0 24px 0;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #1e1d24;
-}
-
-.profile__data {
-  display: flex;
-  flex-direction: column;
-}
-
-.profile__avatar {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-}
-
-.profile__avatar-image {
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
-}
-
-.profile__avatar-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 224px;
-}
-
-.profile__button {
-  padding: 10px 25.5px;
-  min-height: 44px;
-  background: #eaebf5;
-  border-radius: 20px;
-  color: #303360;
-}
-
-.btn-edit-password {
-  padding: 10px 20px;
-  margin-top: 40px;
-}
-
-.btn-edit-profile {
-  height: 44px;
-  padding: 10px 20px;
-  margin-right: 258px;
-  background: #303360;
-  color: #f0b216;
-}
-
-.btn-delete-profile {
-  padding: 10px 20px;
-  height: 44px;
-  width: 179px;
-  background: transparent;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #303360;
-}
-
-.avatar-edit__span {
-  max-width: 213px;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #8c8d91;
-}
-
-.profile__data-list {
-  margin-top: 24px;
-  display: grid;
-  column-gap: 32px;
-  row-gap: 24px;
-  grid-template-columns: repeat(2, 336px);
-}
-
-.profile__data-item {
-  position: relative;
-}
-
-.profile__data-label {
-  position: relative;
-  max-width: 304px;
-  display: grid;
-  gap: 8px;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #8c8d91;
-}
-
-.profile__data-input {
-  display: flex;
-  padding: 16px 20px;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #8c8d91;
-  border: 1px solid #d2d5db;
-  border-radius: 100px;
-  min-height: 56px;
-}
-
-.profile__tooltip {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background-image: url(../../Images/question.svg);
-  top: 44px;
-  left: 313px;
-}
-
-.profile__data-item .react-tooltip {
-  background-color: #303360;
-  font-family: 'Noto Sans';
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  padding: 16px 16px;
-  max-width: 340px;
-  border-radius: 8px;
-  z-index: 4;
-  opacity: 1;
-}
-
-.profile__data-actions {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.profile__error-message {
-  position: absolute;
-  top: 10px;
-  top: 50px;
-  left: 22%;
-  color: red;
 }
