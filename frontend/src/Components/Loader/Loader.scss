@@ -28,44 +28,14 @@
   }
 }
 
-// .loader {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-// }
+.loader-register {
+  margin-right: 75px;
+}
 
-// .loader-circle {
-//   width: 70px;
-//   height: 70px;
-//   border-radius: 50%;
-//   position: relative;
-//   animation: spin 2s infinite linear;
-//   background: conic-gradient(
-//     from 180deg at 50% 50%,
-//     #303360 0deg,
-//     rgba(74, 54, 198, 0) 360deg,
-//     #ebf2f8 360deg
-//   );
-//   background-clip: padding-box;
-// }
+.loader-login {
+  margin: 0 calc((100% - 60px) / 2);
+}
 
-// .loader-circle::after {
-//   content: '';
-//   position: absolute;
-//   top: 10px;
-//   left: 10px;
-//   width: calc(100% - 20px);
-//   height: calc(100% - 20px);
-//   border-radius: 50%;
-//   background: #fff;
-// }
-
-// @keyframes spin {
-//   0% {
-//     transform: rotate(0deg);
-//   }
-//   100% {
-//     transform: rotate(360deg);
-//   }
-// }
+.loader-avatar {
+  margin: 32px calc((100% - 60px) / 2) 0;
+}
