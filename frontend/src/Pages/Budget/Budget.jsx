@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import './Budget.scss';
-import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
-import EarningPopup from '../../Components/EarningPopup/EarningPopup';
-import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
+import SpendPopup from '../../Components/SpendPopup/SpendPopup';
+import IncomePopup from '../../Components/IncomePopup/IncomePopup';
+import { toggleSpendPopup, toggleIncomePopup } from '../../store/slices/togglePopupSlice';
 import { getUser } from '../../store/slices/userSlice';
 import Button from '../../ui/Button/Button';
 import SpendingList from '../../Components/SpendingList/SpendingList';
@@ -11,8 +11,8 @@ import LeftBlock from '../../Components/LeftBlock/LeftBlock';
 import RightBlock from '../../Components/RightBlock/RightBlock';
 
 // mock data
-import cat from '../../Images/cat-ic-24.svg';
-import Vector from '../../Images/Vector.svg';
+import cat from '../../Images/cat.svg';
+import bank from '../../Images/bank.svg';
 
 const spend = [
   {
@@ -27,7 +27,7 @@ const spend = [
         bank: 'Тинькофф',
         amount: '40₽',
         categoryImg: cat,
-        bankLogo: Vector,
+        bankLogo: bank,
         spending: true,
       },
       {
@@ -37,7 +37,7 @@ const spend = [
         bank: 'Тинькофф',
         amount: '40₽',
         categoryImg: cat,
-        bankLogo: Vector,
+        bankLogo: bank,
         spending: false,
       },
     ],
@@ -54,7 +54,7 @@ const spend = [
         bank: 'Тинькофф',
         amount: '40₽',
         categoryImg: cat,
-        bankLogo: Vector,
+        bankLogo: bank,
         spending: true,
       },
       {
@@ -64,7 +64,7 @@ const spend = [
         bank: 'Тинькофф',
         amount: '40₽',
         categoryImg: cat,
-        bankLogo: Vector,
+        bankLogo: bank,
         spending: false,
       },
     ],
@@ -75,8 +75,8 @@ export default function Budget() {
   const dispatch = useDispatch();
   const [timeInterval, setTimeInterval] = useState('');
 
-  const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
-  const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
+  const isIncomePopupOpen = useSelector((state) => state.popup.isIncomePopupOpen);
+  const isSpendPopupOpen = useSelector((state) => state.popup.isSpendPopupOpen);
   const isFetched = useSelector((state) => state.user.isFetched);
 
   useEffect(() => {
@@ -85,20 +85,20 @@ export default function Budget() {
     }
   }, [dispatch, isFetched]);
 
-  const handleSpendingClick = () => {
-    dispatch(toggleSpendingPopup(true));
+  const handleSpendClick = () => {
+    dispatch(toggleSpendPopup(true));
   };
 
-  const handleEarningClick = () => {
-    dispatch(toggleEarningPopup(true));
+  const handleIncomeClick = () => {
+    dispatch(toggleIncomePopup(true));
   };
 
-  const closeSpendingPopup = () => {
-    dispatch(toggleSpendingPopup(false));
+  const closeSpendPopup = () => {
+    dispatch(toggleSpendPopup(false));
   };
 
-  const closeEarningPopup = () => {
-    dispatch(toggleEarningPopup(false));
+  const closeIncomePopup = () => {
+    dispatch(toggleIncomePopup(false));
   };
 
   function getTodayDate(event) {
@@ -195,7 +195,7 @@ export default function Budget() {
               text="Расход"
               size="medium"
               extraClass="button__budget"
-              onClick={handleSpendingClick}
+              onClick={handleSpendClick}
             />
             <Button
               variant="secondary"
@@ -203,7 +203,7 @@ export default function Budget() {
               text="Доход"
               size="medium"
               extraClass="button__budget"
-              onClick={handleEarningClick}
+              onClick={handleIncomeClick}
             />
           </div>
         </div>
@@ -215,9 +215,9 @@ export default function Budget() {
       </section>
       <RightBlock />
 
-      {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
+      {isSpendPopupOpen && <SpendPopup onClose={closeSpendPopup} />}
 
-      {isEarningPopupOpen && <EarningPopup onClose={closeEarningPopup} />}
+      {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}
     </section>
   );
 }
