@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './AccountsPopup.scss';
+import './AccountPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { toggleAccountPopup } from '../../store/slices/togglePopupSlice';
 import accounts from '../../Images/accountslist.svg';
 
-export default function AccountsPopup({ onClose }) {
+export default function AccountPopup({ onClose }) {
   const dispatch = useDispatch();
   const [isAddingAccount, setIsAddingAccount] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
