@@ -13,8 +13,8 @@ import RightBlock from '../../Components/RightBlock/RightBlock';
 
 export default function Budget() {
   const dispatch = useDispatch();
+
   const [timeInterval, setTimeInterval] = useState('');
-  console.log(timeInterval);
   const [isFieldset, setIsFieldset] = useState('');
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
 
@@ -43,25 +43,20 @@ export default function Budget() {
 
   function getTodayDate(event) {
     const today = new Date();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    const year = today.getFullYear();
     const formatter = new Intl.DateTimeFormat('ru', {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
     });
 
-    const formattedToday = `Сегодня: ${day < 10 ? '0' + day : day}.${
-      month < 10 ? '0' + month : month
-    }.${year}`;
-
     setSelectedTimeInterval(event.target.value);
 
     switch (event.target.value) {
-      case 'today':
-        setTimeInterval(formattedToday);
+      case 'today': {
+        const formattedToday = formatter.format(today);
+        setTimeInterval(`Сегодня: ${formattedToday}`);
         break;
+      }
 
       case 'week': {
         const weekStart = new Date(today);
