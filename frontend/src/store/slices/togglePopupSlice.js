@@ -10,6 +10,7 @@ const initialState = {
   isConfirmationPopupOpen: false,
   isInfoPopupOpen: false,
   isAccountPopupOpen: false,
+  isSdekPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -43,6 +44,9 @@ const togglePopupSlice = createSlice({
     toggleAccountPopup: (state, { payload }) => {
       state.isAccountPopupOpen = payload;
     },
+    toggleSdekPopup: (state, { payload }) => {
+      state.isSdekPopupOpen = payload;
+    },
   },
 });
 
@@ -56,6 +60,7 @@ export const {
   toggleConfirmationPopup,
   toggleInfoPopup,
   toggleAccountPopup,
+  toggleSdekPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;

@@ -65,6 +65,24 @@
   }
 }
 
+.popup_sdek {
+  max-width: 512px;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .popup__title {
+    @include h2-web;
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    @include text-small-web;
+    margin-bottom: 0px;
+  }
+}
+
 .popup_s {
   max-width: 512px;
 
