@@ -6,7 +6,8 @@ import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 export default function Moneybox() {
   return (
     <section className="moneybox">
-      <MoneyboxItem />
+      <MoneyboxItem title="На отпуск" balance={20000} target={50000} />
+      <MoneyboxItem title="На cпонсирование космонавтики" balance={3000} target={3000} />
     </section>
   );
 }
