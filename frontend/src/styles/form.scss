@@ -148,6 +148,10 @@
   margin-top: 18px;
 }
 
+.form__button-wrapper_account {
+  margin-top: 24px;
+}
+
 .form__text_confirm-register {
   @include text-small-web;
 }
@@ -223,52 +227,6 @@
 
 .form__valid-message_active {
   opacity: 1;
-}
-
-// радио
-
-.form__radiogroup {
-  position: relative;
-  display: flex;
-  border: none;
-  width: 100%;
-  padding: 0;
-  gap: 45px;
-}
-
-.form__text .form__input-label_radio {
-  cursor: pointer;
-  padding-left: 40px;
-  margin: 0;
-  width: fit-content;
-}
-
-.form__radio {
-  cursor: pointer;
-  position: absolute;
-  left: 0;
-  top: -4px;
-  appearance: none;
-}
-
-.form__radio::after {
-  content: '';
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background-color: white;
-  display: inline-block;
-  border: 2px solid #303360;
-}
-
-.form__radio:checked::after {
-  content: '';
-  width: 23px;
-  height: 23px;
-  background-color: #303360;
-  display: inline-block;
-  border: 3px solid white;
-  outline: 2px solid #303360;
 }
 
 // чекбокс

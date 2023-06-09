@@ -25,23 +25,26 @@ export default function AccountPopup({ onClose }) {
   const handleAddAccountClick = (evt) => {
     evt.preventDefault();
     setIsAddingAccount(true);
-    setPopupSize('popup_custom');
+    setPopupSize('popup_m');
   };
 
   return (
     <Popup onClose={onClose} popupSize={popupSize} title="Мои счета">
-      <div className="accounts-popup__list">
+      <section className='account-popup__content'>
+      <div className="account-popup__list">
         <img src={accounts} alt="" />
+        </div>
         {!isAddingAccount ? (
           <Button
             variant="secondary"
             type="icon-text"
             text="Добавить счет"
             size="medium"
+            extraClass='button__add-account'
             onClick={handleAddAccountClick}
           />
         ) : (
-          <form className="form form_custom">
+          <form className="form">
             <label className="form__input-label" htmlFor="SpendingPopup-card">
               Название счёта
               <select
@@ -69,7 +72,7 @@ export default function AccountPopup({ onClose }) {
               />
             </label>
 
-            <div className="form__button-wrapper form__button-wrapper_profile">
+            <div className="form__button-wrapper">
               <Button
                 variant="secondary"
                 type="text"
@@ -82,7 +85,7 @@ export default function AccountPopup({ onClose }) {
           </form>
         )}
 
-        <div className="form__button-wrapper form__button-wrapper_profile">
+        <div className="form__button-wrapper form__button-wrapper_account">
           {!isAddingAccount && (
             <>
               <Button
@@ -96,7 +99,8 @@ export default function AccountPopup({ onClose }) {
             </>
           )}
         </div>
-      </div>
+      
+      </section>
     </Popup>
   );
 }

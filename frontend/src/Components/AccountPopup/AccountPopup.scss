@@ -1,12 +1,17 @@
-.popup_custom {
-  max-width: 784px;
+.account-popup__content {
   display: flex;
-  gap: 88px;
+
 }
 
-.form_custom {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 336px;
+// ExtraClass
+.button__add-account {
+  max-width: 187px;
+  margin-top: 24px;
+}
+
+.popup_s {
+  .account-popup__content {
+    flex-direction: column;
+  }
+
 }
