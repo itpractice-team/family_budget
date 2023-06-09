@@ -43,7 +43,7 @@ class BaseDirectoryModel(models.Model):
         max_length=25,
         validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
     )
-    description = models.TextField(_("description"))
+    description = models.TextField(_("description"), blank=True)
 
     class Meta:
         abstract = True
@@ -92,7 +92,7 @@ class IconMixin(models.Model):
 
 
 class Icon(IconMixin, models.Model):
-    """Модель иконок для категорий доходов/расходов."""
+    """Модель иконок."""
 
     image_directory = "category"
 
@@ -155,13 +155,6 @@ class Budget(models.Model):
         related_name="budgets",
         verbose_name=_("User budgets"),
     )
-    categories = models.ManyToManyField(
-        Category,
-        verbose_name=_("categories"),
-        blank=True,
-        through="BudgetCategories",
-        related_name="budgets",
-    )
     description = models.TextField(
         _("Budget description"),
         blank=True,
@@ -210,8 +203,10 @@ class BudgetCategories(Category):
 
         constraints = [
             models.UniqueConstraint(
-                fields=["name", "budget", "income_expenses"],
-                name="unique_budget_categories",
+                Lower("name"),
+                "budget",
+                "type_category",
+                name="unique_name_budget_type_category",
                 violation_error_message=(
                     "Наименование категории для бюджета "
                     "должно быть уникальным!"
@@ -247,67 +242,22 @@ class BudgetFinances(models.Model):
         decimal_places=0,
         null=True,
     )
-    color = ColorField(
-        _("color HEX-code"),
-        max_length=7,
-        blank=True,
-        validators=[validate_color_hex_code],
-        help_text=_("Not required. Enter HEX-code color, please."),
-    )
 
     class Meta:
-        """Метаданные модели категорий бюджета."""
+        """Метаданные модели категорий финансирования бюджета."""
 
         constraints = [
             models.UniqueConstraint(
-                fields=["budget", "category", "income_expenses"],
-                name="unique_budget_categories",
+                fields=["budget", "finance"],
+                name="unique_budget_finance",
             )
         ]
-        verbose_name = _("budget category")
-        verbose_name_plural = _("budget categories")
+        verbose_name = _("Budget finance")
+        verbose_name_plural = _("Budget finances")
 
     def __str__(self):
-        """Метод возвращает информацию по категориям бюджета."""
+        """Метод возвращает информацию по источникам финансирования."""
         return f"{self.category} (тип {self.income_expenses})"
-
-
-class Category(models.Model):
-    """Модель категорий для трат."""
-
-    title = models.CharField("Название категории", max_length=50, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
-    # icon = models.ForeignKey(
-    #     CategoryIcon,
-    #     on_delete=models.CASCADE,
-    #     related_name="categories",
-    #     verbose_name="Иконка",
-    #     null=True,
-    # )
-    color = models.CharField(
-        max_length=7,
-        unique=True,
-        blank=True,
-        verbose_name="Цвет категории расхода",
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="categories",
-        verbose_name="Категории созданные пользователем",
-    )
-
-    class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
 
 
 class Spend(models.Model):
@@ -341,26 +291,6 @@ class Spend(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# class CategoryIncome(models.Model):
-#     """Модель Категорий для доходных средств."""
-
-#     title = models.CharField(
-#       "Название категории", max_length=150, unique=True
-#     )
-#     user = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="category_incomes",
-#         verbose_name="Категория дохода пользователя",
-#     )
-#     description = models.TextField(
-#         "Комментарий к категории дохода",
-#         max_length=500,
-#         blank=True,
-#         null=True
-#     )
 
 
 class Income(models.Model):
