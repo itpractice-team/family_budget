@@ -1,22 +1,17 @@
 import './RightBlock.scss';
-import TemplateRightBlock from '../TemplateRightBlock/TemplateRightBlock';
-import moneybox from '../../Images/moneybox.svg';
-import moneybag from '../../Images/moneybag.svg';
+import Moneybox from '../Moneybox/Moneybox';
+import Template from '../Template/Template';
+import RepeatSpend from '../RepeatSpend/RepeatSpend';
 
 export default function RightBlock() {
   return (
     <section className="right-block">
-      <TemplateRightBlock
-        title="Конверты на&nbsp;накопления"
-        icon={moneybox}
-        subtitle="Отложить деньги на цель для накопления"
-      />
-      <TemplateRightBlock
-        title="Повторяющиеся 
-        расходы"
-        icon={moneybag}
-        subtitle="Занести расходы, которые происходят регулярно"
-      />
+      <Template title="Повторяющиеся расходы">
+        <RepeatSpend />
+      </Template>
+      <Template title="Конверты на накопления">
+        <Moneybox />
+      </Template>
     </section>
   );
 }
