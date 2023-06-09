@@ -14,7 +14,20 @@ import RightBlock from '../../Components/RightBlock/RightBlock';
 export default function Budget() {
   const dispatch = useDispatch();
 
-  const [timeInterval, setTimeInterval] = useState('');
+  const [timeInterval, setTimeInterval] = useState(() => {
+    const formatter = new Intl.DateTimeFormat('ru', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    });
+
+    const today = new Date();
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - 6);
+    const formattedWeekStart = formatter.format(weekStart);
+    const formattedWeekEnd = formatter.format(today);
+    return `На этой неделе: ${formattedWeekStart} - ${formattedWeekEnd}`;
+  });
   const [isFieldset, setIsFieldset] = useState('');
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
 
@@ -121,7 +134,7 @@ export default function Budget() {
           <div className="budget__filtration-wrapper">
             <div className={`budget__select ${isFieldset}`}>
               <button className="budget__select-button" type="button" onClick={showSelect}>
-                {timeInterval || 'На этой неделе'}
+                {timeInterval}
               </button>
 
               <fieldset
