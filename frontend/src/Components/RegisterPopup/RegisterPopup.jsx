@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRef } from 'react';
+import { useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
+import Eye from '../../ui/Eye/Eye';
 import {
   RequirementsLogin,
   RequirementsEmail,
@@ -19,6 +20,14 @@ import Button from '../../ui/Button/Button';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
+  
+  // Configuration to add Eye component
+  const [eyes, setEyes] = useState([false, false, false]);
+  const handleEyeChange = (index, opened) => {
+    const newEyesValues = [...eyes];
+    newEyesValues[index] = opened;
+    setEyes(newEyesValues);
+  }
 
   const isRegistration = useSelector((state) => state.registration.data);
   const isLoading = useSelector((store) => store.registration.loading);
@@ -189,9 +198,9 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-password"
               name="password"
               className="form__input"
-              type="password"
-              placeholder="Введите пароль"
+              type={eyes[0] ? 'text' : 'password'}
             />
+            <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
             <span
               className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}
@@ -221,9 +230,10 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
-              type="password"
-              placeholder="Повторите пароль"
+              placeholder="Повторить пароль"
+              type={eyes[1] ? 'text' : 'password'}
             />
+            <Eye index={1} opened={eyes[1]} setOpenState={handleEyeChange} />
             <span
               className={`form__valid-message 
                         ${errors.confirmPassword ? 'form__valid-message_active' : ''}`}

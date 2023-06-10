@@ -1,0 +1,25 @@
+// eye images
+$eye-bg-image: url(../../Images/eyeoff.svg);
+$eye-bg-image-opened: url(../../Images/eyeon.svg);
+
+.eye {
+  // Common eye styles
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 53%;
+  right: 20px;
+  cursor: pointer;
+  background-image: $eye-bg-image;
+  transition: all 0.5s linear;
+
+  &:hover {
+    opacity: 60%;
+  }
+
+  &.opened {
+    // Styles for opened eye
+    background-image: $eye-bg-image-opened;
+    transition: all 0.5s linear;
+  }
+}

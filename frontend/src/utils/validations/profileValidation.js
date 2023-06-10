@@ -6,8 +6,8 @@ const profileValidation = yup.object().shape({
     .email('Введите корректный E-mail'),
   username: yup
     .string()
-    .min(2, 'Поле Логин не может быть короче 2 символов')
-    .max(25, 'Поле Логин не может быть длиннее 25 символов')
+    .min(2, 'Поле Логин не короче 2 символов')
+    .max(25, 'Поле Логин не длиннее 25 символов')
     .test('login', 'Введите правильный логин', (value) => {
       // Check if it is login
       const isLogin = /^[a-zA-Z0-9_./+-]+$/.test(value);
@@ -24,7 +24,7 @@ const profileValidation = yup.object().shape({
       }
       return value.length > 0;
     })
-    .max(25, 'Поле Имя не может быть длиннее 25 символов'),
+    .max(25, 'Поле Имя не длиннее 25 символов'),
   last_name: yup
     .string()
     .test('last_name', (value) => {
@@ -33,7 +33,7 @@ const profileValidation = yup.object().shape({
       }
       return value.length > 0;
     })
-    .max(25, 'Поле Фамилия не может быть длиннее 25 символов'),
+    .max(25, 'Поле Фамилия не длиннее 25 символов'),
 });
 
 export default profileValidation;

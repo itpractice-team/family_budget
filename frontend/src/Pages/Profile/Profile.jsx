@@ -39,7 +39,6 @@ export default function Profile() {
 
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
-
   useEffect(() => {
     if (!isFetched) {
       dispatch(getUser());
@@ -331,7 +330,7 @@ export default function Profile() {
               size="medium"
               onClick={handleConfirmationPopupClick}
             />
-            {isEditing && <span className="profile__error-message">{message}</span>}
+            {(isEditing && message) && <span className="profile__error-message">{message}</span>}
           </div>
           {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
           {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
