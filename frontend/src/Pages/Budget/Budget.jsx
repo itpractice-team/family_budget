@@ -3,12 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import './Budget.scss';
 import SpendPopup from '../../Components/SpendPopup/SpendPopup';
 import IncomePopup from '../../Components/IncomePopup/IncomePopup';
-import { toggleSpendPopup, toggleIncomePopup } from '../../store/slices/togglePopupSlice';
+import {
+  toggleSpendPopup,
+  toggleIncomePopup,
+  toggleRepeatExpensesPopup,
+} from '../../store/slices/togglePopupSlice';
 import { getUser } from '../../store/slices/userSlice';
 import LeftBlock from '../../Components/LeftBlock/LeftBlock';
 import RightBlock from '../../Components/RightBlock/RightBlock';
 import BudgetFilter from '../../Components/BudgetFilter/BudgetFilter';
 import TimeIntervalSelect from '../../Components/TimeIntervalSelect/TimeIntervalSelect';
+import RepeatExpensesPopup from '../../Components/RepeatExpensesPopup/RepeatExpensesPopup';
 
 export default function Budget() {
   const dispatch = useDispatch();
@@ -16,7 +21,9 @@ export default function Budget() {
   const [isFieldset, setIsFieldset] = useState('');
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
 
-  const { isIncomePopupOpen, isSpendPopupOpen } = useSelector((state) => state.popup);
+  const { isIncomePopupOpen, isSpendPopupOpen, isRepeatExpensesPopupOpen } = useSelector(
+    (state) => state.popup,
+  );
   const isFetched = useSelector((state) => state.user.isFetched);
 
   useEffect(() => {
@@ -27,8 +34,11 @@ export default function Budget() {
 
   const handleSpendClick = () => dispatch(toggleSpendPopup(true));
   const handleIncomeClick = () => dispatch(toggleIncomePopup(true));
+  const handleRepeatExpensesClick = () => dispatch(toggleRepeatExpensesPopup(true));
+
   const closeSpendPopup = () => dispatch(toggleSpendPopup(false));
   const closeIncomePopup = () => dispatch(toggleIncomePopup(false));
+  const closeRepeatExpensesPopup = () => dispatch(toggleRepeatExpensesPopup(false));
 
   const showSelect = () => {
     setIsFieldset((prevIsFieldset) => (prevIsFieldset ? '' : 'budget__select-fieldset_open'));
@@ -66,10 +76,11 @@ export default function Budget() {
           />
         </BudgetFilter>
       </section>
-      <RightBlock />
+      <RightBlock handleRepeatExpensesClick={handleRepeatExpensesClick} />
 
       {isSpendPopupOpen && <SpendPopup onClose={closeSpendPopup} />}
       {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}
+      {isRepeatExpensesPopupOpen && <RepeatExpensesPopup onClose={closeRepeatExpensesPopup} />}
     </section>
   );
 }

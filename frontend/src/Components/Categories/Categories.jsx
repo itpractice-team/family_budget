@@ -14,13 +14,28 @@ export default function Categories() {
     <section className="categories">
       <h2 className="categories__title">Отображать категории</h2>
       <div className="categories__tabs">
-        <Tab active={activeTab === 'Расходы'} value="Расходы" onClick={handleTabClick}>
+        <Tab
+          active={activeTab === 'Расходы'}
+          value="Расходы"
+          size="tab-size_m"
+          onClick={handleTabClick}
+        >
           Расходы
         </Tab>
-        <Tab active={activeTab === 'Доходы'} value="Доходы" onClick={handleTabClick}>
+        <Tab
+          active={activeTab === 'Доходы'}
+          value="Доходы"
+          size="tab-size_m"
+          onClick={handleTabClick}
+        >
           Доходы
         </Tab>
-        <Tab active={activeTab === 'Общие'} value="Общие" onClick={handleTabClick}>
+        <Tab
+          active={activeTab === 'Общие'}
+          value="Общие"
+          size="tab-size_m"
+          onClick={handleTabClick}
+        >
           Общие
         </Tab>
       </div>
