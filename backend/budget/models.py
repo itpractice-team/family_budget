@@ -1,7 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.core.validators import (
-    MaxValueValidator,
     MinLengthValidator,
     MinValueValidator,
     validate_slug,
@@ -16,19 +14,10 @@ from colorfield.fields import ColorField
 from core.validators import (
     validate_color_hex_code,
     validate_letter_or_blank_space,
+    validate_only_letters,
 )
 
 User = get_user_model()
-
-COMMON_VALIDATOR = [MinValueValidator(1), MaxValueValidator(1_000_000)]
-
-MONEYBOX_VALIDATOR = [MinValueValidator(1), MaxValueValidator(10_000_000)]
-
-
-def validate_date(value):
-    if value > timezone.now():
-        raise ValidationError("Дата не может быть больше текущей")
-    return value
 
 
 def image_directory_path(instance, filename):
@@ -43,10 +32,14 @@ class BaseDirectoryModel(models.Model):
         max_length=25,
         validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
     )
-    description = models.TextField(_("description"), blank=True)
+    priority = models.IntegerField(_("priority"), default=1000)
+    description = models.TextField(
+        _("description"), max_length=100, blank=True
+    )
 
     class Meta:
         abstract = True
+        ordering = ["priority", "name"]
         constraints = [
             models.UniqueConstraint(
                 Lower("name"),
@@ -95,6 +88,11 @@ class Icon(IconMixin, models.Model):
     """Модель иконок."""
 
     image_directory = "category"
+    tag = models.CharField(
+        _("tag"),
+        max_length=25,
+        validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
+    )
 
     class Meta:
         verbose_name = _("Icon")
@@ -126,7 +124,7 @@ class Category(BaseDirectoryModel):
         Icon,
         on_delete=models.SET_NULL,
         related_name="categories",
-        verbose_name=_("Icon"),
+        verbose_name=_("icon"),
     )
 
     class Meta:
@@ -144,6 +142,7 @@ class Budget(models.Model):
     name = models.CharField(
         _("name"),
         max_length=200,
+        default=_("budget"),
         help_text=_("Required. Enter name budget, please."),
     )
     pub_date = models.DateTimeField(
@@ -153,10 +152,10 @@ class Budget(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="budgets",
-        verbose_name=_("User budgets"),
+        verbose_name=_("user"),
     )
     description = models.TextField(
-        _("Budget description"),
+        _("description"),
         blank=True,
     )
 
@@ -166,7 +165,7 @@ class Budget(models.Model):
 
     def __str__(self):
         """Возвращает информацию по бюджету пользователя."""
-        return f"Бюджет пользователя {self.user}"
+        return f"Бюджет {self.name} пользователя {self.user}"
 
 
 class IncomeExpenses(models.IntegerChoices):
@@ -177,7 +176,7 @@ class IncomeExpenses(models.IntegerChoices):
     __empty__ = _("(Unknown)")
 
 
-class BudgetCategories(Category):
+class BudgetCategory(Category):
     """Модель категорий дохода/расхода для бюджета."""
 
     budget = models.ForeignKey(
@@ -213,34 +212,37 @@ class BudgetCategories(Category):
                 ),
             )
         ]
-        verbose_name = _("budget category")
-        verbose_name_plural = _("budget categories")
+        verbose_name = _("Budget category")
+        verbose_name_plural = _("Budget categories")
 
     def __str__(self):
         """Метод возвращает информацию по категориям бюджета."""
         return f"{self.category} (тип {self.income_expenses})"
 
 
-class BudgetFinances(models.Model):
+class BudgetFinance(models.Model):
     """Модель источников финансирования дохода/расхода для бюджета."""
 
     budget = models.ForeignKey(
         Budget,
         verbose_name=_("budget"),
         on_delete=models.CASCADE,
-        related_name="budget_categories",
+        related_name="finances",
     )
     finance = models.ForeignKey(
         Finance,
         verbose_name=_("finance"),
         on_delete=models.CASCADE,
-        related_name="finance_budgets",
+        related_name="finances",
     )
     balance = models.DecimalField(
         verbose_name=_("balance"),
         max_digits=15,
         decimal_places=0,
-        null=True,
+        default=0,
+        validators=[
+            MinValueValidator(0, message=_("Minimum value for balance is 0"))
+        ],
     )
 
     class Meta:
@@ -257,31 +259,64 @@ class BudgetFinances(models.Model):
 
     def __str__(self):
         """Метод возвращает информацию по источникам финансирования."""
-        return f"{self.category} (тип {self.income_expenses})"
+        return f"{self.budget} ({self.finance} баланс {self.balance})"
+
+
+class FinanceTransaction(models.Model):
+    """Базовый класс финансовой транзакции."""
+
+    name = models.CharField(
+        _("name"),
+        max_length=15,
+        validators=[validate_only_letters, MinLengthValidator(2)],
+    )
+    created = models.DateTimeField(_("created"))
+    amount = models.DecimalField(
+        verbose_name=_("amount"),
+        max_digits=15,
+        decimal_places=0,
+        validators=[
+            MinValueValidator(
+                0, message=_("Minimum value for transaction is 0")
+            )
+        ],
+    )
+    budget = models.ForeignKey(
+        Budget,
+        verbose_name=_("budget"),
+        on_delete=models.CASCADE,
+    )
+    finance = models.ForeignKey(
+        BudgetFinance,
+        on_delete=models.SET_NULL,
+        verbose_name=_("finance"),
+        null=True,
+    )
+    category = models.ForeignKey(
+        BudgetCategory,
+        on_delete=models.SET_NULL,
+        verbose_name=_("category"),
+        null=True,
+    )
+    description = models.TextField(
+        _("description"),
+        max_length=100,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ["-created"]
+        default_related_name = "transactions"
+        verbose_name = _("Transaction")
+        verbose_name_plural = _("Transactions")
 
 
 class Spend(models.Model):
-    """Модель расходов и трат."""
+    """Модель расходов."""
 
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Траты пользователя"
-    )
     title = models.CharField("Наименование расхода", max_length=70)
-    created = models.DateTimeField(
-        "Время создания записи", validators=[validate_date]
-    )
-    amount = models.PositiveIntegerField(
-        "Израсходованная сумма", validators=COMMON_VALIDATOR
-    )
     description = models.TextField(
         "Комментарий к расходу", max_length=500, blank=True, null=True
-    )
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        verbose_name="Категория расхода",
-        blank=True,
-        null=True,
     )
 
     class Meta:
@@ -299,12 +334,6 @@ class Income(models.Model):
     title = models.CharField("Наименование прихода", max_length=50)
     description = models.TextField(
         "Комментарий к приходу", max_length=500, blank=True, null=True
-    )
-    amount = models.PositiveIntegerField(
-        "Оприходованная сумму", validators=COMMON_VALIDATOR
-    )
-    created = models.DateTimeField(
-        "Время создания записи", validators=[validate_date]
     )
     # category = models.ForeignKey(
     #     CategoryIncome,
@@ -332,11 +361,8 @@ class MoneyBox(models.Model):
     """Модель копилка."""
 
     title = models.CharField("Цель накопления", max_length=254)
-    total = models.PositiveIntegerField(
-        "Сумма, которую необходимо накопить", validators=MONEYBOX_VALIDATOR
-    )
     accumulated = models.PositiveIntegerField(
-        "Уже накоплено", validators=MONEYBOX_VALIDATOR
+        "Уже накоплено",
     )
     achieved = models.BooleanField(
         "Цель достигнута/не достигнута", default=False
