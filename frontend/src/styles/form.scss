@@ -160,6 +160,10 @@
   @include text-medium-web;
 }
 
+.form__text-bold {
+  @include text-medium-web-bold;
+}
+
 // ExtraClass
 
 .form__button_single {

@@ -11,6 +11,7 @@ const initialState = {
   isInfoPopupOpen: false,
   isAccountPopupOpen: false,
   isSdekPopupOpen: false,
+  isRepeatExpensesPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -47,6 +48,9 @@ const togglePopupSlice = createSlice({
     toggleSdekPopup: (state, { payload }) => {
       state.isSdekPopupOpen = payload;
     },
+    toggleRepeatExpensesPopup: (state, { payload }) => {
+      state.isRepeatExpensesPopupOpen = payload;
+    },
   },
 });
 
@@ -61,6 +65,7 @@ export const {
   toggleInfoPopup,
   toggleAccountPopup,
   toggleSdekPopup,
+  toggleRepeatExpensesPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;

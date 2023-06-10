@@ -3,7 +3,7 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  width: 113px;
+  // width: 113px;
   height: 36px;
 
   &:hover {
@@ -24,4 +24,16 @@
   .text_type_main-default {
     // Стили для основного текста
   }
+}
+
+.tab-size_xs {
+  width: 77px;
+}
+
+.tab-size_m {
+  width: 113px;
+}
+
+.tab-size_l {
+  width: 168px;
 }

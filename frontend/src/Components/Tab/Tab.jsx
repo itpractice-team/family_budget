@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import './Tab.scss';
 
-export default function Tab({ active, value, onClick, children }) {
-  const className = `tab ${active ? 'tab_type_current' : ''}`;
+export default function Tab({ active, value, size, onClick, children }) {
+  const className = `tab ${size} ${active ? 'tab_type_current' : ''}`;
 
   const handleClick = () => {
     onClick(value);
