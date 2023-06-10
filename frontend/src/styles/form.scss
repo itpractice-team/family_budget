@@ -124,7 +124,9 @@
   border-radius: 100px;
   color: #1e1d24;
 }
-
+.form__input_password {
+  position: relative;
+}
 .form__input_date::-webkit-calendar-picker-indicator {
   display: none;
   background-image: url(../Images/calendar.svg);

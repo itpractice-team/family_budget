@@ -42,7 +42,6 @@ export default function Profile() {
 
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
-
   useEffect(() => {
     if (!isFetched) {
       dispatch(getUser());

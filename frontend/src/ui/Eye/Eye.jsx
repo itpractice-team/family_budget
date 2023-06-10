@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './Eye.scss';
 
-function Eye({ eyeState, handleEye }) {
+function Eye({ index, setOpenState }) {
+  const [isOpened, setOpened] = useState(false);
+
+  const onClick = () => {
+    const eyeState = !isOpened;
+    setOpened(eyeState);
+    setOpenState(index, eyeState);
+  };
+
   return (
     <button
-      className={`${eyeState ? 'eye' : 'eye-closed'}`}
-      aria-label="password eye"
+      className={`eye ${isOpened && "opened"}`}
+      aria-label="make password visible"
       type="button"
-      onClick={handleEye}
+      onClick={onClick}
     />
   );
 }
