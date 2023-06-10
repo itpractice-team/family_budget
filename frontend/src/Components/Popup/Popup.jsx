@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import './Popup.scss';
 import PopupOverlay from '../PopupOverlay/PopupOverlay';
 
-export default function Popup({ children, onClose, popupSize }) {
+export default function Popup({ children, onClose, popupSize, title, subtitle }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const nodeRef = useRef(null);
@@ -42,6 +42,8 @@ export default function Popup({ children, onClose, popupSize }) {
         nodeRef={nodeRef}
       >
         <div className={`${popupSize} popup`} ref={nodeRef}>
+          <h2 className="popup__title">{title}</h2>
+          <p className="popup__subtitle">{subtitle}</p>
           <button
             type="button"
             className="popup__close"

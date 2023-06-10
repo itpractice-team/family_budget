@@ -1,80 +1,29 @@
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
 import './Budget.scss';
-import SpendingPopup from '../../Components/SpendingPopup/SpendingPopup';
-import EarningPopup from '../../Components/EarningPopup/EarningPopup';
-import { toggleSpendingPopup, toggleEarningPopup } from '../../store/slices/togglePopupSlice';
+import SpendPopup from '../../Components/SpendPopup/SpendPopup';
+import IncomePopup from '../../Components/IncomePopup/IncomePopup';
+import {
+  toggleSpendPopup,
+  toggleIncomePopup,
+  toggleRepeatExpensesPopup,
+} from '../../store/slices/togglePopupSlice';
 import { getUser } from '../../store/slices/userSlice';
-import Button from '../../ui/Button/Button';
-import SpendingList from '../../Components/SpendingList/SpendingList';
-
-// mock data
-import cat from '../../Images/cat-ic-24.svg';
-import Vector from '../../Images/Vector.svg';
-
-const spend = [
-  {
-    date: '02 апреля 2023',
-    weekDay: 'воскресенье',
-    id: 1,
-    cards: [
-      {
-        id: 1,
-        header: 'Вкусняшки коту',
-        text: 'Sheba с креветками',
-        bank: 'Тинькофф',
-        amount: '40₽',
-        categoryImg: cat,
-        bankLogo: Vector,
-        spending: true,
-      },
-      {
-        id: 2,
-        header: 'Вкусняшки коту',
-        text: 'Sheba с креветками',
-        bank: 'Тинькофф',
-        amount: '40₽',
-        categoryImg: cat,
-        bankLogo: Vector,
-        spending: false,
-      },
-    ],
-  },
-  {
-    date: '02 апреля 2023',
-    weekDay: 'воскресенье',
-    id: 2,
-    cards: [
-      {
-        id: 1,
-        header: 'Вкусняшки коту',
-        text: 'Sheba с креветками',
-        bank: 'Тинькофф',
-        amount: '40₽',
-        categoryImg: cat,
-        bankLogo: Vector,
-        spending: true,
-      },
-      {
-        id: 2,
-        header: 'Вкусняшки коту',
-        text: 'Sheba с креветками',
-        bank: 'Тинькофф',
-        amount: '40₽',
-        categoryImg: cat,
-        bankLogo: Vector,
-        spending: false,
-      },
-    ],
-  },
-];
+import LeftBlock from '../../Components/LeftBlock/LeftBlock';
+import RightBlock from '../../Components/RightBlock/RightBlock';
+import BudgetFilter from '../../Components/BudgetFilter/BudgetFilter';
+import TimeIntervalSelect from '../../Components/TimeIntervalSelect/TimeIntervalSelect';
+import RepeatExpensesPopup from '../../Components/RepeatExpensesPopup/RepeatExpensesPopup';
 
 export default function Budget() {
   const dispatch = useDispatch();
-  const [timeInterval, setTimeInterval] = useState('');
 
-  const isEarningPopupOpen = useSelector((state) => state.popup.isEarningPopupOpen);
-  const isSpendingPopupOpen = useSelector((state) => state.popup.isSpendingPopupOpen);
+  const [isFieldset, setIsFieldset] = useState('');
+  const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
+
+  const { isIncomePopupOpen, isSpendPopupOpen, isRepeatExpensesPopupOpen } = useSelector(
+    (state) => state.popup,
+  );
   const isFetched = useSelector((state) => state.user.isFetched);
 
   useEffect(() => {
@@ -83,135 +32,55 @@ export default function Budget() {
     }
   }, [dispatch, isFetched]);
 
-  const handleSpendingClick = () => {
-    dispatch(toggleSpendingPopup(true));
+  const handleSpendClick = () => dispatch(toggleSpendPopup(true));
+  const handleIncomeClick = () => dispatch(toggleIncomePopup(true));
+  const handleRepeatExpensesClick = () => dispatch(toggleRepeatExpensesPopup(true));
+
+  const closeSpendPopup = () => dispatch(toggleSpendPopup(false));
+  const closeIncomePopup = () => dispatch(toggleIncomePopup(false));
+  const closeRepeatExpensesPopup = () => dispatch(toggleRepeatExpensesPopup(false));
+
+  const showSelect = () => {
+    setIsFieldset((prevIsFieldset) => (prevIsFieldset ? '' : 'budget__select-fieldset_open'));
   };
 
-  const handleEarningClick = () => {
-    dispatch(toggleEarningPopup(true));
+  const showCalendar = () => {
+    // Отобразить модальное окно с календарем
   };
 
-  const closeSpendingPopup = () => {
-    dispatch(toggleSpendingPopup(false));
+  const handleTimeIntervalChange = (event) => {
+    setSelectedTimeInterval(event.target.value);
   };
 
-  const closeEarningPopup = () => {
-    dispatch(toggleEarningPopup(false));
+  const getTodayDate = (event) => {
+    setSelectedTimeInterval(event.target.value);
   };
-
-  function getTodayDate(event) {
-    const today = new Date();
-    let date = '';
-    let formatter = null;
-
-    switch (event.currentTarget.value) {
-      case 'today':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        });
-
-        date = formatter.format(today);
-        setTimeInterval(date);
-
-        break;
-
-      case 'week':
-        break;
-
-      case 'mounth':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-          month: 'long',
-        });
-
-        date = formatter.format(today);
-        setTimeInterval(date);
-
-        break;
-
-      case 'year':
-        formatter = new Intl.DateTimeFormat('ru', {
-          year: 'numeric',
-        });
-
-        date = formatter.format(today);
-        setTimeInterval(date);
-
-        break;
-
-      case 'all':
-        setTimeInterval('Вся история');
-
-        break;
-
-      default:
-        setTimeInterval('Выберите время');
-
-        break;
-    }
-  }
-
-  function showCalendar() {
-    // modal & calendar
-  }
 
   return (
     <section className="budget">
+      <LeftBlock />
       <section className="budget__spending">
-        <div className="budget__filtration">
-          <div className="budget__filtration-wrapper">
-            <select className="budget__select" onChange={getTodayDate}>
-              <option value="today" className="budget__option">
-                {`Сегодня ${timeInterval}`}
-              </option>
-              <option value="week" className="budget__option">
-                {timeInterval ? `На этой неделе ${timeInterval}` : 'Неделя'}
-              </option>
-              <option value="mounth" className="budget__option">
-                {timeInterval ? `${timeInterval}` : 'Месяц'}
-              </option>
-              <option value="year" className="budget__option">
-                {timeInterval ? `В году ${timeInterval}` : 'Год'}
-              </option>
-              <option value="all" className="budget__option">
-                {timeInterval ? `В году ${timeInterval}` : 'Вся история'}
-              </option>
-            </select>
-
-            <button type="button" className="budget__filtration-button" onClick={showCalendar}>
-              По дате
-            </button>
-          </div>
-
-          <div className="budget__button-wrapper">
-            <Button
-              variant="secondary"
-              type="icon-text"
-              text="Расход"
-              size="medium"
-              onClick={handleSpendingClick}
-            />
-            <Button
-              variant="secondary"
-              type="icon-text"
-              text="Доход"
-              size="medium"
-              onClick={handleEarningClick}
-            />
-          </div>
-        </div>
-
-        {spend &&
-          spend.map((day) => {
-            return <SpendingList {...day} key={day.id} />;
-          })}
+        <BudgetFilter
+          isFieldset={isFieldset}
+          selectedTimeInterval={selectedTimeInterval}
+          showSelect={showSelect}
+          showCalendar={showCalendar}
+          handleSpendClick={handleSpendClick}
+          handleIncomeClick={handleIncomeClick}
+          handleTimeIntervalChange={handleTimeIntervalChange}
+          getTodayDate={getTodayDate}
+        >
+          <TimeIntervalSelect
+            selectedTimeInterval={selectedTimeInterval}
+            onTimeIntervalChange={getTodayDate}
+          />
+        </BudgetFilter>
       </section>
+      <RightBlock handleRepeatExpensesClick={handleRepeatExpensesClick} />
 
-      {isSpendingPopupOpen && <SpendingPopup onClose={closeSpendingPopup} />}
-
-      {isEarningPopupOpen && <EarningPopup onClose={closeEarningPopup} />}
+      {isSpendPopupOpen && <SpendPopup onClose={closeSpendPopup} />}
+      {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}
+      {isRepeatExpensesPopupOpen && <RepeatExpensesPopup onClose={closeRepeatExpensesPopup} />}
     </section>
   );
 }

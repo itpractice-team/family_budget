@@ -7,7 +7,7 @@ import { logoutUser } from '../../store/slices/loginSlice';
 import { resetUser } from '../../store/slices/userSlice';
 import './ProfileTooltip.scss';
 import Button from '../../ui/Button/Button';
-import defaultAvatar from '../../Images/avatar-size-s.svg';
+import defaultAvatar from '../../Images/avatar.svg';
 
 export default function ProfileTooltip({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function ProfileTooltip({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   return (
-    <div ref={tooltipRef} className={`profile-tooltip${isOpen ? '' : ' profile-tooltip--hidden'}`}>
+    <div ref={tooltipRef} className={`profile-tooltip ${isOpen ? '' : 'profile-tooltip_hidden'}`}>
       <div className="profile-tooltip__user-data">
         <img
           src={avatar === null ? defaultAvatar : avatar}

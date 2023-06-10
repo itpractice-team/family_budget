@@ -2,7 +2,6 @@
 import { useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
@@ -11,6 +10,13 @@ import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
 import Eye from '../../ui/Eye/Eye';
+import {
+  RequirementsLogin,
+  RequirementsEmail,
+  RequirementsNameAndSurname,
+  RequirementsPassword,
+} from '../../utils/consts';
+import Button from '../../ui/Button/Button';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -26,7 +32,7 @@ export default function RegisterPopup({ onClose }) {
   const isRegistration = useSelector((state) => state.registration.data);
   const isLoading = useSelector((store) => store.registration.loading);
 
-  const handleEnterClick = () => {
+  const handleLoginClick = () => {
     dispatch(toggleRegisterPopup(false));
     dispatch(toggleLoginPopup(true));
   };
@@ -54,10 +60,8 @@ export default function RegisterPopup({ onClose }) {
   password.current = watch('password', '');
 
   return (
-    <Popup onClose={onClose} popupSize="popup_m">
+    <Popup onClose={onClose} popupSize="popup_m" title="Регистрация">
       <form className="form" onSubmit={handleSubmit(handleRegistration)}>
-        <h2 className="form__header">Регистрация</h2>
-
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RegisterPopup-login">
             Логин
@@ -67,7 +71,7 @@ export default function RegisterPopup({ onClose }) {
               name="username"
               className="form__input"
               type="text"
-              placeholder="Ввести логин"
+              placeholder="Введите логин"
             />
             <span
               className={`form__valid-message 
@@ -77,9 +81,9 @@ export default function RegisterPopup({ onClose }) {
             </span>
           </label>
           <div
-            className="form__tooltip"
+            className="tooltip tooltip-registration"
             data-tooltip-id="login"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, _, ., +, -, без пробелов, минимальное количество символов - 2, максимальное - 25"
+            data-tooltip-content={RequirementsLogin}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -99,7 +103,7 @@ export default function RegisterPopup({ onClose }) {
               name="email"
               className="form__input"
               type="email"
-              placeholder="Ввести e-mail"
+              placeholder="Введите e-mail"
             />
             <span
               className={`form__valid-message 
@@ -109,9 +113,9 @@ export default function RegisterPopup({ onClose }) {
             </span>
           </label>
           <div
-            className="form__tooltip"
+            className="tooltip tooltip-registration"
             data-tooltip-id="email"
-            data-tooltip-content="Цифры, латинские буквы, специальные символы: -, _, .,  минимальное количество символов - 7, максимальное - 129"
+            data-tooltip-content={RequirementsEmail}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -131,7 +135,7 @@ export default function RegisterPopup({ onClose }) {
               name="first_name"
               className="form__input"
               type="text"
-              placeholder="Ввести имя"
+              placeholder="Введите имя"
             />
             <span
               className={`form__valid-message 
@@ -141,9 +145,9 @@ export default function RegisterPopup({ onClose }) {
             </span>
           </label>
           <div
-            className="form__tooltip"
+            className="tooltip tooltip-registration"
             data-tooltip-id="name"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
+            data-tooltip-content={RequirementsNameAndSurname}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -163,7 +167,7 @@ export default function RegisterPopup({ onClose }) {
               name="last_name"
               className="form__input"
               type="text"
-              placeholder="Ввести фамилию"
+              placeholder="Введите фамилию"
             />
             <span
               className={`form__valid-message 
@@ -172,6 +176,18 @@ export default function RegisterPopup({ onClose }) {
               {errors?.last_name && errors?.last_name?.message}
             </span>
           </label>
+          <div
+            className="tooltip tooltip-registration"
+            data-tooltip-id="last-name"
+            data-tooltip-content={RequirementsNameAndSurname}
+          />
+          <Tooltip
+            data-tooltip-variant="info"
+            className="react-tooltip"
+            classNameArrow="react-tooltip-arrow"
+            id="last-name"
+            place="bottom"
+          />
         </div>
 
         <div className="form__input-block">
@@ -193,9 +209,9 @@ export default function RegisterPopup({ onClose }) {
             </span>
           </label>
           <div
-            className="form__tooltip"
+            className="tooltip tooltip-registration"
             data-tooltip-id="password"
-            data-tooltip-content="Прописные и строчные латинские буквы, цифры, нижний слэш, точка,+,-, без пробелов и иных символов, min количество символов - 2, max - 25, нечувствительный к регистру"
+            data-tooltip-content={RequirementsPassword}
           />
           <Tooltip
             data-tooltip-variant="info"
@@ -227,9 +243,12 @@ export default function RegisterPopup({ onClose }) {
           </label>
         </div>
 
-        <label htmlFor="RegisterPopup-confirm" className="form__checkbox-label form__text">
-          Я даю своё согласие на обработку персональных данных и ознакомился c
-          <NavLink to="/"> Политикой o конфиденциальности </NavLink>
+        <label
+          htmlFor="RegisterPopup-confirm"
+          className="form__checkbox-label form__text_confirm-register"
+        >
+          Я даю своё согласие на обработку персональных данных и ознакомился c Политикой
+          o&nbsp;конфиденциальности
           <input
             {...register('agree')}
             type="checkbox"
@@ -239,23 +258,26 @@ export default function RegisterPopup({ onClose }) {
         </label>
 
         <div className="form__button-wrapper">
-          <p className="form__text">
-            {'У вас уже есть аккаунт? '}
-            <button type="button" className="form__button_text" onClick={handleEnterClick}>
-              Войти
-            </button>
-          </p>
+          <div className="form__button-wrapper-register">
+            <p className="form__text">У вас уже есть аккаунт?</p>
+            <Button
+              variant="fiat"
+              type="text"
+              text="Войти"
+              size="small"
+              onClick={handleLoginClick}
+            />
+          </div>
           {isLoading ? (
-            <Loader />
+            <Loader extraClass="loader-register" />
           ) : (
-            <button
-              type="submit"
-              className={`form__button form__button_submit
-          ${(!isValid || !errors) && 'form__button:disabled'}`}
+            <Button
+              variant="primary"
+              type="text"
+              text="Зарегистрироваться"
+              size="large"
               disabled={!isValid}
-            >
-              Зарегистрироваться
-            </button>
+            />
           )}
         </div>
       </form>

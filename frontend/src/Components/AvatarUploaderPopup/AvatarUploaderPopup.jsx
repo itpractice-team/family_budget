@@ -26,12 +26,13 @@ export default function AvatarUploaderPopup({ onClose }) {
   }
 
   return (
-    <Popup onClose={onClose} popupSize="popup_s">
-      <form className="form form_single" onSubmit={handleChangeAvatar}>
-        <h2 className="form__header">Загрузить новое фото</h2>
-        <p className="form__text form__text_explanation">
-          Размер изображения не должен превышать 5 мб, формат jpg и png
-        </p>
+    <Popup
+      onClose={onClose}
+      popupSize="popup_avatar"
+      title="Загрузить новое фото"
+      subtitle="Размер файла не может превышать 5 МБ и требуется использовать форматы JPG/JPEG или PNG"
+    >
+      <form className="form_single" onSubmit={handleChangeAvatar}>
         <div className="avatar-actions">
           <AvatarUploader
             defaultImage={avatar === null ? defaultAvatar : avatar}
@@ -42,9 +43,15 @@ export default function AvatarUploaderPopup({ onClose }) {
           <button className="delete-avatar" type="button" onClick={handleDeleteAvatar} />
         </div>
         {isLoading ? (
-          <Loader />
+          <Loader extraClass="loader-avatar" />
         ) : (
-          <Button variant="primary" type="text" text="Cохранить" size="medium" />
+          <Button
+            variant="primary"
+            type="text"
+            text="Cохранить"
+            size="medium"
+            extraClass="button__save-avatar"
+          />
         )}
       </form>
     </Popup>

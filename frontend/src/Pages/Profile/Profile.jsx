@@ -18,14 +18,12 @@ import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUplo
 import {
   RequirementsLogin,
   RequirementsEmail,
-  RequirementsPassword,
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
 import defaultAvatar from '../../Images/avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
 import profileValidation from '../../utils/validations/profileValidation';
-import Loader from '../../Components/Loader/Loader';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -36,7 +34,6 @@ export default function Profile() {
   const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
   const isAvatarUploaderPopupOpen = useSelector((state) => state.popup.isAvatarUploaderPopupOpen);
   const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
-  const isLoading = useSelector((store) => store.user.loading);
   const userData = useSelector((state) => state.user.user);
   const isFetched = useSelector((state) => state.user.isFetched);
 
@@ -77,7 +74,6 @@ export default function Profile() {
   const {
     register,
     formState: { errors, isValid },
-    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -129,36 +125,23 @@ export default function Profile() {
 
   return (
     <section className="profile-page">
-      {isLoading && !userData ? (
-        <Loader />
-      ) : (
-        <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
-          <div className="form__header-block">
-            <h1 className="form__header_profile">Настройки профиля</h1>
-            <p className="form__text form__text_profile">
-              Здесь можно менять настройки, как душе угодно
-            </p>
-          </div>
-          <div className="form__img-block">
-            <img
-              src={userData.avatar === null ? defaultAvatar : userData.avatar}
-              className="form__img"
-              alt="Аватар"
-            />
-            <div className="form__image-description">
-              <Button
-                variant="secondary"
-                type="text"
-                text="Изменить фото"
-                size="medium"
-                extraClass="button__change-avatar"
-                onClick={handleAvatarUploaderClick}
-              />
-              <p className="form__text form__text_explanation">
-                Размер изображения не&nbsp;должен превышать 5 мб, формат jpg и png
-              </p>
-            </div>
-          </div>
+      <div className="profile-settings">
+        <h1 className="profile-settings__title">Настройки профиля</h1>
+        <div className="profile-settings__avatar-block">
+          <img
+            src={userData.avatar === null ? defaultAvatar : userData.avatar}
+            className="profile-settings__avatar"
+            alt="Аватар"
+          />
+          <Button
+            variant="secondary"
+            type="text"
+            text="Изменить фото"
+            size="medium"
+            onClick={handleAvatarUploaderClick}
+          />
+        </div>
+        <form className="form form_profile" onSubmit={handleUpdateProfile}>
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
@@ -171,7 +154,7 @@ export default function Profile() {
                 name="username"
                 className="form__input"
                 type="text"
-                placeholder="Ввести логин"
+                placeholder="Введите логин"
                 disabled={disable}
               />
               <span
@@ -183,7 +166,7 @@ export default function Profile() {
             </label>
 
             <div
-              className="form__tooltip"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="login"
               data-tooltip-content={RequirementsLogin}
             />
@@ -195,7 +178,6 @@ export default function Profile() {
               place="bottom"
             />
           </div>
-
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-email">
               E-mail
@@ -205,7 +187,7 @@ export default function Profile() {
                 name="email"
                 className="form__input"
                 type="email"
-                placeholder="Ввести e-mail"
+                placeholder="Введите e-mail"
                 disabled={disable}
               />
               <span
@@ -216,7 +198,7 @@ export default function Profile() {
               </span>
             </label>
             <div
-              className="form__tooltip"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="email"
               data-tooltip-content={RequirementsEmail}
             />
@@ -240,18 +222,6 @@ export default function Profile() {
                 disabled
               />
             </label>
-            <div
-              className="form__tooltip"
-              data-tooltip-id="password"
-              data-tooltip-content={RequirementsPassword}
-            />
-            <Tooltip
-              data-tooltip-variant="info"
-              className="react-tooltip"
-              classNameArrow="react-tooltip-arrow"
-              id="password"
-              place="bottom"
-            />
           </div>
 
           <Button
@@ -275,7 +245,7 @@ export default function Profile() {
                 name="first_name"
                 className="form__input"
                 type="text"
-                placeholder="Ввести имя"
+                placeholder="Введите имя"
                 disabled={disable}
               />
               <span
@@ -286,7 +256,7 @@ export default function Profile() {
               </span>
             </label>
             <div
-              className="form__tooltip"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="name"
               data-tooltip-content={RequirementsNameAndSurname}
             />
@@ -311,7 +281,7 @@ export default function Profile() {
                 name="last_name"
                 className="form__input"
                 type="text"
-                placeholder="Ввести фамилию"
+                placeholder="Введите фамилию"
                 disabled={disable}
               />
               <span
@@ -322,7 +292,7 @@ export default function Profile() {
               </span>
             </label>
             <div
-              className="form__tooltip"
+              className="tooltip tooltip-profile-page"
               data-tooltip-id="surname"
               data-tooltip-content={RequirementsNameAndSurname}
             />
@@ -335,7 +305,7 @@ export default function Profile() {
             />
           </div>
 
-          <div className="form__button-wrapper form__button-wrapper_profile">
+          <div className="form__button-wrapper">
             {!isEditing ? (
               <Button
                 variant="primary"
@@ -366,7 +336,7 @@ export default function Profile() {
           {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
           {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
         </form>
-      )}
+      </div>
     </section>
   );
 }

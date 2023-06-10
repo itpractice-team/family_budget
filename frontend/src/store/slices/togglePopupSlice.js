@@ -1,25 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isOpenSpendingPopup: false,
-  isOpenEarningPopup: false,
+  isSpendPopupOpen: false,
+  isIncomePopupOpen: false,
   isRegisterPopupOpen: false,
   isLoginPopupOpen: false,
   isPasswordChangePopupOpen: false,
   isAvatarUploaderPopupOpen: false,
   isConfirmationPopupOpen: false,
   isInfoPopupOpen: false,
+  isAccountPopupOpen: false,
+  isSdekPopupOpen: false,
+  isRepeatExpensesPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
   name: 'togglePopup',
   initialState,
   reducers: {
-    toggleSpendingPopup: (state, { payload }) => {
-      state.isSpendingPopupOpen = payload;
+    toggleInfoPopup: (state, { payload }) => {
+      state.isInfoPopupOpen = payload;
     },
-    toggleEarningPopup: (state, { payload }) => {
-      state.isEarningPopupOpen = payload;
+    toggleSpendPopup: (state, { payload }) => {
+      state.isSpendPopupOpen = payload;
+    },
+    toggleIncomePopup: (state, { payload }) => {
+      state.isIncomePopupOpen = payload;
     },
     toggleRegisterPopup: (state, { payload }) => {
       state.isRegisterPopupOpen = payload;
@@ -36,21 +42,30 @@ const togglePopupSlice = createSlice({
     toggleConfirmationPopup: (state, { payload }) => {
       state.isConfirmationPopupOpen = payload;
     },
-    toggleInfoPopup: (state, { payload }) => {
-      state.isInfoPopupOpen = payload;
+    toggleAccountPopup: (state, { payload }) => {
+      state.isAccountPopupOpen = payload;
+    },
+    toggleSdekPopup: (state, { payload }) => {
+      state.isSdekPopupOpen = payload;
+    },
+    toggleRepeatExpensesPopup: (state, { payload }) => {
+      state.isRepeatExpensesPopupOpen = payload;
     },
   },
 });
 
 export const {
-  toggleSpendingPopup,
-  toggleEarningPopup,
+  toggleSpendPopup,
+  toggleIncomePopup,
   toggleRegisterPopup,
   toggleLoginPopup,
   togglePasswordChangePopup,
   toggleAvatarUploaderPopup,
   toggleConfirmationPopup,
   toggleInfoPopup,
+  toggleAccountPopup,
+  toggleSdekPopup,
+  toggleRepeatExpensesPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;
