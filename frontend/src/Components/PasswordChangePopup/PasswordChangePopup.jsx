@@ -18,6 +18,8 @@ import Eye from '../../ui/Eye/Eye';
 export default function PasswordChangePopup({ onClose }) {
   const dispatch = useDispatch();
   const isLoading = useSelector((store) => store.password.loading);
+
+  // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
   const handleEyeChange = (index, opened) => {
     const newEyesValues = [...eyes];

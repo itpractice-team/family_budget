@@ -14,10 +14,15 @@ import Eye from '../../ui/Eye/Eye';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
-  const [eye, setEye] = useState(false);
-  const handleEye = () => {
-    setEye(!eye);
+  
+  // Configuration to add Eye component
+  const [eyes, setEyes] = useState([false, false, false]);
+  const handleEyeChange = (index, opened) => {
+    const newEyesValues = [...eyes];
+    newEyesValues[index] = opened;
+    setEyes(newEyesValues);
   }
+
   const isRegistration = useSelector((state) => state.registration.data);
   const isLoading = useSelector((store) => store.registration.loading);
 
@@ -177,9 +182,9 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-password"
               name="password"
               className="form__input"
-              type={eye ? 'text' : 'password'}
+              type={eyes[0] ? 'text' : 'password'}
             />
-            <Eye handleEye={handleEye}/>
+            <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
             <span
               className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}
@@ -209,10 +214,10 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
-              type={eye ? 'text' : 'password'}
               placeholder="Повторить пароль"
+              type={eyes[1] ? 'text' : 'password'}
             />
-            <Eye handleEye={handleEye}/>
+            <Eye index={1} opened={eyes[1]} setOpenState={handleEyeChange} />
             <span
               className={`form__valid-message 
                         ${errors.confirmPassword ? 'form__valid-message_active' : ''}`}

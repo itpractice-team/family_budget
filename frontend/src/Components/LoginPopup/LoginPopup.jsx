@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
@@ -12,9 +12,18 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
+import Eye from '../../ui/Eye/Eye';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  // Configuration to add Eye component
+  const [eyes, setEyes] = useState([false, false, false]);
+  const handleEyeChange = (index, opened) => {
+    const newEyesValues = [...eyes];
+    newEyesValues[index] = opened;
+    setEyes(newEyesValues);
+  }
 
   const isLogin = useSelector((state) => state.login.login);
   const isLoading = useSelector((store) => store.login.loading);
@@ -92,9 +101,10 @@ export default function LoginPopup({ onClose }) {
               id="LoginPopup-password"
               name="password"
               className="form__input"
-              type="password"
               placeholder="Пароль"
+              type={eyes[0] ? 'text' : 'password'}
             />
+            <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
             <span
               className={`form__valid-message 
                         ${errors.password ? 'form__valid-message_active' : ''}`}

@@ -177,5 +177,20 @@
   top: 10px;
   top: 50px;
   left: 22%;
-  color: red;
+  height: 28px;
+  background-color: #F05A2B;
+  background-image: url(../../Images/alert-triangle.svg);
+  background-position: top 50% left 8px;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #fff;
+  text-align: left;
+  padding-top: 4px;
+  padding-left: 36px;
+  padding-right: 8px;
+  border: 0;
+  border-radius: 4px;
 }
