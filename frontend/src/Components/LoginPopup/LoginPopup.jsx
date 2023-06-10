@@ -11,6 +11,7 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
+import Button from '../../ui/Button/Button'
 import Eye from '../../ui/Eye/Eye';
 
 export default function LoginPopup({ onClose }) {
