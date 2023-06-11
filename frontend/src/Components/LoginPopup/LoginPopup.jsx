@@ -13,6 +13,7 @@ import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button'
 import Eye from '../../ui/Eye/Eye';
+import Button from '../../ui/Button/Button';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
