@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import './Account.scss';
 import AccountSelect from '../AccountSelect/AccountSelect';
+import Overlay from '../Overlay/Overlay';
 
 export default function Account() {
   const [selectedOption, setSelectedOption] = useState('Тинькофф');
   const [isListOpen, setIsListOpen] = useState(false);
 
   const handleOptionChange = (value) => {
-    setSelectedOption(value);
-    setIsListOpen(false);
+    setSelectedOption((prevSelectedOption) =>
+      prevSelectedOption === value ? prevSelectedOption : value,
+    );
   };
 
   const toggleList = () => {
     setIsListOpen(!isListOpen);
+  };
+
+  const closeList = () => {
+    setIsListOpen(false);
   };
 
   return (
@@ -27,9 +33,9 @@ export default function Account() {
           {selectedOption}
         </button>
       </div>
-      {isListOpen && (
+      <Overlay isOpen={isListOpen} onClose={closeList}>
         <AccountSelect handleOptionChange={handleOptionChange} selectedOption={selectedOption} />
-      )}
+      </Overlay>
     </section>
   );
 }
