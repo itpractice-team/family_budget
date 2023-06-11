@@ -37,7 +37,6 @@
 //   transition: all 0.5s;
 //   border: 1px solid;
 
-
 //   &.rounded {
 //     // Styles for rounded button
 //     width: fit-content;
@@ -189,7 +188,6 @@
 //       line-height: 24px;
 //     }
 
-  
 // }
 
 @import '../../styles/consts.scss';
@@ -366,4 +364,12 @@ $bg-color-fiat-pressed: #f4f4f4;
     // Styles for the button text
     @include text-medium-web;
   }
+}
+
+// extraClass
+
+.button__account {
+  margin-top: 24px;
+  width: 100%;
+  justify-content: center;
 }
