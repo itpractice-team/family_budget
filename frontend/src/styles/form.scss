@@ -217,7 +217,7 @@
 
 .form__valid-message {
   height: 28px;
-  background-color: #F05A2B;
+  background-color: none;
   background-image: url(../Images/alert-triangle.svg);
   background-position: top 50% left 8px;
   background-repeat: no-repeat;
@@ -225,7 +225,7 @@
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
-  color: #fff;
+  color: #F05A2B;
   opacity: 0;
   left: 0;
   text-align: left;
@@ -235,7 +235,6 @@
   top: 86px;
   position: absolute;
   border: 0;
-  border-radius: 4px;
   transition: 0.3s;
   margin: 0;
 }
