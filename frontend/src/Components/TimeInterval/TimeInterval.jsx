@@ -25,11 +25,11 @@ export default function TimeInterval({ selectedTimeInterval }) {
 
       case 'month': {
         // месяц назад от текущей даты
-        const monthStart = new Date(today.getFullYear(), today.getMonth() - 1, 7);
-        const monthEnd = new Date(today.getFullYear(), today.getMonth(), 8);
-        const formattedMonthStart = formatter.format(monthStart);
-        const formattedMonthEnd = formatter.format(monthEnd);
-        return `За месяц: ${formattedMonthStart} - ${formattedMonthEnd}`;
+        const monthAgo = new Date();
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        const formattedMonthAgo = formatter.format(monthAgo);
+        const formattedToday = formatter.format(today);
+        return `За месяц: ${formattedMonthAgo} - ${formattedToday}`;
       }
 
       case 'year': {
