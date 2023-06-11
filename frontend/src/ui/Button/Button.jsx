@@ -28,10 +28,10 @@
 //   disabled: false,
 // };
 
-
+import React from 'react';
 import './Button.scss';
 
-export default function Button({ variant, type, text, size, disabled, extraClass, onClick }) {
+function Button({ variant, type, text, size, disabled, extraClass, onClick }) {
   const buttonClasses = `button ${extraClass} ${variant} ${size} ${disabled ? 'disabled' : ''} ${
     type === 'icon' ? 'rounded' : ''
   }`;
@@ -49,3 +49,5 @@ export default function Button({ variant, type, text, size, disabled, extraClass
     </button>
   );
 }
+
+export default React.memo(Button);

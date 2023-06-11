@@ -3,7 +3,7 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px 32px;
+  gap: 32px;
 }
 
 .form_add-operation {
@@ -19,7 +19,7 @@
 }
 
 .form_profile {
-  gap: 22px 65px;
+  gap: 32px 67px;
 }
 
 .form__input-block {
@@ -76,6 +76,14 @@
   }
 }
 
+.form__input.error {
+  border-color: #f05a2b;
+}
+
+.form__input:focus {
+  outline: none;
+}
+
 .form__input_password-new {
   width: 400px;
 }
@@ -121,17 +129,10 @@
 
 .form__button-wrapper {
   position: relative;
-  margin-top: 8px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.form__button-wrapper-login {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 
 .form__button-wrapper-register {
@@ -140,9 +141,20 @@
 }
 
 .form__button-wrapper_single {
+  margin-top: 8px;
   flex-wrap: wrap;
   justify-content: center;
   gap: 24px;
+}
+
+.form__button-wrapper-login {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form__button-wrapper_password-new {
+  margin-top: 8px;
 }
 
 .form__button-wrapper_add-operation {
@@ -216,23 +228,20 @@
 // сообщения об ошибках ввода
 
 .form__valid-message {
-  height: 28px;
-  background-color: none;
+  @include text-small-web;
+  display: flex;
+  align-items: center;
   background-image: url(../Images/alert-triangle.svg);
   background-position: top 50% left 8px;
   background-repeat: no-repeat;
-  background-size: 25px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-  color: #F05A2B;
+  background-size: 20px;
+  color: #f05a2b;
   opacity: 0;
-  left: 0;
+  left: 9px;
   text-align: left;
-  padding-top: 4px;
   padding-left: 36px;
   padding-right: 8px;
-  top: 86px;
+  top: 90px;
   position: absolute;
   border: 0;
   transition: 0.3s;
@@ -246,8 +255,9 @@
 // чекбокс
 
 .form__checkbox-label {
+  margin-top: 8px;
   cursor: pointer;
-  padding-left: 40px;
+  padding-left: 34px;
   position: relative;
 }
 
@@ -255,10 +265,10 @@
   cursor: pointer;
   position: absolute;
   left: 0;
-  top: -7px;
+  top: 0px;
   appearance: none;
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
 }
 
 .form__checkbox:hover {
@@ -267,8 +277,8 @@
 
 .form__checkbox::after {
   content: '';
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   background-color: white;
   display: inline-block;
   border: 2px solid #303360;

@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
-
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,11 +30,9 @@ export default function Profile() {
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
-  const isAvatarUploaderPopupOpen = useSelector((state) => state.popup.isAvatarUploaderPopupOpen);
-  const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
-  const userData = useSelector((state) => state.user.user);
-  const isFetched = useSelector((state) => state.user.isFetched);
+  const { isPasswordChangePopupOpen, isAvatarUploaderPopupOpen, isConfirmationPopupOpen } =
+    useSelector((state) => state.popup);
+  const { user: userData, isFetched } = useSelector((state) => state.user);
 
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
@@ -45,10 +42,13 @@ export default function Profile() {
     }
   }, [isFetched]);
 
-  const handleAvatarUploaderClick = (evt) => {
-    evt.preventDefault();
-    dispatch(toggleAvatarUploaderPopup(true));
-  };
+  const handleAvatarUploaderClick = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      dispatch(toggleAvatarUploaderPopup(true));
+    },
+    [dispatch],
+  );
 
   const closeAvatarUploaderPopup = () => {
     dispatch(toggleAvatarUploaderPopup(false));
@@ -152,7 +152,7 @@ export default function Profile() {
                 })}
                 id="Profile-login"
                 name="username"
-                className="form__input"
+                className={`form__input ${errors.username ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите логин"
                 disabled={disable}
@@ -185,7 +185,7 @@ export default function Profile() {
                 {...register('email', { value: userData.email || '', shouldUnregister: true })}
                 id="Profile-email"
                 name="email"
-                className="form__input"
+                className={`form__input ${errors.email ? 'error' : ''}`}
                 type="email"
                 placeholder="Введите e-mail"
                 disabled={disable}
@@ -243,7 +243,7 @@ export default function Profile() {
                 })}
                 id="Profile-name"
                 name="first_name"
-                className="form__input"
+                className={`form__input ${errors.first_name ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите имя"
                 disabled={disable}
@@ -279,7 +279,7 @@ export default function Profile() {
                 })}
                 id="Profile-surname"
                 name="last_name"
-                className="form__input"
+                className={`form__input ${errors.last_name ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите фамилию"
                 disabled={disable}
@@ -330,7 +330,7 @@ export default function Profile() {
               size="medium"
               onClick={handleConfirmationPopupClick}
             />
-            {(isEditing && message) && <span className="profile__error-message">{message}</span>}
+            {isEditing && message && <span className="profile__error-message">{message}</span>}
           </div>
           {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
           {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
