@@ -1,9 +1,11 @@
+@import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
+
 .tab {
   display: flex;
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  // width: 113px;
   height: 36px;
 
   &:hover {
@@ -11,14 +13,14 @@
   }
 
   &.tab_type_current {
-    background-color: #ffffff;
+    background-color: $bg-color-fiat;
     box-shadow: 1px 2px 6px rgba(140, 141, 145, 0.2);
     border-radius: 12px;
     pointer-events: none;
   }
 
   .text {
-    // Стили для текста
+    @include text-medium-web;
   }
 
   .text_type_main-default {
