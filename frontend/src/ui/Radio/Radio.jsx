@@ -1,9 +1,12 @@
-import React from 'react';
 import './Radio.scss';
 
 export default function Radio({ text, icon, value, isChecked, onChange, disabled, extraClass }) {
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
-  const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Generate a unique ID
+  const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Генерация уникального идентификатора
+
+  const handleChange = () => {
+    onChange(value);
+  };
 
   return (
     <label className={radioClasses} htmlFor={inputId}>
@@ -14,7 +17,7 @@ export default function Radio({ text, icon, value, isChecked, onChange, disabled
         name="radio-group"
         value={value}
         checked={isChecked}
-        onChange={onChange}
+        onChange={handleChange}
         disabled={disabled}
       />
       <span className="radio__circle"> </span>

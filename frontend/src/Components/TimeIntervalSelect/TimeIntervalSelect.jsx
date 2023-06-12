@@ -1,25 +1,16 @@
-import React from 'react';
-import Radio from '../../ui/Radio/Radio';
+import './TimeIntervalSelect.scss';
+import Dropdown from '../Dropdown/Dropdown';
 
 export default function TimeIntervalSelect({ selectedTimeInterval, onTimeIntervalChange }) {
-  const timeIntervals = [
-    { text: 'Сегодня', value: 'today' },
-    { text: 'Неделя', value: 'week' },
-    { text: 'Месяц', value: 'month' },
-    { text: 'Год', value: 'year' },
-    { text: 'Вся история', value: 'all' },
-  ];
+  const timeIntervals = ['Сегодня', 'Неделя', 'Месяц', 'Год', 'Вся история'];
 
   return (
-    <fieldset className="budget__select-fieldset" onChange={onTimeIntervalChange} name="timePeriod">
-      {timeIntervals.map((interval) => (
-        <Radio
-          key={interval.value}
-          {...interval}
-          isChecked={selectedTimeInterval === interval.value}
-          onChange={onTimeIntervalChange}
-        />
-      ))}
-    </fieldset>
+    <div className="timeinterval-select">
+      <Dropdown
+        options={timeIntervals}
+        selectedOption={selectedTimeInterval}
+        onOptionChange={onTimeIntervalChange}
+      />
+    </div>
   );
 }

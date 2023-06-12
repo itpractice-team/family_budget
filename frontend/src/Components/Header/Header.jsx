@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
@@ -12,14 +13,14 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import ProfileTooltip from '../ProfileTooltip/ProfileTooltip';
 import defaultavatar from '../../Images/avatar.svg';
 import Button from '../../ui/Button/Button';
+import Overlay from '../Overlay/Overlay';
 
 export default function Header() {
   const dispatch = useDispatch();
 
-  const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
-  const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
+  const { isRegisterPopupOpen, isLoginPopupOpen } = useSelector((state) => state.popup);
+
   const isLogin = useSelector((state) => state.login.login);
-  const isLoading = useSelector((store) => store.user.loading);
   const { avatar } = useSelector((state) => state.user.user);
 
   const isBudget = useMatch({ path: '/budget', exact: true });
@@ -97,22 +98,17 @@ export default function Header() {
               Помощь
             </NavLink>
           </nav>
-          {isLoading ? (
-            <img src={defaultavatar} className="header__profile-icon" alt="Дефолтный аватар" />
-          ) : (
-            <div onClick={handleProfileTooltipClick} className="div">
-              <img
-                src={avatar === null ? defaultavatar : avatar}
-                className="header__profile-icon"
-                alt="Аватар"
-              />
-            </div>
-          )}
-          {isTooltipOpen && (
-            <ProfileTooltip isOpen={isTooltipOpen} onClose={handleProfileTooltipClick} />
-          )}
+          <img
+            src={avatar === null ? defaultavatar : avatar}
+            className="header__profile-icon"
+            alt="Аватар"
+            onClick={handleProfileTooltipClick}
+          />
         </div>
       )}
+      <Overlay isOpen={isTooltipOpen} onClose={handleProfileTooltipClick}>
+        <ProfileTooltip onClose={handleProfileTooltipClick} />
+      </Overlay>
       {isRegisterPopupOpen && <RegisterPopup onClose={closeRegisterPopup} />}
       {isLoginPopupOpen && <LoginPopup onClose={closeLoginPopup} />}
     </header>

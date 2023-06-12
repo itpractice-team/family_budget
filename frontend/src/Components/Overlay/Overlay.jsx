@@ -20,5 +20,9 @@ export default function Overlay({ isOpen, onClose, children }) {
     };
   }, [isOpen, onClose]);
 
-  return <div ref={overlayRef}>{isOpen && children}</div>;
+  return (
+    <div className="overlay" ref={overlayRef}>
+      {isOpen && children}
+    </div>
+  );
 }
