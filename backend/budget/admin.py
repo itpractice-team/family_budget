@@ -8,10 +8,15 @@ from budget.models import Category, Finance, Icon
 class ImageAdmin(admin.ModelAdmin):
     """Базовый класс для моделей с картинками в админке."""
 
-    def image_tag(self, recipe):
+    def image_tag(self, obj):
         """Прорисовка изображения рецепта."""
-        if recipe.image:
-            return mark_safe(f'<img src="{recipe.image.url}" height="100" />')
+        if obj.image:
+            url = (
+                obj.image.image.url
+                if isinstance(obj.image, Icon)
+                else obj.image.url
+            )
+            return mark_safe(f'<img src="{url}" height="25" />')
         return None
 
     image_tag.short_description = _("image")
@@ -26,12 +31,6 @@ class CategoryAdmin(ImageAdmin):
         "priority",
         "image_tag",
     )
-    list_editable = (
-        "name",
-        "priority",
-        "image",
-        "description",
-    )
     list_filter = (
         "name",
         "priority",
@@ -41,14 +40,10 @@ class CategoryAdmin(ImageAdmin):
 
 
 @admin.register(Icon)
-class IconAdmin(admin.ModelAdmin):
+class IconAdmin(ImageAdmin):
     """Конфигурация для модели Icon в админке."""
 
     list_display = ("tag", "image_tag")
-    list_editable = (
-        "tag",
-        "image",
-    )
     list_filter = ("tag",)
     search_fields = ("tag",)
     empty_value_display = _("empty")
@@ -63,11 +58,6 @@ class FinanceAdmin(admin.ModelAdmin):
         "priority",
         "slug",
         "description",
-    )
-    list_editable = (
-        "name",
-        "priority",
-        "slug",
     )
     list_filter = (
         "name",

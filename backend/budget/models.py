@@ -11,11 +11,13 @@ from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 
 from colorfield.fields import ColorField
+from core.fields import ImageAndSvgField
 from core.validators import (
     validate_color_hex_code,
     validate_letter_or_blank_space,
     validate_only_letters,
 )
+from dateutil.relativedelta import relativedelta
 
 User = get_user_model()
 
@@ -43,10 +45,8 @@ class BaseDirectoryModel(models.Model):
         constraints = [
             models.UniqueConstraint(
                 Lower("name"),
-                name="%(class)s_name_unique",
-                violation_error_message=(
-                    "Наименование должно быть уникальным!"
-                ),
+                name="%(app_label)s_%(class)s_name_unique",
+                violation_error_message=_("Name must be unique!"),
             ),
         ]
 
@@ -78,7 +78,7 @@ class IconMixin(models.Model):
     """Модель микшена для иконок."""
 
     image_directory = "icon"
-    image = models.ImageField(_("image"), upload_to=image_directory_path)
+    image = ImageAndSvgField(_("image"), upload_to=image_directory_path)
 
     class Meta:
         abstract = True
@@ -92,6 +92,7 @@ class Icon(IconMixin, models.Model):
         _("tag"),
         max_length=25,
         validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
+        unique=True,
     )
 
     class Meta:
@@ -100,7 +101,7 @@ class Icon(IconMixin, models.Model):
 
     def __str__(self):
         """Метод возвращает информацию по иконке."""
-        return self.image
+        return self.tag
 
 
 class Finance(BaseDirectoryModel, IconMixin, SlugMixin):
@@ -108,7 +109,7 @@ class Finance(BaseDirectoryModel, IconMixin, SlugMixin):
 
     image_directory = "finance"
 
-    class Meta:
+    class Meta(BaseDirectoryModel.Meta):
         verbose_name = _("Finance")
         verbose_name_plural = _("Finances")
 
@@ -117,17 +118,25 @@ class Finance(BaseDirectoryModel, IconMixin, SlugMixin):
         return self.name
 
 
-class Category(BaseDirectoryModel):
-    """Модель cправочника для категорий."""
+class BaseCategory(BaseDirectoryModel):
+    """Базовая модель спровочника категорий."""
 
     image = models.ForeignKey(
         Icon,
         on_delete=models.SET_NULL,
-        related_name="categories",
+        null=True,
         verbose_name=_("icon"),
     )
 
-    class Meta:
+    class Meta(BaseDirectoryModel.Meta):
+        abstract = True
+        default_related_name = "%(app_label)s_%(class)s"
+
+
+class Category(BaseCategory):
+    """Модель cправочника для дефолтных категорий."""
+
+    class Meta(BaseCategory.Meta):
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
@@ -173,10 +182,9 @@ class IncomeExpenses(models.IntegerChoices):
 
     INCOME = 0, _("Income")
     EXPENSES = 1, _("Expenses")
-    __empty__ = _("(Unknown)")
 
 
-class BudgetCategory(Category):
+class BudgetCategory(BaseCategory):
     """Модель категорий дохода/расхода для бюджета."""
 
     budget = models.ForeignKey(
@@ -185,7 +193,7 @@ class BudgetCategory(Category):
         on_delete=models.CASCADE,
         related_name="categories",
     )
-    type_category = models.IntegerField(
+    category_type = models.IntegerField(
         verbose_name=_("type"),
         choices=IncomeExpenses.choices,
     )
@@ -197,18 +205,17 @@ class BudgetCategory(Category):
         help_text=_("Not required. Enter HEX-code color, please."),
     )
 
-    class Meta:
+    class Meta(BaseCategory.Meta):
         """Метаданные модели категорий бюджета."""
 
         constraints = [
             models.UniqueConstraint(
                 Lower("name"),
                 "budget",
-                "type_category",
-                name="unique_name_budget_type_category",
-                violation_error_message=(
-                    "Наименование категории для бюджета "
-                    "должно быть уникальным!"
+                "category_type",
+                name="%(app_label)s_%(class)s_name_budget_category_type",
+                violation_error_message=_(
+                    "The budget category name must be unique!"
                 ),
             )
         ]
@@ -252,6 +259,9 @@ class BudgetFinance(models.Model):
             models.UniqueConstraint(
                 fields=["budget", "finance"],
                 name="unique_budget_finance",
+                violation_error_message=_(
+                    "The funding source for the budget must be unique"
+                ),
             )
         ]
         verbose_name = _("Budget finance")
@@ -262,41 +272,29 @@ class BudgetFinance(models.Model):
         return f"{self.budget} ({self.finance} баланс {self.balance})"
 
 
-class FinanceTransaction(models.Model):
-    """Базовый класс финансовой транзакции."""
+class BaseFinance(models.Model):
+    """Базовая модель финансовой модели."""
 
     name = models.CharField(
         _("name"),
         max_length=15,
         validators=[validate_only_letters, MinLengthValidator(2)],
     )
-    created = models.DateTimeField(_("created"))
+    created = models.DateTimeField(
+        _("created"),
+        default=timezone.now,
+        db_index=True,
+    )
     amount = models.DecimalField(
         verbose_name=_("amount"),
         max_digits=15,
         decimal_places=0,
-        validators=[
-            MinValueValidator(
-                0, message=_("Minimum value for transaction is 0")
-            )
-        ],
+        default=0,
     )
     budget = models.ForeignKey(
         Budget,
         verbose_name=_("budget"),
         on_delete=models.CASCADE,
-    )
-    finance = models.ForeignKey(
-        BudgetFinance,
-        on_delete=models.SET_NULL,
-        verbose_name=_("finance"),
-        null=True,
-    )
-    category = models.ForeignKey(
-        BudgetCategory,
-        on_delete=models.SET_NULL,
-        verbose_name=_("category"),
-        null=True,
     )
     description = models.TextField(
         _("description"),
@@ -305,93 +303,178 @@ class FinanceTransaction(models.Model):
     )
 
     class Meta:
+        abstract = True
+        default_related_name = "%(app_label)s_%(class)s"
         ordering = ["-created"]
-        default_related_name = "transactions"
+
+
+class BaseTransaction(BaseFinance):
+    """Базовая модель финансовой транзакции."""
+
+    category = models.ForeignKey(
+        BudgetCategory,
+        on_delete=models.SET_NULL,
+        verbose_name=_("category"),
+        null=True,
+    )
+
+    class Meta(BaseFinance.Meta):
+        abstract = True
+
+
+class FinanceTransaction(BaseTransaction):
+    """Модель финансовой транзакции."""
+
+    finance = models.ForeignKey(
+        BudgetFinance,
+        on_delete=models.SET_NULL,
+        verbose_name=_("finance"),
+        null=True,
+    )
+
+    class Meta(BaseTransaction.Meta):
         verbose_name = _("Transaction")
         verbose_name_plural = _("Transactions")
 
+    @property
+    def is_consumption(self):
+        """Проверка транзакции на тип `Расход`."""
+        return self.amount < 0
 
-class Spend(models.Model):
-    """Модель расходов."""
+    @property
+    def is_income(self):
+        """Проверка транзакции на тип `Доход`."""
+        return not self.is_consumption()
 
-    title = models.CharField("Наименование расхода", max_length=70)
-    description = models.TextField(
-        "Комментарий к расходу", max_length=500, blank=True, null=True
+
+class ConsumptionPeriod(models.IntegerChoices):
+    """Модель выбора периода для повторяющегося расхода."""
+
+    DAY = 0, _("Day")
+    WEEK = 1, _("Week")
+    MONTH = 2, _("Month")
+    YEAR = 3, _("Year")
+
+
+class DateRepeat(models.IntegerChoices):
+    """Модель выбора типа для повторяющегося периода."""
+
+    ENDLESSLY = 0, _("Endlessly")
+    LIMIT_COUNT = 1, _("Count")
+    LIMIT_DATE = 2, _("Date")
+
+
+class ReapeatSpend(BaseTransaction):
+    """Модель повторяющихся платежей."""
+
+    name = models.CharField(
+        _("name"),
+        max_length=50,
+        validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
+    )
+    repeat_type = models.IntegerField(
+        verbose_name=_("type"),
+        choices=ConsumptionPeriod.choices,
+    )
+    repeat_count = models.PositiveIntegerField(
+        verbose_name=_("count"),
+        default=1,
+        validators=[
+            MinValueValidator(1, message=_("Minimum value repeat count is 1"))
+        ],
+    )
+    repeat_period = models.IntegerField(
+        verbose_name=_("period"),
+        choices=DateRepeat.choices,
+    )
+    to_date = models.DateTimeField(_("to_date"), null=True)
+    amount = models.DecimalField(
+        verbose_name=_("amount"),
+        max_digits=15,
+        decimal_places=0,
+        default=0,
+        validators=[
+            MinValueValidator(0, message=_("Minimum value for amount is 0"))
+        ],
     )
 
-    class Meta:
-        default_related_name = "spends"
-        verbose_name = "Расход средств"
-        verbose_name_plural = "Расходы средств"
+    class Meta(BaseTransaction.Meta):
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(to_date__isnull=True)
+                    | models.Q(to_date__gte=models.F("created"))
+                ),
+                name="check_not_to_date_less_created",
+                violation_error_message=_(
+                    "Date before must be "
+                    "greater than or equal to the creation date"
+                ),
+            ),
+        ]
+        verbose_name = _("Reapeat spend")
+        verbose_name_plural = _("Reapeat spends")
+
+    @property
+    def calc_comlete_date(self):
+        """Возвращает дату завершения повторов."""
+        if self.repeat_period == DateRepeat.ENDLESSLY:
+            return None
+        if self.repeat_period == DateRepeat.LIMIT_DATE:
+            return self.to_date
+        delta_param = f"{ConsumptionPeriod.labels[self.repeat_type].lower()}s"
+        return self.created + relativedelta(**{delta_param: self.repeat_count})
+
+    def is_open_by_date(self, date):
+        """Возвращает статус на незавершенность повторного платежа."""
+        comlete_date = self.calc_comlete_date()
+        return comlete_date is not None and date <= comlete_date
+
+    @property
+    def is_open_now(self):
+        return self.is_open_by_date(timezone.now())
+
+
+class MoneyBox(BaseFinance):
+    """Модель копилки."""
+
+    name = models.CharField(
+        _("name"),
+        max_length=50,
+        validators=[validate_letter_or_blank_space, MinLengthValidator(2)],
+    )
+    amount = models.DecimalField(
+        verbose_name=_("amount"),
+        max_digits=15,
+        decimal_places=0,
+        default=0,
+        validators=[
+            MinValueValidator(0, message=_("Minimum value for amount is 0"))
+        ],
+    )
+    accumulated = models.DecimalField(
+        verbose_name=_("accumulated"),
+        max_digits=15,
+        decimal_places=0,
+        default=0,
+        validators=[
+            MinValueValidator(
+                0, message=_("Minimum value for accumulated is 0")
+            )
+        ],
+    )
+
+    class Meta(BaseFinance.Meta):
+        verbose_name = _("Moneybox")
+        verbose_name_plural = _("Moneyboxes")
 
     def __str__(self):
-        return self.title
+        return self.name
 
-
-class Income(models.Model):
-    """Модель прихода средств."""
-
-    title = models.CharField("Наименование прихода", max_length=50)
-    description = models.TextField(
-        "Комментарий к приходу", max_length=500, blank=True, null=True
-    )
-    # category = models.ForeignKey(
-    #     CategoryIncome,
-    #     on_delete=models.SET_NULL,
-    #     verbose_name="Категория дохода",
-    #     blank=True,
-    #     null=True,
-    # )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Приходы пользователя",
-    )
-
-    class Meta:
-        verbose_name = "Приход средств"
-        verbose_name_plural = "Приходы средств"
-        default_related_name = "incomes"
-
-    def __str__(self):
-        return self.title
-
-
-class MoneyBox(models.Model):
-    """Модель копилка."""
-
-    title = models.CharField("Цель накопления", max_length=254)
-    accumulated = models.PositiveIntegerField(
-        "Уже накоплено",
-    )
-    achieved = models.BooleanField(
-        "Цель достигнута/не достигнута", default=False
-    )
-    # description = models.TextField(
-    #     "Комментарий к приходу", max_length=500, blank=True, null=True
-    # )
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        verbose_name="Категория расхода",
-        blank=True,
-        null=True,
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="moneyboxes",
-        verbose_name="Цель пользователя",
-    )
-
-    class Meta:
-        verbose_name = "Цель накопления"
-        verbose_name_plural = "Цели накопления"
-        default_related_name = "moneyboxes"
-
-    def __str__(self):
-        return self.title
+    @property
+    def required_funds(self):
+        return self.amount - self.accumulated
 
     @property
     def is_collected(self):
-        return self.total == self.accumulated
+        return not bool(self.required_funds())
