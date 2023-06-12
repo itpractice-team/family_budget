@@ -50,6 +50,26 @@ class BaseDirectoryModel(models.Model):
             ),
         ]
 
+    @classmethod
+    def get_default_use_records(cls, *fields, flat=False):
+        queryset = cls.objects.filter(default_use=True)
+        if flat:
+            return queryset.values_list(flat=True)
+        return queryset.values(*fields)
+
+
+class DefaultUseMixin(models.Model):
+    """Модель микшена для дефолтных значений в справочниках."""
+
+    default_use = models.BooleanField(_("default_use"), default=False)
+
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def get_default_use_records(cls, *fields):
+        return cls.objects.filter(default_use=True).values(*fields)
+
 
 class SlugMixin(models.Model):
     """Модель микшена для slug справочников."""
@@ -104,7 +124,7 @@ class Icon(IconMixin, models.Model):
         return self.tag
 
 
-class Finance(BaseDirectoryModel, IconMixin, SlugMixin):
+class Finance(BaseDirectoryModel, IconMixin, SlugMixin, DefaultUseMixin):
     """Модель справочника для источника дохода/списания(счет)."""
 
     image_directory = "finance"
@@ -133,7 +153,7 @@ class BaseCategory(BaseDirectoryModel):
         default_related_name = "%(app_label)s_%(class)s"
 
 
-class Category(BaseCategory):
+class Category(BaseCategory, DefaultUseMixin):
     """Модель cправочника для дефолтных категорий."""
 
     class Meta(BaseCategory.Meta):
@@ -196,6 +216,7 @@ class BudgetCategory(BaseCategory):
     category_type = models.IntegerField(
         verbose_name=_("type"),
         choices=IncomeExpenses.choices,
+        default=IncomeExpenses.EXPENSES,
     )
     color = ColorField(
         _("color HEX-code"),
@@ -224,7 +245,7 @@ class BudgetCategory(BaseCategory):
 
     def __str__(self):
         """Метод возвращает информацию по категориям бюджета."""
-        return f"{self.category} (тип {self.income_expenses})"
+        return f"{self.name} (тип {self.category_type})"
 
 
 class BudgetFinance(models.Model):

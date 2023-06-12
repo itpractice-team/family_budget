@@ -27,9 +27,9 @@ class CategoryAdmin(ImageAdmin):
     """Конфигурация для модели Category в админке."""
 
     list_display = (
+        "image_tag",
         "name",
         "priority",
-        "image_tag",
     )
     list_filter = (
         "name",
@@ -43,17 +43,18 @@ class CategoryAdmin(ImageAdmin):
 class IconAdmin(ImageAdmin):
     """Конфигурация для модели Icon в админке."""
 
-    list_display = ("tag", "image_tag")
+    list_display = ("image_tag", "tag")
     list_filter = ("tag",)
     search_fields = ("tag",)
     empty_value_display = _("empty")
 
 
 @admin.register(Finance)
-class FinanceAdmin(admin.ModelAdmin):
+class FinanceAdmin(ImageAdmin):
     """Конфигурация для модели Finance в админке."""
 
     list_display = (
+        "image_tag",
         "name",
         "priority",
         "slug",
