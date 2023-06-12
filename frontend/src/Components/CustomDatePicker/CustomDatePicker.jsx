@@ -1,15 +1,15 @@
+import './CustomDatePicker.scss';
+// import { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ru from 'date-fns/locale/ru';
-import './CustomDatePicker.scss';
-import { useState } from 'react';
 
 registerLocale('ru', ru);
 setDefaultLocale('ru');
 
-export default function CustomDatePicker({ children, type }) {
-  const [startDate, setStartDate] = useState(new Date());
+export default function CustomDatePicker({ children, type, onChange, startDate }) {
+  // const [startDate, setStartDate] = useState(new Date());
 
   return (
     <>
@@ -17,16 +17,17 @@ export default function CustomDatePicker({ children, type }) {
       {type === 'date' && (
         <ReactDatePicker
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={onChange}
           inline
           shouldCloseOnSelect={false}
+          dateFormat="DD.MM.YYYY"
         />
       )}
       {type === 'time' && (
         <ReactDatePicker
           className="data-picker__time"
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={onChange}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}

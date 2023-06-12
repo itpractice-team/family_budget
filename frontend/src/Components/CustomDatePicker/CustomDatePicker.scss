@@ -4,6 +4,7 @@
 .data-picker {
   @include h3-web;
   margin-bottom: 5px;
+  display: none;
 }
 
 .data-picker__time {
