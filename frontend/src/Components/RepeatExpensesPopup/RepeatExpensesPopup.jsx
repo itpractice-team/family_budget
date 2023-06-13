@@ -30,16 +30,15 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize="popup_m" title="Повторяющиеся расходы">
-      <form className="form form_add-operation" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RepeatExpenses-date">
             Дата
             <input
               className="form__input"
-              type="text"
+              type="date"
               name="RepeatExpenses-date"
               id="RepeatExpenses-date"
-              placeholder="__.__.____"
             />
           </label>
         </div>

@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useDispatch } from 'react-redux';
-import './ConfirmationPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { deleteUser } from '../../store/slices/userSlice';
