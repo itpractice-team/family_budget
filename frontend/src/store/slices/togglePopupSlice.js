@@ -12,6 +12,9 @@ const initialState = {
   isAccountPopupOpen: false,
   isSdekPopupOpen: false,
   isRepeatExpensesPopupOpen: false,
+  isEditMoneyboxPopupOpen: false,
+  isDoneMoneyboxPopupOpen: false,
+  isAddMoneyboxPopupOpen: false,
 };
 
 const togglePopupSlice = createSlice({
@@ -51,6 +54,15 @@ const togglePopupSlice = createSlice({
     toggleRepeatExpensesPopup: (state, { payload }) => {
       state.isRepeatExpensesPopupOpen = payload;
     },
+    toggleEditMoneyboxPopup: (state, { payload }) => {
+      state.isEditMoneyboxPopupOpen = payload;
+    },
+    toggleDoneMoneyboxPopup: (state, { payload }) => {
+      state.isDoneMoneyboxPopupOpen = payload;
+    },
+    toggleAddMoneyboxPopup: (state, { payload }) => {
+      state.isAddMoneyboxPopupOpen = payload;
+    },
   },
 });
 
@@ -66,6 +78,9 @@ export const {
   toggleAccountPopup,
   toggleSdekPopup,
   toggleRepeatExpensesPopup,
+  toggleEditMoneyboxPopup,
+  toggleDoneMoneyboxPopup,
+  toggleAddMoneyboxPopup,
 } = togglePopupSlice.actions;
 
 export const popupReducer = togglePopupSlice.reducer;
