@@ -1,4 +1,55 @@
+@import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
+
 .help {
+  @include text-medium-web;
   display: flex;
   flex-grow: 1;
+  margin: 0 160px;
+  padding: 60px 0;
+  gap: 32px;
+
+  &__title {
+    @include h3-web;
+  }
+
+  &__text-small {
+    @include text-small-web;
+  }
+  
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    background: $bg-color-fiat;
+    border-radius: 16px;
+    width: 100%;
+    padding: 40px;
+  }
+
+  &__container-left {
+    width: 376px;
+    height: 204px;
+    background: $bg-color-secondary;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  &__question-button {
+    width: 20px;
+    height: 20px;
+    background-image: url(../../Images/question.svg);
+    background-size: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+  
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 }

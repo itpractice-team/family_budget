@@ -34,7 +34,7 @@ import './Button.scss';
 function Button({ variant, type, text, size, disabled, extraClass, onClick }) {
   const buttonClasses = `button ${extraClass} ${variant} ${size} ${disabled ? 'disabled' : ''} ${
     type === 'icon' ? 'rounded' : ''
-  }`;
+  } ${type === 'iconMinus' ? 'rounded' : ''}`;
 
   return (
     <button className={buttonClasses} disabled={disabled} onClick={onClick}>
@@ -46,6 +46,7 @@ function Button({ variant, type, text, size, disabled, extraClass, onClick }) {
         </>
       )}
       {type === 'icon' && <span className="button-icon"> </span>}
+      {type === 'iconMinus' && <span className="button-icon button-icon_minus"> </span>}
     </button>
   );
 }

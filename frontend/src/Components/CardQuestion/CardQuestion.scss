@@ -1,0 +1,22 @@
+@import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
+
+.card-question {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid $color-border-light;
+  justify-content: space-between;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  &__question-text {
+    @include text-medium-web_bold
+  }
+
+  &__answer-text {
+    margin-top: 20px;
+  }
+}
