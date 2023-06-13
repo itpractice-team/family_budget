@@ -23,7 +23,7 @@ export default function Account() {
 
   return (
     <section className="account">
-      <h2 className="account__title">11 000 ₽</h2>
+      <h2 className="account__title">11 000</h2>
       <div className="account__selected-content">
         <button
           className={`account__selected ${isListOpen ? 'account__selected--open' : ''}`}
