@@ -18,7 +18,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption }) {
         type="text"
         text="Добавить/Редактировать"
         size="medium"
-        extraClass="button__account"
+        extraClass="button_account-select"
       />
     </div>
   );

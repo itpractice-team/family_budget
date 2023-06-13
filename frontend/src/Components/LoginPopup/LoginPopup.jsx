@@ -108,7 +108,7 @@ export default function LoginPopup({ onClose }) {
               type="text"
               text="Войти"
               size="large"
-              extraClass="form__button_single"
+              extraClass="button_single"
               disabled={!isValid}
             />
           )}

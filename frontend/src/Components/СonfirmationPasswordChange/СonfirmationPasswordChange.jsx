@@ -11,9 +11,13 @@ export default function СonfirmationPasswordChange() {
     dispatch(toggleInfoPopup(false));
   }
   return (
-    <div className="form form_single">
-      <h2 className="form__header">Пароль успешно изменен</h2>
-      <Button variant="fiat" type="text" text="Войти" size="medium" onClick={handleLoginClick} />
-    </div>
+    <Button
+      variant="fiat"
+      type="text"
+      text="Войти"
+      size="medium"
+      extraClass="button_confirm"
+      onClick={handleLoginClick}
+    />
   );
 }

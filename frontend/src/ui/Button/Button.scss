@@ -368,8 +368,26 @@ $bg-color-fiat-pressed: #f4f4f4;
 
 // extraClass
 
-.button__account {
+.button_account-select {
   margin-top: 24px;
   width: 100%;
+  justify-content: center;
+}
+
+.button_single {
+  width: 100%;
+}
+
+.button_confirm {
+  width: 100%;
+}
+
+.button__change-password {
+  height: 44px;
+  margin-top: 39px;
+}
+
+.button__save-avatar {
+  margin: 32px auto 0 auto;
   justify-content: center;
 }
