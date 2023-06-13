@@ -30,9 +30,9 @@ export default function AccountPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize={popupSize} title="Мои счета">
-      <section className='account-popup__content'>
-      <div className="account-popup__list">
-        <img src={accounts} alt="" />
+      <section className="account-popup__content">
+        <div className="account-popup__list">
+          <img src={accounts} alt="" />
         </div>
         {!isAddingAccount ? (
           <Button
@@ -40,7 +40,7 @@ export default function AccountPopup({ onClose }) {
             type="icon-text"
             text="Добавить счет"
             size="medium"
-            extraClass='button__add-account'
+            extraClass="button__add-account"
             onClick={handleAddAccountClick}
           />
         ) : (
@@ -99,7 +99,6 @@ export default function AccountPopup({ onClose }) {
             </>
           )}
         </div>
-      
       </section>
     </Popup>
   );
