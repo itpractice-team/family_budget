@@ -8,11 +8,14 @@ import Button from '../../ui/Button/Button';
 import SpendPopup from '../SpendPopup/SpendPopup';
 import IncomePopup from '../IncomePopup/IncomePopup';
 import { toggleSpendPopup, toggleIncomePopup } from '../../store/slices/togglePopupSlice';
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
 export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalChange }) {
   const dispatch = useDispatch();
 
   const [isTimeIntervalSelectOpen, setIsTimeIntervalSelectOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
   const { isIncomePopupOpen, isSpendPopupOpen } = useSelector((state) => state.popup);
 
   const handleSpendClick = () => dispatch(toggleSpendPopup(true));
@@ -29,8 +32,12 @@ export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalC
     setIsTimeIntervalSelectOpen(false);
   };
 
-  const showCalendar = () => {
-    // Отобразить модальное окно с календарем
+  const toggleCalendar = () => {
+    setIsCalendarOpen(!isCalendarOpen);
+  };
+
+  const closeCalendar = () => {
+    setIsCalendarOpen(false);
   };
 
   return (
@@ -54,10 +61,26 @@ export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalC
             />
           </Overlay>
         </div>
-        <button type="button" className="budget-filter__date-button" onClick={showCalendar}>
-          По дате
-        </button>
+
+        <div className="budget-filter__calendar-block">
+          <button
+            type="button"
+            className={`budget-filter__date-button ${
+              isCalendarOpen ? 'budget-filter__date-button--open' : ''
+            }`}
+            onClick={toggleCalendar}
+          >
+            По дате
+          </button>
+
+          <Overlay isOpen={isCalendarOpen} onClose={closeCalendar}>
+            <div className="budget-filter__calendar-wrapper">
+              <CustomDatePicker type="date" />
+            </div>
+          </Overlay>
+        </div>
       </div>
+
       <div className="budget-filter__button-wrapper">
         <Button
           variant="secondary"
