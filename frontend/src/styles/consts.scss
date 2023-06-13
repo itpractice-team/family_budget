@@ -5,11 +5,20 @@ $noto-sans-font: 'NotoSans', sans-serif;
   font-family: $font-family;
 }
 
+@mixin h1-web {
+  @include font-styles($ubuntu-font);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 46px;
+  color: #13164a;
+}
+
 @mixin h2-web {
   @include font-styles($ubuntu-font);
   font-weight: 500;
   font-size: 32px;
   line-height: 40px;
+  color: #13164a;
 }
 
 @mixin h3-web {
@@ -17,6 +26,7 @@ $noto-sans-font: 'NotoSans', sans-serif;
   font-weight: 500;
   font-size: 28px;
   line-height: 34px;
+  color: #13164a;
 }
 
 @mixin text-large-web {

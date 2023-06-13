@@ -36,6 +36,7 @@
   display: block;
   position: relative;
 }
+
 .form__input-label_colum {
   display: flex;
   flex-direction: column;
@@ -67,20 +68,23 @@
   }
 
   &[type='date']::-webkit-calendar-picker-indicator {
-    display: none;
-    background-image: url(../Images/calendar.svg);
-    background-size: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    background: url(../Images/calendar.svg) center / 20px no-repeat;
     vertical-align: middle;
     cursor: pointer;
   }
 }
+
 .form__input-small {
   width: 200px;
+}
+
+.form__input_textarea {
+  resize: vertical;
+  appearance: none;
+  background: url(../Images/drag-area.svg) no-repeat calc(100% - 4px) calc(100% - 4px) / 20px;
+  min-height: 60px;
+  border-radius: 16px;
 }
 
 .form__input.error {
@@ -96,18 +100,13 @@
 }
 
 .form__input_sum {
-  background-image: url(../Images/rub.svg);
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position-x: calc(100% - 18px);
-  background-position-y: center;
+  background: url(../Images/rub.svg) calc(100% - 18px) center/20px no-repeat;
 }
 
 .tooltip {
+  background: url(../Images/help.svg) no-repeat;
   width: 24px;
   height: 24px;
-  background-image: url(../Images/help.svg);
-  background-repeat: no-repeat;
   position: absolute;
   top: 44px;
 }
@@ -184,21 +183,11 @@
   @include text-medium-web-bold;
 }
 
-// ExtraClass
-
-.form__button_single {
-  width: 100%;
-}
-
 // выпадающий список
 
 .form__input_select {
   appearance: none;
-  background-image: url(../Images/chevron-down.svg);
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position-x: calc(100% - 16px);
-  background-position-y: center;
+  background: url(../Images/chevron-down.svg) no-repeat calc(100% - 16px) center / 20px;
 }
 
 .form__input_option {
@@ -209,39 +198,13 @@
   color: #333333;
 }
 
-// конверт
-
-.form__input-label_textarea {
-  max-width: 100%;
-}
-
-.form__input_textarea {
-  resize: vertical;
-  appearance: none;
-  background-image: url(../Images/drag-area.svg);
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: calc(100% - 4px) calc(100% - 4px);
-  z-index: 2;
-  min-height: 60px;
-  border-radius: 16px;
-}
-
-.form__input_textarea::-webkit-scrollbar,
-.form__input_textarea::-webkit-resizer {
-  display: none;
-}
-
 // сообщения об ошибках ввода
 
 .form__valid-message {
   @include text-small-web;
   display: flex;
   align-items: center;
-  background-image: url(../Images/alert-triangle.svg);
-  background-position: top 50% left 8px;
-  background-repeat: no-repeat;
-  background-size: 20px;
+  background: url(../Images/alert-triangle.svg) left 8px top 50% / 20px no-repeat;
   color: #f05a2b;
   opacity: 0;
   left: 9px;
@@ -294,31 +257,9 @@
 
 .form__checkbox:checked::after {
   content: '';
-  background-image: url(../Images/Icon.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 14px auto;
+  background: url(../Images/check.svg) center/14px auto no-repeat;
 }
 
 .form__checkbox:checked {
   opacity: 1;
-}
-
-// lib style
-
-.form__password-reliability-block {
-  width: 100%;
-  display: flex;
-}
-
-.form__password-reliability {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.form__password-reliability_ok {
-  background-color: #6fdd8e;
 }
