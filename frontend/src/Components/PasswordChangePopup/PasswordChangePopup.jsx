@@ -55,7 +55,7 @@ export default function PasswordChangePopup({ onClose }) {
   return (
     <Popup
       onClose={onClose}
-      popupSize="popup_s"
+      popupSize="popup_password"
       title="Изменение пароля"
       subtitle="После изменения пароля, все активные сеансы на всех устройствах, сайтах и приложениях будут автоматически завершены"
     >

@@ -24,14 +24,14 @@ export default function LeftBlock() {
           activeInit={activeDate}
           onClick={handleDateClick}
         />
+        <Button
+          variant="secondary"
+          type="text"
+          text="Добавить/Редактировать"
+          size="medium"
+          extraClass="left-block__categories-button"
+        />
       </div>
-      <Button
-        variant="secondary"
-        type="text"
-        text="Добавить/Редактировать"
-        size="medium"
-        extraClass="left-block__categories-button"
-      />
     </section>
   );
 }

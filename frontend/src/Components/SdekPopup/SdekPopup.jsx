@@ -16,8 +16,8 @@ export default function SdekPopup({ onClose }) {
     dispatch(toggleSdekPopup(false));
   }
   return (
-    <Popup onClose={onClose} popupSize="popup_sdek" title="СДЭК">
-      <form className="form form_add-operation" onSubmit={handleSubmit}>
+    <Popup onClose={onClose} popupSize="popup_edit-operation" title="СДЭК">
+      <form className="form" onSubmit={handleSubmit}>
         <p className="form__input-label">Доставка</p>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="SpendingPopup-date">

@@ -1,4 +1,3 @@
-import './RepeatSpend.scss';
 import moneybag from '../../Images/moneybag.svg';
 import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 
