@@ -7,7 +7,7 @@ import AvatarUploader from '../AvatarUploader/AvatarUploader';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import { updateUser } from '../../store/slices/userSlice';
-import defaultAvatar from '../../Images/avatar.svg';
+import defaultAvatar from '../../Images/profile-default-avatar.svg';
 
 export default function AvatarUploaderPopup({ onClose }) {
   const dispatch = useDispatch();

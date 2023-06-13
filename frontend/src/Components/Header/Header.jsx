@@ -11,7 +11,7 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import ProfileTooltip from '../ProfileTooltip/ProfileTooltip';
-import defaultavatar from '../../Images/avatar.svg';
+import defaultavatar from '../../Images/profile-default-avatar-header.svg';
 import Button from '../../ui/Button/Button';
 import Overlay from '../Overlay/Overlay';
 
