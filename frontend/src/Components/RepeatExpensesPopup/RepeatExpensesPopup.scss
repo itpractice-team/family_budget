@@ -1,0 +1,39 @@
+@import '../../styles/colors.scss';
+@import '../../styles/consts.scss';
+
+.repeat-expenses__text {
+  @include text-medium-web;
+}
+.repeat-expenses__text-bold {
+  @include text-medium-web-bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.repeat-expenses__tab {
+  width: 100%;
+  background: $bg-color-fiat-pressed;
+  border-radius: 16px;
+  display: flex;
+  padding: 4px;
+  gap: 8px;
+}
+
+.repeat-expenses__activeTab {
+  width: 100%;
+}
+
+.repeat-expenses__input-count {
+  margin-left: 14px;
+  margin-right: 4px;
+  width: 34px;
+  padding-left: 2px;
+  text-align: center;
+  border-color: $bg-color-fiat-pressed;
+}
+
+.repeat-expenses__container {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}

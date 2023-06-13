@@ -1,0 +1,17 @@
+.account-popup__content {
+  display: flex;
+
+}
+
+// ExtraClass
+.button__add-account {
+  max-width: 187px;
+  margin-top: 24px;
+}
+
+.popup_s {
+  .account-popup__content {
+    flex-direction: column;
+  }
+
+}

@@ -1,0 +1,90 @@
+@import '../../styles/consts.scss';
+
+// Variables
+$switch-bg-color: #f4f4f4;
+$switch-checked-bg-color: #6fdd8e;
+$switch-border-color-disabled: #d2d5db;
+$switch-bg-color-disabled: #f4f4f4;
+
+
+
+// Regular state
+.switch__label {
+  display: flex;
+  align-items: center;
+}
+
+.switch__label-text {
+  @include text-medium-web;
+  padding-left: 8px;
+}
+
+.switch__input-default {
+  display: none;
+}
+
+.switch__checkbox-area {
+  display: block;
+  width: 48px;
+  height: 28px;
+  border: 2px solid $switch-bg-color;
+  border-radius: 20px;
+  background-color: $switch-bg-color;
+  transition: all 0.3s;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.switch__toggle-point {
+  display: block;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s;
+}
+
+.switch__input-default:checked+.switch__checkbox-area {
+  background-color: $switch-checked-bg-color;
+  border-color: $switch-checked-bg-color;
+}
+
+.switch__input-default:checked+.switch__checkbox-area .switch__toggle-point {
+  left: 22px;
+}
+
+// Disabled state
+.switch__label.disabled {
+  // Styles for disabled state
+  cursor: not-allowed;
+  opacity: 0.48;
+
+  .switch__checkbox-area {
+    cursor: not-allowed;
+    background-color: $switch-bg-color-disabled;
+    border-color: $switch-border-color-disabled;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .switch__toggle-point {
+    border-color: $switch-border-color-disabled;
+    box-shadow: none;
+  }
+
+  .switch__input-default:checked+.switch__checkbox-area {
+    background-color: $switch-bg-color-disabled;
+    border-color: $switch-border-color-disabled;
+  }
+}

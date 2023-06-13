@@ -1,0 +1,160 @@
+@import '../../styles/consts.scss';
+
+$max-width-s: 512px;
+$max-width-m: 784px;
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+
+  .popup__title {
+    @include h3-web;
+    margin-bottom: 32px;
+  }
+
+  .popup__subtitle {
+    @include text-small-web;
+    color: #1e1d24;
+    margin-bottom: 24px;
+  }
+}
+
+.popup__close {
+  background-image: url(../../Images/close.svg);
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+// плавность
+.modal-enter {
+  opacity: 0;
+}
+.modal-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+.modal-exit {
+  opacity: 1;
+}
+.modal-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+///////
+
+// в одну колонку инпутов
+.popup_s {
+  max-width: $max-width-s;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+}
+
+// в две колонки инпутов
+.popup_m {
+  max-width: $max-width-m;
+
+  .form {
+    gap: 32px 67px;
+  }
+}
+
+// информационный
+.popup_info {
+  max-width: $max-width-s;
+
+  .popup__title {
+    text-align: center;
+  }
+}
+
+// изменение аватара
+.popup_avatar {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    color: #8c8d91;
+  }
+}
+
+// изменение пароля
+.popup_password {
+  max-width: $max-width-s;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .popup__subtitle {
+    @include text-medium-web;
+    color: #8c8d91;
+  }
+}
+
+// редактирование операции
+.popup_edit-operation {
+  max-width: $max-width-s;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    margin-bottom: 0px;
+  }
+}
+
+// редактирование конверта
+.popup_edit-moneybox {
+  max-width: $max-width-m;
+
+  .form {
+    margin-top: 24px;
+    gap: 13px 32px;
+  }
+
+  .form__input-block {
+    width: 100%;
+    max-width: calc((100% - 32px) / 2);
+  }
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    margin-bottom: 0px;
+  }
+}
+
+// цель достигнута
+.popup_done {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    margin-bottom: 0px;
+  }
+}
