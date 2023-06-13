@@ -1,9 +1,20 @@
+@import '../../styles/consts.scss';
+
 .logo {
-  font-family: 'Manrope', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-right: 160px;
-  font-weight: 800;
-  font-size: 40px;
-  line-height: 55px;
-  color: #1E1D24;
   justify-self: start;
+}
+
+.logo__image {
+}
+
+.logo__title {
+  font-family: $ubuntu-font;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 56px;
+  color: #13164a;
 }
