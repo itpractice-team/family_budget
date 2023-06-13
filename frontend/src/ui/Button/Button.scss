@@ -244,6 +244,10 @@ $bg-color-fiat-pressed: #f4f4f4;
       background-image: url('../../Images/icons/btn-primary-icon.svg');
     }
 
+    .button-icon_minus {
+      background-image: url('../../Images/icon-minus.svg');
+    }
+
     &:hover {
       color: $color-primary-hover;
       background-color: $bg-color-primary-hover;
@@ -270,6 +274,10 @@ $bg-color-fiat-pressed: #f4f4f4;
       background-image: url('../../Images/icons/btn-secondary-icon.svg');
     }
 
+    .button-icon_minus {
+      background-image: url('../../Images/icon-minus.svg');
+    }
+
     &:hover {
       color: $color-secondary-hover;
       background-color: $bg-color-secondary-hover;
@@ -294,6 +302,10 @@ $bg-color-fiat-pressed: #f4f4f4;
     .button-icon {
       // Styles for the button icon
       background-image: url('../../Images/icons/btn-fiat-icon.svg');
+    }
+
+    .button-icon_minus {
+      background-image: url('../../Images/icon-minus.svg');
     }
 
     &:hover {
