@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './Button';
 import './Button.scss';
 
-import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT } from '../../utils/consts';
+import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT, BUTTON_ICON_MINUS } from '../../utils/consts';
 
 
 export default {
@@ -88,3 +88,12 @@ Fiat.args = {
   size: 'small',
   image: BUTTON_ICON_FIAT,
 };
+
+export const ButtonMinus = Template.bind({});
+
+ButtonMinus.args ={
+  variant: 'secondary',
+  content: 'icon',
+  size: 'medium',
+  image: BUTTON_ICON_MINUS,
+}
