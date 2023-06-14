@@ -2,19 +2,13 @@ import React from 'react';
 import Button from './Button';
 import './Button.scss';
 
+import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT, BUTTON_ICON_MINUS } from '../../utils/consts';
+
+
 export default {
   title: 'Button',
   component: Button,
   argTypes: {
-    variant: {
-      type: 'string',
-      description: 'Вариант внешнего вида',
-      defaultValue: 'primary',
-      options: ['primary', 'secondary', 'fiat'],
-      control: {
-        type: 'radio',
-      },
-    },
     content: {
       type: 'string',
       description: 'Вариант наполнения кнопки',
@@ -54,7 +48,7 @@ export default {
   },
 };
 
-function Template({ variant, content, text, size, onClick, type, disabled, extraClass }) {
+function Template({ variant, content, text, size, onClick, type, disabled, image, extraClass }) {
   return (
     <Button
       variant={variant}
@@ -64,6 +58,7 @@ function Template({ variant, content, text, size, onClick, type, disabled, extra
       onClick={onClick}
       type={type}
       disabled={disabled}
+      image={image}
       extraClass={extraClass}
     />
   );
@@ -75,6 +70,7 @@ Primary.args = {
   content: 'icon-text',
   text: 'Primary button',
   size: 'small',
+  image: BUTTON_ICON_PRIMARY,
 };
 export const Secondary = Template.bind({});
 Secondary.args = {
@@ -82,6 +78,7 @@ Secondary.args = {
   content: 'icon-text',
   text: 'Secondary button',
   size: 'small',
+  image: BUTTON_ICON_SECONDARY,
 };
 export const Fiat = Template.bind({});
 Fiat.args = {
@@ -89,4 +86,14 @@ Fiat.args = {
   content: 'icon-text',
   text: 'Fiat button',
   size: 'small',
+  image: BUTTON_ICON_FIAT,
 };
+
+export const ButtonMinus = Template.bind({});
+
+ButtonMinus.args ={
+  variant: 'secondary',
+  content: 'icon',
+  size: 'medium',
+  image: BUTTON_ICON_MINUS,
+}
