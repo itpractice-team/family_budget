@@ -2,10 +2,8 @@ import React from 'react';
 import Button from './Button';
 import './Button.scss';
 
-// import ButtonIcon from '../../Images/icons/btn-primary-icon.svg'
-import testIconPrimary from '../../Images/icons/btn-primary-icon.svg';
-import testIconSecondary from '../../Images/icons/btn-secondary-icon.svg';
-import testIconFiat from '../../Images/icons/btn-fiat-icon.svg';
+import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT } from './constants';
+
 
 export default {
   title: 'Button',
@@ -72,7 +70,7 @@ Primary.args = {
   content: 'icon-text',
   text: 'Primary button',
   size: 'small',
-  image: testIconPrimary,
+  image: BUTTON_ICON_PRIMARY,
 };
 export const Secondary = Template.bind({});
 Secondary.args = {
@@ -80,7 +78,7 @@ Secondary.args = {
   content: 'icon-text',
   text: 'Secondary button',
   size: 'small',
-  image: testIconSecondary,
+  image: BUTTON_ICON_SECONDARY,
 };
 export const Fiat = Template.bind({});
 Fiat.args = {
@@ -88,5 +86,5 @@ Fiat.args = {
   content: 'icon-text',
   text: 'Fiat button',
   size: 'small',
-  image: testIconFiat,
+  image: BUTTON_ICON_FIAT,
 };
