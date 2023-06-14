@@ -2,19 +2,15 @@ import React from 'react';
 import Button from './Button';
 import './Button.scss';
 
+// import ButtonIcon from '../../Images/icons/btn-primary-icon.svg'
+import testIconPrimary from '../../Images/icons/btn-primary-icon.svg';
+import testIconSecondary from '../../Images/icons/btn-secondary-icon.svg';
+import testIconFiat from '../../Images/icons/btn-fiat-icon.svg';
+
 export default {
   title: 'Button',
   component: Button,
   argTypes: {
-    variant: {
-      type: 'string',
-      description: 'Вариант внешнего вида',
-      defaultValue: 'primary',
-      options: ['primary', 'secondary', 'fiat'],
-      control: {
-        type: 'radio',
-      },
-    },
     content: {
       type: 'string',
       description: 'Вариант наполнения кнопки',
@@ -54,7 +50,7 @@ export default {
   },
 };
 
-function Template({ variant, content, text, size, onClick, type, disabled, extraClass }) {
+function Template({ variant, content, text, size, onClick, type, disabled, image, extraClass }) {
   return (
     <Button
       variant={variant}
@@ -64,6 +60,7 @@ function Template({ variant, content, text, size, onClick, type, disabled, extra
       onClick={onClick}
       type={type}
       disabled={disabled}
+      image={image}
       extraClass={extraClass}
     />
   );
@@ -75,6 +72,7 @@ Primary.args = {
   content: 'icon-text',
   text: 'Primary button',
   size: 'small',
+  image: testIconPrimary,
 };
 export const Secondary = Template.bind({});
 Secondary.args = {
@@ -82,6 +80,7 @@ Secondary.args = {
   content: 'icon-text',
   text: 'Secondary button',
   size: 'small',
+  image: testIconSecondary,
 };
 export const Fiat = Template.bind({});
 Fiat.args = {
@@ -89,4 +88,5 @@ Fiat.args = {
   content: 'icon-text',
   text: 'Fiat button',
   size: 'small',
+  image: testIconFiat,
 };
