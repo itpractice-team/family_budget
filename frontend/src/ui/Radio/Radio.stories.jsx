@@ -20,7 +20,7 @@ export default {
   },
 };
 
-function Template({ text, icon, value, onChange, disabled, extraClass }) {
+function Template({ nameProp, text, icon, value, onChange, disabled, extraClass }) {
   return (
     <div
       style={{
@@ -30,6 +30,7 @@ function Template({ text, icon, value, onChange, disabled, extraClass }) {
       }}
     >
       <Radio
+        nameProp={nameProp}
         text={text}
         icon={icon}
         value={value}
@@ -38,6 +39,7 @@ function Template({ text, icon, value, onChange, disabled, extraClass }) {
         extraClass={extraClass}
       />
       <Radio
+        nameProp={nameProp}
         text={text}
         icon={icon}
         value={value}
@@ -51,15 +53,18 @@ function Template({ text, icon, value, onChange, disabled, extraClass }) {
 
 export const Default = Template.bind({});
 Default.args = {
+  nameProp: 'radio-group',
   text: 'Radio',
   icon: testIcon,
 };
 
 export const RadioText = Template.bind({});
 Default.args = {
+  nameProp: 'radio-group',
   text: 'Radio',
 };
 export const RadioIcon = Template.bind({});
 Default.args = {
+  nameProp: 'radio-group',
   icon: testIcon,
 };

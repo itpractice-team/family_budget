@@ -1,6 +1,6 @@
 import './Radio.scss';
 
-export default function Radio({ text, icon, value, isChecked, onChange, disabled, extraClass }) {
+export default function Radio({nameProp, text, icon, value, isChecked, onChange, disabled, extraClass }) {
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
   const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Генерация уникального идентификатора
 
@@ -14,7 +14,7 @@ export default function Radio({ text, icon, value, isChecked, onChange, disabled
         className="radio__input"
         type="radio"
         id={inputId}
-        name="radio-group"
+        name={nameProp}
         value={value}
         checked={isChecked}
         onChange={onChange}
@@ -28,6 +28,7 @@ export default function Radio({ text, icon, value, isChecked, onChange, disabled
 }
 
 Radio.defaultProps = {
+  nameProp: '',
   text: '',
   icon: '',
   value: '',
