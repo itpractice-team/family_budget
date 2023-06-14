@@ -2,6 +2,9 @@ import React from 'react';
 import Checkbox from './Checkbox';
 import './Checkbox.scss';
 
+import testIcon from '../../Images/envelope-done.svg';
+
+
 export default {
   title: 'Checkbox',
   component: Checkbox,
@@ -18,40 +21,30 @@ export default {
   },
 };
 
-function Template({ nameProp, text, icon, value, onChange, disabled, extraClass }) {
+function Template({nameProp,
+  text,
+  icon,
+  onChange,
+  disabled,
+  extraClass }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-      }}
-    >
-      <Radio
+  
+      <Checkbox
         nameProp={nameProp}
         text={text}
         icon={icon}
-        value={value}
         onChange={onChange}
         disabled={disabled}
         extraClass={extraClass}
       />
-      <Radio
-        nameProp={nameProp}
-        text={text}
-        icon={icon}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        extraClass={extraClass}
-      />
-    </div>
+     
+
   );
 }
 
 export const Default = Template.bind({});
 Default.args = {
-  nameProp: 'radio-group',
-  text: 'Radio',
+  nameProp: 'сheckbox-group',
+  text: 'Checkbox',
   icon: testIcon,
 };
