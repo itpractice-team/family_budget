@@ -1,0 +1,38 @@
+@import '../../styles/consts.scss';
+
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+color: #1E1D24;
+
+}
+
+.checkbox__input {
+}
+.checkbox__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+.checkbox__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.checkbox__image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.checkbox__text {
+  @include font-styles($noto-sans-font);
+  font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+}
