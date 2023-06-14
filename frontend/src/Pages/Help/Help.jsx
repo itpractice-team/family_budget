@@ -7,7 +7,7 @@ export default function Help() {
   return (
     <section className="help">
       <div className="help__container">
-        <h3 className="help__title">Часто задаваемые вопросы?</h3>
+        <h3 className="help__title">Часто задаваемые вопросы</h3>
         <ul>
           {arrInitFQA.map((q) => {
             return <CardQuestion question={q.question} answer={q.answer} key={q.id} />;
