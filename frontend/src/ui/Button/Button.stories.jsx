@@ -2,7 +2,7 @@ import React from 'react';
 import Button from './Button';
 import './Button.scss';
 
-import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT } from './constants';
+import { BUTTON_ICON_PRIMARY, BUTTON_ICON_SECONDARY, BUTTON_ICON_FIAT } from '../../utils/consts';
 
 
 export default {
