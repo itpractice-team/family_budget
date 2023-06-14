@@ -17,7 +17,6 @@ export default {
         type: 'boolean',
       },
     },
-    onChange: { action: 'changed' },
   },
 };
 

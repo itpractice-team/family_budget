@@ -4,7 +4,6 @@ import './Checkbox.scss';
 
 import testIcon from '../../Images/envelope-done.svg';
 
-
 export default {
   title: 'Checkbox',
   component: Checkbox,
@@ -21,24 +20,16 @@ export default {
   },
 };
 
-function Template({nameProp,
-  text,
-  icon,
-  onChange,
-  disabled,
-  extraClass }) {
+function Template({ nameProp, text, icon, onChange, disabled, extraClass }) {
   return (
-  
-      <Checkbox
-        nameProp={nameProp}
-        text={text}
-        icon={icon}
-        onChange={onChange}
-        disabled={disabled}
-        extraClass={extraClass}
-      />
-     
-
+    <Checkbox
+      nameProp={nameProp}
+      text={text}
+      icon={icon}
+      onChange={onChange}
+      disabled={disabled}
+      extraClass={extraClass}
+    />
   );
 }
 

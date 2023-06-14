@@ -23,7 +23,11 @@ export default function Checkbox({
         disabled={disabled}
       />
 
-      {icon && <img src={icon} alt="Ckeckbox-icon" className="checkbox__icon" />}
+      {icon && (
+        <span className="checkbox-icon">
+          <img src={icon} alt="Ckeckbox-icon" className="checkbox-image" />
+        </span>
+      )}
       {text && <span className="checkbox__text">{text}</span>}
     </label>
   );
