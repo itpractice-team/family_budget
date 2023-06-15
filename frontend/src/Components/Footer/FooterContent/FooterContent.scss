@@ -1,0 +1,23 @@
+@import '../../../styles/consts.scss';
+@import '../../../styles/colors.scss';
+
+.footer-content {
+  display: flex;
+  gap: 168px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.footer-content__text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 376px;
+}
+
+.footer-content__title {
+  @include h3-web;
+}
+
+.footer-content__text {
+  @include text-medium-web;
+}

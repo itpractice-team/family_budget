@@ -20,6 +20,7 @@ import {
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
+import Footer from '../../Components/Footer/Footer';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
 import profileValidation from '../../utils/validations/profileValidation';
@@ -335,13 +336,10 @@ export default function Profile() {
           </div>
         </form>
       </div>
-      <div className="footer__content footer__content_profile">
-        <p className="footer__title">Правильные финансовые решения каждый день</p>
-        <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
-      </div>
       {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
       {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
       {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+      <Footer extraClass="footer-absolute" />
     </section>
   );
 }

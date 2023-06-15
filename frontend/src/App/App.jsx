@@ -13,6 +13,7 @@ function App() {
   const location = useLocation();
 
   const isProfilePage = location.pathname === '/profile';
+  const isHomePage = location.pathname === '/';
 
   return (
     <>
@@ -52,7 +53,7 @@ function App() {
           }
         />
       </Routes>
-      {!isProfilePage && <Footer />}
+      {!isProfilePage && !isHomePage && <Footer />}
     </>
   );
 }
