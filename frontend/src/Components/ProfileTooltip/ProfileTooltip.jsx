@@ -7,6 +7,7 @@ import { resetUser } from '../../store/slices/userSlice';
 import './ProfileTooltip.scss';
 import Button from '../../ui/Button/Button';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
+import exit from '../../Images/icons/exit.svg';
 
 export default function ProfileTooltip({ onClose }) {
   const dispatch = useDispatch();
@@ -29,7 +30,14 @@ export default function ProfileTooltip({ onClose }) {
         <p className="profile-tooltip__user-name">
           {first_name} {last_name}
         </p>
-        <button className="profile-tooltip__btn-exit" type="submit" onClick={handleLogout} />
+        <Button
+          type="submit"
+          variant="secondary"
+          content="icon"
+          image={exit}
+          size="medium"
+          onClick={handleLogout}
+        />
       </div>
       <NavLink to="/profile" className="profile-tooltip__link">
         <Button
