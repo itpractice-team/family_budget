@@ -135,7 +135,7 @@ export default function Profile() {
           />
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Изменить фото"
             size="medium"
             onClick={handleAvatarUploaderClick}
@@ -226,7 +226,7 @@ export default function Profile() {
 
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Сменить пароль"
             size="medium"
             extraClass="button__change-password"
@@ -309,7 +309,7 @@ export default function Profile() {
             {!isEditing ? (
               <Button
                 variant="primary"
-                type="text"
+                content="text"
                 text="Изменить данные"
                 size="medium"
                 onClick={handleEnableInputs}
@@ -317,15 +317,16 @@ export default function Profile() {
             ) : (
               <Button
                 disabled={!isValid || disableButton}
+                type="submit"
                 variant="primary"
-                type="text"
+                content="text"
                 text="Сохранить данные"
                 size="medium"
               />
             )}
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Удалить профиль"
               size="medium"
               onClick={handleConfirmationPopupClick}

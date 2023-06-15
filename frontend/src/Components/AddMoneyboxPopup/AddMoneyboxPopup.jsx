@@ -45,8 +45,8 @@ export default function AddMoneyboxPopup({ onClose }) {
       </form>
 
       <div className="form__button-wrapper form__button-wrapper_add-operation">
-        <Button variant="secondary" type="text" text="Отменить" size="medium" />
-        <Button variant="primary" type="text" text="Сохранить" size="medium" />
+        <Button variant="secondary" content="text" text="Отменить" size="medium" />
+        <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
       </div>
     </Popup>
   );

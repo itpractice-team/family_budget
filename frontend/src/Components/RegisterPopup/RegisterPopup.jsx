@@ -262,7 +262,7 @@ export default function RegisterPopup({ onClose }) {
             <p className="form__text">У вас уже есть аккаунт?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Войти"
               size="small"
               onClick={handleLoginClick}
@@ -272,8 +272,9 @@ export default function RegisterPopup({ onClose }) {
             <Loader extraClass="loader-register" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="large"
               disabled={!isValid}

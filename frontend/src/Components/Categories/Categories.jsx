@@ -1,23 +1,31 @@
-/* eslint-disable react/no-array-index-key */
 import './Categories.scss';
-import Tab from '../Tab/Tab';
+import { useState } from 'react';
+import Tabs from '../Tabs/Tabs';
+import Button from '../../ui/Button/Button';
+import { arrCategoriesСommon } from '../../utils/consts';
 
-export default function Categories({ arr, size, activeInit, onClick }) {
+export default function Categories() {
+  const [activeDate, setActiveDate] = useState('Общие');
+
+  const handleDateClick = (tab) => {
+    setActiveDate(tab);
+  };
   return (
-    <div className="categories-tabs">
-      {arr?.map((i, index) => {
-        return (
-          <Tab
-            key={index}
-            active={activeInit === i.title}
-            value={i.title}
-            size={size}
-            onClick={onClick}
-          >
-            {i.title}
-          </Tab>
-        );
-      })}
-    </div>
+    <section className="categories">
+      <h2 className="categories__title">Отображать категории</h2>
+      <Tabs
+        arr={arrCategoriesСommon}
+        size="tab-size_m"
+        activeInit={activeDate}
+        onClick={handleDateClick}
+      />
+      <Button
+        variant="secondary"
+        content="text"
+        text="Добавить/Редактировать"
+        size="medium"
+        extraClass="categories-button"
+      />
+    </section>
   );
 }

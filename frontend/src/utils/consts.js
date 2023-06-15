@@ -1,8 +1,3 @@
-import buttonIconPrimary from '../Images/icons/btn-primary-icon.svg';
-import buttonIconSecondary from '../Images/icons/btn-secondary-icon.svg';
-import buttonIconFiat from '../Images/icons/btn-fiat-icon.svg';
-import buttonIconMinus from '../Images/icons/btn-minus-icon.svg';
-
 export const RegExLogin = '[da-zA-Zа-яА-ЯЁё/_.+-]+';
 export const RegExEmail = '[da-zA-Z_.@-]+';
 export const RegExName = '[^d!@#$%|^&*\\/()_+\n\t]+';
@@ -131,9 +126,3 @@ export const arrInitFQA = [
       'В отображаемых категориях можно выбрать, что вы хотите видеть в своей таблице. Можно как расходы и доходы, так и все транзакции вместе. Помимо этого можно выбирать определенные категории, которые вас интересуют в данный момент.',
   },
 ];
-
-// Button icons 
-export const BUTTON_ICON_PRIMARY = buttonIconPrimary;
-export const BUTTON_ICON_SECONDARY = buttonIconSecondary;
-export const BUTTON_ICON_FIAT = buttonIconFiat;
-export const BUTTON_ICON_MINUS = buttonIconMinus;

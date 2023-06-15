@@ -96,12 +96,12 @@ export default function SdekPopup({ onClose }) {
         <div className="form__button-wrapper form__button-wrapper_add-operation">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
           />
-          <Button variant="primary" type="text" text="Готово" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
         </div>
       </form>
     </Popup>

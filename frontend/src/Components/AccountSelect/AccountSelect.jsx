@@ -15,7 +15,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption }) {
       />
       <Button
         variant="secondary"
-        type="text"
+        content="text"
         text="Добавить/Редактировать"
         size="medium"
         extraClass="button_account-select"

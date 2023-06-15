@@ -27,6 +27,7 @@ export default function Account() {
       <div className="account__selected-content">
         <button
           className={`account__selected ${isListOpen ? 'account__selected--open' : ''}`}
+          type="button"
           onClick={toggleList}
         >
           <span className="account__arrow" />

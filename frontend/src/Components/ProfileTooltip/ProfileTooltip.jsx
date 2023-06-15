@@ -34,7 +34,7 @@ export default function ProfileTooltip({ onClose }) {
       <NavLink to="/profile" className="profile-tooltip__link">
         <Button
           variant="primary"
-          type="text"
+          content="text"
           text="Перейти в личный кабинет"
           size="medium"
           onClick={onClose}

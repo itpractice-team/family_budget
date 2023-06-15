@@ -37,7 +37,7 @@ export default function AccountPopup({ onClose }) {
         {!isAddingAccount ? (
           <Button
             variant="secondary"
-            type="icon-text"
+            content="icon-text"
             text="Добавить счет"
             size="medium"
             extraClass="button__add-account"
@@ -75,12 +75,18 @@ export default function AccountPopup({ onClose }) {
             <div className="form__button-wrapper">
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancelForm}
               />
-              <Button variant="primary" type="text" text="Сохранить" size="medium" />
+              <Button
+                type="submit"
+                variant="primary"
+                content="text"
+                text="Сохранить"
+                size="medium"
+              />
             </div>
           </form>
         )}
@@ -90,12 +96,12 @@ export default function AccountPopup({ onClose }) {
             <>
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancel}
               />
-              <Button variant="primary" type="text" text="Готово" size="medium" />
+              <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
             </>
           )}
         </div>

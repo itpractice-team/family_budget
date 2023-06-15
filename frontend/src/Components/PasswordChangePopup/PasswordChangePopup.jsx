@@ -145,7 +145,7 @@ export default function PasswordChangePopup({ onClose }) {
         <div className="form__button-wrapper form__button-wrapper_password-new">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
@@ -155,8 +155,9 @@ export default function PasswordChangePopup({ onClose }) {
           ) : (
             <Button
               disabled={!isValid || !errors}
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Изменить пароль"
               size="medium"
             />

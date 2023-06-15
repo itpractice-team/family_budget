@@ -40,14 +40,15 @@ export default function AvatarUploaderPopup({ onClose }) {
               setRecipeFile(file);
             }}
           />
-          <button className="delete-avatar" type="button" onClick={handleDeleteAvatar} />
+          <button className="delete-avatar" type="submit" onClick={handleDeleteAvatar} />
         </div>
         {isLoading ? (
           <Loader extraClass="loader-avatar" />
         ) : (
           <Button
+            type="submit"
             variant="primary"
-            type="text"
+            content="text"
             text="Cохранить"
             size="medium"
             extraClass="button__save-avatar"

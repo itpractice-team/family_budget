@@ -18,7 +18,7 @@ export default function DoneMoneyboxPopup({ onClose, title }) {
       <div className="donemoneybox__content">
         <h3 className="donemoneybox__title">Вы достигли цели!</h3>
         <img className="donemoneybox__image" src={envelope} alt="" />
-        <Button variant="primary" type="text" text="Потратить" size="medium" />
+        <Button type="submit" variant="primary" content="text" text="Потратить" size="medium" />
       </div>
     </Popup>
   );

@@ -28,13 +28,14 @@
     padding: 40px;
   }
 
-  &__container-left {
+  &__container-right {
     width: 376px;
-    height: 204px;
+    height: fit-content;
     background: $bg-color-secondary;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     justify-content: center;
     align-items: center;
     padding: 20px;

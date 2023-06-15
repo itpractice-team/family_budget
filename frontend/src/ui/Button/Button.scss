@@ -136,7 +136,7 @@ $bg-color-fiat-pressed: #f4f4f4;
   &.medium {
     // Styles for medium size
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 50px;
   }
 
   &.medium.rounded {
@@ -172,8 +172,6 @@ $bg-color-fiat-pressed: #f4f4f4;
   }
 
   .button-image {
-    width: 100%;
-    height: auto;
     object-fit: contain;
   }
 
@@ -186,29 +184,4 @@ $bg-color-fiat-pressed: #f4f4f4;
   }
 }
 
-// extraClass
-// Дополнительнные стили нужно прописывать в стилях компонента, в котором используется компонент из UI
-
-.button_account-select {
-  margin-top: 24px;
-  width: 100%;
-  justify-content: center;
-}
-
-.button_single {
-  width: 100%;
-}
-
-.button_confirm {
-  width: 100%;
-}
-
-.button__change-password {
-  height: 44px;
-  margin-top: 39px;
-}
-
-.button__save-avatar {
-  margin: 32px auto 0 auto;
-  justify-content: center;
-}
+// Дополнительнные стили (extraClass) нужно прописывать в стилях компонента, в котором используется компонент из UI

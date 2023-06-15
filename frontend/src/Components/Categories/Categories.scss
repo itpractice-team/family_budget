@@ -1,12 +1,19 @@
 @import '../../styles/consts.scss';
 @import '../../styles/colors.scss';
 
-.categories-tabs {
-  width: 100%;
-  background: $bg-color-fiat-pressed;
-  border-radius: 16px;
+.categories {
   display: flex;
-  justify-content: space-around;
-  padding: 4px;
-  gap: 8px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: $bg-color-fiat;
+  border-radius: 20px;
+}
+
+.categories__title {
+  @include h3-web;
+}
+
+.categories-button {
+  justify-content: center;
 }
