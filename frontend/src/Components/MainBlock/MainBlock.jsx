@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './MainBlock.scss';
 import BudgetFilter from '../BudgetFilter/BudgetFilter';
 import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
+import AddOperationBlock from '../AddOperationBlock/AddOperationBlock';
 
 export default function MainBlock() {
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('Неделя');
@@ -16,6 +17,7 @@ export default function MainBlock() {
 
   return (
     <section className="main-block">
+      <AddOperationBlock />
       <BudgetFilter
         selectedTimeInterval={selectedTimeInterval}
         handleTimeIntervalChange={handleTimeIntervalChange}

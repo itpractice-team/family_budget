@@ -192,3 +192,20 @@ $max-width-m: 784px;
     }
   }
 }
+
+// перевод
+.popup_transfer {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 13px;
+
+    .form__button-wrapper {
+      margin-top: 20px;
+    }
+  }
+}
