@@ -8,8 +8,9 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "date-fns": "^2.30.0",
     "react": "^18.2.0",
-    "react-datepicker": "^4.12.0",
+    "react-datepicker": "^4.13.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
     "react-redux": "^8.0.5",
@@ -55,7 +56,8 @@
       "no-useless-escape": "off",
       "arrow-body-style": "off",
       "no-param-reassign": "off",
-      "react/jsx-props-no-spreading": "off"
+      "react/jsx-props-no-spreading": "off",
+      "react/jsx-boolean-value": "off"
     }
   },
   "browserslist": {

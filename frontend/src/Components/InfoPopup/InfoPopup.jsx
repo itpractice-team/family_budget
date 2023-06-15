@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import './InfoPopup.scss';
 import Popup from '../Popup/Popup';
 
