@@ -1,11 +1,12 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .moneybox-item {
   padding: 8px;
 }
 
 .moneybox-item:hover {
-  background-color: #dcdefb;
+  background-color: $blueishGreyHover;
   border-radius: 12px;
 }
 

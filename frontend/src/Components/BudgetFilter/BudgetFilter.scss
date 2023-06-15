@@ -1,4 +1,5 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .budget-filter {
   display: flex;
@@ -6,7 +7,7 @@
   align-items: center;
   width: 100%;
   padding: 16px;
-  background-color: #f4f4f4;
+  background-color: $lightGrey;
   border-radius: 16px;
   height: fit-content;
 }
@@ -22,28 +23,24 @@
 
 .budget-filter__select-button {
   @include text-small-web;
-  border: 1px solid #303360;
-  color: #1e1d24;
+  border: 1px solid $heavyBlue;
+  color: $black;
   border-radius: 50px;
   padding: 4px 36px 4px 16px;
-  background-image: url(../../Images/chevron-down.svg);
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position-x: calc(100% - 11px);
-  background-position-y: center;
+  background: url(../../Images/chevron-down.svg) no-repeat right 11px center / 20px;
   transition: 0.2s ease-in;
 }
 
 .budget-filter__select-button--open {
-  background-color: #13164a;
-  color: #ffbb10;
+  background-color: $heavyBlue;
+  color: $clearWhite;
   background-image: url(../../Images/chevron-up.svg);
 }
 
 .budget-filter__date-button {
   @include text-small-web;
-  color: #1e1d24;
-  border: 1px solid #303360;
+  color: $black;
+  border: 1px solid $heavyBlue;
   border-radius: 50px;
   padding: 4px 16px;
 }

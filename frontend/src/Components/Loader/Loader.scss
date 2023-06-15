@@ -1,16 +1,18 @@
+@import '../../styles/colors.scss';
+
 .loader {
   position: relative;
   width: 60px;
   height: 60px;
   border-radius: 10rem;
-  background: linear-gradient(to right, #303360, #4a36c600);
+  background: linear-gradient(to right, $heavyBlue, $lightBlue);
   animation: animate 1.5s linear infinite;
 }
 
 .loader::before {
   position: absolute;
   content: '';
-  background: #fff;
+  background: $clearWhite;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

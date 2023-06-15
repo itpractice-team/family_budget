@@ -1,7 +1,8 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .footer {
-  background: #eaebf5;
+  background: $blueishGrey;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -23,4 +24,3 @@
 .footer__copyrights {
   @include text-medium-web;
 }
-

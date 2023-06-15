@@ -1,4 +1,5 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .plug {
   display: grid;
@@ -11,5 +12,5 @@
 
 .plug-subtitle {
   @include text-small-web;
-  color: #8c8d91;
+  color: $grey;
 }

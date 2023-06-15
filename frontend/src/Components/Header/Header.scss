@@ -1,11 +1,12 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .header {
   display: flex;
   align-items: center;
   height: 76px;
   padding: 0 160px;
-  background: #ffffff;
+  background: $clearWhite;
   position: relative;
 }
 
@@ -29,16 +30,16 @@
 .header__home-button,
 .header__menu-link {
   @include text-medium-web;
-  color: #303360;
+  color: $heavyBlue;
 }
 
 .header__menu-link_active {
   @include text-medium-web-bold;
-  color: #303360;
+  color: $heavyBlue;
 }
 
 .header__menu-link:hover {
-  color: #4a4e92;
+  color: $blueHover;
 }
 
 .header__profile-icon {

@@ -1,6 +1,8 @@
+@import '../../styles/colors.scss';
+
 .main-block {
   border-radius: 20px;
-  background-color: white;
+  background-color: $clearWhite;
   width: 100%;
   max-width: 920px;
   padding: 24px;

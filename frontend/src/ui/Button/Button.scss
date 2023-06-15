@@ -1,31 +1,32 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 // Button primary
-$color-primary: #ffffff;
-$color-primary-hover: #ffffff;
-$color-primary-pressed: #ffffff;
+$color-primary: $clearWhite;
+$color-primary-hover: $clearWhite;
+$color-primary-pressed: $clearWhite;
 
-$bg-color-primary: #13164a;
-$bg-color-primary-hover: #4a4e92;
-$bg-color-primary-pressed: #393f97;
+$bg-color-primary: $heavyBlue;
+$bg-color-primary-hover: $blueHover;
+$bg-color-primary-pressed: $bluePressed;
 
 // Button secondary
-$color-secondary: #303360;
-$color-secondary-hover: #4a4e92;
-$color-secondary-pressed: #303360;
+$color-secondary: $heavyBlue;
+$color-secondary-hover: $blueHover;
+$color-secondary-pressed: $heavyBlue;
 
-$bg-color-secondary: #eaebf5;
-$bg-color-secondary-hover: #dcdefb;
-$bg-color-secondary-pressed: #babeff;
+$bg-color-secondary: $blueishGrey;
+$bg-color-secondary-hover: $blueishGreyHover;
+$bg-color-secondary-pressed: $blueishGreyPressed;
 
 // Button fiat
-$color-fiat: #303360;
-$color-fiat-hover: #4a4e92;
-$color-fiat-pressed: #303360;
+$color-fiat: $heavyBlue;
+$color-fiat-hover: $blueHover;
+$color-fiat-pressed: $heavyBlue;
 
-$bg-color-fiat: #fff;
-$bg-color-fiat-hover: #fff;
-$bg-color-fiat-pressed: #f4f4f4;
+$bg-color-fiat: $clearWhite;
+$bg-color-fiat-hover: $clearWhite;
+$bg-color-fiat-pressed: $lightGrey;
 
 .button {
   // Common button styles

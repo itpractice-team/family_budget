@@ -34,7 +34,7 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
         />{' '}
         {period}
       </p>
-      <h3 className="repeat-expenses__text-bold">Длительность</h3>
+      <p className="repeat-expenses__text-bold">Длительность</p>
       <div className="repeat-expenses__container">
         <Radio
           value="Бесконечно"
@@ -52,14 +52,11 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
         {selected === 'До' && (
           <>
             <div className="form__input-block">
-              <label
-                className="form__input-label form__input-label_colum"
-                htmlFor={`${inputName}-date`}
-              >
+              <label className="form__input-label" htmlFor={`${inputName}-date`}>
                 Дата
                 <input
-                  className="form__input form__input-small"
-                  type="text"
+                  className="form__input"
+                  type="date"
                   name={`${inputName}-date`}
                   id={`${inputName}-date`}
                   value={startDate.toLocaleDateString()}
