@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import './LoginPopup.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
@@ -101,11 +102,12 @@ export default function LoginPopup({ onClose }) {
             <Loader extraClass="loader-login" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Войти"
               size="large"
-              extraClass="form__button_single"
+              extraClass="button_single"
               disabled={!isValid}
             />
           )}
@@ -113,7 +115,7 @@ export default function LoginPopup({ onClose }) {
             <p className="form__text">У вас ещё нет аккаунта?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="small"
               onClick={handleRegistrationClick}

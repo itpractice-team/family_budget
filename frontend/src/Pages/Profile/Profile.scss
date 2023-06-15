@@ -1,7 +1,8 @@
 @import '../../styles/consts.scss';
 
 .profile-page {
-  background-color: #f4f4f4;
+  position: relative;
+  background: #f4f4f4 url('../../Images/profile-background.svg') no-repeat center bottom;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -33,30 +34,26 @@
   border-radius: 100px;
 }
 
-// ExtraClass
-.button__change-password {
-  height: 44px;
-  margin-top: 39px;
-}
-
 .profile__error-message {
+  @include text-small-web;
+  color: #f05a2b;
   position: absolute;
-  top: 10px;
+  display: flex;
+  align-items: center;
   top: 50px;
   left: 22%;
   height: 28px;
-  background-color: none;
-  background-image: url(../../Images/alert-triangle.svg);
-  background-position: top 50% left 8px;
-  background-repeat: no-repeat;
-  background-size: 25px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-  color: #F05A2B;
-  text-align: left;
-  padding-top: 4px;
+  background: url(../../Images/alert-triangle.svg) no-repeat top 50% left 8px / 25px;
   padding-left: 36px;
-  padding-right: 8px;
-  border: 0;
+}
+
+.footer__content_profile {
+  position: absolute;
+  bottom: 40px;
+}
+
+// extraClass
+.button__change-password {
+  height: 44px;
+  margin-top: 39px;
 }

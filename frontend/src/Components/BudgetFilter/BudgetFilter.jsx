@@ -8,6 +8,9 @@ import Button from '../../ui/Button/Button';
 import SpendPopup from '../SpendPopup/SpendPopup';
 import IncomePopup from '../IncomePopup/IncomePopup';
 import { toggleSpendPopup, toggleIncomePopup } from '../../store/slices/togglePopupSlice';
+import plus from '../../Images/icons/plus.svg';
+import minus from '../../Images/icons/minus.svg';
+import arrow from '../../Images/icons/icon-arrow-right.svg';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
 export default function BudgetFilter({
@@ -102,18 +105,26 @@ export default function BudgetFilter({
       <div className="budget-filter__button-wrapper">
         <Button
           variant="secondary"
-          type="icon-text"
+          content="icon-text"
+          image={minus}
           text="Расход"
           size="medium"
-          extraClass="button__budget"
           onClick={handleSpendClick}
         />
         <Button
           variant="secondary"
-          type="icon-text"
+          content="icon-text"
+          image={plus}
           text="Доход"
           size="medium"
-          extraClass="button__budget"
+          onClick={handleIncomeClick}
+        />
+        <Button
+          variant="secondary"
+          content="icon-text"
+          image={arrow}
+          text="Перевод"
+          size="medium"
           onClick={handleIncomeClick}
         />
       </div>

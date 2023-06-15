@@ -14,7 +14,6 @@
   font-family: 'NotoSans', sans-serif;
   max-width: 1920px;
   min-width: 320px;
-  // background-color: #f4f4f4;
   background-color: $bg-color-fiat-pressed;
 }
 
@@ -33,6 +32,7 @@ ul {
 a {
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
 button {
@@ -47,4 +47,9 @@ h1,
 h2,
 h3 {
   margin: 0;
+}
+
+textarea::-webkit-scrollbar,
+textarea::-webkit-resizer {
+  display: none;
 }

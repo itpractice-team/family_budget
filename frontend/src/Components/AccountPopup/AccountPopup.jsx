@@ -30,17 +30,17 @@ export default function AccountPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize={popupSize} title="Мои счета">
-      <section className='account-popup__content'>
-      <div className="account-popup__list">
-        <img src={accounts} alt="" />
+      <section className="account-popup__content">
+        <div className="account-popup__list">
+          <img src={accounts} alt="" />
         </div>
         {!isAddingAccount ? (
           <Button
             variant="secondary"
-            type="icon-text"
+            content="icon-text"
             text="Добавить счет"
             size="medium"
-            extraClass='button__add-account'
+            extraClass="button__add-account"
             onClick={handleAddAccountClick}
           />
         ) : (
@@ -75,12 +75,18 @@ export default function AccountPopup({ onClose }) {
             <div className="form__button-wrapper">
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancelForm}
               />
-              <Button variant="primary" type="text" text="Сохранить" size="medium" />
+              <Button
+                type="submit"
+                variant="primary"
+                content="text"
+                text="Сохранить"
+                size="medium"
+              />
             </div>
           </form>
         )}
@@ -90,16 +96,15 @@ export default function AccountPopup({ onClose }) {
             <>
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancel}
               />
-              <Button variant="primary" type="text" text="Готово" size="medium" />
+              <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
             </>
           )}
         </div>
-      
       </section>
     </Popup>
   );

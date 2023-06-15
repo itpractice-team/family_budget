@@ -14,6 +14,18 @@
 .account__title {
   @include h3-web;
   color: #1e1d24;
+  display: flex;
+  align-items: center;
+}
+
+.account__title::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../Images/rub.svg') no-repeat;
+  background-size: contain;
+  width: 28px;
+  height: 28px;
 }
 
 .account__selected-content {

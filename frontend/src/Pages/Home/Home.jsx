@@ -26,7 +26,11 @@ export default function Main({ children }) {
     <main className="content">
       {children}
       {isInfoPopupOpen && (
-        <InfoPopup onClose={closeInfoPopup} content={<СonfirmationPasswordChange />} />
+        <InfoPopup
+          onClose={closeInfoPopup}
+          content={<СonfirmationPasswordChange />}
+          title="Пароль успешно изменен"
+        />
       )}
     </main>
   );

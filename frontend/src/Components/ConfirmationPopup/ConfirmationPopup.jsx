@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import './ConfirmationPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { deleteUser } from '../../store/slices/userSlice';
@@ -26,14 +25,15 @@ export default function ConfirmationPopup({ onClose }) {
         <div className="form__button-wrapper">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
           />
           <Button
+            type="submit"
             variant="primary"
-            type="text"
+            content="text"
             text="Удалить профиль"
             size="medium"
             onClick={handleDeleteProfile}

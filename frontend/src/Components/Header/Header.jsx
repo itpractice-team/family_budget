@@ -9,7 +9,7 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import ProfileTooltip from '../ProfileTooltip/ProfileTooltip';
-import defaultavatar from '../../Images/avatar.svg';
+import defaultavatar from '../../Images/profile-default-avatar-header.svg';
 import Button from '../../ui/Button/Button';
 import Overlay from '../Overlay/Overlay';
 
@@ -51,23 +51,23 @@ export default function Header() {
       {!isLogin ? (
         <div className="header__content">
           <nav className="header__menu">
-            <Button variant="fiat" type="text" text="Преимущества" size="medium" />
-            <Button variant="fiat" type="text" text="Как это работает?" size="medium" />
+            <Button variant="fiat" content="text" text="Преимущества" size="medium" />
+            <Button variant="fiat" content="text" text="Как это работает?" size="medium" />
           </nav>
           <div className="header__buttons">
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Войти"
-              size="medium"
+              size="large"
               onClick={handleLoginClick}
             />
 
             <Button
               variant="primary"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
-              size="medium"
+              size="large"
               onClick={handleRegisterClick}
             />
           </div>
