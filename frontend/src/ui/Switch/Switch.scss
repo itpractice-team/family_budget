@@ -1,12 +1,10 @@
 @import '../../styles/consts.scss';
 
 // Variables
-$switch-bg-color: #f4f4f4;
-$switch-checked-bg-color: #6fdd8e;
-$switch-border-color-disabled: #d2d5db;
-$switch-bg-color-disabled: #f4f4f4;
-
-
+$switch-bg-color: $lightGrey;
+$switch-checked-bg-color: $incomeGreen;
+$switch-border-color-disabled: $midGrey;
+$switch-bg-color-disabled: $lightGrey;
 
 // Regular state
 .switch__label {
@@ -41,11 +39,11 @@ $switch-bg-color-disabled: #f4f4f4;
 
 .switch__toggle-point {
   display: block;
-  background-color: #fff;
+  background-color: $clearWhite;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   width: 20px;
   height: 20px;
-  border: 2px solid #fff;
+  border: 2px solid $clearWhite;
   border-radius: 50%;
   position: relative;
   top: 2px;
@@ -53,12 +51,12 @@ $switch-bg-color-disabled: #f4f4f4;
   transition: all 0.3s;
 }
 
-.switch__input-default:checked+.switch__checkbox-area {
+.switch__input-default:checked + .switch__checkbox-area {
   background-color: $switch-checked-bg-color;
   border-color: $switch-checked-bg-color;
 }
 
-.switch__input-default:checked+.switch__checkbox-area .switch__toggle-point {
+.switch__input-default:checked + .switch__checkbox-area .switch__toggle-point {
   left: 22px;
 }
 
@@ -83,7 +81,7 @@ $switch-bg-color-disabled: #f4f4f4;
     box-shadow: none;
   }
 
-  .switch__input-default:checked+.switch__checkbox-area {
+  .switch__input-default:checked + .switch__checkbox-area {
     background-color: $switch-bg-color-disabled;
     border-color: $switch-border-color-disabled;
   }
