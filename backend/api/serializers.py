@@ -11,7 +11,7 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 # from rest_framework.exceptions import ValidationError
-from api.fields import PrimaryKey404RelatedField
+from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField
 from budget.models import (
     Budget,
     BudgetCategory,
@@ -124,7 +124,13 @@ class FinanceDetailInfoSerializer(serializers.ModelSerializer):
         )
 
 
-class BudgetFinanceSerializer(serializers.ModelSerializer):
+class DefaultBudgetDataSerializer(serializers.ModelSerializer):
+    """Базовый сериализатор данных бюджета."""
+
+    budget = serializers.HiddenField(default=CurrentBudgetDefault())
+
+
+class BudgetFinanceSerializer(DefaultBudgetDataSerializer):
     """Сериализатор счетов для бюджета."""
 
     id = PrimaryKey404RelatedField(
@@ -136,15 +142,17 @@ class BudgetFinanceSerializer(serializers.ModelSerializer):
         use_url=True,
         read_only=True,
     )
+    balance = serializers.IntegerField()
 
     class Meta:
         model = BudgetFinance
-        fields = (
-            "id",
-            "name",
-            "image",
-            "balance",
-        )
+        fields = ("id", "budget", "name", "image", "balance")
+
+
+class BudgetUpdateFinanceSerializer(BudgetFinanceSerializer):
+    """Сериализатор счетов для бюджета."""
+
+    id = serializers.ReadOnlyField(source="finance.id")
 
 
 class BudgetCategorySerializer(serializers.ModelSerializer):

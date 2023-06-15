@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 #     extend_schema,
 #     extend_schema_view,
 # )
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 
 # , status, viewsets
 # from rest_framework.decorators import action
@@ -16,10 +16,10 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from api.serializers import (
     BudgetCategorySerializer,
     BudgetFinanceSerializer,
+    BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
 )
-from api.viewsets import BudgetDataViewSet
 from budget.models import BudgetCategory, BudgetFinance, Finance, Icon
 
 User = get_user_model()
@@ -44,28 +44,25 @@ class BudgetFinanceViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgetDataViewSet,
+    viewsets.GenericViewSet,
 ):
     """ViewSet-класс для модели источников финансирования бюджета."""
 
-    serializer_class = BudgetFinanceSerializer
     queryset = BudgetFinance.objects.all()
-    budget_field = "budget"
-    obj_field = "finance"
-    obj_model = Finance
+    serializer_class = BudgetFinanceSerializer
+    lookup_field = "finance_id"
 
-    def get_queryset(self):
-        """Возвращает выборку данных по сточнику финансирования для бюджета."""
-        return BudgetFinance.objects.filter(
-            budget=self.request.user.budgets.first()
-        )
+    def get_serializer_class(self):
+        if self.action in ("update", "partial_update"):
+            return BudgetUpdateFinanceSerializer
+        return BudgetFinanceSerializer
 
 
 class BudgetCategoryViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     mixins.DestroyModelMixin,
-    BudgetDataViewSet,
+    viewsets.GenericViewSet,
 ):
     """ViewSet-класс для модели категорий бюджета."""
 

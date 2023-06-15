@@ -15,3 +15,13 @@ class PrimaryKey404RelatedField(serializers.PrimaryKeyRelatedField):
                 raise Http404(_("Object not found"))
         except (TypeError, ValueError):
             self.fail("incorrect_type", data_type=type(data))
+
+
+class CurrentBudgetDefault:
+    requires_context = True
+
+    def __call__(self, serializer_field):
+        return serializer_field.context["request"].user.budgets.first()
+
+    def __repr__(self):
+        return "%s()" % self.__class__.__name__
