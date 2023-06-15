@@ -1,25 +1,23 @@
 /* eslint-disable no-shadow */
-export default function TimeInterval({ selectedTimeInterval }) {
-  const formatter = new Intl.DateTimeFormat('ru', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
-
+export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
   const getTimeInterval = (selectedTimeInterval) => {
     const today = new Date();
 
+    if (selectedTimeInterval.match(/\d{2}.\d{2}.\d{4}/gm)) {
+      return `За период: ${selectedTimeInterval}`;
+    }
+
     switch (selectedTimeInterval) {
       case 'Сегодня': {
-        const formattedToday = formatter.format(today);
+        const formattedToday = dateFormatter.format(today);
         return `Сегодня: ${formattedToday}`;
       }
 
       case 'Неделя': {
         const weekStart = new Date(today);
         weekStart.setDate(today.getDate() - 6); // 6 дней назад
-        const formattedWeekStart = formatter.format(weekStart);
-        const formattedWeekEnd = formatter.format(today);
+        const formattedWeekStart = dateFormatter.format(weekStart);
+        const formattedWeekEnd = dateFormatter.format(today);
         return `На этой неделе: ${formattedWeekStart} - ${formattedWeekEnd}`;
       }
 
@@ -27,8 +25,8 @@ export default function TimeInterval({ selectedTimeInterval }) {
         // месяц назад от текущей даты
         const monthAgo = new Date();
         monthAgo.setMonth(monthAgo.getMonth() - 1);
-        const formattedMonthAgo = formatter.format(monthAgo);
-        const formattedToday = formatter.format(today);
+        const formattedMonthAgo = dateFormatter.format(monthAgo);
+        const formattedToday = dateFormatter.format(today);
         return `За месяц: ${formattedMonthAgo} - ${formattedToday}`;
       }
 
@@ -36,8 +34,8 @@ export default function TimeInterval({ selectedTimeInterval }) {
         // год назад от текущей даты
         const yearAgo = new Date(today);
         yearAgo.setFullYear(today.getFullYear() - 1);
-        const formattedYearAgo = formatter.format(yearAgo);
-        const formattedTodayForYear = formatter.format(today);
+        const formattedYearAgo = dateFormatter.format(yearAgo);
+        const formattedTodayForYear = dateFormatter.format(today);
         return `За год: ${formattedYearAgo} - ${formattedTodayForYear}`;
       }
 

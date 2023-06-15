@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './BudgetFilter.scss';
@@ -10,7 +11,14 @@ import IncomePopup from '../IncomePopup/IncomePopup';
 import { toggleSpendPopup, toggleIncomePopup } from '../../store/slices/togglePopupSlice';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
-export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalChange }) {
+export default function BudgetFilter({
+  selectedTimeInterval,
+  handleTimeIntervalChange,
+  onChange,
+  startDate,
+  endDate,
+  dateFormatter,
+}) {
   const dispatch = useDispatch();
 
   const [isTimeIntervalSelectOpen, setIsTimeIntervalSelectOpen] = useState(false);
@@ -51,7 +59,10 @@ export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalC
             type="button"
             onClick={toggleTimeIntervalSelect}
           >
-            <TimeInterval selectedTimeInterval={selectedTimeInterval} />
+            <TimeInterval
+              selectedTimeInterval={selectedTimeInterval}
+              dateFormatter={dateFormatter}
+            />
           </button>
 
           <Overlay isOpen={isTimeIntervalSelectOpen} onClose={closeTimeIntervalSelect}>
@@ -75,7 +86,15 @@ export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalC
 
           <Overlay isOpen={isCalendarOpen} onClose={closeCalendar}>
             <div className="budget-filter__calendar-wrapper">
-              <CustomDatePicker type="date" />
+              <CustomDatePicker
+                type="date"
+                onChange={onChange}
+                selected={startDate}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange={true}
+                selectsDisabledDaysInRange={true}
+              />
             </div>
           </Overlay>
         </div>

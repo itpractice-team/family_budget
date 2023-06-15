@@ -1,21 +1,30 @@
 import './CustomDatePicker.scss';
-// import { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import ru from 'date-fns/locale/ru';
 
 registerLocale('ru', ru);
 setDefaultLocale('ru');
 
-export default function CustomDatePicker({ children, type, onChange, startDate }) {
-  // const [startDate, setStartDate] = useState(new Date());
-
+export default function CustomDatePicker({
+  children,
+  type,
+  onChange,
+  startDate,
+  endDate,
+  excludeDates,
+  selectsRange,
+  selectsDisabledDaysInRange,
+}) {
   return (
     <>
       <h5 className="data-picker">{children}</h5>
       {type === 'date' && (
         <ReactDatePicker
+          startDate={startDate}
+          endDate={endDate}
+          excludeDates={excludeDates}
+          selectsRange={selectsRange}
+          selectsDisabledDaysInRange={selectsDisabledDaysInRange}
           selected={startDate}
           onChange={onChange}
           inline
