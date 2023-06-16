@@ -39,12 +39,19 @@ class FinanceHandBookViewSet(ReadOnlyModelViewSet):
     serializer_class = FinanceHandBookSerializer
 
 
+class BudgeBaseiewSet(viewsets.GenericViewSet):
+    """Базовый Viewset бюджета пользователя."""
+
+    def get_queryset(self):
+        return self.queryset.filter(budget=self.request.user.budgets.first())
+
+
 class BudgetFinanceViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    viewsets.GenericViewSet,
+    BudgeBaseiewSet,
 ):
     """Источники финансирования бюджета пользователя."""
 
@@ -63,7 +70,7 @@ class BudgetCategoryViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    viewsets.GenericViewSet,
+    BudgeBaseiewSet,
 ):
     """Категории расходов и доходов для бюджета пользователя."""
 
