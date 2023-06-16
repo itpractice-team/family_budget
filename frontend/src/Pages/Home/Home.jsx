@@ -19,9 +19,7 @@ export default function Main({ children }) {
     }
   }, [dispatch, isFetched]);
 
-  const closeInfoPopup = () => {
-    dispatch(toggleInfoPopup(false));
-  };
+  const closeInfoPopup = () => dispatch(toggleInfoPopup(false));
 
   return (
     <section className="home-page">

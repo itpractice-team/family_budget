@@ -43,6 +43,7 @@ export default function PasswordChangePopup({ onClose }) {
       })
       .finally(() => {
         dispatch(togglePasswordChangePopup(false));
+        dispatch(toggleInfoPopup(true));
       });
   }
 

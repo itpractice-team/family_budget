@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import './СonfirmationPasswordChange.scss';
 import Button from '../../ui/Button/Button';
 import { toggleInfoPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 
@@ -13,11 +12,10 @@ export default function СonfirmationPasswordChange() {
   }
   return (
     <Button
-      variant="fiat"
+      variant="secondary"
       content="text"
       text="Войти"
       size="medium"
-      extraClass="button_confirm"
       onClick={handleLoginClick}
     />
   );
