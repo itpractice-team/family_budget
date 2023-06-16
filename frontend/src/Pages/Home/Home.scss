@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 160px 160px 0 160px;
+  padding-top: 160px;
 
   &__container-title {
     display: flex;
@@ -38,13 +38,6 @@
     @include h2-web;
   }
 
-  // &__img {
-  //   background: $clearWhite url('../../Images/main.svg') no-repeat center;
-  //   width: 1740px;
-  //   height: 903px;
-  //   background-size: contain;
-  // }
-
   &__lists-advantages {
     display: flex;
     justify-content: center;
@@ -55,7 +48,7 @@
   &__container-how-works {
     background: $blueishGrey;
     display: flex;
-    padding: 60px 160px;
+    padding: 0 160px 60px;
     flex-direction: column;
   }
 

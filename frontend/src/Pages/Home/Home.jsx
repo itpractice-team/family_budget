@@ -49,7 +49,9 @@ export default function Main() {
       </div>
 
       <img src={main} alt="" />
-      <h3 className="home-page__subtitle">Преимущества</h3>
+      <h3 id="advantages" className="home-page__subtitle">
+        Преимущества
+      </h3>
       <ul className="home-page__lists-advantages">
         {arrAdvantages.map((i) => {
           return (
@@ -57,8 +59,8 @@ export default function Main() {
           );
         })}
       </ul>
-      <div className="home-page__container-how-works">
-        <h3 className="home-page__subtitle">Как это работает</h3>
+      <div id="how-works" className="home-page__container-how-works">
+        <h3 className="home-page__subtitle">Как это работает ?</h3>
         <ul className="home-page__lists-how-works">
           {arrCardWorks.map((i) => {
             return (
