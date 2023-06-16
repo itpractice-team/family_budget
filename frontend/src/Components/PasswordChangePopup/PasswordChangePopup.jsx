@@ -10,7 +10,7 @@ import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import { togglePasswordChangePopup, toggleInfoPopup } from '../../store/slices/togglePopupSlice';
 import { RequirementsPassword } from '../../utils/consts';
-import { clearUser } from '../../store/slices/userSlice';
+import { resetUser } from '../../store/slices/userSlice';
 import { setLogin } from '../../store/slices/loginSlice';
 import changePasswordValidation from '../../utils/validations/changePasswordValidation';
 import Eye from '../../ui/Eye/Eye';
@@ -25,7 +25,7 @@ export default function PasswordChangePopup({ onClose }) {
     const newEyesValues = [...eyes];
     newEyesValues[index] = opened;
     setEyes(newEyesValues);
-  }
+  };
 
   function handleСancel(evt) {
     evt.preventDefault();
@@ -33,16 +33,23 @@ export default function PasswordChangePopup({ onClose }) {
   }
 
   function handleChangePassword(formData) {
-    dispatch(changePassword(formData)).then(() => {
-      dispatch(clearUser());
-      dispatch(setLogin(false));
-      dispatch(toggleInfoPopup(true));
-      dispatch(togglePasswordChangePopup(false));
-    });
+    dispatch(changePassword(formData))
+      .then((action) => {
+        if (!action.error) {
+          dispatch(resetUser());
+          dispatch(setLogin(false));
+          dispatch(toggleInfoPopup(true));
+        }
+      })
+      .finally(() => {
+        dispatch(togglePasswordChangePopup(false));
+      });
   }
+
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -55,11 +62,11 @@ export default function PasswordChangePopup({ onClose }) {
   return (
     <Popup
       onClose={onClose}
-      popupSize="popup_s"
+      popupSize="popup_password"
       title="Изменение пароля"
       subtitle="После изменения пароля, все активные сеансы на всех устройствах, сайтах и приложениях будут автоматически завершены"
     >
-      <form className="form" onSubmit={handleChangePassword}>
+      <form className="form" onSubmit={handleSubmit(handleChangePassword)}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="PasswordChangePopup-oldPassword">
             Текущий пароль
@@ -67,8 +74,8 @@ export default function PasswordChangePopup({ onClose }) {
               {...register('current_password')}
               id="PasswordChangePopup-oldPassword"
               name="current_password"
-              className="form__input form__input_password"
-              placeholder="Ввести текущий пароль"
+              className={`form__input ${errors.current_password ? 'error' : ''}`}
+              placeholder="Введите текущий пароль"
               type={eyes[0] ? 'text' : 'password'}
             />
             <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
@@ -88,11 +95,18 @@ export default function PasswordChangePopup({ onClose }) {
               {...register('new_password')}
               id="PasswordChangePopup-newPassword"
               name="new_password"
-              className="form__input"
-              placeholder="Ввести новый пароль"
+              className={`form__input form__input_password-new ${
+                errors.new_password ? 'error' : ''
+              }`}
+              placeholder="Введите новый пароль"
               type={eyes[1] ? 'text' : 'password'}
             />
-            <Eye index={1} opened={eyes[1]} setOpenState={handleEyeChange} />
+            <Eye
+              index={1}
+              opened={eyes[1]}
+              setOpenState={handleEyeChange}
+              extraClass="eye_password-new"
+            />
             <span
               className={`form__valid-message 
                         ${errors.new_password ? 'form__valid-message_active' : ''}`}
@@ -114,11 +128,6 @@ export default function PasswordChangePopup({ onClose }) {
           />
         </div>
 
-        <div className="form__password-reliability-block">
-          <div className="form__password-reliability form__password-reliability_ok" />
-          <p> Надёжный пароль</p>
-        </div>
-
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="PasswordChangePopup-repeatPassword">
             Новый пароль ещё раз
@@ -126,8 +135,8 @@ export default function PasswordChangePopup({ onClose }) {
               {...register('re_new_password')}
               id="PasswordChangePopup-repeatPassword"
               name="re_new_password"
-              className="form__input"
-              placeholder="Ввести новый пароль еще раз"
+              className={`form__input ${errors.re_new_password ? 'error' : ''}`}
+              placeholder="Введите новый пароль еще раз"
               type={eyes[2] ? 'text' : 'password'}
             />
             <Eye index={2} opened={eyes[2]} setOpenState={handleEyeChange} />
@@ -140,10 +149,10 @@ export default function PasswordChangePopup({ onClose }) {
           </label>
         </div>
 
-        <div className="form__button-wrapper form__button-wrapper_profile">
+        <div className="form__button-wrapper form__button-wrapper_password-new">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
@@ -153,8 +162,9 @@ export default function PasswordChangePopup({ onClose }) {
           ) : (
             <Button
               disabled={!isValid || !errors}
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Изменить пароль"
               size="medium"
             />

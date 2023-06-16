@@ -1,0 +1,11 @@
+@import '../../styles/consts.scss';
+
+.tabs {
+  width: 100%;
+  background: $lightGrey;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-around;
+  padding: 4px;
+  gap: 8px;
+}

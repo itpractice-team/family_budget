@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
@@ -10,16 +11,18 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import ProfileTooltip from '../ProfileTooltip/ProfileTooltip';
-import defaultavatar from '../../Images/avatar.svg';
+import defaultavatar from '../../Images/profile-default-avatar-header.svg';
+import logo from '../../Images/logo.svg';
+import logomini from '../../Images/logo-mini.svg';
 import Button from '../../ui/Button/Button';
+import Overlay from '../Overlay/Overlay';
 
 export default function Header() {
   const dispatch = useDispatch();
 
-  const isRegisterPopupOpen = useSelector((state) => state.popup.isRegisterPopupOpen);
-  const isLoginPopupOpen = useSelector((state) => state.popup.isLoginPopupOpen);
+  const { isRegisterPopupOpen, isLoginPopupOpen } = useSelector((state) => state.popup);
+
   const isLogin = useSelector((state) => state.login.login);
-  const isLoading = useSelector((store) => store.user.loading);
   const { avatar } = useSelector((state) => state.user.user);
 
   const isBudget = useMatch({ path: '/budget', exact: true });
@@ -47,72 +50,72 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <Logo />
+    <header className={`header ${isLogin ? 'header-login' : ''}`}>
       {!isLogin ? (
-        <div className="header__content">
-          <nav className="header__menu">
-            <Button variant="fiat" type="text" text="Преимущества" size="medium" />
-            <Button variant="fiat" type="text" text="Как это работает?" size="medium" />
-          </nav>
-          <div className="header__buttons">
-            <Button
-              variant="fiat"
-              type="text"
-              text="Войти"
-              size="medium"
-              onClick={handleLoginClick}
-            />
+        <>
+          <Logo src={logo} />
+          <div className="header__content">
+            <nav className="header__menu">
+              <Button variant="fiat" content="text" text="Преимущества" size="medium" />
+              <Button variant="fiat" content="text" text="Как это работает?" size="medium" />
+            </nav>
+            <div className="header__buttons">
+              <Button
+                variant="fiat"
+                content="text"
+                text="Войти"
+                size="large"
+                onClick={handleLoginClick}
+              />
 
-            <Button
-              variant="primary"
-              type="text"
-              text="Зарегистрироваться"
-              size="medium"
-              onClick={handleRegisterClick}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="header__content">
-          <nav className="header__menu">
-            <NavLink
-              to="/budget"
-              className={isBudget ? 'header__menu-link_active' : 'header__menu-link'}
-            >
-              Бюджет
-            </NavLink>
-
-            <NavLink
-              to="/statistic"
-              className={isStatistic ? 'header__menu-link_active' : 'header__menu-link'}
-            >
-              Статистика
-            </NavLink>
-
-            <NavLink
-              to="/help"
-              className={isHelp ? 'header__menu-link_active' : 'header__menu-link'}
-            >
-              Помощь
-            </NavLink>
-          </nav>
-          {isLoading ? (
-            <img src={defaultavatar} className="header__profile-icon" alt="Дефолтный аватар" />
-          ) : (
-            <div onClick={handleProfileTooltipClick} className="div">
-              <img
-                src={avatar === null ? defaultavatar : avatar}
-                className="header__profile-icon"
-                alt="Аватар"
+              <Button
+                variant="primary"
+                content="text"
+                text="Зарегистрироваться"
+                size="large"
+                onClick={handleRegisterClick}
               />
             </div>
-          )}
-          {isTooltipOpen && (
-            <ProfileTooltip isOpen={isTooltipOpen} onClose={handleProfileTooltipClick} />
-          )}
-        </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <Logo src={logomini} />
+          <div className="header__content">
+            <nav className="header__menu">
+              <NavLink
+                to="/budget"
+                className={isBudget ? 'header__menu-link_active' : 'header__menu-link'}
+              >
+                Бюджет
+              </NavLink>
+
+              <NavLink
+                to="/statistic"
+                className={isStatistic ? 'header__menu-link_active' : 'header__menu-link'}
+              >
+                Статистика
+              </NavLink>
+
+              <NavLink
+                to="/help"
+                className={isHelp ? 'header__menu-link_active' : 'header__menu-link'}
+              >
+                Помощь
+              </NavLink>
+            </nav>
+            <img
+              src={avatar === null ? defaultavatar : avatar}
+              className="header__profile-icon"
+              alt="Аватар"
+              onClick={handleProfileTooltipClick}
+            />
+          </div>
+        </>
       )}
+      <Overlay isOpen={isTooltipOpen} onClose={handleProfileTooltipClick}>
+        <ProfileTooltip onClose={handleProfileTooltipClick} />
+      </Overlay>
       {isRegisterPopupOpen && <RegisterPopup onClose={closeRegisterPopup} />}
       {isLoginPopupOpen && <LoginPopup onClose={closeLoginPopup} />}
     </header>

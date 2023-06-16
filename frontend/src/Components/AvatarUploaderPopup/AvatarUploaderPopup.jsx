@@ -7,7 +7,8 @@ import AvatarUploader from '../AvatarUploader/AvatarUploader';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import { updateUser } from '../../store/slices/userSlice';
-import defaultAvatar from '../../Images/avatar.svg';
+import defaultAvatar from '../../Images/profile-default-avatar.svg';
+import trash from '../../Images/icons/trash.svg';
 
 export default function AvatarUploaderPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -40,14 +41,22 @@ export default function AvatarUploaderPopup({ onClose }) {
               setRecipeFile(file);
             }}
           />
-          <button className="delete-avatar" type="button" onClick={handleDeleteAvatar} />
+          <Button
+            type="submit"
+            variant="secondary"
+            content="icon"
+            image={trash}
+            size="medium"
+            onClick={handleDeleteAvatar}
+          />
         </div>
         {isLoading ? (
           <Loader extraClass="loader-avatar" />
         ) : (
           <Button
+            type="submit"
             variant="primary"
-            type="text"
+            content="text"
             text="Cохранить"
             size="medium"
             extraClass="button__save-avatar"

@@ -1,0 +1,45 @@
+@import '../../styles/consts.scss';
+
+.budget-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background-color: $lightGrey;
+  border-radius: 16px;
+  height: fit-content;
+}
+
+.budget-filter__wrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.budget-filter__select {
+  position: relative;
+}
+
+.budget-filter__select-button {
+  @include text-small-web;
+  border: 1px solid $heavyBlue;
+  color: $black;
+  border-radius: 50px;
+  padding: 4px 36px 4px 16px;
+  background: url(../../Images/chevron-down.svg) no-repeat right 11px center / 20px;
+  transition: 0.2s ease-in;
+}
+
+.budget-filter__select-button--open {
+  background-color: $heavyBlue;
+  color: $clearWhite;
+  background-image: url(../../Images/chevron-up.svg);
+}
+
+.budget-filter__date-button {
+  @include text-small-web;
+  color: $black;
+  border: 1px solid $heavyBlue;
+  border-radius: 50px;
+  padding: 4px 16px;
+}

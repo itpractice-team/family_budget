@@ -1,0 +1,13 @@
+@import '../../styles/consts.scss';
+
+.main-block {
+  border-radius: 20px;
+  background-color: $clearWhite;
+  width: 100%;
+  max-width: 920px;
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 24px;
+}

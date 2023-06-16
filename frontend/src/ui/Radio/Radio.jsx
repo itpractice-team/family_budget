@@ -1,9 +1,8 @@
-import React from 'react';
 import './Radio.scss';
 
 export default function Radio({ text, icon, value, isChecked, onChange, disabled, extraClass }) {
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
-  const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Generate a unique ID
+  const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Генерация уникального идентификатора
 
   return (
     <label className={radioClasses} htmlFor={inputId}>

@@ -4,19 +4,20 @@ import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { toggleRepeatExpensesPopup } from '../../store/slices/togglePopupSlice';
-import Tab from '../Tab/Tab';
 import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
-import MonthBtn from './MonthBtn/MonthBtn';
-import YearBtn from './YearBtn/YearBtn';
+import Tabs from '../Tabs/Tabs';
+import { arrCategoriesDate } from '../../utils/consts';
 
 export default function RepeatExpensesPopup({ onClose }) {
-  const [activeTab, setActiveTab] = useState('День');
+  const [activeDate, setActiveDate] = useState('День');
+
   const dispatch = useDispatch();
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const handleDateClick = (tab) => {
+    setActiveDate(tab);
   };
+
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(toggleRepeatExpensesPopup(false));
@@ -28,17 +29,16 @@ export default function RepeatExpensesPopup({ onClose }) {
   }
 
   return (
-    <Popup onClose={onClose} popupSize="popup_m" title="Повторяющиеся расходы">
-      <form className="form form_add-operation" onSubmit={handleSubmit}>
+    <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RepeatExpenses-date">
             Дата
             <input
               className="form__input"
-              type="text"
+              type="date"
               name="RepeatExpenses-date"
               id="RepeatExpenses-date"
-              placeholder="__.__.____"
             />
           </label>
         </div>
@@ -88,55 +88,41 @@ export default function RepeatExpensesPopup({ onClose }) {
           </label>
         </div>
 
-        <h3 className="form__text-bold">Сделать повторяющуюся запись?</h3>
-        <p className="form__input-label">Это событие будет повторяться каждый 1 день</p>
+        <div className="form__text-content">
+          <p className="form__text-bold">Сделать повторяющуюся запись?</p>
+          <p className="form__text">Это событие будет повторяться каждый 1 день</p>
+        </div>
 
         <div className="repeat-expenses__tab">
-          <Tab
-            active={activeTab === 'День'}
-            value="День"
-            onClick={handleTabClick}
+          <Tabs
+            arr={arrCategoriesDate}
             size="tab-size_l"
-          >
-            День
-          </Tab>
-          <Tab
-            active={activeTab === 'Неделя'}
-            value="Неделя"
-            size="tab-size_l"
-            onClick={handleTabClick}
-          >
-            Неделя
-          </Tab>
-          <Tab
-            active={activeTab === 'Месяц'}
-            value="Месяц"
-            size="tab-size_l"
-            onClick={handleTabClick}
-          >
-            Месяц
-          </Tab>
-          <Tab active={activeTab === 'Год'} value="Год" size="tab-size_l" onClick={handleTabClick}>
-            Год
-          </Tab>
+            activeInit={activeDate}
+            onClick={handleDateClick}
+          />
         </div>
 
         <div className="repeat-expenses__activeTab">
-          {activeTab === 'День' && <DayBtn />}
-          {activeTab === 'Неделя' && <WeekBtn />}
-          {activeTab === 'Месяц' && <MonthBtn />}
-          {activeTab === 'Год' && <YearBtn />}
+          {activeDate === 'День' && <DayBtn inputName="dayBtn" />}
+          {activeDate === 'Неделя' && (
+            <div className="repeat-expenses__container">
+              <WeekBtn />
+              <DayBtn ending="ую" period="неделю" inputName="weekBtn" />
+            </div>
+          )}
+          {activeDate === 'Месяц' && <DayBtn period="месяц" inputName="monthBtn" />}
+          {activeDate === 'Год' && <DayBtn period="год" inputName="yearBtn" />}
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_add-operation">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
           />
-          <Button variant="primary" type="text" text="Готово" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>

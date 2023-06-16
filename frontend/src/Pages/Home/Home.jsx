@@ -5,6 +5,7 @@ import InfoPopup from '../../Components/InfoPopup/InfoPopup';
 import { toggleInfoPopup } from '../../store/slices/togglePopupSlice';
 import СonfirmationPasswordChange from '../../Components/СonfirmationPasswordChange/СonfirmationPasswordChange';
 import { getUser } from '../../store/slices/userSlice';
+import Footer from '../../Components/Footer/Footer';
 
 export default function Main({ children }) {
   const dispatch = useDispatch();
@@ -23,11 +24,16 @@ export default function Main({ children }) {
   };
 
   return (
-    <main className="content">
+    <section className="home-page">
       {children}
       {isInfoPopupOpen && (
-        <InfoPopup onClose={closeInfoPopup} content={<СonfirmationPasswordChange />} />
+        <InfoPopup
+          onClose={closeInfoPopup}
+          content={<СonfirmationPasswordChange />}
+          title="Пароль успешно изменен"
+        />
       )}
-    </main>
+      <Footer extraClass="footer-absolute" />
+    </section>
   );
 }

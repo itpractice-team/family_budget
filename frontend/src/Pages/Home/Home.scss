@@ -1,6 +1,9 @@
-.content {
+@import '../../styles/consts.scss';
+
+.home-page {
+  position: relative;
+  background: $clearWhite url('../../Images/home-background.svg') no-repeat center bottom;
   display: flex;
   flex-grow: 1;
-  margin: 60px auto;
-  max-width: 1600px;
+  padding: 160px 160px 0 160px;
 }

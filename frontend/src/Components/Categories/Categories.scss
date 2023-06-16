@@ -5,24 +5,14 @@
   flex-direction: column;
   gap: 20px;
   padding: 24px;
-  background: #ffffff;
+  background: $clearWhite;
   border-radius: 20px;
 }
 
 .categories__title {
   @include h3-web;
-  color: #1e1d24;
 }
 
-.categories__tabs {
-  max-width: 328px;
-  background: #f4f4f4;
-  border-radius: 16px;
-  display: flex;
-  padding: 4px;
-  gap: 8px;
-}
-
-.categories__button {
+.categories-button {
   justify-content: center;
 }

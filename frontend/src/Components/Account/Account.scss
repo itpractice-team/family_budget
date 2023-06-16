@@ -5,7 +5,7 @@
   padding: 21px 24px 33px 24px;
   width: 100%;
   height: 128px;
-  background-color: #eaebf5;
+  background-color: $blueishGrey;
   border-radius: 20px;
   display: grid;
   gap: 16px;
@@ -13,7 +13,18 @@
 
 .account__title {
   @include h3-web;
-  color: #1e1d24;
+  color: $black;
+  display: flex;
+  align-items: center;
+}
+
+.account__title::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../Images/rub.svg') no-repeat center / contain;
+  width: 28px;
+  height: 28px;
 }
 
 .account__selected-content {
@@ -26,20 +37,11 @@
   align-items: center;
 }
 
-.custom-select__content {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .account__arrow {
   width: 40px;
   height: 40px;
   margin-right: 8px;
-  background-image: url(../../Images/dropdawn.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
+  background: url('../../Images/dropdawn.svg') no-repeat center / contain;
   transform: rotate(0deg);
 }
 

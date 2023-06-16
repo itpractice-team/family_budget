@@ -1,10 +1,9 @@
-import './Logo.scss';
 import { NavLink } from 'react-router-dom';
 
-export default function Logo() {
+export default function Logo({ src }) {
   return (
     <NavLink to="/" className="logo">
-      LOGO
+      <img className="logo__image" src={src} alt="Логотип" />
     </NavLink>
   );
 }

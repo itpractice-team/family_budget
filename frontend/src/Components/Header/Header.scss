@@ -1,19 +1,19 @@
 @import '../../styles/consts.scss';
 
-.div {
-  position: relative;
-}
-
 .header {
   display: flex;
   align-items: center;
-  height: 76px;
-  padding: 0 160px;
-  background: #ffffff;
+  min-height: fit-content;
+  padding: 25px 160px;
+  background: $clearWhite;
+  position: relative;
+}
+
+.header-login {
+  padding: 12px 160px;
 }
 
 .header__content {
-  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -28,25 +28,28 @@
 
 .header__buttons {
   display: flex;
+  gap: 24px;
 }
 
 .header__home-button,
 .header__menu-link {
   @include text-medium-web;
-  color: #303360;
+  color: $heavyBlue;
 }
 
 .header__menu-link_active {
   @include text-medium-web-bold;
-  color: #303360;
+  color: $heavyBlue;
 }
 
 .header__menu-link:hover {
-  color: #4a4e92;
+  color: $blueHover;
 }
 
 .header__profile-icon {
+  cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 50px;
+  position: relative;
 }

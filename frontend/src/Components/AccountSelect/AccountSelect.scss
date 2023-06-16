@@ -1,35 +1,31 @@
 @import '../../styles/consts.scss';
 
-.account-select__list {
+.account-select {
   position: absolute;
   top: 111px;
   left: 0;
   z-index: 1;
   width: 376px;
-  background: #ffffff;
-  border: 1px solid #f4f4f4;
+  background: $clearWhite;
+  border: 1px solid $lightGrey;
   border-radius: 8px;
   padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
-.custom-select__list_hidden {
-  display: none;
-}
-
-.account-select__list-title {
+.account-select__title {
   @include text-medium-web;
-  margin-bottom: 5px;
+  margin-bottom: 11px;
   padding-bottom: 12px;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #d2d5db;
+  border-bottom: 1px solid $midGrey;
 }
 
-.button__account {
-  margin-top: 12px;
+// extraClass
+.button_account-select {
+  margin-top: 24px;
   width: 100%;
   justify-content: center;
 }

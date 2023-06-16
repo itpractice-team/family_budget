@@ -1,9 +1,48 @@
-.logo {
-  font-family: 'Manrope', sans-serif;
-  margin-right: 160px;
-  font-weight: 800;
-  font-size: 40px;
-  line-height: 55px;
-  color: #1E1D24;
-  justify-self: start;
-}
+@import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
+
+// .logo__image {
+//   width: 376px;
+//   height: 80px;
+// }
+
+// .logo {
+//   max-width: 376px;
+//   display: flex;
+//   align-items: center;
+//   gap: 12px;
+//   margin-right: 155px;
+//   justify-self: start;
+
+//   &__image {
+//     width: 80px;
+//     height: 80px;
+//   }
+
+//   &__text-content {
+//     width: 100%;
+//     max-width: 168px;
+//     display: flex;
+//     flex-direction: column;
+//   }
+
+//   &__title,
+//   &__subtitle {
+//     width: 100%;
+//     font-family: $ubuntu-font;
+//     color: $heavyBlue;
+//   }
+
+//   &__title {
+//     font-weight: 700;
+//     font-size: 32px;
+//     line-height: 56px;
+//   }
+
+//   &__subtitle {
+//     font-weight: 400;
+//     font-size: 14px;
+//     line-height: 100%;
+//     letter-spacing: 0.02em;
+//   }
+// }

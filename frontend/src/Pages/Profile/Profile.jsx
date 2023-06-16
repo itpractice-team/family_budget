@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-props-no-spreading */
-
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,7 +20,8 @@ import {
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
-import defaultAvatar from '../../Images/avatar.svg';
+import Footer from '../../Components/Footer/Footer';
+import defaultAvatar from '../../Images/profile-default-avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
 import profileValidation from '../../utils/validations/profileValidation';
 
@@ -31,11 +31,9 @@ export default function Profile() {
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const isPasswordChangePopupOpen = useSelector((state) => state.popup.isPasswordChangePopupOpen);
-  const isAvatarUploaderPopupOpen = useSelector((state) => state.popup.isAvatarUploaderPopupOpen);
-  const isConfirmationPopupOpen = useSelector((state) => state.popup.isConfirmationPopupOpen);
-  const userData = useSelector((state) => state.user.user);
-  const isFetched = useSelector((state) => state.user.isFetched);
+  const { isPasswordChangePopupOpen, isAvatarUploaderPopupOpen, isConfirmationPopupOpen } =
+    useSelector((state) => state.popup);
+  const { user: userData, isFetched } = useSelector((state) => state.user);
 
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
@@ -45,10 +43,13 @@ export default function Profile() {
     }
   }, [isFetched]);
 
-  const handleAvatarUploaderClick = (evt) => {
-    evt.preventDefault();
-    dispatch(toggleAvatarUploaderPopup(true));
-  };
+  const handleAvatarUploaderClick = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      dispatch(toggleAvatarUploaderPopup(true));
+    },
+    [dispatch],
+  );
 
   const closeAvatarUploaderPopup = () => {
     dispatch(toggleAvatarUploaderPopup(false));
@@ -74,6 +75,7 @@ export default function Profile() {
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -135,13 +137,13 @@ export default function Profile() {
           />
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Изменить фото"
             size="medium"
             onClick={handleAvatarUploaderClick}
           />
         </div>
-        <form className="form form_profile" onSubmit={handleUpdateProfile}>
+        <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
@@ -152,7 +154,7 @@ export default function Profile() {
                 })}
                 id="Profile-login"
                 name="username"
-                className="form__input"
+                className={`form__input ${errors.username ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите логин"
                 disabled={disable}
@@ -185,7 +187,7 @@ export default function Profile() {
                 {...register('email', { value: userData.email || '', shouldUnregister: true })}
                 id="Profile-email"
                 name="email"
-                className="form__input"
+                className={`form__input ${errors.email ? 'error' : ''}`}
                 type="email"
                 placeholder="Введите e-mail"
                 disabled={disable}
@@ -226,7 +228,7 @@ export default function Profile() {
 
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Сменить пароль"
             size="medium"
             extraClass="button__change-password"
@@ -243,7 +245,7 @@ export default function Profile() {
                 })}
                 id="Profile-name"
                 name="first_name"
-                className="form__input"
+                className={`form__input ${errors.first_name ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите имя"
                 disabled={disable}
@@ -279,7 +281,7 @@ export default function Profile() {
                 })}
                 id="Profile-surname"
                 name="last_name"
-                className="form__input"
+                className={`form__input ${errors.last_name ? 'error' : ''}`}
                 type="text"
                 placeholder="Введите фамилию"
                 disabled={disable}
@@ -309,7 +311,7 @@ export default function Profile() {
             {!isEditing ? (
               <Button
                 variant="primary"
-                type="text"
+                content="text"
                 text="Изменить данные"
                 size="medium"
                 onClick={handleEnableInputs}
@@ -317,26 +319,28 @@ export default function Profile() {
             ) : (
               <Button
                 disabled={!isValid || disableButton}
+                type="submit"
                 variant="primary"
-                type="text"
+                content="text"
                 text="Сохранить данные"
                 size="medium"
               />
             )}
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Удалить профиль"
               size="medium"
               onClick={handleConfirmationPopupClick}
             />
-            {(isEditing && message) && <span className="profile__error-message">{message}</span>}
+            {isEditing && message && <span className="profile__error-message">{message}</span>}
           </div>
-          {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
-          {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
-          {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
         </form>
       </div>
+      {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
+      {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
+      {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+      <Footer extraClass="footer-absolute" />
     </section>
   );
 }

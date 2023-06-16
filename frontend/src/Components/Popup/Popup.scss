@@ -1,18 +1,18 @@
 @import '../../styles/consts.scss';
 
+$max-width-s: 512px;
+$max-width-m: 784px;
+
 .popup {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #e5e5e5;
+  background-color: $clearWhite;
+  border: 1px solid $lightGrey;
   border-radius: 16px;
   padding: 40px;
   width: 100%;
-  // to show popup skroll if height is not enough
-  max-height: 100vh;
-  overflow-y: auto;
 
   .popup__title {
     @include h3-web;
@@ -20,8 +20,8 @@
   }
 
   .popup__subtitle {
-    @include text-medium-web;
-    color: #8c8d91;
+    @include text-small-web;
+    color: $black;
     margin-bottom: 24px;
   }
 }
@@ -52,91 +52,159 @@
 }
 ///////
 
-.popup_avatar {
-  max-width: 512px;
+// в одну колонку инпутов
+.popup_s {
+  max-width: $max-width-s;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+}
+
+// в две колонки инпутов
+.popup_m {
+  max-width: $max-width-m;
+
+  .form {
+    gap: 32px 67px;
+  }
+}
+
+// информационный
+.popup_info {
+  max-width: $max-width-s;
 
   .popup__title {
-    @include h2-web;
+    text-align: center;
+  }
+}
+
+// изменение аватара
+.popup_avatar {
+  max-width: $max-width-s;
+
+  .popup__title {
     margin-bottom: 8px;
   }
 
   .popup__subtitle {
-    @include text-small-web;
+    color: $grey;
   }
 }
 
-.popup_sdek {
-  max-width: 512px;
+// изменение пароля
+.popup_password {
+  max-width: $max-width-s;
+
+  .form__input-block {
+    max-width: 432px;
+  }
+
+  .popup__subtitle {
+    @include text-medium-web;
+    color: $grey;
+  }
+}
+
+// редактирование операции
+.popup_edit-operation {
+  max-width: $max-width-s;
 
   .form__input-block {
     max-width: 432px;
   }
 
   .popup__title {
-    @include h2-web;
     margin-bottom: 8px;
   }
 
   .popup__subtitle {
-    @include text-small-web;
     margin-bottom: 0px;
   }
 }
 
-.popup_s {
-  max-width: 512px;
-
-  .form__input-block {
-    max-width: 432px;
-  }
-
-  // .form__button-wrapper {
-  //   margin-top: 8px;
-  //   flex-wrap: wrap;
-  //   justify-content: space-between;
-  //   gap: 24px;
-  // }
-
-  // .form__button-wrapper_single {
-  //   flex-direction: column;
-  //   justify-content: center;
-  // }
-
-  // .form__text {
-  //   @include text-large-web;
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   justify-content: center;
-  // }
-
-  // .form__button_text {
-  //   margin: 0 auto;
-  //   display: block;
-  //   border-bottom: 1px solid #303360;
-  //   margin-top: 8px;
-  // }
-}
-
-.popup_m {
-  max-width: 784px;
-
-  // .form__input-block {
-  //   max-width: 334px;
-  // }
+// редактирование конверта
+.popup_edit-moneybox {
+  max-width: $max-width-m;
 
   .form {
-    gap: 24px 67px;
+    margin-top: 24px;
+    gap: 13px 32px;
   }
 
-  // .form__button-wrapper {
-  //   width: 100%;
-  //   display: flex;
-  //   justify-content: space-between;
-  //   gap: 32px;
-  // }
+  .form__input-block {
+    width: 100%;
+    max-width: calc((100% - 32px) / 2);
+  }
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    margin-bottom: 0px;
+  }
 }
 
-// hide default scrollbar to customize
-.popup::-webkit-scrollbar {
-  display: none;
+// цель достигнута
+.popup_done {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 8px;
+  }
+
+  .popup__subtitle {
+    margin-bottom: 0px;
+  }
+}
+
+// повторяющиеся расходы
+.popup_repeat {
+  max-width: $max-width-m;
+
+  .popup__title {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 12px 32px;
+
+    &__input-block {
+      width: 100%;
+      max-width: calc((100% - 32px) / 2);
+    }
+
+    &__text-content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    &__text-bold {
+      margin-top: 12px;
+      @include text-medium-web-bold;
+    }
+
+    &__text {
+      @include text-small-web;
+    }
+  }
+}
+
+// перевод
+.popup_transfer {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 13px;
+
+    .form__button-wrapper {
+      margin-top: 20px;
+    }
+  }
 }

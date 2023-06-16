@@ -1,16 +1,17 @@
 @import '../../styles/consts.scss';
 
 .profile-page {
-  background-color: #f4f4f4;
+  position: relative;
+  background: $lightGrey url('../../Images/profile-background.svg') no-repeat center bottom;
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
-  padding: 70px 160px 50px 160px;
+  padding: 70px 160px 0 160px;
 }
 
 .profile-settings {
-  background-color: #ffffff;
+  background-color: $clearWhite;
   max-width: 784px;
+  height: fit-content;
   padding: 40px;
   border-radius: 16px;
 }
@@ -33,30 +34,21 @@
   border-radius: 100px;
 }
 
-// ExtraClass
-.button__change-password {
-  height: 44px;
-  margin-top: 39px;
-}
-
 .profile__error-message {
+  @include text-small-web;
+  color: $alertRed;
   position: absolute;
-  top: 10px;
+  display: flex;
+  align-items: center;
   top: 50px;
   left: 22%;
   height: 28px;
-  background-color: none;
-  background-image: url(../../Images/alert-triangle.svg);
-  background-position: top 50% left 8px;
-  background-repeat: no-repeat;
-  background-size: 25px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-  color: #F05A2B;
-  text-align: left;
-  padding-top: 4px;
+  background: url(../../Images/alert-triangle.svg) no-repeat top 50% left 8px / 25px;
   padding-left: 36px;
-  padding-right: 8px;
-  border: 0;
+}
+
+// extraClass
+.button__change-password {
+  height: 44px;
+  margin-top: 39px;
 }

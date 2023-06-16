@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import './LoginPopup.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
@@ -11,7 +12,7 @@ import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/toggle
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
-import Button from '../../ui/Button/Button'
+import Button from '../../ui/Button/Button';
 import Eye from '../../ui/Eye/Eye';
 
 export default function LoginPopup({ onClose }) {
@@ -23,7 +24,7 @@ export default function LoginPopup({ onClose }) {
     const newEyesValues = [...eyes];
     newEyesValues[index] = opened;
     setEyes(newEyesValues);
-  }
+  };
 
   const isLogin = useSelector((state) => state.login.login);
   const isLoading = useSelector((store) => store.login.loading);
@@ -65,7 +66,7 @@ export default function LoginPopup({ onClose }) {
               {...register('username')}
               id="LoginPopup-login"
               name="username"
-              className="form__input"
+              className={`form__input ${errors.username ? 'error' : ''}`}
               type="text"
               placeholder="Введите логин"
             />
@@ -85,7 +86,7 @@ export default function LoginPopup({ onClose }) {
               {...register('password')}
               id="LoginPopup-password"
               name="password"
-              className="form__input"
+              className={`form__input ${errors.password ? 'error' : ''}`}
               placeholder="Пароль"
               type={eyes[0] ? 'text' : 'password'}
             />
@@ -104,11 +105,12 @@ export default function LoginPopup({ onClose }) {
             <Loader extraClass="loader-login" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Войти"
               size="large"
-              extraClass="form__button_single"
+              extraClass="button_single"
               disabled={!isValid}
             />
           )}
@@ -116,7 +118,7 @@ export default function LoginPopup({ onClose }) {
             <p className="form__text">У вас ещё нет аккаунта?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="small"
               onClick={handleRegistrationClick}

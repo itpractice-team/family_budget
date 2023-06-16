@@ -1,50 +1,48 @@
+import { useState } from 'react';
+import './BudgetFilter.scss';
 import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
 import TimeInterval from '../TimeInterval/TimeInterval';
-import Button from '../../ui/Button/Button';
+import Overlay from '../Overlay/Overlay';
 
-export default function BudgetFilter({
-  isFieldset,
-  selectedTimeInterval,
-  showSelect,
-  showCalendar,
-  handleSpendClick,
-  handleIncomeClick,
-  handleTimeIntervalChange,
-}) {
+export default function BudgetFilter({ selectedTimeInterval, handleTimeIntervalChange }) {
+  const [isTimeIntervalSelectOpen, setIsTimeIntervalSelectOpen] = useState(false);
+
+  const toggleTimeIntervalSelect = () => {
+    setIsTimeIntervalSelectOpen(!isTimeIntervalSelectOpen);
+  };
+
+  const closeTimeIntervalSelect = () => {
+    setIsTimeIntervalSelectOpen(false);
+  };
+
+  const showCalendar = () => {
+    // Отобразить модальное окно с календарем
+  };
+
   return (
-    <div className="budget__filtration">
-      <div className="budget__filtration-wrapper">
-        <div className={`budget__select ${isFieldset}`}>
-          <button className="budget__select-button" type="button" onClick={showSelect}>
+    <div className="budget-filter">
+      <div className="budget-filter__wrapper">
+        <div className="budget-filter__select">
+          <button
+            className={`budget-filter__select-button ${
+              isTimeIntervalSelectOpen ? 'budget-filter__select-button--open' : ''
+            }`}
+            type="button"
+            onClick={toggleTimeIntervalSelect}
+          >
             <TimeInterval selectedTimeInterval={selectedTimeInterval} />
           </button>
-          <TimeIntervalSelect
-            selectedTimeInterval={selectedTimeInterval}
-            onTimeIntervalChange={handleTimeIntervalChange}
-          />
-        </div>
 
-        <button type="button" className="budget__filtration-button" onClick={showCalendar}>
+          <Overlay isOpen={isTimeIntervalSelectOpen} onClose={closeTimeIntervalSelect}>
+            <TimeIntervalSelect
+              selectedTimeInterval={selectedTimeInterval}
+              onTimeIntervalChange={handleTimeIntervalChange}
+            />
+          </Overlay>
+        </div>
+        <button type="button" className="budget-filter__date-button" onClick={showCalendar}>
           По дате
         </button>
-      </div>
-      <div className="budget__button-wrapper">
-        <Button
-          variant="secondary"
-          type="icon-text"
-          text="Расход"
-          size="medium"
-          extraClass="button__budget"
-          onClick={handleSpendClick}
-        />
-        <Button
-          variant="secondary"
-          type="icon-text"
-          text="Доход"
-          size="medium"
-          extraClass="button__budget"
-          onClick={handleIncomeClick}
-        />
       </div>
     </div>
   );

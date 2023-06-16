@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
@@ -20,14 +20,14 @@ import Button from '../../ui/Button/Button';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
-  
+
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
   const handleEyeChange = (index, opened) => {
     const newEyesValues = [...eyes];
     newEyesValues[index] = opened;
     setEyes(newEyesValues);
-  }
+  };
 
   const isRegistration = useSelector((state) => state.registration.data);
   const isLoading = useSelector((store) => store.registration.loading);
@@ -262,7 +262,7 @@ export default function RegisterPopup({ onClose }) {
             <p className="form__text">У вас уже есть аккаунт?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Войти"
               size="small"
               onClick={handleLoginClick}
@@ -272,8 +272,9 @@ export default function RegisterPopup({ onClose }) {
             <Loader extraClass="loader-register" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="large"
               disabled={!isValid}

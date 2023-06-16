@@ -25,7 +25,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 2px solid #13164a;
+    border: 2px solid $heavyBlue;
     vertical-align: middle;
     cursor: pointer;
 
@@ -38,7 +38,7 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background-color: #13164a;
+      background-color: $heavyBlue;
       transition: all 0.2s ease-in-out;
     }
   }
@@ -48,13 +48,12 @@
   }
 
   &:disabled ~ .radio__circle {
-    border-color: #d2d5db;
-    background-color: #f4f4f4;
+    border-color: $midGrey;
+    background-color: $lightGrey;
     cursor: not-allowed;
 
-
     &:before {
-      background-color: #d2d5db;
+      background-color: $midGrey;
     }
   }
 }
@@ -66,8 +65,5 @@
 }
 
 .radio__text {
-  @include font-styles($noto-sans-font);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  @include text-medium-web;
 }

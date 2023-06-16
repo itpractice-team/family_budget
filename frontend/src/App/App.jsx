@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '../Pages/Home/Home';
 import Budget from '../Pages/Budget/Budget';
 import Statistic from '../Pages/Statistic/Statistic';
@@ -10,6 +10,11 @@ import Footer from '../Components/Footer/Footer';
 import ProtectedRoute from '../Components/ProtectedRoute/ProtectedRoute';
 
 function App() {
+  const location = useLocation();
+
+  const isProfilePage = location.pathname === '/profile';
+  const isHomePage = location.pathname === '/';
+
   return (
     <>
       <Header />
@@ -48,7 +53,7 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
+      {!isProfilePage && !isHomePage && <Footer />}
     </>
   );
 }

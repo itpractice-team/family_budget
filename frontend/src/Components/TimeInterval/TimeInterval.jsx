@@ -10,12 +10,12 @@ export default function TimeInterval({ selectedTimeInterval }) {
     const today = new Date();
 
     switch (selectedTimeInterval) {
-      case 'today': {
+      case 'Сегодня': {
         const formattedToday = formatter.format(today);
         return `Сегодня: ${formattedToday}`;
       }
 
-      case 'week': {
+      case 'Неделя': {
         const weekStart = new Date(today);
         weekStart.setDate(today.getDate() - 6); // 6 дней назад
         const formattedWeekStart = formatter.format(weekStart);
@@ -23,16 +23,16 @@ export default function TimeInterval({ selectedTimeInterval }) {
         return `На этой неделе: ${formattedWeekStart} - ${formattedWeekEnd}`;
       }
 
-      case 'month': {
+      case 'Месяц': {
         // месяц назад от текущей даты
-        const monthStart = new Date(today.getFullYear(), today.getMonth() - 1, 7);
-        const monthEnd = new Date(today.getFullYear(), today.getMonth(), 8);
-        const formattedMonthStart = formatter.format(monthStart);
-        const formattedMonthEnd = formatter.format(monthEnd);
-        return `За месяц: ${formattedMonthStart} - ${formattedMonthEnd}`;
+        const monthAgo = new Date();
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        const formattedMonthAgo = formatter.format(monthAgo);
+        const formattedToday = formatter.format(today);
+        return `За месяц: ${formattedMonthAgo} - ${formattedToday}`;
       }
 
-      case 'year': {
+      case 'Год': {
         // год назад от текущей даты
         const yearAgo = new Date(today);
         yearAgo.setFullYear(today.getFullYear() - 1);
@@ -41,7 +41,7 @@ export default function TimeInterval({ selectedTimeInterval }) {
         return `За год: ${formattedYearAgo} - ${formattedTodayForYear}`;
       }
 
-      case 'all':
+      case 'Вся история':
         return 'Вся история';
 
       default:
