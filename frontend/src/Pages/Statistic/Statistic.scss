@@ -13,6 +13,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 32px 24px;
+  align-items: center;
 }
 
 .statistic__overview {
@@ -32,26 +33,12 @@
 }
 
 .statistic__incoms {
-  background-color: green;
   max-width: 784px;
   width: 100%;
 }
 
 .statistic__spending {
-  background-color: yellow;
   max-width: 784px;
-  width: 100%;
-}
-
-.statistic__text {
-  @include text-large-web;
-  color: #1e1d24;
-  width: 100%;
-}
-
-.statistic__header {
-  @include text-large-web-bold;
-  color: #1e1d24;
   width: 100%;
 }
 
@@ -64,4 +51,10 @@
   background-color: #f4f4f4;
   border-radius: 16px;
   height: fit-content;
+}
+
+.statistic__text {
+  @include text-large-web;
+  color: #1e1d24;
+  width: 100%;
 }
