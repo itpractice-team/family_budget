@@ -24,9 +24,7 @@ export default function Main({ children }) {
     }
   }, [dispatch, isFetched]);
 
-  const closeInfoPopup = () => {
-    dispatch(toggleInfoPopup(false));
-  };
+  const closeInfoPopup = () => dispatch(toggleInfoPopup(false));
 
   const handleRegisterClick = () => {
     dispatch(toggleRegisterPopup(true));
