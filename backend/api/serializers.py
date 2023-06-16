@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.db import transaction
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import IntegrityError, transaction
 from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings
 from djoser.serializers import (
@@ -9,8 +10,8 @@ from djoser.serializers import (
 )
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
-# from rest_framework.exceptions import ValidationError
 from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField
 from budget.models import (
     Budget,
@@ -19,6 +20,7 @@ from budget.models import (
     Category,
     Finance,
     Icon,
+    IncomeExpenses,
 )
 from core.utils import (
     create_model_link_budget_data,
@@ -129,6 +131,14 @@ class DefaultBudgetDataSerializer(serializers.ModelSerializer):
 
     budget = serializers.HiddenField(default=CurrentBudgetDefault())
 
+    def save(self, **kwargs):
+        try:
+            isinstance = super().save(**kwargs)
+            isinstance.full_clean()
+            return isinstance
+        except (IntegrityError, DjangoValidationError) as exc:
+            raise ValidationError(str(exc))
+
 
 class BudgetFinanceSerializer(DefaultBudgetDataSerializer):
     """Сериализатор счетов для бюджета."""
@@ -147,17 +157,45 @@ class BudgetFinanceSerializer(DefaultBudgetDataSerializer):
     class Meta:
         model = BudgetFinance
         fields = ("id", "budget", "name", "image", "balance")
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=BudgetFinance.objects.all(),
+                fields=["budget", "id"],
+                message=_("The funding source for the budget must be unique"),
+            )
+        ]
 
 
 class BudgetUpdateFinanceSerializer(BudgetFinanceSerializer):
-    """Сериализатор счетов для бюджета."""
+    """Сериализатор для чтения счетов бюджета."""
 
     id = serializers.ReadOnlyField(source="finance.id")
 
 
-class BudgetCategorySerializer(serializers.ModelSerializer):
-    """Сериализатор тегов."""
+class BudgetCategorySerializer(DefaultBudgetDataSerializer):
+    """Сериализатор категорий расходов/доходов."""
+
+    icon = PrimaryKey404RelatedField(
+        queryset=Icon.objects.all(), source="image"
+    )
+    image_url = serializers.ImageField(
+        source="image.image",
+        use_url=True,
+        read_only=True,
+    )
+    category_type = serializers.IntegerField(default=IncomeExpenses.EXPENSES)
+    priority = serializers.ReadOnlyField()
 
     class Meta:
         model = BudgetCategory
-        fields = "__all__"
+        fields = (
+            "id",
+            "name",
+            "priority",
+            "budget",
+            "icon",
+            "image_url",
+            "category_type",
+            "color",
+            "description",
+        )

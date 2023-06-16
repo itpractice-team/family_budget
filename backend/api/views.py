@@ -26,14 +26,14 @@ User = get_user_model()
 
 
 class CategoryIconViewSet(ReadOnlyModelViewSet):
-    """ViewSet-класс для просмотра иконок категорий."""
+    """Иконки категорий."""
 
     queryset = Icon.objects.all()
     serializer_class = CategoryIconSerializer
 
 
 class FinanceHandBookViewSet(ReadOnlyModelViewSet):
-    """ViewSet-класс для просмотра справочник источника финансирований."""
+    """Справочник источников финансирований."""
 
     queryset = Finance.objects.all()
     serializer_class = FinanceHandBookSerializer
@@ -46,7 +46,7 @@ class BudgetFinanceViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-    """ViewSet-класс для модели источников финансирования бюджета."""
+    """Источники финансирования бюджета пользователя."""
 
     queryset = BudgetFinance.objects.all()
     serializer_class = BudgetFinanceSerializer
@@ -61,16 +61,11 @@ class BudgetFinanceViewSet(
 class BudgetCategoryViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-    """ViewSet-класс для модели категорий бюджета."""
+    """Категории расходов и доходов для бюджета пользователя."""
 
+    queryset = BudgetCategory.objects.all()
     serializer_class = BudgetCategorySerializer
-    budget_field = "user"
-    obj_field = "author"
-    obj_model = User
-
-    def get_queryset(self):
-        """Возвращает выборку данных по категория для бюджета."""
-        return BudgetCategory.objects.filter(budget=self.request.user.budgets)

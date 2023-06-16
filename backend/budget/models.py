@@ -276,6 +276,7 @@ class BudgetFinance(models.Model):
     class Meta:
         """Метаданные модели категорий финансирования бюджета."""
 
+        ordering = ["finance__priority", "finance__name"]
         constraints = [
             models.UniqueConstraint(
                 fields=["budget", "finance"],

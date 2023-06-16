@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 class CustomTokenCreateView(TokenCreateView):
-    """Кастомный класс создания токена аутентификации пользователя."""
+    """Создание токена аутентификации пользователя."""
 
     def _action(self, serializer):
         token = utils.login_user(self.request, serializer.user)
@@ -20,6 +20,6 @@ class CustomTokenCreateView(TokenCreateView):
 
 
 class CustomTokenDestroyView(TokenDestroyView):
-    """Кастомный класс удаления токена аутентификации пользователя."""
+    """Удаление токена аутентификации пользователя."""
 
     pass
