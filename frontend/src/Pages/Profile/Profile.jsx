@@ -75,6 +75,7 @@ export default function Profile() {
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -142,7 +143,7 @@ export default function Profile() {
             onClick={handleAvatarUploaderClick}
           />
         </div>
-        <form className="form form_profile" onSubmit={handleUpdateProfile}>
+        <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
