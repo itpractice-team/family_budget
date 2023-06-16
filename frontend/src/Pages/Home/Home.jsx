@@ -11,8 +11,9 @@ import { arrAdvantages, arrCardWorks, arrInitFQAHome } from '../../utils/consts'
 import CardQuestion from '../../Components/CardQuestion/CardQuestion';
 import Advantages from './Advantages/Advantages';
 import CardWork from './CardWork/CardWork';
+import main from '../../Images/main.svg';
 
-export default function Main({ children }) {
+export default function Main() {
   const dispatch = useDispatch();
 
   const isInfoPopupOpen = useSelector((state) => state.popup.isInfoPopupOpen);
@@ -32,7 +33,6 @@ export default function Main({ children }) {
 
   return (
     <section className="home-page">
-      {children}
       <div className="home-page__container-title">
         <h1 className="home-page__title">Контроль расходов «Семейный бюджет»</h1>
         <p className="home-page__description">
@@ -48,7 +48,7 @@ export default function Main({ children }) {
         />
       </div>
 
-      <div className="home-page__img" />
+      <img src={main} alt="" />
       <h3 className="home-page__subtitle">Преимущества</h3>
       <ul className="home-page__lists-advantages">
         {arrAdvantages.map((i) => {
@@ -98,7 +98,7 @@ export default function Main({ children }) {
           title="Пароль успешно изменен"
         />
       )}
-      <Footer extraClass="footer" />
+      <Footer extraClass="footer-absolute" />
     </section>
   );
 }

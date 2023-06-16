@@ -2,7 +2,11 @@
 
 .home-page {
   position: relative;
-  background: $clearWhite url('../../Images/profile-background.svg') no-repeat center bottom;
+  background: $clearWhite url('../../Images/home-background.svg') no-repeat center bottom;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 160px 160px 0 160px;
 
   &__container-title {
     display: flex;
@@ -10,7 +14,7 @@
     align-items: center;
     gap: 40px;
     max-width: 920px;
-    padding: 160px 0 60px;
+    padding-bottom: 60px;
     margin: 0 auto;
     text-align: center;
   }
@@ -22,6 +26,7 @@
 
   &__subtitle {
     @include h2-web-main;
+    margin-top: 80px;
     text-align: center;
   }
 
@@ -33,24 +38,25 @@
     @include h2-web;
   }
 
-  &__img {
-    background: $clearWhite url('../../Images/main.png') no-repeat center;
-    width: 100%;
-    height: 40vh;
-    background-size: contain;
-  }
+  // &__img {
+  //   background: $clearWhite url('../../Images/main.svg') no-repeat center;
+  //   width: 1740px;
+  //   height: 903px;
+  //   background-size: contain;
+  // }
 
   &__lists-advantages {
     display: flex;
     justify-content: center;
     gap: 200px;
-    padding: 80px 0;
+    padding: 60px 0 80px 0;
   }
 
   &__container-how-works {
     background: $blueishGrey;
-    display: block;
+    display: flex;
     padding: 60px 160px;
+    flex-direction: column;
   }
 
   &__lists-how-works {
@@ -69,6 +75,7 @@
     border-radius: 16px;
     max-width: 1056px;
     padding: 100px 0 100px 160px;
+    margin-bottom: 347px;
   }
 
   &__text-start {

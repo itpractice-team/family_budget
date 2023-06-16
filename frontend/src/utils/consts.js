@@ -153,7 +153,7 @@ export const arrAdvantages = [
     title: 'Категории',
     description:
       'Используй стандартные категории, такие как транспорт, продукты, здоровье и другие, или создавай свои',
-    icon: './Images/advanages-categ.svg',
+    icon: '../../Images/advanages-static.svg',
   },
   {
     id: '2',
