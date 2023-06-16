@@ -2,8 +2,76 @@
 
 .home-page {
   position: relative;
-  background: $clearWhite url('../../Images/home-background.svg') no-repeat center bottom;
-  display: flex;
-  flex-grow: 1;
-  padding: 160px 160px 0 160px;
+  background: $clearWhite url('../../Images/profile-background.svg') no-repeat center bottom;
+
+  &__container-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 920px;
+    padding: 160px 0 60px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    @include h1-web-main;
+    text-align: center;
+  }
+
+  &__subtitle {
+    @include h2-web-main;
+    text-align: center;
+  }
+
+  &__text-bold {
+    @include h1-web;
+  }
+
+  &__description {
+    @include h2-web;
+  }
+
+  &__img {
+    background: $clearWhite url('../../Images/main.png') no-repeat center;
+    width: 100%;
+    height: 40vh;
+    background-size: contain;
+  }
+
+  &__lists-advantages {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+    padding: 80px 0;
+  }
+
+  &__container-how-works {
+    background: $blueishGrey;
+    display: block;
+    padding: 60px 160px;
+  }
+
+  &__lists-how-works {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-top: 60px;
+  }
+
+  &__container-fqa {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    background: transparent;
+    border-radius: 16px;
+    max-width: 1056px;
+    padding: 100px 0 100px 160px;
+  }
+
+  &__text-start {
+    text-align: start;
+  }
 }

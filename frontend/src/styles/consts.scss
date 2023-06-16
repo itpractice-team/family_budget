@@ -24,6 +24,22 @@ $speedYellow: #fff27d;
   font-family: $font-family;
 }
 
+@mixin h1-web-main {
+  @include font-styles($ubuntu-font);
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 116px;
+  color: #13164a;
+}
+
+@mixin h2-web-main {
+  @include font-styles($ubuntu-font);
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 70px;
+  color: #13164a;
+}
+
 @mixin h1-web {
   @include font-styles($ubuntu-font);
   font-weight: 500;

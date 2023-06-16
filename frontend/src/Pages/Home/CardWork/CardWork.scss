@@ -1,0 +1,32 @@
+@import '../../../styles/consts.scss';
+
+.list-card {
+  display: flex;
+  gap: 123px;
+
+  &__img {
+    width: 644px;
+    background: gray;
+  }
+
+  &__text-block {
+    display: block;
+    max-width: 648px;
+  }
+
+  &__description {
+    @include text-medium-web;
+    text-align: start;
+  }
+
+  &__title {
+    @include h3-web;
+    margin: 20px 0 12px;
+  }
+
+  &__number {
+    @include h2-web-main;
+    display: flex;
+    align-items: center;
+  }
+}

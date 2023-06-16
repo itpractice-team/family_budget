@@ -1,0 +1,16 @@
+@import '../../../styles/consts.scss';
+
+.advantages {
+  max-width: 240px;
+
+  &__text-bold {
+    @include h3-web;
+    margin: 20px 0 12px;
+    text-align: center;
+  }
+
+  &__text {
+    @include text-medium-web;
+    text-align: center;
+  }
+}
