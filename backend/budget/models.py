@@ -141,7 +141,7 @@ class Finance(BaseDirectoryModel, IconMixin, SlugMixin, DefaultUseMixin):
 class BaseCategory(BaseDirectoryModel):
     """Базовая модель спровочника категорий."""
 
-    image = models.ForeignKey(
+    icon = models.ForeignKey(
         Icon,
         on_delete=models.SET_NULL,
         null=True,

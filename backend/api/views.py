@@ -11,9 +11,17 @@ from api.serializers import (
     BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
+    TransactionReadSerializer,
+    TransactionWriteSerializer,
     TransferFinanceSerializer,
 )
-from budget.models import BudgetCategory, BudgetFinance, Finance, Icon
+from budget.models import (
+    BudgetCategory,
+    BudgetFinance,
+    Finance,
+    FinanceTransaction,
+    Icon,
+)
 
 User = get_user_model()
 
@@ -101,3 +109,21 @@ class BudgetCategoryViewSet(
 
     queryset = BudgetCategory.objects.all()
     serializer_class = BudgetCategorySerializer
+
+
+class BudgetTransactionViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgeBaseViewSet,
+):
+    """Транзакции бюджета пользователя."""
+
+    queryset = FinanceTransaction.objects.all()
+    serializer_class = BudgetCategorySerializer
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return TransactionReadSerializer
+        return TransactionWriteSerializer

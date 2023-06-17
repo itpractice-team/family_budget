@@ -19,6 +19,7 @@ from budget.models import (
     BudgetFinance,
     Category,
     Finance,
+    FinanceTransaction,
     Icon,
     IncomeExpenses,
 )
@@ -207,10 +208,10 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
     """Сериализатор категорий расходов/доходов."""
 
     icon = PrimaryKey404RelatedField(
-        queryset=Icon.objects.all(), source="image"
+        queryset=Icon.objects.all(), source="icon"
     )
     image_url = serializers.ImageField(
-        source="image.image",
+        source="icon.image",
         use_url=True,
         read_only=True,
     )
@@ -230,3 +231,29 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
             "color",
             "description",
         )
+
+
+class TransactionReadSerializer(DefaultBudgetDataSerializer):
+    """Сериализатор чтения транзакций."""
+
+    category = BudgetCategorySerializer()
+    finance = BudgetFinanceSerializer()
+
+    class Meta:
+        model = FinanceTransaction
+        fields = "__all__"
+
+
+class TransactionWriteSerializer(DefaultBudgetDataSerializer):
+    """Сериализатор транзакций."""
+
+    category = PrimaryKey404RelatedField(
+        queryset=BudgetCategory.objects.all(),
+    )
+    finance = PrimaryKey404RelatedField(
+        queryset=BudgetFinance.objects.all(),
+    )
+
+    class Meta:
+        model = FinanceTransaction
+        fields = "__all__"
