@@ -196,10 +196,10 @@ class TransferFinanceSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 _("There are not enough funds on the debit account.")
             )
-        data["obj_from_finance"] = obj_from_finance
+        data["obj_from_finance"] = obj_from_finance.get()
         data["obj_to_finance"] = budget.finances.filter(
             finance=data["to_finance"]
-        )
+        ).get()
         return data
 
 
