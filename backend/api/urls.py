@@ -7,6 +7,7 @@ from api.views import (
     BudgetTransactionViewSet,
     CategoryIconViewSet,
     FinanceHandBookViewSet,
+    ReapeatSpendViewSet,
     TransferFinanceViewSet,
 )
 
@@ -29,6 +30,10 @@ router_v1.register("finance", BudgetFinanceViewSet, basename="budget_finance")
 router_v1.register(
     "transaction", BudgetTransactionViewSet, basename="budget_transactions"
 )
+router_v1.register(
+    "reapeatspend", ReapeatSpendViewSet, basename="budget_reapeat_spend"
+)
+
 urlpatterns = [
     path("", include(router_v1.urls)),
     path("users/", include("users.urls")),

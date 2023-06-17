@@ -14,7 +14,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField
-from budget.models import (
+from budget.models import (  # MoneyBox,
     Budget,
     BudgetCategory,
     BudgetFinance,
@@ -23,6 +23,7 @@ from budget.models import (
     FinanceTransaction,
     Icon,
     IncomeExpenses,
+    ReapeatSpend,
 )
 from core.utils import (
     create_model_link_budget_data,
@@ -260,4 +261,28 @@ class TransactionWriteSerializer(BaseTransactionSerializer):
     )
     finance = PrimaryKey404RelatedField(
         queryset=BudgetFinance.objects.all(),
+    )
+
+
+class BaseReapeatSpendSerializer(DefaultBudgetDataSerializer):
+    """Базовый сериализатор повторяющихся платежей."""
+
+    amount = serializers.IntegerField()
+
+    class Meta:
+        model = ReapeatSpend
+        fields = "__all__"
+
+
+class ReapeatSpendReadSerializer(BaseReapeatSpendSerializer):
+    """Cериализатор для чтения повторяющихся платежей."""
+
+    category = BudgetCategorySerializer()
+
+
+class ReapeatSpendWriteSerializer(BaseReapeatSpendSerializer):
+    """Cериализатор для записи повторяющихся платежей."""
+
+    category = PrimaryKey404RelatedField(
+        queryset=BudgetCategory.objects.all(),
     )

@@ -11,16 +11,19 @@ from api.serializers import (
     BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
+    ReapeatSpendReadSerializer,
+    ReapeatSpendWriteSerializer,
     TransactionReadSerializer,
     TransactionWriteSerializer,
     TransferFinanceSerializer,
 )
-from budget.models import (
+from budget.models import (  # MoneyBox,
     BudgetCategory,
     BudgetFinance,
     Finance,
     FinanceTransaction,
     Icon,
+    ReapeatSpend,
 )
 
 User = get_user_model()
@@ -40,7 +43,7 @@ class FinanceHandBookViewSet(ReadOnlyModelViewSet):
     serializer_class = FinanceHandBookSerializer
 
 
-class BudgeBaseViewSet(viewsets.GenericViewSet):
+class BudgetBaseViewSet(viewsets.GenericViewSet):
     """Базовый Viewset бюджета пользователя."""
 
     def get_budget(self):
@@ -55,7 +58,7 @@ class BudgetFinanceViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgeBaseViewSet,
+    BudgetBaseViewSet,
 ):
     """Источники финансирования бюджета пользователя."""
 
@@ -74,7 +77,7 @@ class BudgetFinanceViewSet(
         return get_object_or_404(queryset.filter(finance=pk))
 
 
-class TransferFinanceViewSet(BudgeBaseViewSet):
+class TransferFinanceViewSet(BudgetBaseViewSet):
     """Источники финансирования бюджета пользователя."""
 
     queryset = BudgetFinance.objects.all()
@@ -103,7 +106,7 @@ class BudgetCategoryViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgeBaseViewSet,
+    BudgetBaseViewSet,
 ):
     """Категории расходов и доходов для бюджета пользователя."""
 
@@ -116,14 +119,30 @@ class BudgetTransactionViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgeBaseViewSet,
+    BudgetBaseViewSet,
 ):
     """Транзакции бюджета пользователя."""
 
     queryset = FinanceTransaction.objects.all()
-    serializer_class = BudgetCategorySerializer
 
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
             return TransactionReadSerializer
         return TransactionWriteSerializer
+
+
+class ReapeatSpendViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Повтороряющиеся расходы."""
+
+    queryset = ReapeatSpend.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return ReapeatSpendReadSerializer
+        return ReapeatSpendWriteSerializer
