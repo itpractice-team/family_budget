@@ -2,31 +2,35 @@
 
 .list-card {
   display: flex;
-  gap: 123px;
+  gap: 102px;
 
   &__img {
-    width: 644px;
-    background: $blueishGrey;
+    width: 660px;
+    height: 276px;
   }
 
   &__text-block {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 49.5px 0;
     max-width: 648px;
   }
 
   &__description {
     @include text-medium-web;
+    max-width: 590px;
     text-align: start;
   }
 
   &__title {
     @include h3-web;
-    margin: 20px 0 12px;
   }
 
   &__number {
-    @include h2-web-main;
+    @include h2-main;
     display: flex;
+    padding: 0 21px 0 13px;
     align-items: center;
   }
 }

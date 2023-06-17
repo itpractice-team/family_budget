@@ -1,11 +1,11 @@
-import imgCategories from '../Images/img-categories.svg';
-import imgSetting from '../Images/img-setting.svg';
-import imgStatic from '../Images/img-static.svg';
+import imgProfile from '../Images/image-profile.svg';
+import imgBudget from '../Images/image-budget.svg';
+import imgStatistics from '../Images/image-statistics.svg';
 
-import statics from '../Images/advanages-static.svg';
-import categories from '../Images/advanages-categories.svg';
-import dollar from '../Images/dollar.svg';
-import envelope from '../Images/envelope-grey.svg';
+import categories from '../Images/categories.svg';
+import statistics from '../Images/statistics.svg';
+import money from '../Images/money.svg';
+import moneyenvelope from '../Images/moneyenvelope.svg';
 
 export const RegExLogin = '[da-zA-Zа-яА-ЯЁё/_.+-]+';
 export const RegExEmail = '[da-zA-Z_.@-]+';
@@ -169,20 +169,20 @@ export const arrAdvantages = [
     title: 'Статистика',
     description:
       'Отслеживай статистику и определяй, какие категории занимают большую часть в твоем бюджете',
-    icon: statics,
+    icon: statistics,
   },
   {
     id: '3',
     title: 'Повторяющиеся расходы',
     description:
       'Настрой повторние расходов и приложение будет автоматически добавлять расходы и доходы',
-    icon: dollar,
+    icon: money,
   },
   {
     id: '4',
     title: 'Конверт накоплений',
     description: 'Создавай и достигай цели накоплений с помощью InCoin',
-    icon: envelope,
+    icon: moneyenvelope,
   },
 ];
 
@@ -192,7 +192,7 @@ export const arrCardWorks = [
     title: 'Создай аккаунт',
     description:
       'Процесс регистрации у нас максимально простой -  всего несколько полей, чтобы создать вашу учетную запись. Вы сразу сможете начать использовать все функции приложения. Одно из главных преимуществ регистрации заключается в том, что ваши финансовые данные становятся доступными с любого устройства, где бы вы ни находились.',
-    img: imgSetting,
+    img: imgProfile,
     number: '01',
   },
   {
@@ -200,7 +200,7 @@ export const arrCardWorks = [
     title: 'Заполняй расходы и доходы по категориям',
     description:
       'Система категоризации расходов помогает вам классифицировать траты по различным областям, таким как питание, транспорт, развлечения, медицина и многие другие. Благодаря этому, вы сможете отследить, на что именно уходят ваши деньги и какие категории занимают большую долю в вашем бюджете.',
-    img: imgStatic,
+    img: imgBudget,
     number: '02',
   },
   {
@@ -208,7 +208,7 @@ export const arrCardWorks = [
     title: 'Следи за динамикой',
     description:
       'Кроме того, анализ расходов по категориям помогает вам установить финансовые цели и следить за их достижением. Например, если вашей целью является сокращение расходов на развлечения, вы сможете отслеживать, насколько успешно вы справляетесь с этой задачей и насколько близко вы подходите к достижению желаемого уровня трат.',
-    img: imgCategories,
+    img: imgStatistics,
     number: '03',
   },
 ];

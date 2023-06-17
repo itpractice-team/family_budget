@@ -31,7 +31,7 @@
 
 .form__input-label {
   @include text-small-web;
-  color: #1e1d24;
+  color: $black;
   width: 100%;
   display: block;
   position: relative;
@@ -42,7 +42,7 @@
   display: block;
   width: 1px;
   height: 24px;
-  background-color: #bdbdbd;
+  background-color: $midGrey;
   position: absolute;
   top: 46px;
   right: 46px;
@@ -53,9 +53,9 @@
   padding: 16px 20px;
   margin: 8px 8px 0 0;
   width: 100%;
-  border: 1px solid #d2d5db;
+  border: 1px solid $midGrey;
   border-radius: 100px;
-  color: #1e1d24;
+  color: $black;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {
@@ -83,7 +83,7 @@
 }
 
 .form__input.error {
-  border-color: #f05a2b;
+  border-color: $alertRed;
 }
 
 .form__input_password-new {
@@ -116,7 +116,7 @@
 
 .form__input-block .react-tooltip {
   @include text-small-web;
-  background-color: #303360;
+  background-color: $heavyBlue;
   padding: 16px 16px;
   max-width: 340px;
   border-radius: 8px;
@@ -192,7 +192,7 @@
   display: flex;
   align-items: center;
   background: url(../Images/alert-triangle.svg) left 8px top 50% / 20px no-repeat;
-  color: #f05a2b;
+  color: $alertRed;
   opacity: 0;
   left: 9px;
   text-align: left;
@@ -236,9 +236,9 @@
   content: '';
   width: 20px;
   height: 20px;
-  background-color: white;
+  background-color: $clearWhite;
   display: inline-block;
-  border: 2px solid #303360;
+  border: 2px solid $heavyBlue;
   border-radius: 6px;
 }
 

@@ -36,7 +36,7 @@ export default function Main() {
       <div className="home-page__container-title">
         <h1 className="home-page__title">Контроль расходов «Семейный бюджет»</h1>
         <p className="home-page__description">
-          Отслеживай свои расходы и будь в курсе своего финансового состояния
+          Отслеживай свои расходы и будь в&nbsp;курсе своего финансового состояния
         </p>
 
         <Button
@@ -48,7 +48,7 @@ export default function Main() {
         />
       </div>
 
-      <img src={main} alt="" />
+      <img className="home-page__image" src={main} alt="Скрин приложения" />
       <h3 id="advantages" className="home-page__subtitle">
         Преимущества
       </h3>
@@ -60,7 +60,7 @@ export default function Main() {
         })}
       </ul>
       <div id="how-works" className="home-page__container-how-works">
-        <h3 className="home-page__subtitle">Как это работает ?</h3>
+        <h3 className="home-page__subtitle">Как это работает?</h3>
         <ul className="home-page__lists-how-works">
           {arrCardWorks.map((i) => {
             return (
@@ -76,20 +76,19 @@ export default function Main() {
         </ul>
       </div>
       <div className="home-page__container-fqa">
-        <h3 className="home-page__text-bold home-page__text-start">Часто задаваемые вопросы</h3>
-        <ul>
+        <h3 className="home-page__text-bold">Часто задаваемые вопросы</h3>
+        <ul className="home-page__fqa-list">
           {arrInitFQAHome.map((q) => {
             return <CardQuestion question={q.question} answer={q.answer} key={q.id} />;
           })}
         </ul>
-        <h3 className="home-page__text-bold home-page__text-start">
-          Готовы начать контролировать бюджет?
-        </h3>
+        <h3 className="home-page__text-bold">Готовы начать контролировать бюджет?</h3>
         <Button
           variant="primary"
           content="text"
           text="Начать"
           size="large"
+          extraClass="home-page__button"
           onClick={handleRegisterClick}
         />
       </div>

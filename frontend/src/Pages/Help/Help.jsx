@@ -2,7 +2,7 @@ import React from 'react';
 import CardQuestion from '../../Components/CardQuestion/CardQuestion';
 import './Help.scss';
 import { arrInitFQA } from '../../utils/consts';
-import question from '../../Images/icons/question.svg';
+import question from '../../Images/question.svg';
 
 export default function Help() {
   return (
