@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -31,11 +32,14 @@ class FinanceHandBookViewSet(ReadOnlyModelViewSet):
     serializer_class = FinanceHandBookSerializer
 
 
-class BudgeBaseiewSet(viewsets.GenericViewSet):
+class BudgeBaseViewSet(viewsets.GenericViewSet):
     """Базовый Viewset бюджета пользователя."""
 
+    def get_budget(self):
+        return self.request.user.budgets.first()
+
     def get_queryset(self):
-        return self.queryset.filter(budget=self.request.user.budgets.first())
+        return self.queryset.filter(budget=self.get_budget())
 
 
 class BudgetFinanceViewSet(
@@ -43,29 +47,51 @@ class BudgetFinanceViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgeBaseiewSet,
+    BudgeBaseViewSet,
 ):
     """Источники финансирования бюджета пользователя."""
 
     queryset = BudgetFinance.objects.all()
     serializer_class = BudgetFinanceSerializer
-    lookup_field = "finance_id"
 
     def get_serializer_class(self):
         if self.action in ("update", "partial_update"):
             return BudgetUpdateFinanceSerializer
         return BudgetFinanceSerializer
 
+    def get_object(self):
+        """Возвращает объект по finance_id."""
+        queryset = self.get_queryset()
+        pk = self.request.parser_context["kwargs"]["pk"]
+        return get_object_or_404(queryset.filter(finance=pk))
+
+
+class TransferFinanceViewSet(BudgeBaseViewSet):
+    """Источники финансирования бюджета пользователя."""
+
+    queryset = BudgetFinance.objects.all()
+    serializer_class = TransferFinanceSerializer
+
     @action(methods=["post"], detail=False)
     def transfer(self, request, *args, **kwargs):
         """Перевод баланса между счетами."""
-        serializer = TransferFinanceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.validate["user_ids"]
-            # for user_id in user_ids:
-            #     target_user = User.objects.get(pk=user_id)
-            #     Follow.objects.create(user=user, target=target_user)
+        serializer = TransferFinanceSerializer(
+            data=request.data, context={"budget": self.get_budget()}
+        )
+        if serializer.is_valid(raise_exception=True):
+            amount = serializer.validated_data["amount"]
+            debet_obj = self.queryset.get(
+                finance=serializer.validated_data["from_finance"]
+            )
+            debet_obj.balance -= amount
+            debet_obj.save()
+            credit_obj = self.queryset.get(
+                finance=serializer.validated_data["to_finance"]
+            )
+            credit_obj.balance += amount
+            credit_obj.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class BudgetCategoryViewSet(
@@ -73,7 +99,7 @@ class BudgetCategoryViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    BudgeBaseiewSet,
+    BudgeBaseViewSet,
 ):
     """Категории расходов и доходов для бюджета пользователя."""
 

@@ -6,6 +6,7 @@ from api.views import (
     BudgetFinanceViewSet,
     CategoryIconViewSet,
     FinanceHandBookViewSet,
+    TransferFinanceViewSet,
 )
 
 app_name = "api"
@@ -21,6 +22,10 @@ router_v1.register(
     "finance/handbook", FinanceHandBookViewSet, basename="finance_handbook"
 )
 router_v1.register("finance", BudgetFinanceViewSet, basename="budget_finance")
+router_v1.register(
+    "finance/main", TransferFinanceViewSet, basename="transfers_finance"
+)
+
 # router_v1.register("moneybox", MoneyBoxViewSet, basename="moneyboxs")
 # router_v1.register("incomes", IncomeViewSet, basename="incomes")
 # router_v1.register("accounts", AccountViewSet, basename="accounts")
