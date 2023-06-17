@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import (
+    MaxValueValidator,
     MinLengthValidator,
     MinValueValidator,
     validate_slug,
@@ -306,6 +307,12 @@ class BaseFinance(models.Model):
         _("created"),
         default=timezone.now,
         db_index=True,
+        validators=[
+            MaxValueValidator(
+                timezone.now,
+                message=_("Creation date must not exceed the current date!"),
+            )
+        ],
     )
     amount = models.DecimalField(
         verbose_name=_("amount"),

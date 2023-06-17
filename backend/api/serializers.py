@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import IntegrityError, transaction
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from djoser.conf import settings
 from djoser.serializers import (
@@ -176,8 +177,8 @@ class BudgetUpdateFinanceSerializer(BudgetFinanceSerializer):
 class TransferFinanceSerializer(serializers.Serializer):
     """Трансфер баланса между счетами."""
 
-    from_finance = PrimaryKey404RelatedField(queryset=Finance.objects.all())
-    to_finance = PrimaryKey404RelatedField(queryset=Finance.objects.all())
+    from_finance = serializers.IntegerField()
+    to_finance = serializers.IntegerField()
     amount = serializers.IntegerField()
 
     def validate(self, data):
@@ -191,16 +192,17 @@ class TransferFinanceSerializer(serializers.Serializer):
                 _("The debit account must not match the credit account.")
             )
         budget = self.context["budget"]
-        obj_from_finance = budget.finances.filter(finance=data["from_finance"])
-        debet_balance = obj_from_finance.values_list("balance", flat=True)[0]
-        if debet_balance < data["amount"]:
+        obj_from_finance = get_object_or_404(
+            budget.finances, finance=data["from_finance"]
+        )
+        if obj_from_finance.balance < data["amount"]:
             raise serializers.ValidationError(
                 _("There are not enough funds on the debit account.")
             )
-        data["obj_from_finance"] = obj_from_finance.get()
-        data["obj_to_finance"] = budget.finances.filter(
-            finance=data["to_finance"]
-        ).get()
+        data["obj_from_finance"] = obj_from_finance
+        data["obj_to_finance"] = get_object_or_404(
+            budget.finances, finance=data["to_finance"]
+        )
         return data
 
 
@@ -208,7 +210,7 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
     """Сериализатор категорий расходов/доходов."""
 
     icon = PrimaryKey404RelatedField(
-        queryset=Icon.objects.all(), source="icon"
+        queryset=Icon.objects.all(),
     )
     image_url = serializers.ImageField(
         source="icon.image",
@@ -233,18 +235,24 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
         )
 
 
-class TransactionReadSerializer(DefaultBudgetDataSerializer):
-    """Сериализатор чтения транзакций."""
+class BaseTransactionSerializer(DefaultBudgetDataSerializer):
+    """Базовый сериализатор транзакций."""
 
-    category = BudgetCategorySerializer()
-    finance = BudgetFinanceSerializer()
+    amount = serializers.IntegerField()
 
     class Meta:
         model = FinanceTransaction
         fields = "__all__"
 
 
-class TransactionWriteSerializer(DefaultBudgetDataSerializer):
+class TransactionReadSerializer(BaseTransactionSerializer):
+    """Сериализатор чтения транзакций."""
+
+    category = BudgetCategorySerializer()
+    finance = BudgetFinanceSerializer()
+
+
+class TransactionWriteSerializer(BaseTransactionSerializer):
     """Сериализатор транзакций."""
 
     category = PrimaryKey404RelatedField(
@@ -253,7 +261,3 @@ class TransactionWriteSerializer(DefaultBudgetDataSerializer):
     finance = PrimaryKey404RelatedField(
         queryset=BudgetFinance.objects.all(),
     )
-
-    class Meta:
-        model = FinanceTransaction
-        fields = "__all__"

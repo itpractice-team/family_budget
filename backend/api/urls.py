@@ -22,10 +22,10 @@ router_v1.register(
 router_v1.register(
     "finance/handbook", FinanceHandBookViewSet, basename="finance_handbook"
 )
-router_v1.register("finance", BudgetFinanceViewSet, basename="budget_finance")
 router_v1.register(
-    "finance/main", TransferFinanceViewSet, basename="transfers_finance"
+    "finance", TransferFinanceViewSet, basename="transfers_finance"
 )
+router_v1.register("finance", BudgetFinanceViewSet, basename="budget_finance")
 router_v1.register(
     "transaction", BudgetTransactionViewSet, basename="budget_transactions"
 )
