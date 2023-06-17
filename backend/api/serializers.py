@@ -293,6 +293,7 @@ class ReapeatSpendShortInfoSerializer(BaseReapeatSpendSerializer):
     """Cериализатор для чтения повторяющихся платежей."""
 
     class Meta:
+        model = ReapeatSpend
         fields = ["id", "created", "name", "amount"]
 
 
@@ -311,6 +312,7 @@ class MoneyBoxShortInfoSerializer(MoneyBoxSerializer):
     """Cериализатор краткой информации по копилке."""
 
     class Meta:
+        model = MoneyBox
         fields = ["id", "created", "name", "amount", "accumulated"]
 
 
@@ -334,3 +336,4 @@ class TotalBudgetInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Budget
+        fields = "__all__"
