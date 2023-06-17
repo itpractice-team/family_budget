@@ -4,6 +4,7 @@ from rest_framework import routers
 from api.views import (
     BudgetCategoryViewSet,
     BudgetFinanceViewSet,
+    BudgetTransactionViewSet,
     CategoryIconViewSet,
     FinanceHandBookViewSet,
     TransferFinanceViewSet,
@@ -25,16 +26,9 @@ router_v1.register("finance", BudgetFinanceViewSet, basename="budget_finance")
 router_v1.register(
     "finance/main", TransferFinanceViewSet, basename="transfers_finance"
 )
-
-# router_v1.register("moneybox", MoneyBoxViewSet, basename="moneyboxs")
-# router_v1.register("incomes", IncomeViewSet, basename="incomes")
-# router_v1.register("accounts", AccountViewSet, basename="accounts")
-# router_v1.register(
-#     "account_icons", AccountIconViewSet, basename="account_icons"
-# )
-# router_v1.register("categories", CategoryViewSet, basename="categories")
-# router_v1.register("spends", SpendViewSet, basename="spends")
-
+router_v1.register(
+    "transaction", BudgetTransactionViewSet, basename="budget_transactions"
+)
 urlpatterns = [
     path("", include(router_v1.urls)),
     path("users/", include("users.urls")),
