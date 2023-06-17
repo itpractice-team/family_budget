@@ -189,15 +189,17 @@ class TransferFinanceSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 _("The debit account must not match the credit account.")
             )
-        debet_balance = (
-            self.context["budget"]
-            .finances.values_list("balance", flat=True)
-            .filter(finance=data["from_finance"])[0]
-        )
+        budget = self.context["budget"]
+        obj_from_finance = budget.finances.filter(finance=data["from_finance"])
+        debet_balance = obj_from_finance.values_list("balance", flat=True)[0]
         if debet_balance < data["amount"]:
             raise serializers.ValidationError(
                 _("There are not enough funds on the debit account.")
             )
+        data["obj_from_finance"] = obj_from_finance
+        data["obj_to_finance"] = budget.finances.filter(
+            finance=data["to_finance"]
+        )
         return data
 
 

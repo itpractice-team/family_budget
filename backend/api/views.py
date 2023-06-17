@@ -80,14 +80,10 @@ class TransferFinanceViewSet(BudgeBaseViewSet):
         )
         if serializer.is_valid(raise_exception=True):
             amount = serializer.validated_data["amount"]
-            debet_obj = self.queryset.get(
-                finance=serializer.validated_data["from_finance"]
-            )
+            debet_obj = serializer.validated_data["obj_from_finance"]
             debet_obj.balance -= amount
             debet_obj.save()
-            credit_obj = self.queryset.get(
-                finance=serializer.validated_data["to_finance"]
-            )
+            credit_obj = serializer.validated_data["obj_to_finance"]
             credit_obj.balance += amount
             credit_obj.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
