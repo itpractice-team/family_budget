@@ -320,8 +320,8 @@ class TotalBudgetInfoSerializer(serializers.ModelSerializer):
     balance = serializers.IntegerField()
     income = serializers.IntegerField()
     сonsumption = serializers.IntegerField()
-    finances = BudgetFinanceSerializer()
-    categories = BudgetCategorySerializer()
+    finances = BudgetFinanceSerializer(many=True)
+    categories = BudgetCategorySerializer(many=True)
     transactions = TransactionReadSerializer(
         source="budget_financetransaction", many=True
     )
