@@ -494,6 +494,15 @@ class MoneyBox(BaseFinance):
     )
 
     class Meta(BaseFinance.Meta):
+        constraints = [
+            models.CheckConstraint(
+                check=(models.Q(amount__gte=models.F("accumulated"))),
+                name="check_amount_less_accumulated",
+                violation_error_message=_(
+                    "The accumulated amount " "cannot be more than the total"
+                ),
+            ),
+        ]
         verbose_name = _("Moneybox")
         verbose_name_plural = _("Moneyboxes")
 

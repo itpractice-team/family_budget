@@ -11,18 +11,22 @@ from api.serializers import (
     BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
+    MoneyBoxSerializer,
     ReapeatSpendReadSerializer,
     ReapeatSpendWriteSerializer,
+    TotalBudgetInfoSerializer,
     TransactionReadSerializer,
     TransactionWriteSerializer,
     TransferFinanceSerializer,
 )
-from budget.models import (  # MoneyBox,
+from budget.models import (
+    Budget,
     BudgetCategory,
     BudgetFinance,
     Finance,
     FinanceTransaction,
     Icon,
+    MoneyBox,
     ReapeatSpend,
 )
 
@@ -146,3 +150,23 @@ class ReapeatSpendViewSet(
         if self.action in ("list", "retrieve"):
             return ReapeatSpendReadSerializer
         return ReapeatSpendWriteSerializer
+
+
+class MoneyBoxViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Конверты на накопления."""
+
+    queryset = MoneyBox.objects.all()
+    serializer_class = MoneyBoxSerializer
+
+
+class TotalBudgetInfoViewSet(mixins.RetrieveModelMixin, BudgetBaseViewSet):
+    """Детальная информаци по бюджету."""
+
+    queryset = Budget.objects.all()
+    serializer_class = TotalBudgetInfoSerializer

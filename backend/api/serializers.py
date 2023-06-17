@@ -14,7 +14,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField
-from budget.models import (  # MoneyBox,
+from budget.models import (
     Budget,
     BudgetCategory,
     BudgetFinance,
@@ -23,6 +23,7 @@ from budget.models import (  # MoneyBox,
     FinanceTransaction,
     Icon,
     IncomeExpenses,
+    MoneyBox,
     ReapeatSpend,
 )
 from core.utils import (
@@ -286,3 +287,50 @@ class ReapeatSpendWriteSerializer(BaseReapeatSpendSerializer):
     category = PrimaryKey404RelatedField(
         queryset=BudgetCategory.objects.all(),
     )
+
+
+class ReapeatSpendShortInfoSerializer(BaseReapeatSpendSerializer):
+    """Cериализатор для чтения повторяющихся платежей."""
+
+    class Meta:
+        fields = ["id", "created", "name", "amount"]
+
+
+class MoneyBoxSerializer(DefaultBudgetDataSerializer):
+    """Cериализатор копилки."""
+
+    amount = serializers.IntegerField()
+    accumulated = serializers.IntegerField()
+
+    class Meta:
+        model = MoneyBox
+        fields = "__all__"
+
+
+class MoneyBoxShortInfoSerializer(MoneyBoxSerializer):
+    """Cериализатор краткой информации по копилке."""
+
+    class Meta:
+        fields = ["id", "created", "name", "amount", "accumulated"]
+
+
+class TotalBudgetInfoSerializer(serializers.ModelSerializer):
+    """Детальная информация по бюджету на главной странице."""
+
+    balance = serializers.IntegerField()
+    income = serializers.IntegerField()
+    сonsumption = serializers.IntegerField()
+    finances = BudgetFinanceSerializer()
+    categories = BudgetCategorySerializer()
+    transactions = TransactionReadSerializer(
+        source="budget_financetransaction", many=True
+    )
+    reapeatspends = ReapeatSpendShortInfoSerializer(
+        source="budget_reapeatspend", many=True
+    )
+    moneyboxes = MoneyBoxShortInfoSerializer(
+        source="budget_moneybox", many=True
+    )
+
+    class Meta:
+        model = Budget
