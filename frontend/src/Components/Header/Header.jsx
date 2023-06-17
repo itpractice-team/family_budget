@@ -49,6 +49,18 @@ export default function Header() {
     setIsTooltipOpen(!isTooltipOpen);
   };
 
+  const handleScrollToAdvantages = (event) => {
+    event.preventDefault();
+    const advantagesSection = document.getElementById('advantages');
+    advantagesSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToHowWorks = (event) => {
+    event.preventDefault();
+    const howWorksSection = document.getElementById('how-works');
+    howWorksSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <header className={`header ${isLogin ? 'header-login' : ''}`}>
       {!isLogin ? (
@@ -56,8 +68,17 @@ export default function Header() {
           <Logo src={logo} />
           <div className="header__content">
             <nav className="header__menu">
-              <Button variant="fiat" content="text" text="Преимущества" size="medium" />
-              <Button variant="fiat" content="text" text="Как это работает?" size="medium" />
+              <a
+                href="#advantages"
+                className="header__menu-link"
+                onClick={handleScrollToAdvantages}
+              >
+                Преимущества
+              </a>
+
+              <a href="#how-works" className="header__menu-link" onClick={handleScrollToHowWorks}>
+                Как это работает?
+              </a>
             </nav>
             <div className="header__buttons">
               <Button
