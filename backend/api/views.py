@@ -1,16 +1,7 @@
 from django.contrib.auth import get_user_model
-
-# from django.shortcuts import get_object_or_404
-# from drf_spectacular.utils import (
-#     PolymorphicProxySerializer,
-#     extend_schema,
-#     extend_schema_view,
-# )
-from rest_framework import mixins, viewsets
-
-# , status, viewsets
-# from rest_framework.decorators import action
-# from rest_framework.response import Response
+from rest_framework import mixins, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from api.serializers import (
@@ -19,6 +10,7 @@ from api.serializers import (
     BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
+    TransferFinanceSerializer,
 )
 from budget.models import BudgetCategory, BudgetFinance, Finance, Icon
 
@@ -63,6 +55,17 @@ class BudgetFinanceViewSet(
         if self.action in ("update", "partial_update"):
             return BudgetUpdateFinanceSerializer
         return BudgetFinanceSerializer
+
+    @action(methods=["post"], detail=False)
+    def transfer(self, request, *args, **kwargs):
+        """Перевод баланса между счетами."""
+        serializer = TransferFinanceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validate["user_ids"]
+            # for user_id in user_ids:
+            #     target_user = User.objects.get(pk=user_id)
+            #     Follow.objects.create(user=user, target=target_user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class BudgetCategoryViewSet(

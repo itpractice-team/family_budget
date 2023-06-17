@@ -166,6 +166,37 @@ class BudgetFinanceSerializer(DefaultBudgetDataSerializer):
         ]
 
 
+class TransferFinanceSerializer(serializers.Serializer):
+    """Трансфер баланса между счетами."""
+
+    from_finance = PrimaryKey404RelatedField(
+        queryset=Finance.objects.all(),
+    )
+    to_finance = PrimaryKey404RelatedField(
+        queryset=Finance.objects.all(),
+    )
+    balance = serializers.IntegerField()
+
+    class Meta:
+        fields = ("from_finance", "to_finance", "balance")
+
+    def validate(self, data):
+        """Валидация трансфера счетов."""
+        if data["balance"] < 0:
+            raise serializers.ValidationError(
+                _("The balance for the transfer must be greater than zero!")
+            )
+        if data["from_finance"] == data["to_finance"]:
+            raise serializers.ValidationError(
+                _("The debit account must not match the credit account.")
+            )
+        if data["from_finance__balance"] < data["balance"]:
+            raise serializers.ValidationError(
+                _("There are not enough funds on the debit account.")
+            )
+        return data
+
+
 class BudgetUpdateFinanceSerializer(BudgetFinanceSerializer):
     """Сериализатор для чтения счетов бюджета."""
 
