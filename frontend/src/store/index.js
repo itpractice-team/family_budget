@@ -6,6 +6,7 @@ import { userReducer } from './slices/userSlice';
 import { passwordReducer } from './slices/passwordSlice';
 import { accountsReducer } from './slices/accounts';
 import { categoriesReducer } from './slices/categories';
+import { moneyboxReducer } from './slices/moneybox';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     password: passwordReducer,
     accounts: accountsReducer,
     categories: categoriesReducer,
+    moneybox: moneyboxReducer,
   },
 });
 

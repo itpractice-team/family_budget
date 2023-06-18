@@ -13,6 +13,7 @@ export default function Moneybox() {
   const dispatch = useDispatch();
 
   const { isEditMoneyboxPopupOpen, isDoneMoneyboxPopupOpen } = useSelector((state) => state.popup);
+  const moneyboxList = useSelector((state) => state.moneybox.moneybox);
 
   const handleItemClick = (isDone) => {
     if (isDone && !isDoneMoneyboxPopupOpen) {
@@ -33,18 +34,25 @@ export default function Moneybox() {
   };
   return (
     <section className="moneybox">
-      <MoneyboxItem
-        title="На отпуск"
-        balance={20000}
-        target={50000}
-        onClick={() => handleItemClick(false)}
-      />
-      <MoneyboxItem
-        title="На cпонсирование космонавтики"
-        balance={3000}
-        target={3000}
-        onClick={() => handleItemClick(true)}
-      />
+      {moneyboxList.length === 0 ? (
+        <PlugRightBlock icon={moneybox} subtitle="Отложить деньги на цель для накопления" />
+      ) : (
+        <>
+          <MoneyboxItem
+            title="На отпуск"
+            balance={20000}
+            target={50000}
+            onClick={() => handleItemClick(false)}
+          />
+          <MoneyboxItem
+            title="На cпонсирование космонавтики"
+            balance={3000}
+            target={3000}
+            onClick={() => handleItemClick(true)}
+          />
+        </>
+      )}
+
       {isEditMoneyboxPopupOpen && (
         <EditMoneyboxPopup onClose={handleEditPopupClose} title="На отпуск" />
       )}
@@ -54,5 +62,3 @@ export default function Moneybox() {
     </section>
   );
 }
-
-<PlugRightBlock icon={moneybox} subtitle="Отложить деньги на цель для накопления" />;

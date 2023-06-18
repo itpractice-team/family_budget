@@ -148,3 +148,16 @@ export const getCategoriesAPI = async () => {
   const data = await request(url, options);
   return data;
 };
+
+export const getMoneyboxAPI = async () => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
