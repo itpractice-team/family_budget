@@ -7,13 +7,13 @@
   background-color: $blueishGrey;
   border-radius: 5px;
   overflow: hidden;
-}
 
-.progress-bar__fill {
-  height: 100%;
-  background-color: $heavyBlue;
-}
+  &__fill {
+    height: 100%;
+    background-color: $heavyBlue;
 
-.progress-bar__fill.done {
-  background-color: $incomeGreen;
+    &.done {
+      background-color: $incomeGreen;
+    }
+  }
 }

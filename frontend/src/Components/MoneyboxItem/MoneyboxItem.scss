@@ -2,42 +2,42 @@
 
 .moneybox-item {
   padding: 8px;
-}
 
-.moneybox-item:hover {
-  background-color: $blueishGreyHover;
-  border-radius: 12px;
-}
-
-.moneybox-item__content {
-  @include text-medium-web;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  max-width: 100%;
-
-  > :first-child {
-    flex-grow: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+  &:hover {
+    background-color: $blueishGreyHover;
+    border-radius: 12px;
   }
-}
 
-.moneybox-item__target {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  align-self: flex-end;
-  flex-shrink: 0;
-}
+  &__content {
+    @include text-medium-web;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
 
-.moneybox-item__target::after {
-  content: '';
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url('../../Images/rub.svg');
-  background-size: cover;
+    > :first-child {
+      flex-grow: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  &__target {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: flex-end;
+    flex-shrink: 0;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-image: url('../../Images/rub.svg');
+      background-size: cover;
+    }
+  }
 }
