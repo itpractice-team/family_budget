@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect, useRef } from 'react';
 import './AvatarUploader.scss';
 import Button from '../../ui/Button/Button';

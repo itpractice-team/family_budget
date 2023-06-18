@@ -42,4 +42,29 @@
   border: 1px solid $heavyBlue;
   border-radius: 50px;
   padding: 4px 16px;
+  position: relative;
+}
+
+.budget-filter__date-button--open {
+  background-color: #13164a;
+  color: #ffbb10;
+}
+
+.budget-filter__button-wrapper {
+  display: flex;
+  gap: 32px;
+}
+
+.budget-filter__calendar-block {
+  position: relative;
+}
+
+.budget-filter__calendar-wrapper {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 1;
+  width: 376px;
+  background: #ffffff;
+  border-radius: 16px;
 }

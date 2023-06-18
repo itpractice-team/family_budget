@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';

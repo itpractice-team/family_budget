@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './AvatarUploaderPopup.scss';
