@@ -165,8 +165,11 @@ class MoneyBoxViewSet(
     serializer_class = MoneyBoxSerializer
 
 
-class TotalBudgetInfoViewSet(mixins.RetrieveModelMixin, BudgetBaseViewSet):
+class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """Детальная информаци по бюджету."""
 
     queryset = Budget.objects.all()
     serializer_class = TotalBudgetInfoSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)

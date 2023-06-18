@@ -319,9 +319,9 @@ class MoneyBoxShortInfoSerializer(MoneyBoxSerializer):
 class TotalBudgetInfoSerializer(serializers.ModelSerializer):
     """Детальная информация по бюджету на главной странице."""
 
-    balance = serializers.IntegerField()
-    income = serializers.IntegerField()
-    сonsumption = serializers.IntegerField()
+    # balance = serializers.IntegerField()
+    # income = serializers.IntegerField()
+    # сonsumption = serializers.IntegerField()
     finances = BudgetFinanceSerializer(many=True)
     categories = BudgetCategorySerializer(many=True)
     transactions = TransactionReadSerializer(
