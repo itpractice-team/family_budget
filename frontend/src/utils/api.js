@@ -135,3 +135,16 @@ export const getAccontsAPI = async () => {
   const data = await request(url, options);
   return data;
 };
+
+export const getCategoriesAPI = async () => {
+  const url = `${baseUrl}/category/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};

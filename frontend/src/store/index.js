@@ -5,6 +5,7 @@ import { loginReducer } from './slices/loginSlice';
 import { userReducer } from './slices/userSlice';
 import { passwordReducer } from './slices/passwordSlice';
 import { accountsReducer } from './slices/accounts';
+import { categoriesReducer } from './slices/categories';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     user: userReducer,
     password: passwordReducer,
     accounts: accountsReducer,
+    categories: categoriesReducer,
   },
 });
 
