@@ -9,48 +9,50 @@
   border-radius: 20px;
   display: grid;
   gap: 12px;
-}
 
-.account__title {
-  @include h3-web;
-  color: $black;
-  display: flex;
-  align-items: center;
-}
+  &__title {
+    @include h3-web;
+    color: $black;
+    display: flex;
+    align-items: center;
 
-.account__title::after {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  background: url('../../Images/rub.svg') no-repeat center / contain;
-  width: 28px;
-  height: 28px;
-}
+    &::after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      background: url('../../Images/rub.svg') no-repeat center / contain;
+      width: 28px;
+      height: 28px;
+    }
+  }
 
-.account__selected-content {
-  position: relative;
-}
+  &__selected-content {
+    position: relative;
+  }
 
-.account__selected {
-  @include text-medium-web;
-  display: flex;
-  align-items: center;
-}
+  &__selected {
+    @include text-medium-web;
+    display: flex;
+    align-items: center;
 
-.account__arrow {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  background: url('../../Images/chevron-down.svg') no-repeat center / contain;
-  transform: rotate(0deg);
-}
+    &--open {
+      .account__arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
 
-.account__selected--open .account__arrow {
-  transform: rotate(180deg);
-}
+  &__arrow {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background: url('../../Images/chevron-down.svg') no-repeat center / contain;
+    transform: rotate(0deg);
+  }
 
-.account__icon {
-  margin-right: 12px;
-  width: 24px;
-  height: 24px;
+  &__icon {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+  }
 }
