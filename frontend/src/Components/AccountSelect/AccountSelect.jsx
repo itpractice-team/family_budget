@@ -7,7 +7,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption }) {
   const accounts = useSelector((state) => state.accounts.accounts);
 
   return (
-    <div className="account-select">
+    <div className="">
       <p className="account-select__title">Все счета</p>
       <Dropdown
         options={accounts}
@@ -19,7 +19,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption }) {
         content="text"
         text="Добавить/Редактировать"
         size="medium"
-        extraClass="button_account-select"
+        extraClass="account-select__button"
       />
     </div>
   );

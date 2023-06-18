@@ -12,20 +12,20 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-}
 
-.account-select__title {
-  @include text-medium-web;
-  margin-bottom: 11px;
-  padding-bottom: 12px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid $midGrey;
-}
+  &__title {
+    @include text-medium-web;
+    margin-bottom: 11px;
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid $midGrey;
+  }
 
-// extraClass
-.button_account-select {
-  margin-top: 24px;
-  width: 100%;
-  justify-content: center;
+  // extraClass
+  &__button {
+    margin-top: 24px;
+    width: 100%;
+    justify-content: center;
+  }
 }
