@@ -212,3 +212,11 @@ export const arrCardWorks = [
     number: '03',
   },
 ];
+
+export const timeIntervals = [
+  { id: 'today', name: 'Сегодня' },
+  { id: 'week', name: 'Неделя' },
+  { id: 'month', name: 'Месяц' },
+  { id: 'year', name: 'Год' },
+  { id: 'all', name: 'Вся история' },
+];
