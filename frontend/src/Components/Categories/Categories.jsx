@@ -9,12 +9,11 @@ import { getCategories } from '../../store/slices/categories';
 export default function Categories() {
   const dispatch = useDispatch();
 
+  const categories = useSelector((state) => state.categories.categories);
+
   useEffect(() => {
     dispatch(getCategories());
   }, []);
-
-  const categories = useSelector((state) => state.categories.categories);
-  console.log(categories);
 
   const [activeDate, setActiveDate] = useState('Общие');
 
