@@ -17,7 +17,6 @@ const registrationSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Обработка действий, созданных createAsyncThunk
     builder
       .addCase(registerUser.pending, (state) => {
         state.loading = true;

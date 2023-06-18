@@ -4,6 +4,7 @@ import { registrationReducer } from './slices/registerSlice';
 import { loginReducer } from './slices/loginSlice';
 import { userReducer } from './slices/userSlice';
 import { passwordReducer } from './slices/passwordSlice';
+import { accountsReducer } from './slices/accounts';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     login: loginReducer,
     user: userReducer,
     password: passwordReducer,
+    accounts: accountsReducer,
   },
 });
 

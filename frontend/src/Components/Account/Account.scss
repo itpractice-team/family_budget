@@ -8,7 +8,7 @@
   background-color: $blueishGrey;
   border-radius: 20px;
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .account__title {
@@ -38,13 +38,19 @@
 }
 
 .account__arrow {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   margin-right: 8px;
-  background: url('../../Images/dropdawn.svg') no-repeat center / contain;
+  background: url('../../Images/chevron-down.svg') no-repeat center / contain;
   transform: rotate(0deg);
 }
 
 .account__selected--open .account__arrow {
   transform: rotate(180deg);
+}
+
+.account__icon {
+  margin-right: 12px;
+  width: 24px;
+  height: 24px;
 }

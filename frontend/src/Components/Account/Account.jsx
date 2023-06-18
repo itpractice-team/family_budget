@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './Account.scss';
 import AccountSelect from '../AccountSelect/AccountSelect';
 import Overlay from '../Overlay/Overlay';
+import { getAccounts } from '../../store/slices/accounts';
 
 export default function Account() {
-  const [selectedOption, setSelectedOption] = useState('Тинькофф');
+  const dispatch = useDispatch();
+
+  const accounts = useSelector((state) => state.accounts.accounts);
+
+  useEffect(() => {
+    dispatch(getAccounts());
+  }, []);
+
+  const [selectedOption, setSelectedOption] = useState('');
   const [isListOpen, setIsListOpen] = useState(false);
+
+  useEffect(() => {
+    if (accounts.length > 0) {
+      setSelectedOption(accounts[0].id);
+    }
+  }, [accounts]);
+
+  const selectedAccount = accounts.find((account) => account.id === selectedOption);
 
   const handleOptionChange = (value) => {
     setSelectedOption((prevSelectedOption) =>
@@ -23,7 +41,7 @@ export default function Account() {
 
   return (
     <section className="account">
-      <h2 className="account__title">11 000</h2>
+      <h2 className="account__title">{selectedAccount?.balance}</h2>
       <div className="account__selected-content">
         <button
           className={`account__selected ${isListOpen ? 'account__selected--open' : ''}`}
@@ -31,7 +49,12 @@ export default function Account() {
           onClick={toggleList}
         >
           <span className="account__arrow" />
-          {selectedOption}
+          {selectedAccount && (
+            <>
+              <img src={selectedAccount.image} alt="Account Icon" className="account__icon" />
+              {selectedAccount.name}
+            </>
+          )}
         </button>
       </div>
       <Overlay isOpen={isListOpen} onClose={closeList}>
