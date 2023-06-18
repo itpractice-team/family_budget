@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   toggleEditMoneyboxPopup,
@@ -8,9 +9,14 @@ import moneybox from '../../Images/moneybox.svg';
 import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 import EditMoneyboxPopup from '../EditMoneyboxPopup/EditMoneyboxPopup';
 import DoneMoneyboxPopup from '../DoneMoneyboxPopup/DoneMoneyboxPopup';
+import { getMoneybox } from '../../store/slices/moneybox';
 
 export default function Moneybox() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMoneybox());
+  }, []);
 
   const { isEditMoneyboxPopupOpen, isDoneMoneyboxPopupOpen } = useSelector((state) => state.popup);
   const moneyboxList = useSelector((state) => state.moneybox.moneybox);
@@ -37,20 +43,15 @@ export default function Moneybox() {
       {moneyboxList.length === 0 ? (
         <PlugRightBlock icon={moneybox} subtitle="Отложить деньги на цель для накопления" />
       ) : (
-        <>
+        moneyboxList.map((item) => (
           <MoneyboxItem
-            title="На отпуск"
-            balance={20000}
-            target={50000}
-            onClick={() => handleItemClick(false)}
+            key={item.id}
+            title={item.name}
+            balance={item.accumulated}
+            target={item.amount}
+            onClick={() => handleItemClick(item.accumulated === item.amount)}
           />
-          <MoneyboxItem
-            title="На cпонсирование космонавтики"
-            balance={3000}
-            target={3000}
-            onClick={() => handleItemClick(true)}
-          />
-        </>
+        ))
       )}
 
       {isEditMoneyboxPopupOpen && (

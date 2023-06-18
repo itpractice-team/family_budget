@@ -161,3 +161,18 @@ export const getMoneyboxAPI = async () => {
   const data = await request(url, options);
   return data;
 };
+
+export const addMoneyboxAPI = async (formData) => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
