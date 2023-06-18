@@ -1,8 +1,9 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .card {
   width: 100%;
-  border: 1px solid #f4f4f4;
+  border: 1px solid $clearWhite;
   padding: 13px 8px;
   border-radius: 12px;
   display: flex;
@@ -27,7 +28,7 @@
   padding: 8px;
   width: 36px;
   height: 36px;
-  background-color: #ffeab4;
+  background-color: $lightGrey;
   border-radius: 8px;
 }
 
@@ -50,17 +51,17 @@
 }
 
 .card__amount_spending {
-  color: #ff6f6f;
+  color: $spendRed;
 }
 
 .card__amount_earn {
-  color: #6fdd8e;
+  color: $incomeGreen;
 }
 
 .card__button {
   width: 20px;
   height: 20px;
-  background-color: #d2d5db;
+  background-color: $midGrey;
   border-radius: 50%;
 }
 
@@ -71,13 +72,10 @@
 .card {
   &:hover {
     .card__button {
-      background-size: 20px;
-      background-position: center;
-      background-repeat: no-repeat;
+      background: transparent url('../../Images/dropdawn.svg') center / 20px no-repeat;
       width: 40px;
       height: 40px;
       padding: 10px;
-      background-color: transparent;
       border-radius: 0;
     }
 

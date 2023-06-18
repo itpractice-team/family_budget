@@ -1,6 +1,8 @@
+@import '../../styles/consts.scss';
+
 .profile-tooltip {
-  background: #ffffff;
-  border: 1px solid #f4f4f4;
+  background: $clearWhite;
+  border: 1px solid $lightGrey;
   border-radius: 16px;
   width: 376px;
   height: 196px;

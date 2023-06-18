@@ -9,7 +9,7 @@ import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import { togglePasswordChangePopup, toggleInfoPopup } from '../../store/slices/togglePopupSlice';
 import { RequirementsPassword } from '../../utils/consts';
-import { clearUser } from '../../store/slices/userSlice';
+import { resetUser } from '../../store/slices/userSlice';
 import { setLogin } from '../../store/slices/loginSlice';
 import changePasswordValidation from '../../utils/validations/changePasswordValidation';
 import Eye from '../../ui/Eye/Eye';
@@ -32,16 +32,24 @@ export default function PasswordChangePopup({ onClose }) {
   }
 
   function handleChangePassword(formData) {
-    dispatch(changePassword(formData)).then(() => {
-      dispatch(clearUser());
-      dispatch(setLogin(false));
-      dispatch(toggleInfoPopup(true));
-      dispatch(togglePasswordChangePopup(false));
-    });
+    dispatch(changePassword(formData))
+      .then((action) => {
+        if (!action.error) {
+          dispatch(resetUser());
+          dispatch(setLogin(false));
+          dispatch(toggleInfoPopup(true));
+        }
+      })
+      .finally(() => {
+        dispatch(togglePasswordChangePopup(false));
+        dispatch(toggleInfoPopup(true));
+      });
   }
+
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -58,7 +66,7 @@ export default function PasswordChangePopup({ onClose }) {
       title="Изменение пароля"
       subtitle="После изменения пароля, все активные сеансы на всех устройствах, сайтах и приложениях будут автоматически завершены"
     >
-      <form className="form" onSubmit={handleChangePassword}>
+      <form className="form" onSubmit={handleSubmit(handleChangePassword)}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="PasswordChangePopup-oldPassword">
             Текущий пароль

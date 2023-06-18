@@ -198,6 +198,7 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-password"
               name="password"
               className="form__input"
+              placeholder="Введите пароль"
               type={eyes[0] ? 'text' : 'password'}
             />
             <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
@@ -230,7 +231,7 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
-              placeholder="Повторить пароль"
+              placeholder="Повторите пароль"
               type={eyes[1] ? 'text' : 'password'}
             />
             <Eye index={1} opened={eyes[1]} setOpenState={handleEyeChange} />

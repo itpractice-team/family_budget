@@ -1,12 +1,11 @@
 @import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
 
 .categories {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 24px;
-  background: $bg-color-fiat;
+  background: $clearWhite;
   border-radius: 20px;
 }
 

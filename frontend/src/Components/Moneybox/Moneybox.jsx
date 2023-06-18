@@ -16,20 +16,20 @@ export default function Moneybox() {
 
   const handleItemClick = (isDone) => {
     if (isDone && !isDoneMoneyboxPopupOpen) {
-      dispatch(toggleDoneMoneyboxPopup(true)); // Открыть попап для достигнутой цели
+      dispatch(toggleDoneMoneyboxPopup(true));
     } else if (!isDone && !isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(true)); // Открыть попап для редактирования
+      dispatch(toggleEditMoneyboxPopup(true));
     }
   };
 
   const handleEditPopupClose = () => {
     if (isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(false)); // Закрыть попап для редактирования
+      dispatch(toggleEditMoneyboxPopup(false));
     }
   };
 
   const handleDonePopupClose = () => {
-    dispatch(toggleDoneMoneyboxPopup(false)); // Закрыть попап для достигнутой цели
+    dispatch(toggleDoneMoneyboxPopup(false));
   };
   return (
     <section className="moneybox">

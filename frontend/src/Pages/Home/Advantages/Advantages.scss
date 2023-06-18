@@ -1,0 +1,23 @@
+@import '../../../styles/consts.scss';
+
+.advantages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__image {
+    width: 40px;
+    height: 40px;
+  }
+
+  &__text-bold {
+    @include h3-web;
+    margin: 20px 0 12px;
+    text-align: center;
+  }
+
+  &__text {
+    @include text-medium-web;
+    text-align: center;
+  }
+}

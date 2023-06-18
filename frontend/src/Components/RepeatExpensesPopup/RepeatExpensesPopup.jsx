@@ -29,8 +29,8 @@ export default function RepeatExpensesPopup({ onClose }) {
   }
 
   return (
-    <Popup onClose={onClose} popupSize="popup_m" title="Повторяющиеся расходы">
-      <form className="form" onSubmit={handleSubmit}>
+    <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
+      <form className="form repeat-expenses" onSubmit={handleSubmit}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RepeatExpenses-date">
             Дата
@@ -88,8 +88,11 @@ export default function RepeatExpensesPopup({ onClose }) {
           </label>
         </div>
 
-        <h3 className="form__text-bold">Сделать повторяющуюся запись?</h3>
-        <p className="form__input-label">Это событие будет повторяться каждый 1 день</p>
+        <div className="form__text-content">
+          <p className="form__text-bold">Сделать повторяющуюся запись?</p>
+          <p className="form__text">Это событие будет повторяться каждый 1 день</p>
+        </div>
+
         <div className="repeat-expenses__tab">
           <Tabs
             arr={arrCategoriesDate}
@@ -119,7 +122,7 @@ export default function RepeatExpensesPopup({ onClose }) {
             size="medium"
             onClick={handleСancel}
           />
-          <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>

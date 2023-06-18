@@ -21,7 +21,7 @@ export default function CardQuestion({ question, answer }) {
             variant="secondary"
             content="icon"
             image={plus}
-            size="medium"
+            size="small"
             onClick={toggleIsActive}
           />
         ) : (
@@ -29,7 +29,7 @@ export default function CardQuestion({ question, answer }) {
             variant="secondary"
             content="icon"
             image={minus}
-            size="medium"
+            size="small"
             onClick={toggleIsActive}
           />
         )}

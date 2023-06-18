@@ -2,16 +2,16 @@
 
 .profile-page {
   position: relative;
-  background: #f4f4f4 url('../../Images/profile-background.svg') no-repeat center bottom;
+  background: $lightGrey url('../../Images/profile-background.svg') no-repeat center bottom;
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
-  padding: 70px 160px 50px 160px;
+  padding: 70px 160px 0 160px;
 }
 
 .profile-settings {
-  background-color: #ffffff;
+  background-color: $clearWhite;
   max-width: 784px;
+  height: fit-content;
   padding: 40px;
   border-radius: 16px;
 }
@@ -36,7 +36,7 @@
 
 .profile__error-message {
   @include text-small-web;
-  color: #f05a2b;
+  color: $alertRed;
   position: absolute;
   display: flex;
   align-items: center;
@@ -45,11 +45,6 @@
   height: 28px;
   background: url(../../Images/alert-triangle.svg) no-repeat top 50% left 8px / 25px;
   padding-left: 36px;
-}
-
-.footer__content_profile {
-  position: absolute;
-  bottom: 40px;
 }
 
 // extraClass

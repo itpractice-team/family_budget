@@ -1,4 +1,5 @@
 @import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
 
 .spending-list__wrapper {
   display: flex;
@@ -17,7 +18,7 @@
 .spending-list__header,
 .spending-list__text {
   width: 100%;
-  color: #1e1d24;
+  color: $black;
 }
 
 .spending-list__header {

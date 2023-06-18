@@ -42,12 +42,11 @@ export default function AddMoneyboxPopup({ onClose }) {
             placeholder="Заметка о цели"
           />
         </label>
+        <div className="form__button-wrapper form__button-wrapper_add-operation">
+          <Button variant="secondary" content="text" text="Отменить" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
+        </div>
       </form>
-
-      <div className="form__button-wrapper form__button-wrapper_add-operation">
-        <Button variant="secondary" content="text" text="Отменить" size="medium" />
-        <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
-      </div>
     </Popup>
   );
 }

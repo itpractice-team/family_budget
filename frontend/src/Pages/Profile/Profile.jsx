@@ -9,6 +9,7 @@ import {
   togglePasswordChangePopup,
   toggleAvatarUploaderPopup,
   toggleConfirmationPopup,
+  toggleInfoPopup,
 } from '../../store/slices/togglePopupSlice';
 import { getUser, updateUser } from '../../store/slices/userSlice';
 import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUploaderPopup';
@@ -18,9 +19,12 @@ import {
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
+import Footer from '../../Components/Footer/Footer';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
 import profileValidation from '../../utils/validations/profileValidation';
+import InfoPopup from '../../Components/InfoPopup/InfoPopup';
+import ErrorNotification from '../../Components/ErrorNotification/ErrorNotification';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -28,8 +32,12 @@ export default function Profile() {
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { isPasswordChangePopupOpen, isAvatarUploaderPopupOpen, isConfirmationPopupOpen } =
-    useSelector((state) => state.popup);
+  const {
+    isPasswordChangePopupOpen,
+    isAvatarUploaderPopupOpen,
+    isConfirmationPopupOpen,
+    isInfoPopupOpen,
+  } = useSelector((state) => state.popup);
   const { user: userData, isFetched } = useSelector((state) => state.user);
 
   const [disableButton, setDisableButton] = useState(true);
@@ -48,30 +56,25 @@ export default function Profile() {
     [dispatch],
   );
 
-  const closeAvatarUploaderPopup = () => {
-    dispatch(toggleAvatarUploaderPopup(false));
-  };
-
   const handlePasswordChangeClick = (evt) => {
     evt.preventDefault();
     dispatch(togglePasswordChangePopup(true));
   };
-  const closePasswordChangePopup = () => {
-    dispatch(togglePasswordChangePopup(false));
-  };
 
-  const handleConfirmationPopupClick = (evt) => {
+  const handleDeleteProfileClick = (evt) => {
     evt.preventDefault();
     dispatch(toggleConfirmationPopup(true));
   };
 
-  const closeConfirmationPopup = () => {
-    dispatch(toggleConfirmationPopup(false));
-  };
+  const closeAvatarUploaderPopup = () => dispatch(toggleAvatarUploaderPopup(false));
+  const closePasswordChangePopup = () => dispatch(togglePasswordChangePopup(false));
+  const closeConfirmationPopup = () => dispatch(toggleConfirmationPopup(false));
+  const closeInfoPopup = () => dispatch(toggleInfoPopup(false));
 
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -139,7 +142,7 @@ export default function Profile() {
             onClick={handleAvatarUploaderClick}
           />
         </div>
-        <form className="form form_profile" onSubmit={handleUpdateProfile}>
+        <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
@@ -327,19 +330,24 @@ export default function Profile() {
               content="text"
               text="Удалить профиль"
               size="medium"
-              onClick={handleConfirmationPopupClick}
+              onClick={handleDeleteProfileClick}
             />
             {isEditing && message && <span className="profile__error-message">{message}</span>}
           </div>
         </form>
       </div>
-      <div className="footer__content footer__content_profile">
-        <p className="footer__title">Правильные финансовые решения каждый день</p>
-        <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
-      </div>
       {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
       {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
       {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+      {isInfoPopupOpen && (
+        <InfoPopup
+          onClose={closeInfoPopup}
+          content={<ErrorNotification />}
+          title="Ошибка"
+          subtitle="Что-то пошло не так"
+        />
+      )}
+      <Footer extraClass="footer-absolute" />
     </section>
   );
 }
