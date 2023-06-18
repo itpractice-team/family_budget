@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { deleteUser } from '../../store/slices/userSlice';
+import { deleteUser, resetUser } from '../../store/slices/userSlice';
 import { toggleConfirmationPopup } from '../../store/slices/togglePopupSlice';
-// import { logoutUser } from '../../store/slices/loginSlice';
+import { setLogin } from '../../store/slices/loginSlice';
 
 export default function ConfirmationPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -15,7 +15,8 @@ export default function ConfirmationPopup({ onClose }) {
 
   const handleDeleteProfile = () => {
     dispatch(deleteUser());
-    // dispatch(logoutUser());
+    dispatch(resetUser());
+    dispatch(setLogin(false));
   };
 
   return (
