@@ -57,7 +57,7 @@ class CustomUserCreateSerializer(AvatarMixin, UserCreateSerializer):
                 budget,
                 BudgetCategory,
                 Category.get_default_use_records(
-                    "name", "priority", "image_id"
+                    "name", "priority", "icon_id"
                 ),
             )
             create_model_link_budget_data(
