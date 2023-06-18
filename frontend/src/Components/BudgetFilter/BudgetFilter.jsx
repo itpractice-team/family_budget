@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './BudgetFilter.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
 import TimeInterval from '../TimeInterval/TimeInterval';
 import Overlay from '../Overlay/Overlay';

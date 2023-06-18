@@ -30,7 +30,7 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form repeat-expenses" onSubmit={handleSubmit}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RepeatExpenses-date">
             Дата
