@@ -28,7 +28,6 @@ export default function CustomDatePicker({
           selected={startDate}
           onChange={onChange}
           inline
-          shouldCloseOnSelect={false}
           dateFormat="DD.MM.YYYY"
         />
       )}

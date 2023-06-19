@@ -7,6 +7,8 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
   const [selected, setSelected] = useState('До');
   const [count, setCount] = useState('1');
   const [startDate, setStartDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [valueDate, setValueDate] = useState('');
 
   const handleCount = ({ target }) => {
     const re = /^[0-9\b]+$/;
@@ -19,6 +21,11 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
   const handle = ({ target }) => {
     const { value } = target;
     setSelected(value);
+  };
+
+  const isOpen = () => {
+    setValueDate(startDate.toLocaleDateString());
+    setOpen(true);
   };
 
   return (
@@ -56,18 +63,25 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
                 Дата
                 <input
                   className="form__input"
-                  type="date"
+                  type="text"
                   name={`${inputName}-date`}
                   id={`${inputName}-date`}
-                  value={startDate.toLocaleDateString()}
+                  value={valueDate}
+                  placeholder="дд.мм.гггг"
+                  onClick={isOpen}
                 />
               </label>
             </div>
-            <CustomDatePicker
-              type="date"
-              onChange={(date) => setStartDate(date)}
-              startDate={startDate}
-            />
+            {open && (
+              <CustomDatePicker
+                type="date"
+                onChange={(date) => {
+                  setStartDate(date);
+                  setOpen(false);
+                }}
+                startDate={startDate}
+              />
+            )}
           </>
         )}
       </div>
