@@ -8,15 +8,18 @@ from budget.models import Category, Finance, Icon
 class ImageAdmin(admin.ModelAdmin):
     """Базовый класс для моделей с картинками в админке."""
 
+    def get_image_obj(self, obj):
+        if isinstance(obj, Finance) or isinstance(obj, Icon):
+            return obj.image
+        if isinstance(obj, Category):
+            return obj.icon.image
+        return None
+
     def image_tag(self, obj):
         """Прорисовка изображения рецепта."""
-        if obj.image:
-            url = (
-                obj.image.image.url
-                if isinstance(obj.image, Icon)
-                else obj.image.url
-            )
-            return mark_safe(f'<img src="{url}" height="25" />')
+        obj_image = self.get_image_obj(obj)
+        if obj_image:
+            return mark_safe(f'<img src="{obj_image.url}" height="25" />')
         return None
 
     image_tag.short_description = _("image")

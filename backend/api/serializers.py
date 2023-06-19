@@ -57,7 +57,10 @@ class CustomUserCreateSerializer(AvatarMixin, UserCreateSerializer):
                 budget,
                 BudgetCategory,
                 Category.get_default_use_records(
-                    "name", "priority", "icon_id"
+                    "name",
+                    "priority",
+                    "icon_id",
+                    "category_type",
                 ),
             )
             create_model_link_budget_data(
@@ -338,3 +341,13 @@ class TotalBudgetInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = "__all__"
+
+
+class BudgetParamsSerializer(serializers.Serializer):
+    """Query параметры по бюджету на главной странице."""
+
+    from_date = serializers.DateField(required=False)
+    to_date = serializers.DateField(required=False)
+    categories = PrimaryKey404RelatedField(
+        queryset=BudgetCategory.objects.all(), required=False, many=True
+    )

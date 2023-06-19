@@ -139,6 +139,13 @@ class Finance(BaseDirectoryModel, IconMixin, SlugMixin, DefaultUseMixin):
         return self.name
 
 
+class IncomeExpenses(models.IntegerChoices):
+    """Модель выбора дохода/расхода."""
+
+    EXPENSES = 1, _("Expenses")
+    INCOME = 2, _("Income")
+
+
 class BaseCategory(BaseDirectoryModel):
     """Базовая модель спровочника категорий."""
 
@@ -147,6 +154,11 @@ class BaseCategory(BaseDirectoryModel):
         on_delete=models.SET_NULL,
         null=True,
         verbose_name=_("icon"),
+    )
+    category_type = models.IntegerField(
+        verbose_name=_("type"),
+        choices=IncomeExpenses.choices,
+        default=IncomeExpenses.EXPENSES,
     )
 
     class Meta(BaseDirectoryModel.Meta):
@@ -198,13 +210,6 @@ class Budget(models.Model):
         return f"Бюджет {self.name} пользователя {self.user}"
 
 
-class IncomeExpenses(models.IntegerChoices):
-    """Модель выбора дохода/расхода."""
-
-    INCOME = 0, _("Income")
-    EXPENSES = 1, _("Expenses")
-
-
 class BudgetCategory(BaseCategory):
     """Модель категорий дохода/расхода для бюджета."""
 
@@ -213,11 +218,6 @@ class BudgetCategory(BaseCategory):
         verbose_name=_("budget"),
         on_delete=models.CASCADE,
         related_name="categories",
-    )
-    category_type = models.IntegerField(
-        verbose_name=_("type"),
-        choices=IncomeExpenses.choices,
-        default=IncomeExpenses.EXPENSES,
     )
     color = ColorField(
         _("color HEX-code"),
@@ -359,6 +359,11 @@ class FinanceTransaction(BaseTransaction):
         on_delete=models.SET_NULL,
         verbose_name=_("finance"),
         null=True,
+    )
+    category_type = models.IntegerField(
+        verbose_name=_("type"),
+        choices=IncomeExpenses.choices,
+        default=IncomeExpenses.EXPENSES,
     )
 
     class Meta(BaseTransaction.Meta):

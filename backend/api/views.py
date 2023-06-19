@@ -8,6 +8,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from api.serializers import (
     BudgetCategorySerializer,
     BudgetFinanceSerializer,
+    BudgetParamsSerializer,
     BudgetUpdateFinanceSerializer,
     CategoryIconSerializer,
     FinanceHandBookSerializer,
@@ -171,5 +172,32 @@ class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Budget.objects.all()
     serializer_class = TotalBudgetInfoSerializer
 
+    def get_serializer_context(self):
+        """Возвращает контекст сериализатора."""
+        context = super().get_serializer_context()
+        query = BudgetParamsSerializer(data=self.request.query_params)
+        query.is_valid(raise_exception=True)
+        query_params = query.validated_data
+        context["from_date"] = query_params.get("from_date")
+        context["to_date"] = query_params.get("to_date")
+        categories = query_params.get("categories")
+        context["categories"] = (
+            [data.pk for data in categories] if categories else None
+        )
+        print(context)
+        return context
+
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        queryset = super().get_queryset().filter(user=self.request.user)
+        context = self.get_serializer_context()
+        if context["from_date"]:
+            queryset = queryset.filter(created__gte=context["from_date"])
+        if context["to_date"]:
+            queryset = queryset.filter(created__lte=context["to_date"])
+        if context["categories"]:
+            queryset = queryset.filter(
+                budget_financetransaction__category__id__in=context[
+                    "categories"
+                ]
+            ).distinct()
+        return queryset
