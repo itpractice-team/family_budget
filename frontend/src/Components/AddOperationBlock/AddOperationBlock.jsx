@@ -10,8 +10,8 @@ import SpendPopup from '../SpendPopup/SpendPopup';
 import IncomePopup from '../IncomePopup/IncomePopup';
 import TransferPopup from '../TransferPopup/TransferPopup';
 import plus from '../../Images/icons/plus.svg';
-import minus from '../../Images/icons/minus.svg';
-import arrow from '../../Images/icons/icon-arrow-right.svg';
+// import minus from '../../Images/icons/minus.svg';
+// import arrow from '../../Images/icons/icon-arrow-right.svg';
 
 export default function AddOperationBlock() {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function AddOperationBlock() {
       <Button
         variant="secondary"
         content="icon-text"
-        image={minus}
+        image={plus}
         text="Расход"
         size="medium"
         onClick={handleSpendClick}
@@ -49,7 +49,7 @@ export default function AddOperationBlock() {
       <Button
         variant="secondary"
         content="icon-text"
-        image={arrow}
+        image={plus}
         text="Перевод"
         size="medium"
         onClick={handleTransferClick}
