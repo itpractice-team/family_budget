@@ -3,6 +3,7 @@ import './MainBlock.scss';
 import BudgetFilter from '../BudgetFilter/BudgetFilter';
 import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
 import AddOperationBlock from '../AddOperationBlock/AddOperationBlock';
+import TransactionList from '../TransactionList/TransactionList';
 
 export default function MainBlock() {
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
@@ -64,6 +65,7 @@ export default function MainBlock() {
           onTimeIntervalChange={getTodayDate}
         />
       </BudgetFilter>
+      <TransactionList />
     </section>
   );
 }
