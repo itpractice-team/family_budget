@@ -67,3 +67,8 @@
 .radio__text {
   @include text-medium-web;
 }
+
+.radio:hover {
+  background-color: $blueishGreyHover;
+  border-radius: 15px;
+}
