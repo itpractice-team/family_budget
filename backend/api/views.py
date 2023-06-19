@@ -189,7 +189,6 @@ class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
         context = self.get_serializer_context()
-        print(context)
         if context["from_date"]:
             queryset = queryset.filter(
                 budget_financetransaction__created__lte=context["from_date"]
