@@ -1,5 +1,9 @@
+import { useDispatch } from "react-redux";
+import { setDateStart, setDateEnd } from "../../store/slices/dateSlice";
+
 /* eslint-disable no-shadow */
 export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
+  const dispatch = useDispatch();
   const getTimeInterval = (selectedTimeInterval) => {
     const today = new Date();
 
@@ -10,6 +14,8 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
     switch (selectedTimeInterval) {
       case 'Сегодня': {
         const formattedToday = dateFormatter.format(today);
+        dispatch(setDateStart(formattedToday));
+        dispatch(setDateEnd(''));
         return `Сегодня: ${formattedToday}`;
       }
 
@@ -18,6 +24,8 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         weekStart.setDate(today.getDate() - 6); // 6 дней назад
         const formattedWeekStart = dateFormatter.format(weekStart);
         const formattedWeekEnd = dateFormatter.format(today);
+        dispatch(setDateStart(formattedWeekStart));
+        dispatch(setDateEnd(formattedWeekEnd));
         return `На этой неделе: ${formattedWeekStart} - ${formattedWeekEnd}`;
       }
 
@@ -27,6 +35,8 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         monthAgo.setMonth(monthAgo.getMonth() - 1);
         const formattedMonthAgo = dateFormatter.format(monthAgo);
         const formattedToday = dateFormatter.format(today);
+        dispatch(setDateStart(formattedMonthAgo));
+        dispatch(setDateEnd(formattedToday));
         return `За месяц: ${formattedMonthAgo} - ${formattedToday}`;
       }
 
@@ -36,10 +46,14 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         yearAgo.setFullYear(today.getFullYear() - 1);
         const formattedYearAgo = dateFormatter.format(yearAgo);
         const formattedTodayForYear = dateFormatter.format(today);
+        dispatch(setDateStart(formattedYearAgo));
+        dispatch(setDateEnd(formattedTodayForYear));
         return `За год: ${formattedYearAgo} - ${formattedTodayForYear}`;
       }
 
       case 'Вся история':
+      dispatch(setDateStart(''));
+      dispatch(setDateEnd(''));
         return 'Вся история';
 
       default:

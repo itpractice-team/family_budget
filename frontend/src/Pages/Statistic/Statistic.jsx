@@ -1,6 +1,13 @@
+import { useState } from 'react';
+import BigChart from '../../Components/BigChart/BigChart';
+import StatisticDates from '../../Components/StatisticDates/StatisticDates';
 import './Statistic.scss';
 
 export default function Statistic() {
+  const [lineChart, setLineChart] = useState(true)
+  const dinamicChartShow = (state) =>{
+    setLineChart(state);
+  }
   return (
     <section className="statistic">
       <div className="statistic__overview statistic__block">
@@ -12,10 +19,13 @@ export default function Statistic() {
 
       <div className="statistic__periods statistic__block">
         <div className="statistic__filtration">
-          <p>stats filter</p>
-          {/* adds */}
+      <StatisticDates 
+      dinamicChartShow={dinamicChartShow}
+      />
         </div>
-        <p>stats</p>
+          <BigChart
+            lineChart={lineChart}
+          />
       </div>
 
       <div className="statistic__spending statistic__block">

@@ -1,0 +1,620 @@
+[
+    {
+        "amount": 9090,
+        "income": 9205,
+        "category": "L",
+        "created": "03.07.2022"
+    },
+    {
+        "amount": 1107,
+        "income": 9304,
+        "category": "L",
+        "created": "08.07.2022"
+    },
+    {
+        "amount": 3490,
+        "income": 3596,
+        "category": "XL",
+        "created": "08.07.2022"
+    },
+    {
+        "amount": 2228,
+        "income": 2441,
+        "category": "2XL",
+        "created": "14.07.2022"
+    },
+    {
+        "amount": 1354,
+        "income": 8776,
+        "category": "S",
+        "created": "15.07.2022"
+    },
+    {
+        "amount": 8991,
+        "income": 2647,
+        "category": "3XL",
+        "created": "07.08.2022"
+    },
+    {
+        "amount": 8899,
+        "income": 3471,
+        "category": "L",
+        "created": "11.08.2022"
+    },
+    {
+        "amount": 4912,
+        "income": 9397,
+        "category": "3XL",
+        "created": "17.08.2022"
+    },
+    {
+        "amount": 7110,
+        "income": 4970,
+        "category": "S",
+        "created": "19.08.2022"
+    },
+    {
+        "amount": 6010,
+        "income": 564,
+        "category": "2XL",
+        "created": "25.08.2022"
+    },
+    {
+        "amount": 6102,
+        "income": 9926,
+        "category": "2XL",
+        "created": "31.08.2022"
+    },
+    {
+        "amount": 4395,
+        "income": 5378,
+        "category": "M",
+        "created": "03.09.2022"
+    },
+    {
+        "amount": 4895,
+        "income": 7233,
+        "category": "S",
+        "created": "07.09.2022"
+    },
+    {
+        "amount": 3230,
+        "income": 2006,
+        "category": "2XL",
+        "created": "08.09.2022"
+    },
+    {
+        "amount": 1607,
+        "income": 7059,
+        "category": "S",
+        "created": "14.09.2022"
+    },
+    {
+        "amount": 4116,
+        "income": 9117,
+        "category": "L",
+        "created": "15.09.2022"
+    },
+    {
+        "amount": 7495,
+        "income": 9466,
+        "category": "S",
+        "created": "26.09.2022"
+    },
+    {
+        "amount": 7552,
+        "income": 1080,
+        "category": "XL",
+        "created": "28.09.2022"
+    },
+    {
+        "amount": 8550,
+        "income": 3771,
+        "category": "M",
+        "created": "30.09.2022"
+    },
+    {
+        "amount": 8415,
+        "income": 718,
+        "category": "2XL",
+        "created": "04.10.2022"
+    },
+    {
+        "amount": 5344,
+        "income": 1012,
+        "category": "L",
+        "created": "12.10.2022"
+    },
+    {
+        "amount": 9145,
+        "income": 3423,
+        "category": "L",
+        "created": "12.10.2022"
+    },
+    {
+        "amount": 6798,
+        "income": 6354,
+        "category": "L",
+        "created": "15.10.2022"
+    },
+    {
+        "amount": 5438,
+        "income": 8641,
+        "category": "2XL",
+        "created": "18.10.2022"
+    },
+    {
+        "amount": 668,
+        "income": 8380,
+        "category": "3XL",
+        "created": "26.10.2022"
+    },
+    {
+        "amount": 3124,
+        "income": 9498,
+        "category": "3XL",
+        "created": "30.10.2022"
+    },
+    {
+        "amount": 4469,
+        "income": 2982,
+        "category": "XS",
+        "created": "31.10.2022"
+    },
+    {
+        "amount": 9598,
+        "income": 2165,
+        "category": "S",
+        "created": "11.11.2022"
+    },
+    {
+        "amount": 2557,
+        "income": 6161,
+        "category": "L",
+        "created": "11.11.2022"
+    },
+    {
+        "amount": 5765,
+        "income": 8241,
+        "category": "M",
+        "created": "14.11.2022"
+    },
+    {
+        "amount": 8725,
+        "income": 1359,
+        "category": "L",
+        "created": "16.11.2022"
+    },
+    {
+        "amount": 4595,
+        "income": 7899,
+        "category": "L",
+        "created": "24.11.2022"
+    },
+    {
+        "amount": 8153,
+        "income": 9613,
+        "category": "S",
+        "created": "25.11.2022"
+    },
+    {
+        "amount": 7106,
+        "income": 3391,
+        "category": "XS",
+        "created": "26.11.2022"
+    },
+    {
+        "amount": 1491,
+        "income": 857,
+        "category": "XL",
+        "created": "26.11.2022"
+    },
+    {
+        "amount": 4464,
+        "income": 1321,
+        "category": "L",
+        "created": "28.11.2022"
+    },
+    {
+        "amount": 7559,
+        "income": 552,
+        "category": "2XL",
+        "created": "29.11.2022"
+    },
+    {
+        "amount": 4286,
+        "income": 2541,
+        "category": "XS",
+        "created": "30.11.2022"
+    },
+    {
+        "amount": 6960,
+        "income": 6510,
+        "category": "S",
+        "created": "03.12.2022"
+    },
+    {
+        "amount": 6845,
+        "income": 3479,
+        "category": "XS",
+        "created": "05.12.2022"
+    },
+    {
+        "amount": 3303,
+        "income": 6519,
+        "category": "XL",
+        "created": "11.12.2022"
+    },
+    {
+        "amount": 8971,
+        "income": 628,
+        "category": "XS",
+        "created": "12.12.2022"
+    },
+    {
+        "amount": 7066,
+        "income": 9331,
+        "category": "L",
+        "created": "15.12.2022"
+    },
+    {
+        "amount": 4218,
+        "income": 4238,
+        "category": "XS",
+        "created": "15.12.2022"
+    },
+    {
+        "amount": 4767,
+        "income": 2438,
+        "category": "L",
+        "created": "17.12.2022"
+    },
+    {
+        "amount": 3391,
+        "income": 9690,
+        "category": "L",
+        "created": "20.12.2022"
+    },
+    {
+        "amount": 4085,
+        "income": 4901,
+        "category": "XS",
+        "created": "21.12.2022"
+    },
+    {
+        "amount": 2242,
+        "income": 6236,
+        "category": "XL",
+        "created": "25.12.2022"
+    },
+    {
+        "amount": 2152,
+        "income": 7996,
+        "category": "S",
+        "created": "28.12.2022"
+    },
+    {
+        "amount": 5080,
+        "income": 2458,
+        "category": "XL",
+        "created": "01.01.2023"
+    },
+    {
+        "amount": 5856,
+        "income": 5994,
+        "category": "3XL",
+        "created": "02.01.2023"
+    },
+    {
+        "amount": 9509,
+        "income": 5654,
+        "category": "M",
+        "created": "04.01.2023"
+    },
+    {
+        "amount": 9340,
+        "income": 6455,
+        "category": "3XL",
+        "created": "05.01.2023"
+    },
+    {
+        "amount": 747,
+        "income": 3690,
+        "category": "XS",
+        "created": "05.01.2023"
+    },
+    {
+        "amount": 7758,
+        "income": 700,
+        "category": "L",
+        "created": "05.01.2023"
+    },
+    {
+        "amount": 6567,
+        "income": 1019,
+        "category": "XS",
+        "created": "11.01.2023"
+    },
+    {
+        "amount": 6004,
+        "income": 7340,
+        "category": "XL",
+        "created": "12.01.2023"
+    },
+    {
+        "amount": 7731,
+        "income": 7347,
+        "category": "M",
+        "created": "22.01.2023"
+    },
+    {
+        "amount": 2690,
+        "income": 2419,
+        "category": "M",
+        "created": "22.01.2023"
+    },
+    {
+        "amount": 3933,
+        "income": 3632,
+        "category": "S",
+        "created": "24.01.2023"
+    },
+    {
+        "amount": 5251,
+        "income": 7432,
+        "category": "XS",
+        "created": "10.02.2023"
+    },
+    {
+        "amount": 4844,
+        "income": 5282,
+        "category": "2XL",
+        "created": "21.02.2023"
+    },
+    {
+        "amount": 2132,
+        "income": 5154,
+        "category": "M",
+        "created": "25.02.2023"
+    },
+    {
+        "amount": 2598,
+        "income": 4598,
+        "category": "2XL",
+        "created": "26.02.2023"
+    },
+    {
+        "amount": 711,
+        "income": 9196,
+        "category": "XL",
+        "created": "01.03.2023"
+    },
+    {
+        "amount": 1316,
+        "income": 9400,
+        "category": "L",
+        "created": "03.03.2023"
+    },
+    {
+        "amount": 9130,
+        "income": 4476,
+        "category": "XL",
+        "created": "04.03.2023"
+    },
+    {
+        "amount": 2405,
+        "income": 1443,
+        "category": "2XL",
+        "created": "05.03.2023"
+    },
+    {
+        "amount": 7594,
+        "income": 9117,
+        "category": "M",
+        "created": "08.03.2023"
+    },
+    {
+        "amount": 4985,
+        "income": 1216,
+        "category": "M",
+        "created": "13.03.2023"
+    },
+    {
+        "amount": 9109,
+        "income": 4511,
+        "category": "L",
+        "created": "14.03.2023"
+    },
+    {
+        "amount": 8917,
+        "income": 7398,
+        "category": "M",
+        "created": "16.03.2023"
+    },
+    {
+        "amount": 9954,
+        "income": 6918,
+        "category": "M",
+        "created": "22.03.2023"
+    },
+    {
+        "amount": 8525,
+        "income": 3398,
+        "category": "L",
+        "created": "25.03.2023"
+    },
+    {
+        "amount": 2602,
+        "income": 3161,
+        "category": "L",
+        "created": "30.03.2023"
+    },
+    {
+        "amount": 4421,
+        "income": 5090,
+        "category": "M",
+        "created": "30.03.2023"
+    },
+    {
+        "amount": 9009,
+        "income": 6344,
+        "category": "L",
+        "created": "08.04.2023"
+    },
+    {
+        "amount": 8747,
+        "income": 5890,
+        "category": "2XL",
+        "created": "09.04.2023"
+    },
+    {
+        "amount": 2488,
+        "income": 8151,
+        "category": "M",
+        "created": "15.04.2023"
+    },
+    {
+        "amount": 7785,
+        "income": 3387,
+        "category": "3XL",
+        "created": "16.04.2023"
+    },
+    {
+        "amount": 7515,
+        "income": 7958,
+        "category": "L",
+        "created": "22.04.2023"
+    },
+    {
+        "amount": 8690,
+        "income": 4711,
+        "category": "M",
+        "created": "24.04.2023"
+    },
+    {
+        "amount": 5533,
+        "income": 5646,
+        "category": "XS",
+        "created": "26.04.2023"
+    },
+    {
+        "amount": 4762,
+        "income": 7334,
+        "category": "3XL",
+        "created": "27.04.2023"
+    },
+    {
+        "amount": 4661,
+        "income": 1470,
+        "category": "M",
+        "created": "02.05.2023"
+    },
+    {
+        "amount": 1537,
+        "income": 5172,
+        "category": "2XL",
+        "created": "02.05.2023"
+    },
+    {
+        "amount": 2957,
+        "income": 1732,
+        "category": "3XL",
+        "created": "04.05.2023"
+    },
+    {
+        "amount": 4555,
+        "income": 7436,
+        "category": "XL",
+        "created": "05.05.2023"
+    },
+    {
+        "amount": 1437,
+        "income": 8202,
+        "category": "3XL",
+        "created": "05.05.2023"
+    },
+    {
+        "amount": 5459,
+        "income": 1708,
+        "category": "2XL",
+        "created": "12.05.2023"
+    },
+    {
+        "amount": 1015,
+        "income": 2770,
+        "category": "XS",
+        "created": "17.05.2023"
+    },
+    {
+        "amount": 2964,
+        "income": 5730,
+        "category": "XS",
+        "created": "21.05.2023"
+    },
+    {
+        "amount": 9576,
+        "income": 9942,
+        "category": "S",
+        "created": "30.05.2023"
+    },
+    {
+        "amount": 3158,
+        "income": 3314,
+        "category": "3XL",
+        "created": "01.06.2023"
+    },
+    {
+        "amount": 3094,
+        "income": 7133,
+        "category": "L",
+        "created": "06.06.2023"
+    },
+    {
+        "amount": 4264,
+        "income": 4300,
+        "category": "XS",
+        "created": "11.06.2023"
+    },
+    {
+        "amount": 7519,
+        "income": 963,
+        "category": "M",
+        "created": "12.06.2023"
+    },
+    {
+        "amount": 2012,
+        "income": 8514,
+        "category": "2XL",
+        "created": "13.06.2023"
+    },
+    {
+        "amount": 3237,
+        "income": 5852,
+        "category": "2XL",
+        "created": "14.06.2023"
+    },
+    {
+        "amount": 3926,
+        "income": 4800,
+        "category": "L",
+        "created": "15.06.2023"
+    },
+    {
+        "amount": 358,
+        "income": 4800,
+        "category": "L",
+        "created": "16.06.2023"
+    },
+    {
+        "amount": 237,
+        "income": 1052,
+        "category": "2XL",
+        "created": "17.06.2023"
+    },
+    {
+        "amount": 1219,
+        "income": 2963,
+        "category": "M",
+        "created": "18.06.2023"
+    }
+]
