@@ -18,42 +18,33 @@ export default function SpendPopup({ onClose }) {
     <Popup onClose={onClose} popupSize="popup_s" title="Добавить расход">
       <form className="form form_add-operation" onSubmit={handleSubmit}>
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-date">
+          <label className="form__input-label" htmlFor="SpendPopup-date">
             Дата
+            <input id="SpendPopup-date" name="created" className="form__input" type="date" />
+          </label>
+        </div>
+
+        <div className="form__input-block">
+          <label className="form__input-label" htmlFor="SpendPopup-category">
+            Категория расхода
             <input
-              className="form__input"
-              type="date"
-              name="SpendingPopup-date"
-              id="SpendingPopup-date"
-              placeholder=""
+              id="SpendPopup-category"
+              name="category"
+              className="form__input form__input_select"
+              type="select"
+              placeholder="Выберите категорию"
             />
           </label>
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-category">
-            Категория расхода
-            <select
-              className="form__input form__input_select"
-              type="select"
-              name="SpendingPopup-category"
-              id="SpendingPopup-category"
-            >
-              <option value="" className="form__input_option">
-                Продукты
-              </option>
-            </select>
-          </label>
-        </div>
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-name">
+          <label className="form__input-label" htmlFor="SpedPopup-name">
             Название
             <input
+              id="SpendPopup-name"
+              name="name"
               className="form__input"
               type="text"
-              name="SpendingPopup-name"
-              id="SpendingPopup-name"
               placeholder="Введите название"
             />
           </label>
@@ -62,32 +53,29 @@ export default function SpendPopup({ onClose }) {
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
-            htmlFor="SpendingPopup-amount"
+            htmlFor="SpendPopup-amount"
           >
             Сумма
             <input
+              id="SpendPopup-amount"
+              name="amount"
               className="form__input form__input_sum"
               type="number"
-              name="SpendingPopup-amount"
-              id="SpendingPopup-amount"
               placeholder="Введите сумму"
             />
           </label>
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-card">
+          <label className="form__input-label" htmlFor="SpendPopup-finance">
             Счёт списания
-            <select
+            <input
+              id="SpendPopup-finance"
+              name="finance"
               className="form__input form__input_select"
               type="select"
-              name="SpendingPopup-card"
-              id="SpendingPopup-card"
-            >
-              <option value="" className="form__input_option">
-                Тинькофф
-              </option>
-            </select>
+              placeholder="Выберите счёт"
+            />
           </label>
         </div>
 

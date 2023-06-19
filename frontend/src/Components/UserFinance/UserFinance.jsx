@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './Account.scss';
-import AccountSelect from '../AccountSelect/AccountSelect';
+import './UserFinance.scss';
+import FinanceSelect from '../FinanceSelect/FinanceSelect';
 import Overlay from '../Overlay/Overlay';
-import { getAccounts } from '../../store/slices/accounts';
+import { getUserFinance } from '../../store/slices/userFinance';
 
-export default function Account() {
+export default function UserFinance() {
   const dispatch = useDispatch();
 
-  const accounts = useSelector((state) => state.accounts.accounts);
+  const accounts = useSelector((state) => state.userFinance.finance);
 
   useEffect(() => {
-    dispatch(getAccounts());
+    dispatch(getUserFinance());
   }, []);
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -40,25 +40,25 @@ export default function Account() {
   };
 
   return (
-    <section className="account">
-      <h2 className="account__title">{selectedAccount?.balance}</h2>
-      <div className="account__selected-content">
+    <section className="user-finance">
+      <h2 className="user-finance__title">{selectedAccount?.balance}</h2>
+      <div className="user-finance__selected-content">
         <button
-          className={`account__selected ${isListOpen ? 'account__selected--open' : ''}`}
+          className={`user-finance__selected ${isListOpen ? 'user-finance__selected--open' : ''}`}
           type="button"
           onClick={toggleList}
         >
-          <span className="account__arrow" />
+          <span className="user-finance__arrow" />
           {selectedAccount && (
             <>
-              <img src={selectedAccount.image} alt="Account Icon" className="account__icon" />
+              <img src={selectedAccount.image} className="user-finance__icon" alt="Иконка банка" />
               {selectedAccount.name}
             </>
           )}
         </button>
       </div>
       <Overlay isOpen={isListOpen} onClose={closeList}>
-        <AccountSelect handleOptionChange={handleOptionChange} selectedOption={selectedOption} />
+        <FinanceSelect handleOptionChange={handleOptionChange} selectedOption={selectedOption} />
       </Overlay>
     </section>
   );
