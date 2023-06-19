@@ -4,9 +4,8 @@ import React from 'react';
 function TransactionCard({ transaction }) {
   const { name, finance, amount, category } = transaction;
 
-  //  const spending = amount < 0;
-  // const textStyle = spending ? 'card__amount_spending' : 'card__amount_earn';
-  const mathSign = '-';
+  const mathSign = category.id === 119 ? '+' : '-';
+  const amountStyle = category.id === 119 ? 'card__amount_earn' : 'card__amount_spending';
 
   return (
     <li className="card">
@@ -24,7 +23,7 @@ function TransactionCard({ transaction }) {
       </div>
 
       <div className="card__block">
-        <p className="card__amount_spending">
+        <p className={`card__amount ${amountStyle}`}>
           {mathSign}
           {amount}₽
         </p>
