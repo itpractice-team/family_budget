@@ -173,16 +173,29 @@
 // выпадающий список
 
 .form__input_select {
-  appearance: none;
-  background: url(../Images/chevron-down.svg) no-repeat calc(100% - 16px) center / 20px;
+  position: relative;
+  display: flex;
+
+  &--open {
+    .form__input_select__arrow {
+      transform: rotate(90deg);
+    }
+  }
 }
 
-.form__input_option {
-  color: #828282;
+.form__input_select__arrow {
+  position: absolute;
+  left: calc(100% - 38px);
+  width: 24px;
+  height: 24px;
+  background: url('../Images/chevron-down.svg') no-repeat center / contain;
+  transform: rotate(-90deg);
 }
 
-.form__input_option[selected] {
-  color: #333333;
+.form__input_select__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 
 // сообщения об ошибках ввода
