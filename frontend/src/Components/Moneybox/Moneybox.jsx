@@ -14,12 +14,12 @@ import { getMoneybox } from '../../store/slices/moneybox';
 export default function Moneybox() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getMoneybox());
-  }, []);
-
   const { isEditMoneyboxPopupOpen, isDoneMoneyboxPopupOpen } = useSelector((state) => state.popup);
   const moneyboxList = useSelector((state) => state.moneybox.moneybox);
+
+  useEffect(() => {
+    dispatch(getMoneybox());
+  }, [moneyboxList]);
 
   const handleItemClick = (isDone) => {
     if (isDone && !isDoneMoneyboxPopupOpen) {
