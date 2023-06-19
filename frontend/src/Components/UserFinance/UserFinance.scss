@@ -1,6 +1,6 @@
 @import '../../styles/consts.scss';
 
-.account {
+.user-finance {
   position: relative;
   padding: 21px 24px 33px 24px;
   width: 100%;
@@ -36,7 +36,7 @@
     align-items: center;
 
     &--open {
-      .account__arrow {
+      .user-finance__arrow {
         transform: rotate(180deg);
       }
     }

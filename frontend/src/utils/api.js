@@ -123,7 +123,7 @@ export const deleteUserAPI = async () => {
   }
 };
 
-export const getAccontsAPI = async () => {
+export const getUserFinanceAPI = async () => {
   const url = `${baseUrl}/finance/`;
   const options = {
     method: 'GET',
