@@ -217,7 +217,7 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
     icon = PrimaryKey404RelatedField(
         queryset=Icon.objects.all(),
     )
-    image_url = serializers.ImageField(
+    image = serializers.ImageField(
         source="icon.image",
         use_url=True,
         read_only=True,
@@ -233,7 +233,7 @@ class BudgetCategorySerializer(DefaultBudgetDataSerializer):
             "priority",
             "budget",
             "icon",
-            "image_url",
+            "image",
             "category_type",
             "color",
             "description",

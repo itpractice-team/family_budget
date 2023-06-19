@@ -184,16 +184,20 @@ class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         context["categories"] = (
             [data.pk for data in categories] if categories else None
         )
-        print(context)
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
         context = self.get_serializer_context()
+        print(context)
         if context["from_date"]:
-            queryset = queryset.filter(created__gte=context["from_date"])
+            queryset = queryset.filter(
+                budget_financetransaction__created__lte=context["from_date"]
+            )
         if context["to_date"]:
-            queryset = queryset.filter(created__lte=context["to_date"])
+            queryset = queryset.filter(
+                budget_financetransaction__created__gte=context["to_date"]
+            )
         if context["categories"]:
             queryset = queryset.filter(
                 budget_financetransaction__category__id__in=context[
