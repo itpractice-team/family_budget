@@ -3,16 +3,48 @@
 .categories {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 24px;
   background: $clearWhite;
   border-radius: 20px;
-}
 
-.categories__title {
-  @include h3-web;
-}
+  &__title {
+    @include h3-web;
+    margin-bottom: 20px;
+  }
 
-.categories-button {
-  justify-content: center;
+  &__all-text {
+    padding-bottom: 12px;
+    margin: 20px 0 12px 0;
+    border-bottom: 1px solid $midGrey;
+  }
+
+  &__button {
+    justify-content: center;
+  }
+
+  &__list {
+    margin-bottom: 32px;
+    display: grid;
+    gap: 12px;
+    height: 136px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      border-radius: 8px;
+      width: 4px;
+      background-color: $lightGrey;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: $heavyBlue;
+    }
+  }
+
+  &__item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }

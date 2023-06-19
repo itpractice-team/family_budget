@@ -7,7 +7,7 @@ export default function LeftBlock() {
   return (
     <section className="left-block">
       <Account />
-      <Speedometer income={25000} spend={11000} />
+      <Speedometer income={111000} spend={77000} />
       <Categories />
     </section>
   );

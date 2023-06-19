@@ -1,15 +1,16 @@
+import { useSelector } from 'react-redux';
 import './AccountSelect.scss';
 import Button from '../../ui/Button/Button';
 import Dropdown from '../Dropdown/Dropdown';
 
 export default function AccountSelect({ handleOptionChange, selectedOption }) {
-  const options = ['Тинькофф', 'СБЕР', 'Наличные', 'Другой счёт'];
+  const accounts = useSelector((state) => state.accounts.accounts);
 
   return (
     <div className="account-select">
       <p className="account-select__title">Все счета</p>
       <Dropdown
-        options={options}
+        options={accounts}
         selectedOption={selectedOption}
         onOptionChange={handleOptionChange}
       />
@@ -18,7 +19,7 @@ export default function AccountSelect({ handleOptionChange, selectedOption }) {
         content="text"
         text="Добавить/Редактировать"
         size="medium"
-        extraClass="button_account-select"
+        extraClass="account-select__button"
       />
     </div>
   );

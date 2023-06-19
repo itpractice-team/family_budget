@@ -5,7 +5,7 @@ import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
 import AddOperationBlock from '../AddOperationBlock/AddOperationBlock';
 
 export default function MainBlock() {
-  const [selectedTimeInterval, setSelectedTimeInterval] = useState('Неделя');
+  const [selectedTimeInterval, setSelectedTimeInterval] = useState('week');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
 

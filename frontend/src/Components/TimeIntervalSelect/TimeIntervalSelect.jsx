@@ -1,9 +1,8 @@
 import './TimeIntervalSelect.scss';
 import Dropdown from '../Dropdown/Dropdown';
+import { timeIntervals } from '../../utils/consts';
 
 export default function TimeIntervalSelect({ selectedTimeInterval, onTimeIntervalChange }) {
-  const timeIntervals = ['Сегодня', 'Неделя', 'Месяц', 'Год', 'Вся история'];
-
   return (
     <div className="timeinterval-select">
       <Dropdown

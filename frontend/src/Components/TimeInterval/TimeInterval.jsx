@@ -5,6 +5,7 @@ import { setDateStart, setDateEnd } from "../../store/slices/dateSlice";
 export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
   const dispatch = useDispatch();
   const getTimeInterval = (selectedTimeInterval) => {
+
     const today = new Date();
 
     if (selectedTimeInterval.match(/\d{2}.\d{2}.\d{4}/gm)) {
@@ -12,14 +13,14 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
     }
 
     switch (selectedTimeInterval) {
-      case 'Сегодня': {
+      case 'today': {
         const formattedToday = dateFormatter.format(today);
         dispatch(setDateStart(formattedToday));
         dispatch(setDateEnd(''));
         return `Сегодня: ${formattedToday}`;
       }
 
-      case 'Неделя': {
+      case 'week': {
         const weekStart = new Date(today);
         weekStart.setDate(today.getDate() - 6); // 6 дней назад
         const formattedWeekStart = dateFormatter.format(weekStart);
@@ -29,7 +30,7 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         return `На этой неделе: ${formattedWeekStart} - ${formattedWeekEnd}`;
       }
 
-      case 'Месяц': {
+      case 'month': {
         // месяц назад от текущей даты
         const monthAgo = new Date();
         monthAgo.setMonth(monthAgo.getMonth() - 1);
@@ -40,7 +41,7 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         return `За месяц: ${formattedMonthAgo} - ${formattedToday}`;
       }
 
-      case 'Год': {
+      case 'year': {
         // год назад от текущей даты
         const yearAgo = new Date(today);
         yearAgo.setFullYear(today.getFullYear() - 1);
@@ -51,7 +52,7 @@ export default function TimeInterval({ selectedTimeInterval, dateFormatter }) {
         return `За год: ${formattedYearAgo} - ${formattedTodayForYear}`;
       }
 
-      case 'Вся история':
+      case 'all':
       dispatch(setDateStart(''));
       dispatch(setDateEnd(''));
         return 'Вся история';

@@ -12,11 +12,12 @@ export default function Dropdown({ options, selectedOption, onOptionChange }) {
       {options.map((option) => {
         return (
           <Radio
-            key={option}
-            text={option}
-            value={option}
-            isChecked={selectedOption === option}
-            onChange={() => handleRadioChange(option)}
+            key={option.id}
+            text={option.name}
+            icon={option.image}
+            value={option.id}
+            isChecked={selectedOption === option.id}
+            onChange={() => handleRadioChange(option.id)}
           />
         );
       })}

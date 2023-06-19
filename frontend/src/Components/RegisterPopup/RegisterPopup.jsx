@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
