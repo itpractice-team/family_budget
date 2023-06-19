@@ -4,6 +4,7 @@ import { registrationReducer } from './slices/registerSlice';
 import { loginReducer } from './slices/loginSlice';
 import { userReducer } from './slices/userSlice';
 import { passwordReducer } from './slices/passwordSlice';
+import { dateReducer } from './slices/dateSlice';
 import { accountsReducer } from './slices/accounts';
 import { categoriesReducer } from './slices/categories';
 import { moneyboxReducer } from './slices/moneybox';
@@ -15,6 +16,7 @@ const store = configureStore({
     login: loginReducer,
     user: userReducer,
     password: passwordReducer,
+    dates: dateReducer,
     accounts: accountsReducer,
     categories: categoriesReducer,
     moneybox: moneyboxReducer,
