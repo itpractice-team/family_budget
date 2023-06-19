@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './UserFinance.scss';
-import FinanceSelect from '../FinanceSelect/FinanceSelect';
+import UserFinanceSelect from '../UserFinanceSelect/UserFinanceSelect';
 import Overlay from '../Overlay/Overlay';
 import { getUserFinance } from '../../store/slices/userFinance';
 
@@ -26,9 +26,7 @@ export default function UserFinance() {
   const selectedAccount = accounts.find((account) => account.id === selectedOption);
 
   const handleOptionChange = (value) => {
-    setSelectedOption((prevSelectedOption) =>
-      prevSelectedOption === value ? prevSelectedOption : value,
-    );
+    setSelectedOption((option) => (option === value ? option : value));
   };
 
   const toggleList = () => {
@@ -58,7 +56,11 @@ export default function UserFinance() {
         </button>
       </div>
       <Overlay isOpen={isListOpen} onClose={closeList}>
-        <FinanceSelect handleOptionChange={handleOptionChange} selectedOption={selectedOption} />
+        <UserFinanceSelect
+          handleOptionChange={handleOptionChange}
+          selectedOption={selectedOption}
+          accounts={accounts}
+        />
       </Overlay>
     </section>
   );

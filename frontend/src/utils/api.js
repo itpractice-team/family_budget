@@ -136,6 +136,19 @@ export const getUserFinanceAPI = async () => {
   return data;
 };
 
+export const getFinanceListAPI = async () => {
+  const url = `${baseUrl}/finance/handbook/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
 export const getCategoriesAPI = async () => {
   const url = `${baseUrl}/category/`;
   const options = {
@@ -164,6 +177,34 @@ export const getMoneyboxAPI = async () => {
 
 export const addMoneyboxAPI = async (formData) => {
   const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
+
+export const getTransactionListAPI = async () => {
+  const url = `${baseUrl}/transaction/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+export const addSpendAPI = async (formData) => {
+  const url = `${baseUrl}/transaction/`;
   const options = {
     method: 'POST',
     headers: {

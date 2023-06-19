@@ -1,5 +1,4 @@
-@import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
+@import '../../../styles/consts.scss';
 
 .card {
   width: 100%;
@@ -72,7 +71,7 @@
 .card {
   &:hover {
     .card__button {
-      background: transparent url('../../Images/dropdawn.svg') center / 20px no-repeat;
+      background: transparent url('../../../Images/dropdawn.svg') center / 20px no-repeat;
       width: 40px;
       height: 40px;
       padding: 10px;
@@ -80,15 +79,15 @@
     }
 
     .card__button_edit {
-      background-image: url(../../Images/edit.svg);
+      background-image: url(../../../Images/edit.svg);
     }
 
     .card__button_delete {
-      background-image: url(../../Images/delete.svg);
+      background-image: url(../../../Images/delete.svg);
     }
 
     .card__button_copy {
-      background-image: url(../../Images/copy.svg);
+      background-image: url(../../../Images/copy.svg);
     }
   }
 }

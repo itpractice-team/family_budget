@@ -1,31 +1,26 @@
-import './Card.scss';
+import './TransactionCard.scss';
 import React from 'react';
 
-function SpendingCard({ header, text, bank, amount, categoryImg, bankLogo, spending }) {
-  let textStyle = '';
-  let mathSign = '';
+function TransactionCard({ transaction }) {
+  const { name, finance, amount, category } = transaction;
 
-  if (spending) {
-    textStyle = 'card__amount_spending';
-    mathSign = '-';
-  } else {
-    textStyle = 'card__amount_earn';
-    mathSign = '+';
-  }
+  const spending = amount < 0;
+  const textStyle = spending ? 'card__amount_spending' : 'card__amount_earn';
+  const mathSign = spending ? '-' : '+';
 
   return (
     <li className="card">
       <div className="card__block">
-        <img className="card__category" src={categoryImg} alt={text} />
+        <img className="card__category" src={category.image_url} alt={category.name} />
         <p className="card__header">
-          {header}
-          <span className="card__text">{text}</span>
+          {category.name}
+          <span className="card__text">{name}</span>
         </p>
       </div>
 
       <div className="card__block">
-        <img className="card__bank-img" src={bankLogo} alt={bank} />
-        <p className="card__text">{bank}</p>
+        <img className="card__bank-img" src={finance.image} alt={finance.name} />
+        <p className="card__text">{finance.name}</p>
       </div>
 
       <div className="card__block">
@@ -44,4 +39,4 @@ function SpendingCard({ header, text, bank, amount, categoryImg, bankLogo, spend
   );
 }
 
-export default React.memo(SpendingCard);
+export default React.memo(TransactionCard);
