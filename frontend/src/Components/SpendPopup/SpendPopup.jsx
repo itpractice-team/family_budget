@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { toggleSpendPopup } from '../../store/slices/togglePopupSlice';
-import { getFinanceList } from '../../store/slices/finance';
 import Select from '../Select/Select';
 import Overlay from '../Overlay/Overlay';
-import { addSpend } from '../../store/slices/transactionList';
+import { addTransaction } from '../../store/slices/transactionList';
 
 export default function SpendPopup({ onClose }) {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getFinanceList());
-  }, []);
 
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinance.finance,
@@ -68,7 +63,7 @@ export default function SpendPopup({ onClose }) {
 
   const handleAddSpend = (evt) => {
     evt.preventDefault();
-    dispatch(addSpend(formData)).then(() => {
+    dispatch(addTransaction({ ...formData, category_type: 1 })).then(() => {
       dispatch(toggleSpendPopup(false));
     });
   };

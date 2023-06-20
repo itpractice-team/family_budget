@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { toggleIncomePopup } from '../../store/slices/togglePopupSlice';
-import { getFinanceList } from '../../store/slices/finance';
-import { addSpend } from '../../store/slices/transactionList';
+import { addTransaction } from '../../store/slices/transactionList';
 import Overlay from '../Overlay/Overlay';
 import Select from '../Select/Select';
 
 export default function IncomePopup({ onClose }) {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getFinanceList());
-  }, []);
 
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinance.finance,
@@ -66,9 +61,9 @@ export default function IncomePopup({ onClose }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleAddSpend = (evt) => {
+  const handleAddIncome = (evt) => {
     evt.preventDefault();
-    dispatch(addSpend(formData)).then(() => {
+    dispatch(addTransaction({ ...formData, category_type: 2 })).then(() => {
       dispatch(toggleIncomePopup(false));
     });
   };
@@ -80,7 +75,7 @@ export default function IncomePopup({ onClose }) {
 
   return (
     <Popup onClose={onClose} popupSize="popup_s" title="Добавить доход">
-      <form className="form form_add-operation" onSubmit={handleAddSpend}>
+      <form className="form form_add-operation" onSubmit={handleAddIncome}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="IncomePopup-date">
             Дата
