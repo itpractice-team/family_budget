@@ -8,6 +8,13 @@ validate_only_letters = RegexValidator(
     "invalid",
 )
 
+letter_or_blank_space_re = _lazy_re_compile(r"^([^\W\d]| )+$")
+validate_letter_or_blank_space = RegexValidator(
+    letter_or_blank_space_re,
+    _("Enter a valid string value consisting of only letters or blank space."),
+    "invalid",
+)
+
 color_hex_code_re = _lazy_re_compile(r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
 validate_color_hex_code = RegexValidator(
     color_hex_code_re,
