@@ -87,3 +87,9 @@ def is_exists_user_info(queryset, user):
     if user.is_anonymous:
         return False
     return queryset.filter(pk=user.pk).exists()
+
+
+def create_model_link_budget_data(budget, model, validated_data):
+    """Создание связанных данных c бюджетом."""
+    bulk_objs = [model(budget=budget, **data) for data in validated_data]
+    model.objects.bulk_create(bulk_objs)

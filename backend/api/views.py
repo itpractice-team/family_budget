@@ -1,201 +1,206 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import status, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from api.permissions import IsAuthor
 from api.serializers import (
-    AccountIconCreteSerializer,
-    AccountSerializer,
-    AcountIconGetSerializer,
-    CategoryIconCreateSerializer,
-    CategoryIconGetSerializer,
-    CategorySerializer,
-    IncomeSerializer,
+    BudgetCategorySerializer,
+    BudgetFinanceSerializer,
+    BudgetParamsSerializer,
+    BudgetUpdateFinanceSerializer,
+    CategoryIconSerializer,
+    FinanceHandBookSerializer,
     MoneyBoxSerializer,
-    SpendSerializer,
+    ReapeatSpendReadSerializer,
+    ReapeatSpendWriteSerializer,
+    TotalBudgetInfoSerializer,
+    TransactionReadSerializer,
+    TransactionWriteSerializer,
+    TransferFinanceSerializer,
 )
 from budget.models import (
-    Account,
-    AccountIcon,
-    Category,
-    CategoryIcon,
-    Income,
+    Budget,
+    BudgetCategory,
+    BudgetFinance,
+    Finance,
+    FinanceTransaction,
+    Icon,
     MoneyBox,
-    Spend,
+    ReapeatSpend,
 )
 
 User = get_user_model()
 
 
-class MoneyBoxViewSet(viewsets.ModelViewSet):
+class CategoryIconViewSet(ReadOnlyModelViewSet):
+    """Иконки категорий."""
+
+    queryset = Icon.objects.all()
+    serializer_class = CategoryIconSerializer
+
+
+class FinanceHandBookViewSet(ReadOnlyModelViewSet):
+    """Справочник источников финансирований."""
+
+    queryset = Finance.objects.all()
+    serializer_class = FinanceHandBookSerializer
+
+
+class BudgetBaseViewSet(viewsets.GenericViewSet):
+    """Базовый Viewset бюджета пользователя."""
+
+    def get_budget(self):
+        return self.request.user.budgets.first()
+
+    def get_queryset(self):
+        return self.queryset.filter(budget=self.get_budget())
+
+
+class BudgetFinanceViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Источники финансирования бюджета пользователя."""
+
+    queryset = BudgetFinance.objects.all()
+    serializer_class = BudgetFinanceSerializer
+
+    def get_serializer_class(self):
+        if self.action in ("update", "partial_update"):
+            return BudgetUpdateFinanceSerializer
+        return BudgetFinanceSerializer
+
+    def get_object(self):
+        """Возвращает объект по finance_id."""
+        queryset = self.get_queryset()
+        pk = self.request.parser_context["kwargs"]["pk"]
+        return get_object_or_404(queryset.filter(finance=pk))
+
+
+class TransferFinanceViewSet(BudgetBaseViewSet):
+    """Источники финансирования бюджета пользователя."""
+
+    queryset = BudgetFinance.objects.all()
+    serializer_class = TransferFinanceSerializer
+
+    @action(methods=["post"], detail=False)
+    def transfer(self, request, *args, **kwargs):
+        """Перевод баланса между счетами."""
+        serializer = TransferFinanceSerializer(
+            data=request.data, context={"budget": self.get_budget()}
+        )
+        if serializer.is_valid(raise_exception=True):
+            amount = serializer.validated_data["amount"]
+            debet_obj = serializer.validated_data["obj_from_finance"]
+            debet_obj.balance -= amount
+            debet_obj.save()
+            credit_obj = serializer.validated_data["obj_to_finance"]
+            credit_obj.balance += amount
+            credit_obj.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class BudgetCategoryViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Категории расходов и доходов для бюджета пользователя."""
+
+    queryset = BudgetCategory.objects.all()
+    serializer_class = BudgetCategorySerializer
+
+
+class BudgetTransactionViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Транзакции бюджета пользователя."""
+
+    queryset = FinanceTransaction.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return TransactionReadSerializer
+        return TransactionWriteSerializer
+
+
+class ReapeatSpendViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Повтороряющиеся расходы."""
+
+    queryset = ReapeatSpend.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return ReapeatSpendReadSerializer
+        return ReapeatSpendWriteSerializer
+
+
+class MoneyBoxViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    BudgetBaseViewSet,
+):
+    """Конверты на накопления."""
+
+    queryset = MoneyBox.objects.all()
     serializer_class = MoneyBoxSerializer
-    permission_classes = (IsAuthor,)
+
+
+class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """Детальная информаци по бюджету."""
+
+    queryset = Budget.objects.all()
+    serializer_class = TotalBudgetInfoSerializer
+
+    def get_serializer_context(self):
+        """Возвращает контекст сериализатора."""
+        context = super().get_serializer_context()
+        query = BudgetParamsSerializer(data=self.request.query_params)
+        query.is_valid(raise_exception=True)
+        query_params = query.validated_data
+        context["from_date"] = query_params.get("from_date")
+        context["to_date"] = query_params.get("to_date")
+        categories = query_params.get("categories")
+        context["categories"] = (
+            [data.pk for data in categories] if categories else None
+        )
+        return context
 
     def get_queryset(self):
-        user = self.request.user
-        return MoneyBox.objects.filter(user=user)
-
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
-
-    @action(detail=True, methods=("post",))
-    def goal_achieved(self, request, pk=None):
-        moneybox = MoneyBox.objects.get(id=pk)
-        if moneybox.is_collected:
-            moneybox.achieved = True
-            moneybox.save()
-            Spend.objects.create(
-                title=moneybox.title,
-                amount=moneybox.total,
-                # description=moneybox.description,
-                category=moneybox.category,
-                user=request.user,
+        queryset = super().get_queryset().filter(user=self.request.user)
+        context = self.get_serializer_context()
+        if context["from_date"]:
+            queryset = queryset.filter(
+                budget_financetransaction__created__lte=context["from_date"]
             )
-
-
-class IncomeViewSet(viewsets.ModelViewSet):
-    serializer_class = IncomeSerializer
-    permission_classes = (IsAuthor,)
-    http_method_names = ["get"]
-
-    def get_queryset(self):
-        user = self.request.user
-        return Income.objects.filter(user=user)
-
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
-
-
-class SpendViewSet(viewsets.ModelViewSet):
-    serializer_class = SpendSerializer
-    permission_classes = (IsAuthor,)
-    http_method_names = ["get"]
-
-    def get_queryset(self):
-        user = self.request.user
-        return Spend.objects.filter(user=user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-
-# class CategoryIncomeViewSet(viewsets.ModelViewSet):
-#     queryset = CategoryIncome.objects.all()
-#     serializer_class = CategoryIncomeSerializer
-#     permission_classes = (IsAuthor,)
-
-#     def get_queryset(self):
-#         return CategoryIncome.objects.filter(user=self.request.user)
-
-#     def perform_create(self, serializer):
-#         return serializer.save(user=self.request.user)
-
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    serializer_class = CategorySerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def get_queryset(self):
-        user = self.request.user
-        return Category.objects.filter(user=user)
-
-
-class AccountViewSet(viewsets.ModelViewSet):
-    serializer_class = AccountSerializer
-    permission_classes = (IsAuthor,)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def get_queryset(self):
-        user = self.request.user
-        return Account.objects.filter(user=user)
-
-    @action(
-        detail=True,
-        url_path="add_spend",
-        methods=["POST"],
-        url_name="add_spend",
-        permission_classes=(IsAuthor,),
-        serializer_class=SpendSerializer,
-    )
-    def add_spend(self, request, *args, **kwargs):
-        user = request.user
-        account = get_object_or_404(Account, id=kwargs["pk"])
-        request_data = request.data
-        amount = request_data.get("amount")
-
-        if account.user != user:
-            return Response(
-                {"error": "Нельзя производить опрации не со своим счетом."},
-                status=status.HTTP_400_BAD_REQUEST,
+        if context["to_date"]:
+            queryset = queryset.filter(
+                budget_financetransaction__created__gte=context["to_date"]
             )
-
-        if amount > account.balance:
-            return Response(
-                {"error": "Сумма траты не может превышать сумму счёта."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        category_data = request_data.pop("category")
-        category = Category.objects.get(id=category_data)
-
-        new_spend = Spend.objects.create(**request_data, user=user)
-        new_spend.category = category
-        new_spend.save()
-        account.balance -= amount
-        account.save()
-
-        serializer = SpendSerializer(new_spend)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    @action(
-        detail=True,
-        methods=["POST"],
-        url_name="add_income",
-        url_path="add_income",
-        permission_classes=(IsAuthor,),
-    )
-    def add_income(self, request, *args, **kwargs):
-        user = request.user
-        account = get_object_or_404(Account, id=kwargs["pk"])
-        request_data = request.data
-
-        if account.user != user:
-            return Response(
-                {"error": "Нельзя производить опрации не со своим счетом."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        serializer = IncomeSerializer(data=request_data)
-        serializer.is_valid(raise_exception=True)
-
-        amount = request_data.get("amount")
-        new_income = Income.objects.create(**request_data, user=user)
-        account.balance += amount
-        account.save()
-
-        serializer = IncomeSerializer(new_income)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class AccountIconViewSet(viewsets.ModelViewSet):
-    queryset = AccountIcon.objects.all()
-
-    def get_serializer_class(self):
-        if self.request.method == ["GET"]:
-            return AcountIconGetSerializer
-        return AccountIconCreteSerializer
-
-
-class CategoryIconViewSet(viewsets.ModelViewSet):
-    queryset = CategoryIcon.objects.all()
-
-    def get_serializer_class(self):
-        if self.request.method == ["GET"]:
-            return CategoryIconGetSerializer
-        return CategoryIconCreateSerializer
+        if context["categories"]:
+            queryset = queryset.filter(
+                budget_financetransaction__category__id__in=context[
+                    "categories"
+                ]
+            ).distinct()
+        return queryset
