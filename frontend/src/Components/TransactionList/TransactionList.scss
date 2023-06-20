@@ -1,10 +1,6 @@
 @import '../../styles/consts.scss';
 
 .spending-list__wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 12px;
   height: 689px;
   overflow-x: hidden;
   overflow-y: auto;
