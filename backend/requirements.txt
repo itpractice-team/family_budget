@@ -76,6 +76,7 @@ pytest-lazy-fixture==0.6.3 ; python_full_version >= "3.10.1" and python_full_ver
 pytest-pythonpath==0.7.4 ; python_full_version >= "3.10.1" and python_version < "4"
 pytest-sugar==0.9.7 ; python_full_version >= "3.10.1" and python_full_version < "4.0.0"
 pytest==6.2.5 ; python_full_version >= "3.10.1" and python_version < "4"
+python-dateutil==2.8.2 ; python_full_version >= "3.10.1" and python_full_version < "4.0.0"
 python-dotenv==1.0.0 ; python_full_version >= "3.10.1" and python_full_version < "4.0.0"
 python-slugify==8.0.1 ; python_full_version >= "3.10.1" and python_full_version < "4.0.0"
 python3-openid==3.2.0 ; python_full_version >= "3.10.1" and python_version < "4.0"

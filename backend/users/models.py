@@ -1,8 +1,10 @@
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator, MinLengthValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from users.settings import USER_ME
 from users.validators import UnicodeUsernameValidator, validate_simple_name
 
 
@@ -53,9 +55,32 @@ class User(AbstractUser):
         upload_to="users",
     )
 
-    class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+    class Meta(AbstractUser.Meta):
+        ordering = ["username"]
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(username__iexact=USER_ME),
+                name="reserve_USER_ME",
+            ),
+        ]
+
+    @property
+    def is_admin(self):
+        """Проверка административных прав у пользователя."""
+        return self.is_staff or self.is_superuser
+
+    def clean(self):
+        """Валидация модели."""
+        if self.username.upper() == USER_ME:
+            raise ValidationError(
+                {
+                    "username": _(
+                        "The ME username is reserved. Specify another please."
+                    )
+                }
+            )
+        super().clean()
 
     def __str__(self):
-        return self.username
+        """Вывод данных пользователя."""
+        return f"{self.username} ({self.get_full_name()}), email: {self.email}"
