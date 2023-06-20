@@ -1,0 +1,53 @@
+@import '../../styles/consts.scss';
+
+.profile-page {
+  position: relative;
+  background: #f4f4f4 url('../../Images/profile-background.svg') no-repeat center bottom;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 70px 160px 50px 160px;
+}
+
+.profile-settings {
+  background-color: #ffffff;
+  max-width: 784px;
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.profile-settings__title {
+  @include h2-web;
+  margin-bottom: 24px;
+}
+
+.profile-settings__avatar-block {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.profile-settings__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
+}
+
+.profile__error-message {
+  @include text-small-web;
+  color: #f05a2b;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50px;
+  left: 22%;
+  height: 28px;
+  background: url(../../Images/alert-triangle.svg) no-repeat top 50% left 8px / 25px;
+  padding-left: 36px;
+}
+
+.footer__content_profile {
+  position: absolute;
+  bottom: 40px;
+}

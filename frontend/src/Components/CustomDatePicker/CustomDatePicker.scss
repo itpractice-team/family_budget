@@ -1,0 +1,17 @@
+@import '../../styles/consts.scss';
+@import '../../styles/colors.scss';
+
+.data-picker {
+  @include h3-web;
+  margin-bottom: 5px;
+  display: none;
+}
+
+.data-picker__time {
+  padding: 10px;
+  border: 0.5px solid $bg-color-primary;
+  width: 96px;
+  height: 34px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
