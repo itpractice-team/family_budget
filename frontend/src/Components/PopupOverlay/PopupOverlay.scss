@@ -1,0 +1,13 @@
+.popup-overlay {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  transition: visibility 0.5s, opacity 0.5s ease-in;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
