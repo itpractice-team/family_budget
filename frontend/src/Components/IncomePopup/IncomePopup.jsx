@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
@@ -6,6 +7,7 @@ import { toggleIncomePopup } from '../../store/slices/togglePopupSlice';
 import { addTransaction } from '../../store/slices/transactionList';
 import Overlay from '../Overlay/Overlay';
 import Select from '../Select/Select';
+import SelectButton from '../../ui/SelectButton/SelectButton';
 
 export default function IncomePopup({ onClose }) {
   const dispatch = useDispatch();
@@ -91,27 +93,17 @@ export default function IncomePopup({ onClose }) {
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="EarningPopup-category">
+          <label className="form__input-label">
             Категория дохода
-            <button
-              className={`form__input form__input_select ${
-                isFinanceListOpen ? 'form__input_select--open' : ''
-              }`}
-              type="button"
-              onClick={() => toggleList('category')}
-            >
-              {formData.category && (
-                <>
-                  <img
-                    src={categories.find((category) => category.id === formData.category)?.image}
-                    className="form__input_select__icon"
-                    alt="Иконка категории"
-                  />
-                  {categories.find((category) => category.id === formData.category)?.name}
-                </>
-              )}
-              <span className="form__input_select__arrow" />
-            </button>
+            <SelectButton
+              isOpen={isCategoryListOpen}
+              toggleList={() => toggleList('category')}
+              options={categories}
+              selectedOption={formData.category}
+              imageKey="image"
+              nameKey="name"
+              altText="Иконка категории"
+            />
             <Overlay isOpen={isCategoryListOpen} onClose={() => closeList('category')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('category', value)}
@@ -156,27 +148,17 @@ export default function IncomePopup({ onClose }) {
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="IncomePopup-card">
+          <label className="form__input-label">
             Счёт зачисления
-            <button
-              className={`form__input form__input_select ${
-                isFinanceListOpen ? 'form__input_select--open' : ''
-              }`}
-              type="button"
-              onClick={() => toggleList('finance')}
-            >
-              {formData.finance && (
-                <>
-                  <img
-                    src={finance?.find((account) => account.id === formData.finance)?.image}
-                    className="form__input_select__icon"
-                    alt="Иконка банка"
-                  />
-                  {finance?.find((account) => account.id === formData.finance)?.name}
-                </>
-              )}
-              <span className="form__input_select__arrow" />
-            </button>
+            <SelectButton
+              isOpen={isFinanceListOpen}
+              toggleList={() => toggleList('finance')}
+              options={finance}
+              selectedOption={formData.finance}
+              imageKey="image"
+              nameKey="name"
+              altText="Иконка банка"
+            />
             <Overlay isOpen={isFinanceListOpen} onClose={() => closeList('finance')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('finance', value)}
