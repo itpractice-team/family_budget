@@ -1,19 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import './AccountPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleAccountPopup } from '../../store/slices/togglePopupSlice';
-import accounts from '../../Images/accountslist.svg';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function AccountPopup({ onClose }) {
-  const dispatch = useDispatch();
+  const { closePopup: closeAccountPopup } = usePopup('account');
   const [isAddingAccount, setIsAddingAccount] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
 
   function handleCancel(evt) {
     evt.preventDefault();
-    dispatch(toggleAccountPopup(false));
+    closeAccountPopup();
   }
 
   function handleCancelForm(evt) {
@@ -31,9 +29,7 @@ export default function AccountPopup({ onClose }) {
   return (
     <Popup onClose={onClose} popupSize={popupSize} title="Мои счета">
       <section className="account-popup__content">
-        <div className="account-popup__list">
-          <img src={accounts} alt="" />
-        </div>
+        <div className="account-popup__list" />
         {!isAddingAccount ? (
           <Button
             variant="secondary"

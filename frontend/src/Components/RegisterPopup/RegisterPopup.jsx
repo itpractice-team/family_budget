@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { registerUser } from '../../store/slices/registerSlice';
 import registerValidation from '../../utils/validations/registerValidation';
@@ -16,9 +15,13 @@ import {
   RequirementsPassword,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const { openPopup: openLoginPopup } = usePopup('login');
+  const { closePopup: closeRegisterPopup } = usePopup('register');
 
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
@@ -32,8 +35,8 @@ export default function RegisterPopup({ onClose }) {
   const isLoading = useSelector((store) => store.registration.loading);
 
   const handleLoginClick = () => {
-    dispatch(toggleRegisterPopup(false));
-    dispatch(toggleLoginPopup(true));
+    closeRegisterPopup();
+    openLoginPopup();
   };
 
   const handleRegistration = (userData) => {
@@ -41,8 +44,8 @@ export default function RegisterPopup({ onClose }) {
   };
 
   if (isRegistration) {
-    dispatch(toggleRegisterPopup(false));
-    dispatch(toggleLoginPopup(true));
+    closeRegisterPopup();
+    openLoginPopup();
   }
 
   const {

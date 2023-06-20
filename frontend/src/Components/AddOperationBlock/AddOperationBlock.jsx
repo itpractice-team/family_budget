@@ -1,32 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './AddOperationBlock.scss';
-import {
-  toggleSpendPopup,
-  toggleIncomePopup,
-  toggleTransferPopup,
-} from '../../store/slices/togglePopupSlice';
-import Button from '../../ui/Button/Button';
+import usePopup from '../../utils/hooks/usePopup';
 import SpendPopup from '../SpendPopup/SpendPopup';
 import IncomePopup from '../IncomePopup/IncomePopup';
 import TransferPopup from '../TransferPopup/TransferPopup';
+import Button from '../../ui/Button/Button';
 import plus from '../../Images/icons/plus.svg';
-// import minus from '../../Images/icons/minus.svg';
-// import arrow from '../../Images/icons/icon-arrow-right.svg';
 
 export default function AddOperationBlock() {
-  const dispatch = useDispatch();
-
-  const { isIncomePopupOpen, isSpendPopupOpen, isTransferPopupOpen } = useSelector(
-    (state) => state.popup,
-  );
-
-  const handleSpendClick = () => dispatch(toggleSpendPopup(true));
-  const handleIncomeClick = () => dispatch(toggleIncomePopup(true));
-  const handleTransferClick = () => dispatch(toggleTransferPopup(true));
-
-  const closeSpendPopup = () => dispatch(toggleSpendPopup(false));
-  const closeIncomePopup = () => dispatch(toggleIncomePopup(false));
-  const closeTransferPopup = () => dispatch(toggleTransferPopup(false));
+  const {
+    isOpen: isSpendPopupOpen,
+    openPopup: openSpendPopup,
+    closePopup: closeSpendPopup,
+  } = usePopup('spend');
+  const {
+    isOpen: isIncomePopupOpen,
+    openPopup: openIncomePopup,
+    closePopup: closeIncomePopup,
+  } = usePopup('income');
+  const {
+    isOpen: isTransferPopupOpen,
+    openPopup: openTransferPopup,
+    closePopup: closeTransferPopup,
+  } = usePopup('transfer');
 
   return (
     <section className="add-operation">
@@ -36,7 +31,7 @@ export default function AddOperationBlock() {
         image={plus}
         text="Расход"
         size="medium"
-        onClick={handleSpendClick}
+        onClick={openSpendPopup}
       />
       <Button
         variant="secondary"
@@ -44,7 +39,7 @@ export default function AddOperationBlock() {
         image={plus}
         text="Доход"
         size="medium"
-        onClick={handleIncomeClick}
+        onClick={openIncomePopup}
       />
       <Button
         variant="secondary"
@@ -52,7 +47,7 @@ export default function AddOperationBlock() {
         image={plus}
         text="Перевод"
         size="medium"
-        onClick={handleTransferClick}
+        onClick={openTransferPopup}
       />
       {isSpendPopupOpen && <SpendPopup onClose={closeSpendPopup} />}
       {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}

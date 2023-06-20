@@ -1,14 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
 import { deleteTransaction } from '../../../store/slices/transactionList';
-import { toggleEditTransactionPopup } from '../../../store/slices/togglePopupSlice';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
+import usePopup from '../../../utils/hooks/usePopup';
 
 function TransactionCard({ transaction }) {
   const dispatch = useDispatch();
 
-  const isEditTransactionPopupOpen = useSelector((state) => state.popup.isEditTransactionPopupOpen);
+  const {
+    isOpen: isEditTransactionPopupOpen,
+    openPopup: openEditTransactionPopup,
+    closePopup: closeEditTransactionPopup,
+  } = usePopup('editTransaction');
 
   const { id, name, finance, amount, category } = transaction;
 
@@ -24,13 +28,8 @@ function TransactionCard({ transaction }) {
     dispatch(deleteTransaction(id));
   };
 
-  const handleEdit = () => {
-    dispatch(toggleEditTransactionPopup(true));
-  };
-
-  const handleEditTransactionPopupClose = () => {
-    dispatch(toggleEditTransactionPopup(false));
-  };
+  const handleEdit = () => openEditTransactionPopup();
+  const handleEditTransactionPopupClose = () => closeEditTransactionPopup();
 
   return (
     <li className="card">

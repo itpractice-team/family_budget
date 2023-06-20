@@ -1,7 +1,13 @@
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function TransferPopup({ onClose }) {
+  const { closePopup: closeTransferPopup } = usePopup('transfer');
+
+  const handleCancel = () => {
+    closeTransferPopup();
+  };
   return (
     <Popup onClose={onClose} popupSize="popup_transfer" title="Перевод между счетами">
       <form className="form">
@@ -40,7 +46,13 @@ export default function TransferPopup({ onClose }) {
           />
         </label>
         <div className="form__button-wrapper">
-          <Button variant="secondary" content="text" text="Отменить" size="medium" />
+          <Button
+            variant="secondary"
+            content="text"
+            text="Отменить"
+            size="medium"
+            onClick={handleCancel}
+          />
           <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
         </div>
       </form>

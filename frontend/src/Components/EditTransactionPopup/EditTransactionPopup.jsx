@@ -1,31 +1,32 @@
-import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleEditTransactionPopup } from '../../store/slices/togglePopupSlice';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function EditTransactionPopup({ onClose, transaction }) {
-  const dispatch = useDispatch();
+  const { closePopup: closeEditTransactionPopup } = usePopup('editTransaction');
 
   function handleSubmit(evt) {
     evt.preventDefault();
   }
 
-  const handleСancel = () => dispatch(toggleEditTransactionPopup(false));
+  const handleCancel = () => {
+    closeEditTransactionPopup();
+  };
 
   return (
     <Popup onClose={onClose} popupSize="popup_edit-operation" title={transaction.name}>
       <form className="form" onSubmit={handleSubmit}>
         <p className="form__input-label">{transaction.category.name}</p>
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-date">
+          <label className="form__input-label" htmlFor="EditTransactionPopup-date">
             Дата
             <input
+              id="EditTransactionPopup-date"
+              name="created"
               className="form__input"
               type="text"
-              name="SpendingPopup-date"
-              id="SpendingPopup-date"
-              placeholder="__.__.____"
-              value={transaction.created}
+              placeholder="Введите дату"
+              defaultValue={transaction.created}
             />
           </label>
         </div>
@@ -47,14 +48,15 @@ export default function EditTransactionPopup({ onClose, transaction }) {
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-name">
+          <label className="form__input-label" htmlFor="EditTransactionPopup-name">
             Название
             <input
+              id="EditTransactionPopup-name"
+              name="name"
               className="form__input"
               type="text"
-              name="SpendingPopup-name"
-              id="SpendingPopup-name"
               placeholder="Введите название"
+              defaultValue={transaction.name}
             />
           </label>
         </div>
@@ -62,15 +64,16 @@ export default function EditTransactionPopup({ onClose, transaction }) {
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
-            htmlFor="SpendingPopup-amount"
+            htmlFor="EditTransactionPopup-amount"
           >
             Сумма
             <input
+              id="EditTransactionPopup-amount"
+              name="amount"
               className="form__input form__input_sum"
               type="number"
-              name="SpendingPopup-amount"
-              id="SpendingPopup-amount"
-              placeholder="0"
+              placeholder="Введите сумму"
+              defaultValue={transaction.amount}
             />
           </label>
         </div>
@@ -97,7 +100,7 @@ export default function EditTransactionPopup({ onClose, transaction }) {
             content="text"
             text="Отменить"
             size="medium"
-            onClick={handleСancel}
+            onClick={handleCancel}
           />
           <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
         </div>

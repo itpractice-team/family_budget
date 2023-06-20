@@ -34,7 +34,7 @@ export default function TransactionList() {
 
   useEffect(() => {
     dispatch(getTransactionList());
-  }, [transactions]);
+  }, []);
 
   return (
     <div className="spending-list__wrapper">

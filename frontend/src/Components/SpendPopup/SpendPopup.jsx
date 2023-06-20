@@ -1,14 +1,16 @@
-// SpendPopup.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import SpendForm from './SpendForm';
-import { toggleSpendPopup } from '../../store/slices/togglePopupSlice';
 import { addTransaction } from '../../store/slices/transactionList';
 import useDropdown from '../../utils/hooks/useDropdown';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function SpendPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const { closePopup: closeSpendPopup } = usePopup('spend');
+
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinance.finance,
     categories: state.categories.categories,
@@ -53,14 +55,11 @@ export default function SpendPopup({ onClose }) {
   const handleAddSpend = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: 1 })).then(() => {
-      dispatch(toggleSpendPopup(false));
+      closeSpendPopup();
     });
   };
 
-  const handleCancel = (evt) => {
-    evt.preventDefault();
-    dispatch(toggleSpendPopup(false));
-  };
+  const handleCancel = () => closeSpendPopup();
 
   return (
     <Popup onClose={onClose} popupSize="popup_s" title="Добавить расход">

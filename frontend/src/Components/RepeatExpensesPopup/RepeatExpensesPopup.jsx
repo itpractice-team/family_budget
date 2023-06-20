@@ -1,18 +1,17 @@
 import './RepeatExpensesPopup.scss';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleRepeatExpensesPopup } from '../../store/slices/togglePopupSlice';
 import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
 
-  const dispatch = useDispatch();
+  const { closePopup: closeRepeatExpensesPopup } = usePopup('repeatExpenses');
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
@@ -20,12 +19,12 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
+    closeRepeatExpensesPopup();
   }
 
   function handleСancel(evt) {
     evt.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
+    closeRepeatExpensesPopup();
   }
 
   return (
