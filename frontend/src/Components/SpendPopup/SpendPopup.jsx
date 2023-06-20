@@ -16,8 +16,12 @@ export default function SpendPopup({ onClose }) {
     finance: state.userFinance.finance,
     categories: state.categories.categories,
   }));
-  const [isFinanceListOpen, setIsFinanceListOpen] = useState(false);
-  const [isCategoryListOpen, setIsCategoryListOpen] = useState(false);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState({
+    category: false,
+    finance: false,
+  });
+
   const [formData, setFormData] = useState({
     created: '',
     category: categories?.[0]?.id || '',
@@ -27,35 +31,23 @@ export default function SpendPopup({ onClose }) {
   });
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories.length > 0 && !formData.category) {
       setFormData((prevData) => ({ ...prevData, category: categories[0].id }));
     }
-  }, [categories]);
+  }, [categories, formData.category]);
 
   useEffect(() => {
-    if (finance.length > 0) {
+    if (finance.length > 0 && !formData.finance) {
       setFormData((prevData) => ({ ...prevData, finance: finance[0].id }));
     }
-  }, [finance]);
+  }, [finance, formData.finance]);
 
   const handleOptionChange = (field, value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const toggleList = (type) => {
-    if (type === 'finance') {
-      setIsFinanceListOpen(!isFinanceListOpen);
-    } else if (type === 'category') {
-      setIsCategoryListOpen(!isCategoryListOpen);
-    }
-  };
-
-  const closeList = (type) => {
-    if (type === 'finance') {
-      setIsFinanceListOpen(false);
-    } else if (type === 'category') {
-      setIsCategoryListOpen(false);
-    }
+  const toggleDropdown = (type) => {
+    setIsDropdownOpen((prevState) => ({ ...prevState, [type]: !prevState[type] }));
   };
 
   const handleChange = (evt) => {
@@ -96,15 +88,15 @@ export default function SpendPopup({ onClose }) {
           <label className="form__input-label">
             Категория расхода
             <SelectButton
-              isOpen={isCategoryListOpen}
-              toggleList={() => toggleList('category')}
+              isOpen={isDropdownOpen.category}
+              toggleList={() => toggleDropdown('category')}
               options={categories}
               selectedOption={formData.category}
               imageKey="image"
               nameKey="name"
               altText="Иконка категории"
             />
-            <Overlay isOpen={isCategoryListOpen} onClose={() => closeList('category')}>
+            <Overlay isOpen={isDropdownOpen.category} onClose={() => toggleDropdown('category')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('category', value)}
                 selectedOption={formData.category}
@@ -151,15 +143,15 @@ export default function SpendPopup({ onClose }) {
           <label className="form__input-label">
             Счёт списания
             <SelectButton
-              isOpen={isFinanceListOpen}
-              toggleList={() => toggleList('finance')}
+              isOpen={isDropdownOpen.finance}
+              toggleList={() => toggleDropdown('finance')}
               options={finance}
               selectedOption={formData.finance}
               imageKey="image"
               nameKey="name"
               altText="Иконка банка"
             />
-            <Overlay isOpen={isFinanceListOpen} onClose={() => closeList('finance')}>
+            <Overlay isOpen={isDropdownOpen.finance} onClose={() => toggleDropdown('finance')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('finance', value)}
                 selectedOption={formData.finance}
