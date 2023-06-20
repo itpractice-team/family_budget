@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
 import { deleteTransaction } from '../../../store/slices/transactionList';
@@ -7,6 +7,7 @@ import usePopup from '../../../utils/hooks/usePopup';
 
 function TransactionCard({ transaction }) {
   const dispatch = useDispatch();
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   const {
     isOpen: isEditTransactionPopupOpen,
@@ -28,8 +29,15 @@ function TransactionCard({ transaction }) {
     dispatch(deleteTransaction(id));
   };
 
-  const handleEdit = () => openEditTransactionPopup();
-  const handleEditTransactionPopupClose = () => closeEditTransactionPopup();
+  const handleEdit = () => {
+    setSelectedTransaction(transaction);
+    openEditTransactionPopup();
+  };
+
+  const handleEditTransactionPopupClose = () => {
+    setSelectedTransaction(null);
+    closeEditTransactionPopup();
+  };
 
   return (
     <li className="card">
@@ -68,8 +76,12 @@ function TransactionCard({ transaction }) {
         />
         <button type="button" aria-label="Повторить" className="card__button card__button_copy" />
       </div>
+
       {isEditTransactionPopupOpen && (
-        <EditTransactionPopup onClose={handleEditTransactionPopupClose} transaction={transaction} />
+        <EditTransactionPopup
+          onClose={handleEditTransactionPopupClose}
+          transaction={selectedTransaction}
+        />
       )}
     </li>
   );
