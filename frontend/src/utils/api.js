@@ -203,7 +203,7 @@ export const getTransactionListAPI = async () => {
   return data;
 };
 
-export const addSpendAPI = async (formData) => {
+export const addTransactionAPI = async (formData) => {
   const url = `${baseUrl}/transaction/`;
   const options = {
     method: 'POST',
@@ -216,4 +216,21 @@ export const addSpendAPI = async (formData) => {
 
   const data = await request(url, options);
   return data;
+};
+
+export const deleteTransactionAPI = async (id) => {
+  const url = `${baseUrl}/transaction/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete transaction failed: ${error.message}`);
+  }
 };
