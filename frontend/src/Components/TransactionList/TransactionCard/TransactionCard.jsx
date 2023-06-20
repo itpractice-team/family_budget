@@ -1,11 +1,36 @@
-import './TransactionCard.scss';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import './TransactionCard.scss';
+import { deleteTransaction } from '../../../store/slices/transactionList';
+import { toggleEditTransactionPopup } from '../../../store/slices/togglePopupSlice';
+import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 
 function TransactionCard({ transaction }) {
-  const { name, finance, amount, category } = transaction;
+  const dispatch = useDispatch();
 
-  const mathSign = category.id === 119 ? '+' : '-';
-  const amountStyle = category.id === 119 ? 'card__amount_earn' : 'card__amount_spending';
+  const isEditTransactionPopupOpen = useSelector((state) => state.popup.isEditTransactionPopupOpen);
+
+  const { id, name, finance, amount, category } = transaction;
+
+  const categoryTypeStyles = {
+    1: { mathSign: '-', amountStyle: 'card__amount_spending' },
+    2: { mathSign: '+', amountStyle: 'card__amount_earn' },
+  };
+
+  const { mathSign, amountStyle } =
+    categoryTypeStyles[transaction.category_type] || categoryTypeStyles[2];
+
+  const handleDelete = () => {
+    dispatch(deleteTransaction(id));
+  };
+
+  const handleEdit = () => {
+    dispatch(toggleEditTransactionPopup(true));
+  };
+
+  const handleEditTransactionPopupClose = () => {
+    dispatch(toggleEditTransactionPopup(false));
+  };
 
   return (
     <li className="card">
@@ -25,15 +50,28 @@ function TransactionCard({ transaction }) {
       <div className="card__block">
         <p className={`card__amount ${amountStyle}`}>
           {mathSign}
-          {amount}₽
+          {amount} ₽
         </p>
       </div>
 
       <div className="card__block card__button-block">
-        <button type="button" aria-label="Изменить" className="card__button card__button_edit" />
-        <button type="button" aria-label="Удалить" className="card__button card__button_delete" />
+        <button
+          type="button"
+          aria-label="Изменить"
+          className="card__button card__button_edit"
+          onClick={handleEdit}
+        />
+        <button
+          type="button"
+          aria-label="Удалить"
+          className="card__button card__button_delete"
+          onClick={handleDelete}
+        />
         <button type="button" aria-label="Повторить" className="card__button card__button_copy" />
       </div>
+      {isEditTransactionPopupOpen && (
+        <EditTransactionPopup onClose={handleEditTransactionPopupClose} transaction={transaction} />
+      )}
     </li>
   );
 }
