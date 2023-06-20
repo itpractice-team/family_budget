@@ -10,7 +10,7 @@ function TransactionCard({ transaction }) {
   return (
     <li className="card">
       <div className="card__block">
-        <img className="card__category" src={category.image_url} alt={category.name} />
+        <img className="card__category" src={category.image} alt={category.name} />
         <p className="card__header">
           {category.name}
           <span className="card__text">{name}</span>

@@ -108,9 +108,7 @@ export default function IncomePopup({ onClose }) {
               {formData.category && (
                 <>
                   <img
-                    src={
-                      categories.find((category) => category.id === formData.category)?.image_url
-                    }
+                    src={categories.find((category) => category.id === formData.category)?.image}
                     className="form__input_select__icon"
                     alt="Иконка категории"
                   />
