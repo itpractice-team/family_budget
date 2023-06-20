@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
@@ -6,6 +7,7 @@ import { toggleSpendPopup } from '../../store/slices/togglePopupSlice';
 import Select from '../Select/Select';
 import Overlay from '../Overlay/Overlay';
 import { addTransaction } from '../../store/slices/transactionList';
+import SelectButton from '../../ui/SelectButton/SelectButton';
 
 export default function SpendPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -91,27 +93,17 @@ export default function SpendPopup({ onClose }) {
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendPopup-category">
+          <label className="form__input-label">
             Категория расхода
-            <button
-              className={`form__input form__input_select ${
-                isCategoryListOpen ? 'form__input_select--open' : ''
-              }`}
-              type="button"
-              onClick={() => toggleList('category')}
-            >
-              {formData.category && (
-                <>
-                  <img
-                    src={categories.find((category) => category.id === formData.category)?.image}
-                    className="form__input_select__icon"
-                    alt="Иконка категории"
-                  />
-                  {categories.find((category) => category.id === formData.category)?.name}
-                </>
-              )}
-              <span className="form__input_select__arrow" />
-            </button>
+            <SelectButton
+              isOpen={isCategoryListOpen}
+              toggleList={() => toggleList('category')}
+              options={categories}
+              selectedOption={formData.category}
+              imageKey="image"
+              nameKey="name"
+              altText="Иконка категории"
+            />
             <Overlay isOpen={isCategoryListOpen} onClose={() => closeList('category')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('category', value)}
@@ -156,27 +148,17 @@ export default function SpendPopup({ onClose }) {
         </div>
 
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendPopup-finance">
+          <label className="form__input-label">
             Счёт списания
-            <button
-              className={`form__input form__input_select ${
-                isFinanceListOpen ? 'form__input_select--open' : ''
-              }`}
-              type="button"
-              onClick={() => toggleList('finance')}
-            >
-              {formData.finance && (
-                <>
-                  <img
-                    src={finance?.find((account) => account.id === formData.finance)?.image}
-                    className="form__input_select__icon"
-                    alt="Иконка банка"
-                  />
-                  {finance?.find((account) => account.id === formData.finance)?.name}
-                </>
-              )}
-              <span className="form__input_select__arrow" />
-            </button>
+            <SelectButton
+              isOpen={isFinanceListOpen}
+              toggleList={() => toggleList('finance')}
+              options={finance}
+              selectedOption={formData.finance}
+              imageKey="image"
+              nameKey="name"
+              altText="Иконка банка"
+            />
             <Overlay isOpen={isFinanceListOpen} onClose={() => closeList('finance')}>
               <Select
                 handleOptionChange={(value) => handleOptionChange('finance', value)}
