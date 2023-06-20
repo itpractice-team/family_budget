@@ -5,6 +5,10 @@ import usePopup from '../../utils/hooks/usePopup';
 export default function EditTransactionPopup({ onClose, transaction }) {
   const { closePopup: closeEditTransactionPopup } = usePopup('editTransaction');
 
+  if (!transaction) {
+    return null;
+  }
+
   function handleSubmit(evt) {
     evt.preventDefault();
   }
@@ -23,10 +27,10 @@ export default function EditTransactionPopup({ onClose, transaction }) {
             <input
               id="EditTransactionPopup-date"
               name="created"
-              className="form__input"
+              className="form__input form__input_date"
               type="text"
               placeholder="Введите дату"
-              defaultValue={transaction.created}
+              defaultValue={new Date(transaction.created).toLocaleDateString('ru-RU')}
             />
           </label>
         </div>
