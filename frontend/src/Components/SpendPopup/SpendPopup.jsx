@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import SpendForm from './SpendForm';
-import { addTransaction } from '../../store/slices/transactionList';
+import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
 import useDropdown from '../../utils/hooks/useDropdown';
 
 export default function SpendPopup({ onClose }) {
@@ -52,6 +52,7 @@ export default function SpendPopup({ onClose }) {
   const handleAddSpend = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: 1 })).then(() => {
+      dispatch(getTransactionList());
       onClose();
     });
   };

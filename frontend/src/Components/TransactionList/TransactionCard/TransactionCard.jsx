@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
-import { deleteTransaction } from '../../../store/slices/transactionList';
+import { deleteTransaction, getTransactionList } from '../../../store/slices/transactionList';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
@@ -26,7 +26,9 @@ function TransactionCard({ transaction }) {
     categoryTypeStyles[transaction.category_type] || categoryTypeStyles[2];
 
   const handleDelete = () => {
-    dispatch(deleteTransaction(id));
+    dispatch(deleteTransaction(id)).then(() => {
+      dispatch(getTransactionList());
+    });
   };
 
   const handleEdit = () => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { addTransaction } from '../../store/slices/transactionList';
+import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
 import Overlay from '../Overlay/Overlay';
 import Select from '../Select/Select';
 import SelectButton from '../../ui/SelectButton/SelectButton';
@@ -65,6 +65,7 @@ export default function IncomePopup({ onClose }) {
   const handleAddIncome = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: 2 })).then(() => {
+      dispatch(getTransactionList());
       onClose();
     });
   };
