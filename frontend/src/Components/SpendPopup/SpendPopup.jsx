@@ -1,75 +1,31 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
-import SpendForm from './SpendForm';
+import TransactionForm from '../TransactionForm/TransactionForm';
 import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
-import useDropdown from '../../utils/hooks/useDropdown';
+import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
-export default function SpendPopup({ onClose }) {
+export default function SpendPopup({ onClose, popupSize, title, categoryType }) {
   const dispatch = useDispatch();
-
-  const { finance, categories } = useSelector((state) => ({
-    finance: state.userFinance.finance,
-    categories: state.categories.categories,
-  }));
-
-  const categoryDropdown = useDropdown(categories?.[0]?.id || '', categories);
-  const financeDropdown = useDropdown(finance?.[0]?.id || '', finance);
-
-  const [formData, setFormData] = useState({
-    created: '',
-    category: '',
-    name: '',
-    amount: '',
-    finance: '',
-  });
-
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      category: categoryDropdown.selectedOption,
-      finance: financeDropdown.selectedOption,
-    }));
-  }, [categoryDropdown.selectedOption, financeDropdown.selectedOption]);
-
-  useEffect(() => {
-    if (categories.length > 0 && !formData.category) {
-      setFormData((prevData) => ({ ...prevData, category: categories[0].id }));
-    }
-  }, [categories, formData.category]);
-
-  useEffect(() => {
-    if (finance.length > 0 && !formData.finance) {
-      setFormData((prevData) => ({ ...prevData, finance: finance[0].id }));
-    }
-  }, [finance, formData.finance]);
-
-  const handleChange = (data) => {
-    const { name, value } = data;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  const { formData, handleChange, categoryOptions, financeOptions } =
+    useTransactionForm(categoryType);
 
   const handleAddSpend = (evt) => {
     evt.preventDefault();
-    dispatch(addTransaction({ ...formData, category_type: 1 })).then(() => {
+    dispatch(addTransaction({ ...formData, category_type: categoryType })).then(() => {
       dispatch(getTransactionList());
       onClose();
     });
   };
 
-  const handleCancel = (evt) => {
-    evt.preventDefault();
-    onClose();
-  };
   return (
-    <Popup onClose={onClose} popupSize="popup_s" title="Добавить расход">
-      <SpendForm
+    <Popup onClose={onClose} popupSize={popupSize} title={title}>
+      <TransactionForm
         formData={formData}
         handleChange={handleChange}
-        handleAddSpend={handleAddSpend}
-        handleCancel={handleCancel}
-        categoryOptions={categories}
-        financeOptions={finance}
+        handleSubmit={handleAddSpend}
+        onClose={onClose}
+        categoryOptions={categoryOptions}
+        financeOptions={financeOptions}
       />
     </Popup>
   );

@@ -49,7 +49,14 @@ export default function AddOperationBlock() {
         size="medium"
         onClick={openTransferPopup}
       />
-      {isSpendPopupOpen && <SpendPopup onClose={closeSpendPopup} />}
+      {isSpendPopupOpen && (
+        <SpendPopup
+          onClose={closeSpendPopup}
+          popupSize="popup_s"
+          title="Добавить расход"
+          categoryType={1}
+        />
+      )}
       {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}
       {isTransferPopupOpen && <TransferPopup onClose={closeTransferPopup} />}
     </section>
