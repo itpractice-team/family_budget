@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
 import { deleteTransaction, getTransactionList } from '../../../store/slices/transactionList';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
-function TransactionCard({ transaction }) {
+export default function TransactionCard({ transaction }) {
   const dispatch = useDispatch();
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -14,6 +14,10 @@ function TransactionCard({ transaction }) {
     openPopup: openEditTransactionPopup,
     closePopup: closeEditTransactionPopup,
   } = usePopup('editTransaction');
+
+  if (!transaction) {
+    return null;
+  }
 
   const { id, name, finance, amount, category } = transaction;
 
@@ -83,10 +87,9 @@ function TransactionCard({ transaction }) {
         <EditTransactionPopup
           onClose={handleEditTransactionPopupClose}
           transaction={selectedTransaction}
+          categoryType={transaction.category_type}
         />
       )}
     </li>
   );
 }
-
-export default React.memo(TransactionCard);
