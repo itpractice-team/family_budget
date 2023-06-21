@@ -6,14 +6,12 @@ import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
-import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 import Radio from '../../ui/Radio/Radio';
+import InputData from '../InputData/InputDate';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
   const [selected, setSelected] = useState('До');
-  const [startDate, setStartDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
   const [valueDate, setValueDate] = useState('');
 
   const handleDateClick = (tab) => {
@@ -23,6 +21,7 @@ export default function RepeatExpensesPopup({ onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setValueDate('');
+    onClose();
   };
 
   const handleСancel = (evt) => {
@@ -35,26 +34,10 @@ export default function RepeatExpensesPopup({ onClose }) {
     setSelected(value);
   };
 
-  const isOpen = () => {
-    setValueDate(startDate.toLocaleDateString());
-    setOpen(true);
-  };
-
   return (
     <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
       <form className="form repeat-expenses" onSubmit={handleSubmit}>
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="RepeatExpenses-date">
-            Дата
-            <input
-              className="form__input"
-              type="date"
-              name="RepeatExpenses-date"
-              id="RepeatExpenses-date"
-            />
-          </label>
-        </div>
-
+        <InputData labelTitle="Дата" inputName="RepeatExpenses-date" value={valueDate} />
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
@@ -142,34 +125,7 @@ export default function RepeatExpensesPopup({ onClose }) {
           />
           <Radio value="До" isChecked={selected === 'До'} onChange={handleRadio} text="До" />
           {selected === 'До' && (
-            <>
-              <div className="form__input-block">
-                <label className="form__input-label" htmlFor="RepeatExpensesPopup-date">
-                  Дата
-                  <input
-                    className="form__input"
-                    type="text"
-                    name="RepeatExpensesPopup-date"
-                    id="RepeatExpensesPopup-date"
-                    value={valueDate}
-                    onChange={(e) => setValueDate(e.target.value)}
-                    placeholder="дд.мм.гггг"
-                    onClick={isOpen}
-                  />
-                </label>
-              </div>
-              {open && (
-                <CustomDatePicker
-                  type="date"
-                  onChange={(date) => {
-                    setStartDate(date);
-                    setValueDate(date.toLocaleDateString());
-                    setOpen(false);
-                  }}
-                  startDate={startDate}
-                />
-              )}
-            </>
+            <InputData labelTitle="Дата" inputName="RepeatExpensesPopup-date" value={valueDate} />
           )}
         </div>
 
