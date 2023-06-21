@@ -98,8 +98,8 @@ export default function EditMoneyboxPopup({ onClose, title }) {
           />
         </label>
         <div className="form__button-wrapper">
-          <Button variant="fiat" type="text" text="Удалить конверт" size="medium" />
-          <Button variant="primary" type="text" text="Сохранить" size="medium" />
+          <Button variant="fiat" content="text" text="Удалить конверт" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>

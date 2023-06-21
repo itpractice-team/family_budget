@@ -1,27 +1,6 @@
-@import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
-
 .left-block {
   display: flex;
   flex-direction: column;
   gap: 32px;
   width: 376px;
-}
-
-.left-block__categories {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  background: $bg-color-fiat;
-  border-radius: 20px;
-}
-
-.left-block__categories-title {
-  @include h3-web;
-  color: #1e1d24;
-}
-
-.left-block__categories-button {
-  justify-content: center;
 }

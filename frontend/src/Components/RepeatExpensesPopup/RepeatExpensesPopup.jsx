@@ -1,18 +1,14 @@
 import './RepeatExpensesPopup.scss';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleRepeatExpensesPopup } from '../../store/slices/togglePopupSlice';
 import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
-import Categories from '../Categories/Categories';
+import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
-
-  const dispatch = useDispatch();
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
@@ -20,17 +16,16 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
   }
 
   function handleСancel(evt) {
     evt.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
+    onClose();
   }
 
   return (
-    <Popup onClose={onClose} popupSize="popup_m" title="Повторяющиеся расходы">
-      <form className="form" onSubmit={handleSubmit}>
+    <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
+      <form className="form repeat-expenses" onSubmit={handleSubmit}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="RepeatExpenses-date">
             Дата
@@ -88,10 +83,13 @@ export default function RepeatExpensesPopup({ onClose }) {
           </label>
         </div>
 
-        <h3 className="form__text-bold">Сделать повторяющуюся запись?</h3>
-        <p className="form__input-label">Это событие будет повторяться каждый 1 день</p>
+        <div className="form__text-content">
+          <p className="form__text-bold">Сделать повторяющуюся запись?</p>
+          <p className="form__text">Это событие будет повторяться каждый 1 день</p>
+        </div>
+
         <div className="repeat-expenses__tab">
-          <Categories
+          <Tabs
             arr={arrCategoriesDate}
             size="tab-size_l"
             activeInit={activeDate}
@@ -114,12 +112,12 @@ export default function RepeatExpensesPopup({ onClose }) {
         <div className="form__button-wrapper form__button-wrapper_add-operation">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
           />
-          <Button variant="primary" type="text" text="Готово" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>

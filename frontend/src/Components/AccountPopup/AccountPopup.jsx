@@ -1,19 +1,15 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import './AccountPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleAccountPopup } from '../../store/slices/togglePopupSlice';
-import accounts from '../../Images/accountslist.svg';
 
 export default function AccountPopup({ onClose }) {
-  const dispatch = useDispatch();
   const [isAddingAccount, setIsAddingAccount] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
 
   function handleCancel(evt) {
     evt.preventDefault();
-    dispatch(toggleAccountPopup(false));
+    onClose();
   }
 
   function handleCancelForm(evt) {
@@ -31,13 +27,11 @@ export default function AccountPopup({ onClose }) {
   return (
     <Popup onClose={onClose} popupSize={popupSize} title="Мои счета">
       <section className="account-popup__content">
-        <div className="account-popup__list">
-          <img src={accounts} alt="" />
-        </div>
+        <div className="account-popup__list" />
         {!isAddingAccount ? (
           <Button
             variant="secondary"
-            type="icon-text"
+            content="icon-text"
             text="Добавить счет"
             size="medium"
             extraClass="button__add-account"
@@ -75,12 +69,18 @@ export default function AccountPopup({ onClose }) {
             <div className="form__button-wrapper">
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancelForm}
               />
-              <Button variant="primary" type="text" text="Сохранить" size="medium" />
+              <Button
+                type="submit"
+                variant="primary"
+                content="text"
+                text="Сохранить"
+                size="medium"
+              />
             </div>
           </form>
         )}
@@ -90,12 +90,12 @@ export default function AccountPopup({ onClose }) {
             <>
               <Button
                 variant="secondary"
-                type="text"
+                content="text"
                 text="Отменить"
                 size="medium"
                 onClick={handleCancel}
               />
-              <Button variant="primary" type="text" text="Готово" size="medium" />
+              <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
             </>
           )}
         </div>

@@ -1,96 +1,16 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCookie } from '../../utils/cookies';
-
-export const getUserAPI = async () => {
-  try {
-    const response = await fetch('https://familybudget.ddns.net/api/users/me/', {
-      method: 'GET',
-      headers: {
-        authorization: `Token ${getCookie('token')}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Getting user data failed');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const updateUserAPI = async (userData) => {
-  try {
-    const response = await fetch('https://familybudget.ddns.net/api/users/me/', {
-      method: 'PATCH',
-      headers: {
-        authorization: `Token ${getCookie('token')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Update user data failed');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-export const deleteUserAPI = async () => {
-  try {
-    const response = await fetch('https://familybudget.ddns.net/api/users/me/', {
-      method: 'DELETE',
-      headers: {
-        authorization: `Token ${getCookie('token')}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Delete user data failed');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+import { getUserAPI, updateUserAPI, deleteUserAPI } from '../../utils/api';
 
 export const getUser = createAsyncThunk('user/getData', async () => {
-  try {
-    const response = await getUserAPI();
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  return getUserAPI();
 });
 
 export const updateUser = createAsyncThunk('user/updateData', async (userData) => {
-  try {
-    const response = await updateUserAPI(userData);
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  return updateUserAPI(userData);
 });
 
 export const deleteUser = createAsyncThunk('user/deleteData', async () => {
-  try {
-    const response = await deleteUserAPI();
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  return deleteUserAPI();
 });
 
 const initialState = {
@@ -114,9 +34,6 @@ const userSlice = createSlice({
     resetUser: (state) => {
       state.user = initialState.user;
       state.isFetched = false;
-    },
-    clearUser: (state) => {
-      state.user = initialState.user;
     },
   },
   extraReducers: (builder) => {
@@ -162,6 +79,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { resetUser, clearUser } = userSlice.actions;
+export const { resetUser } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

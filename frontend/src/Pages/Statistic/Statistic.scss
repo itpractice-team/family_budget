@@ -1,6 +1,67 @@
+@import '../../styles/consts.scss';
+
 .statistic {
   display: flex;
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+  gap: 32px 60px;
+  flex-wrap: wrap;
+}
+
+.statistic__block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 24px;
+}
+
+.statistic__overview {
+  background-color: red;
+  max-width: 376px;
+  width: 100%;
+}
+
+.statistic__periods {
+  max-width: 1192px;
+  width: 100%;
+
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  height: fit-content;
+}
+
+.statistic__incoms {
+  background-color: green;
+  max-width: 784px;
+  width: 100%;
+}
+
+.statistic__spending {
+  background-color: yellow;
+  max-width: 784px;
+  width: 100%;
+}
+
+.statistic__text {
+  @include text-large-web;
+  color: #1e1d24;
+  width: 100%;
+}
+
+.statistic__header {
+  @include text-large-web-bold;
+  color: #1e1d24;
+  width: 100%;
+}
+
+.statistic__filtration {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background-color: #f4f4f4;
+  border-radius: 16px;
+  height: fit-content;
 }

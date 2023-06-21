@@ -1,58 +1,62 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  toggleEditMoneyboxPopup,
-  toggleDoneMoneyboxPopup,
-} from '../../store/slices/togglePopupSlice';
 import MoneyboxItem from '../MoneyboxItem/MoneyboxItem';
 import moneybox from '../../Images/moneybox.svg';
 import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 import EditMoneyboxPopup from '../EditMoneyboxPopup/EditMoneyboxPopup';
 import DoneMoneyboxPopup from '../DoneMoneyboxPopup/DoneMoneyboxPopup';
+import { getMoneybox } from '../../store/slices/moneybox';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Moneybox() {
   const dispatch = useDispatch();
 
-  const { isEditMoneyboxPopupOpen, isDoneMoneyboxPopupOpen } = useSelector((state) => state.popup);
+  const {
+    isOpen: isEditMoneyboxPopupOpen,
+    openPopup: openEditMoneyboxPopup,
+    closePopup: closeEditMoneyboxPopup,
+  } = usePopup('editMoneybox');
+  const {
+    isOpen: isDoneMoneyboxPopupOpen,
+    openPopup: openDoneMoneyboxPopup,
+    closePopup: closeDoneMoneyboxPopup,
+  } = usePopup('doneMoneybox');
+  const moneyboxList = useSelector((state) => state.moneybox.moneybox);
+
+  useEffect(() => {
+    dispatch(getMoneybox());
+  }, []);
 
   const handleItemClick = (isDone) => {
     if (isDone && !isDoneMoneyboxPopupOpen) {
-      dispatch(toggleDoneMoneyboxPopup(true)); // Открыть попап для достигнутой цели
+      openDoneMoneyboxPopup();
     } else if (!isDone && !isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(true)); // Открыть попап для редактирования
+      openEditMoneyboxPopup();
     }
   };
 
-  const handleEditPopupClose = () => {
-    if (isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(false)); // Закрыть попап для редактирования
-    }
-  };
-
-  const handleDonePopupClose = () => {
-    dispatch(toggleDoneMoneyboxPopup(false)); // Закрыть попап для достигнутой цели
-  };
   return (
     <section className="moneybox">
-      <MoneyboxItem
-        title="На отпуск"
-        balance={20000}
-        target={50000}
-        onClick={() => handleItemClick(false)}
-      />
-      <MoneyboxItem
-        title="На cпонсирование космонавтики"
-        balance={3000}
-        target={3000}
-        onClick={() => handleItemClick(true)}
-      />
+      {moneyboxList.length === 0 ? (
+        <PlugRightBlock icon={moneybox} subtitle="Отложить деньги на цель для накопления" />
+      ) : (
+        moneyboxList.map((item) => (
+          <MoneyboxItem
+            key={item.id}
+            title={item.name}
+            balance={item.accumulated}
+            target={item.amount}
+            onClick={() => handleItemClick(item.accumulated === item.amount)}
+          />
+        ))
+      )}
+
       {isEditMoneyboxPopupOpen && (
-        <EditMoneyboxPopup onClose={handleEditPopupClose} title="На отпуск" />
+        <EditMoneyboxPopup onClose={closeEditMoneyboxPopup} title="На отпуск" />
       )}
       {isDoneMoneyboxPopupOpen && (
-        <DoneMoneyboxPopup onClose={handleDonePopupClose} title="На cпонсирование космонавтики" />
+        <DoneMoneyboxPopup onClose={closeDoneMoneyboxPopup} title="На cпонсирование космонавтики" />
       )}
     </section>
   );
 }
-
-<PlugRightBlock icon={moneybox} subtitle="Отложить деньги на цель для накопления" />;

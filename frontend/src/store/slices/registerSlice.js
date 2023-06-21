@@ -1,35 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { registerUserAPI } from '../../utils/api';
 
-export const registerUserAPI = async (userData) => {
-  try {
-    const response = await fetch('https://familybudget.ddns.net/api/users/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Registration failed');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-// Создание асинхронного действия с помощью createAsyncThunk
 export const registerUser = createAsyncThunk('user/register', async (userData) => {
-  try {
-    const response = await registerUserAPI(userData);
-    return response;
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  return registerUserAPI(userData);
 });
 
 const initialState = {
@@ -43,7 +17,6 @@ const registrationSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // Обработка действий, созданных createAsyncThunk
     builder
       .addCase(registerUser.pending, (state) => {
         state.loading = true;

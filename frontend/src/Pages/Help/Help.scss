@@ -1,4 +1,40 @@
+@import '../../styles/consts.scss';
+@import '../../styles/consts.scss';
+
 .help {
   display: flex;
   flex-grow: 1;
+  margin: 0 160px;
+  padding: 60px 0;
+  gap: 32px;
+
+  &__title {
+    @include h1-web;
+  }
+
+  &__text-small {
+    @include text-medium-web;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    background: $clearWhite;
+    border-radius: 16px;
+    width: 100%;
+    padding: 40px;
+  }
+
+  &__container-right {
+    max-width: 376px;
+    height: fit-content;
+    background: $blueishGrey;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
 }

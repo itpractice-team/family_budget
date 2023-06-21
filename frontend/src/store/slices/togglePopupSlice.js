@@ -1,86 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isSpendPopupOpen: false,
-  isIncomePopupOpen: false,
-  isRegisterPopupOpen: false,
-  isLoginPopupOpen: false,
-  isPasswordChangePopupOpen: false,
-  isAvatarUploaderPopupOpen: false,
-  isConfirmationPopupOpen: false,
-  isInfoPopupOpen: false,
-  isAccountPopupOpen: false,
-  isSdekPopupOpen: false,
-  isRepeatExpensesPopupOpen: false,
-  isEditMoneyboxPopupOpen: false,
-  isDoneMoneyboxPopupOpen: false,
-  isAddMoneyboxPopupOpen: false,
+  isOpen: {
+    spend: false,
+    income: false,
+    register: false,
+    login: false,
+    passwordChange: false,
+    avatarUploader: false,
+    confirmation: false,
+    info: false,
+    account: false,
+    editTransaction: false,
+    repeatExpenses: false,
+    editMoneybox: false,
+    doneMoneybox: false,
+    addMoneybox: false,
+    transfer: false,
+  },
 };
 
 const togglePopupSlice = createSlice({
   name: 'togglePopup',
   initialState,
   reducers: {
-    toggleInfoPopup: (state, { payload }) => {
-      state.isInfoPopupOpen = payload;
-    },
-    toggleSpendPopup: (state, { payload }) => {
-      state.isSpendPopupOpen = payload;
-    },
-    toggleIncomePopup: (state, { payload }) => {
-      state.isIncomePopupOpen = payload;
-    },
-    toggleRegisterPopup: (state, { payload }) => {
-      state.isRegisterPopupOpen = payload;
-    },
-    toggleLoginPopup: (state, { payload }) => {
-      state.isLoginPopupOpen = payload;
-    },
-    togglePasswordChangePopup: (state, { payload }) => {
-      state.isPasswordChangePopupOpen = payload;
-    },
-    toggleAvatarUploaderPopup: (state, { payload }) => {
-      state.isAvatarUploaderPopupOpen = payload;
-    },
-    toggleConfirmationPopup: (state, { payload }) => {
-      state.isConfirmationPopupOpen = payload;
-    },
-    toggleAccountPopup: (state, { payload }) => {
-      state.isAccountPopupOpen = payload;
-    },
-    toggleSdekPopup: (state, { payload }) => {
-      state.isSdekPopupOpen = payload;
-    },
-    toggleRepeatExpensesPopup: (state, { payload }) => {
-      state.isRepeatExpensesPopupOpen = payload;
-    },
-    toggleEditMoneyboxPopup: (state, { payload }) => {
-      state.isEditMoneyboxPopupOpen = payload;
-    },
-    toggleDoneMoneyboxPopup: (state, { payload }) => {
-      state.isDoneMoneyboxPopupOpen = payload;
-    },
-    toggleAddMoneyboxPopup: (state, { payload }) => {
-      state.isAddMoneyboxPopupOpen = payload;
+    togglePopup: (state, { payload }) => {
+      const { popupType, isOpen } = payload;
+      state.isOpen[popupType] = isOpen;
     },
   },
 });
 
-export const {
-  toggleSpendPopup,
-  toggleIncomePopup,
-  toggleRegisterPopup,
-  toggleLoginPopup,
-  togglePasswordChangePopup,
-  toggleAvatarUploaderPopup,
-  toggleConfirmationPopup,
-  toggleInfoPopup,
-  toggleAccountPopup,
-  toggleSdekPopup,
-  toggleRepeatExpensesPopup,
-  toggleEditMoneyboxPopup,
-  toggleDoneMoneyboxPopup,
-  toggleAddMoneyboxPopup,
-} = togglePopupSlice.actions;
-
+export const { togglePopup } = togglePopupSlice.actions;
 export const popupReducer = togglePopupSlice.reducer;

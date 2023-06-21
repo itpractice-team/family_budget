@@ -1,8 +1,51 @@
 $ubuntu-font: 'Ubuntu', sans-serif;
 $noto-sans-font: 'NotoSans', sans-serif;
 
+$black: #1e1d24;
+$clearWhite: #ffffff;
+$grey: #8c8d90;
+$lightGrey: #f4f4f4;
+$midGrey: #d2d5db;
+$alertRed: #f05a2b;
+$heavyBlue: #13164a;
+$blueHover: #4a4e92;
+$bluePressed: #393f97;
+$lightBlue: #ebf2f8;
+$blueishGrey: #eaebf5;
+$blueishGreyHover: #dcdefb;
+$blueishGreyPressed: #babeff;
+$spendRed: #ff6f6f;
+$incomeGreen: #6fdd8e;
+$speedRed: #ed8a8a;
+$speedGreen: #bfffe0;
+$speedYellow: #fff27d;
+
 @mixin font-styles($font-family) {
   font-family: $font-family;
+}
+
+@mixin h1-main {
+  @include font-styles($ubuntu-font);
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 116px;
+  color: $heavyBlue;
+}
+
+@mixin h2-main {
+  @include font-styles($ubuntu-font);
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 70px;
+  color: $heavyBlue;
+}
+
+@mixin h3-main {
+  @include font-styles($ubuntu-font);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 145%;
+  color: $heavyBlue;
 }
 
 @mixin h1-web {
@@ -10,7 +53,7 @@ $noto-sans-font: 'NotoSans', sans-serif;
   font-weight: 500;
   font-size: 40px;
   line-height: 46px;
-  color: #13164a;
+  color: $heavyBlue;
 }
 
 @mixin h2-web {
@@ -18,7 +61,7 @@ $noto-sans-font: 'NotoSans', sans-serif;
   font-weight: 500;
   font-size: 32px;
   line-height: 40px;
-  color: #13164a;
+  color: $heavyBlue;
 }
 
 @mixin h3-web {
@@ -26,7 +69,7 @@ $noto-sans-font: 'NotoSans', sans-serif;
   font-weight: 500;
   font-size: 28px;
   line-height: 34px;
-  color: #13164a;
+  color: $heavyBlue;
 }
 
 @mixin text-large-web {
