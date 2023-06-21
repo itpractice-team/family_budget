@@ -2,16 +2,14 @@ import { useState } from 'react';
 import './AccountPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function AccountPopup({ onClose }) {
-  const { closePopup: closeAccountPopup } = usePopup('account');
   const [isAddingAccount, setIsAddingAccount] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
 
   function handleCancel(evt) {
     evt.preventDefault();
-    closeAccountPopup();
+    onClose();
   }
 
   function handleCancelForm(evt) {

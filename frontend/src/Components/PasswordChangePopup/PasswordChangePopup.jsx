@@ -27,11 +27,10 @@ export default function PasswordChangePopup({ onClose }) {
   };
 
   const { openPopup: openInfoPopup } = usePopup('info');
-  const { closePopup: closePasswordChangePopup } = usePopup('passwordChange');
 
   function handleCancel(evt) {
     evt.preventDefault();
-    closePasswordChangePopup();
+    onClose();
   }
 
   function handleChangePassword(formData) {
@@ -44,7 +43,7 @@ export default function PasswordChangePopup({ onClose }) {
         }
       })
       .finally(() => {
-        closePasswordChangePopup();
+        onClose();
         openInfoPopup();
       });
   }

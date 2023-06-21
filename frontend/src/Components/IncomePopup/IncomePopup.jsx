@@ -7,12 +7,9 @@ import { addTransaction } from '../../store/slices/transactionList';
 import Overlay from '../Overlay/Overlay';
 import Select from '../Select/Select';
 import SelectButton from '../../ui/SelectButton/SelectButton';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function IncomePopup({ onClose }) {
   const dispatch = useDispatch();
-
-  const { closePopup: closeIncomePopup } = usePopup('income');
 
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinance.finance,
@@ -68,13 +65,13 @@ export default function IncomePopup({ onClose }) {
   const handleAddIncome = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: 2 })).then(() => {
-      closeIncomePopup();
+      onClose();
     });
   };
 
   const handleCancel = (evt) => {
     evt.preventDefault();
-    closeIncomePopup();
+    onClose();
   };
 
   return (

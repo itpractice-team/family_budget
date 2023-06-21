@@ -6,12 +6,9 @@ import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
-
-  const { closePopup: closeRepeatExpensesPopup } = usePopup('repeatExpenses');
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
@@ -19,12 +16,11 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    closeRepeatExpensesPopup();
   }
 
   function handleСancel(evt) {
     evt.preventDefault();
-    closeRepeatExpensesPopup();
+    onClose();
   }
 
   return (

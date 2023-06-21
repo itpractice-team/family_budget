@@ -4,12 +4,9 @@ import Popup from '../Popup/Popup';
 import SpendForm from './SpendForm';
 import { addTransaction } from '../../store/slices/transactionList';
 import useDropdown from '../../utils/hooks/useDropdown';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function SpendPopup({ onClose }) {
   const dispatch = useDispatch();
-
-  const { closePopup: closeSpendPopup } = usePopup('spend');
 
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinance.finance,
@@ -55,12 +52,14 @@ export default function SpendPopup({ onClose }) {
   const handleAddSpend = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: 1 })).then(() => {
-      closeSpendPopup();
+      onClose();
     });
   };
 
-  const handleCancel = () => closeSpendPopup();
-
+  const handleCancel = (evt) => {
+    evt.preventDefault();
+    onClose();
+  };
   return (
     <Popup onClose={onClose} popupSize="popup_s" title="Добавить расход">
       <SpendForm

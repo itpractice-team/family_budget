@@ -1,10 +1,7 @@
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function EditTransactionPopup({ onClose, transaction }) {
-  const { closePopup: closeEditTransactionPopup } = usePopup('editTransaction');
-
   if (!transaction) {
     return null;
   }
@@ -14,7 +11,7 @@ export default function EditTransactionPopup({ onClose, transaction }) {
   }
 
   const handleCancel = () => {
-    closeEditTransactionPopup();
+    onClose();
   };
 
   return (

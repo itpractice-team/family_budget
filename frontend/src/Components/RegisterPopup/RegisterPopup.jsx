@@ -21,7 +21,6 @@ export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const { openPopup: openLoginPopup } = usePopup('login');
-  const { closePopup: closeRegisterPopup } = usePopup('register');
 
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
@@ -35,7 +34,7 @@ export default function RegisterPopup({ onClose }) {
   const isLoading = useSelector((store) => store.registration.loading);
 
   const handleLoginClick = () => {
-    closeRegisterPopup();
+    onClose();
     openLoginPopup();
   };
 
@@ -44,7 +43,7 @@ export default function RegisterPopup({ onClose }) {
   };
 
   if (isRegistration) {
-    closeRegisterPopup();
+    onClose();
     openLoginPopup();
   }
 

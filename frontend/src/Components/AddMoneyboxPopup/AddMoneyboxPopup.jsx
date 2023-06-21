@@ -3,12 +3,9 @@ import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { addMoneybox } from '../../store/slices/moneybox';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function AddMoneyboxPopup({ onClose }) {
   const dispatch = useDispatch();
-
-  const { closePopup: closeAddMoneyboxPopup } = usePopup('addMoneybox');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -26,12 +23,13 @@ export default function AddMoneyboxPopup({ onClose }) {
   const handleAddMoneybox = (evt) => {
     evt.preventDefault();
     dispatch(addMoneybox(formData)).then(() => {
-      dispatch(closeAddMoneyboxPopup(false));
+      onClose();
     });
   };
 
-  const handleCancel = () => {
-    closeAddMoneyboxPopup();
+  const handleCancel = (evt) => {
+    evt.preventDefault();
+    onClose();
   };
 
   return (

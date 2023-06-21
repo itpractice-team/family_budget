@@ -15,7 +15,6 @@ import usePopup from '../../utils/hooks/usePopup';
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  const { closePopup: closeLoginPopup } = usePopup('login');
   const { openPopup: openRegisterPopup } = usePopup('register');
 
   // Configuration to add Eye component
@@ -30,7 +29,7 @@ export default function LoginPopup({ onClose }) {
   const isLoading = useSelector((store) => store.login.loading);
 
   const handleRegistrationClick = () => {
-    closeLoginPopup();
+    onClose();
     openRegisterPopup();
   };
 
@@ -40,7 +39,7 @@ export default function LoginPopup({ onClose }) {
 
   useEffect(() => {
     if (isLogin) {
-      closeLoginPopup();
+      onClose();
     }
   }, [isLogin, dispatch]);
 

@@ -1,12 +1,10 @@
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function TransferPopup({ onClose }) {
-  const { closePopup: closeTransferPopup } = usePopup('transfer');
-
-  const handleCancel = () => {
-    closeTransferPopup();
+  const handleCancel = (evt) => {
+    evt.preventDefault();
+    onClose();
   };
   return (
     <Popup onClose={onClose} popupSize="popup_transfer" title="Перевод между счетами">

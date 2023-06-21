@@ -3,15 +3,13 @@ import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { deleteUser, resetUser } from '../../store/slices/userSlice';
 import { setLogin } from '../../store/slices/loginSlice';
-import usePopup from '../../utils/hooks/usePopup';
 
 export default function ConfirmationPopup({ onClose }) {
   const dispatch = useDispatch();
-  const { closePopup: closeConfirmationPopup } = usePopup('confirmation');
 
   function handleCancel(evt) {
     evt.preventDefault();
-    closeConfirmationPopup();
+    onClose();
   }
 
   const handleDeleteProfile = () => {
