@@ -30,6 +30,13 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
     });
   };
 
+  const inputDate = transaction.created;
+  const date = new Date(inputDate);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const formattedDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month}.${year}`;
+
   return (
     <Popup
       onClose={onClose}
@@ -39,7 +46,7 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
     >
       <TransactionForm
         formData={{
-          created: new Date(transaction.created).toLocaleDateString('ru-RU'),
+          created: formattedDate,
           category: selectedCategoryOption ? selectedCategoryOption.id : '',
           name: transaction.name,
           amount: transaction.amount,
