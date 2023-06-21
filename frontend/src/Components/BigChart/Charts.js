@@ -25,6 +25,25 @@ function Charts({ amount, income, created, lineData, lineChart }) {
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
+  }; 
+  const differrenceData = {
+    labels: created,
+    datasets: [
+      {
+        data: amount,
+        fill: false,
+        borderColor: 'blue',
+        tension: 0.6,
+        backgroundColor: 'rgba(255,111,111,0.5)',
+      },
+      {
+        data: income,
+        fill: false,
+        borderColor: 'red',
+        tension: 0.6,
+        backgroundColor: 'rgba(111,221,142,0.5)',
+      },
+    ],
   };
 
   const options = {
@@ -58,7 +77,7 @@ function Charts({ amount, income, created, lineData, lineChart }) {
   return lineChart ? (
     <Line data={data} options={options} plugins={['zoom']} />
   ) : (
-    <Bar data={data} options={options} />
+    <Bar data={differrenceData} options={options} />
   );
 }
 export default Charts;

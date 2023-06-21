@@ -5,15 +5,17 @@ import './LoginPopup.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
-import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
 import { loginUser } from '../../store/slices/loginSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import Eye from '../../ui/Eye/Eye';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const { openPopup: openRegisterPopup } = usePopup('register');
 
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
@@ -27,8 +29,8 @@ export default function LoginPopup({ onClose }) {
   const isLoading = useSelector((store) => store.login.loading);
 
   const handleRegistrationClick = () => {
-    dispatch(toggleLoginPopup(false));
-    dispatch(toggleRegisterPopup(true));
+    onClose();
+    openRegisterPopup();
   };
 
   const handleLogin = (formData) => {
@@ -37,7 +39,7 @@ export default function LoginPopup({ onClose }) {
 
   useEffect(() => {
     if (isLogin) {
-      dispatch(toggleLoginPopup(false));
+      onClose();
     }
   }, [isLogin, dispatch]);
 

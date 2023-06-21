@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { addMoneybox } from '../../store/slices/moneybox';
-import { toggleAddMoneyboxPopup } from '../../store/slices/togglePopupSlice';
 
 export default function AddMoneyboxPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -24,8 +23,13 @@ export default function AddMoneyboxPopup({ onClose }) {
   const handleAddMoneybox = (evt) => {
     evt.preventDefault();
     dispatch(addMoneybox(formData)).then(() => {
-      dispatch(toggleAddMoneyboxPopup(false));
+      onClose();
     });
+  };
+
+  const handleCancel = (evt) => {
+    evt.preventDefault();
+    onClose();
   };
 
   return (
@@ -69,7 +73,13 @@ export default function AddMoneyboxPopup({ onClose }) {
           />
         </label>
         <div className="form__button-wrapper form__button-wrapper_add-operation">
-          <Button variant="secondary" content="text" text="Отменить" size="medium" />
+          <Button
+            variant="secondary"
+            content="text"
+            text="Отменить"
+            size="medium"
+            onClick={handleCancel}
+          />
           <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>

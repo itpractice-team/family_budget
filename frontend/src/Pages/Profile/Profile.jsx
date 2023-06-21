@@ -5,12 +5,6 @@ import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
-import {
-  togglePasswordChangePopup,
-  toggleAvatarUploaderPopup,
-  toggleConfirmationPopup,
-  toggleInfoPopup,
-} from '../../store/slices/togglePopupSlice';
 import { getUser, updateUser } from '../../store/slices/userSlice';
 import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUploaderPopup';
 import {
@@ -25,6 +19,7 @@ import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPo
 import profileValidation from '../../utils/validations/profileValidation';
 import InfoPopup from '../../Components/InfoPopup/InfoPopup';
 import ErrorNotification from '../../Components/ErrorNotification/ErrorNotification';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -33,11 +28,22 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
 
   const {
-    isPasswordChangePopupOpen,
-    isAvatarUploaderPopupOpen,
-    isConfirmationPopupOpen,
-    isInfoPopupOpen,
-  } = useSelector((state) => state.popup);
+    isOpen: isPasswordChangePopupOpen,
+    openPopup: openPasswordChangePopup,
+    closePopup: closePasswordChangePopup,
+  } = usePopup('passwordChange');
+  const {
+    isOpen: isAvatarUploaderPopupOpen,
+    openPopup: openAvatarUploaderPopup,
+    closePopup: closeAvatarUploaderPopup,
+  } = usePopup('avatarUploader');
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
+  const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
+
   const { user: userData, isFetched } = useSelector((state) => state.user);
 
   const [disableButton, setDisableButton] = useState(true);
@@ -51,25 +57,20 @@ export default function Profile() {
   const handleAvatarUploaderClick = useCallback(
     (evt) => {
       evt.preventDefault();
-      dispatch(toggleAvatarUploaderPopup(true));
+      openAvatarUploaderPopup();
     },
     [dispatch],
   );
 
   const handlePasswordChangeClick = (evt) => {
     evt.preventDefault();
-    dispatch(togglePasswordChangePopup(true));
+    openPasswordChangePopup();
   };
 
   const handleDeleteProfileClick = (evt) => {
     evt.preventDefault();
-    dispatch(toggleConfirmationPopup(true));
+    openConfirmationPopup();
   };
-
-  const closeAvatarUploaderPopup = () => dispatch(toggleAvatarUploaderPopup(false));
-  const closePasswordChangePopup = () => dispatch(togglePasswordChangePopup(false));
-  const closeConfirmationPopup = () => dispatch(toggleConfirmationPopup(false));
-  const closeInfoPopup = () => dispatch(toggleInfoPopup(false));
 
   const {
     register,

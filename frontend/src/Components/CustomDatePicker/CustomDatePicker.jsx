@@ -31,7 +31,7 @@ export default function CustomDatePicker({
           dateFormat="DD.MM.YYYY"
         />
       )}
-      {type === 'time' && (
+      {/* {type === 'time' && (
         <ReactDatePicker
           className="data-picker__time"
           selected={startDate}
@@ -43,7 +43,7 @@ export default function CustomDatePicker({
           dateFormat="p"
           timeFormat="hh:mm"
         />
-      )}
+      )} */}
     </>
   );
 }

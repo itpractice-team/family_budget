@@ -1,24 +1,31 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, useMatch } from 'react-router-dom';
 import './Header.scss';
 import Logo from '../Logo/Logo';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import LoginPopup from '../LoginPopup/LoginPopup';
-import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import ProfileTooltip from '../ProfileTooltip/ProfileTooltip';
 import defaultavatar from '../../Images/profile-default-avatar-header.svg';
 import logo from '../../Images/logo.svg';
 import logomini from '../../Images/logo-mini.svg';
 import Button from '../../ui/Button/Button';
 import Overlay from '../Overlay/Overlay';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Header() {
-  const dispatch = useDispatch();
-
-  const { isRegisterPopupOpen, isLoginPopupOpen } = useSelector((state) => state.popup);
+  const {
+    isOpen: isRegisterPopupOpen,
+    openPopup: openRegisterPopup,
+    closePopup: closeRegisterPopup,
+  } = usePopup('register');
+  const {
+    isOpen: isLoginPopupOpen,
+    openPopup: openLoginPopup,
+    closePopup: closeLoginPopup,
+  } = usePopup('login');
 
   const isLogin = useSelector((state) => state.login.login);
   const { avatar } = useSelector((state) => state.user.user);
@@ -28,20 +35,6 @@ export default function Header() {
   const isHelp = useMatch({ path: '/help', exact: true });
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-
-  const handleRegisterClick = () => {
-    dispatch(toggleRegisterPopup(true));
-  };
-  const handleLoginClick = () => {
-    dispatch(toggleLoginPopup(true));
-  };
-
-  const closeRegisterPopup = () => {
-    dispatch(toggleRegisterPopup(false));
-  };
-  const closeLoginPopup = () => {
-    dispatch(toggleLoginPopup(false));
-  };
 
   const handleProfileTooltipClick = () => {
     setIsTooltipOpen(!isTooltipOpen);
@@ -84,7 +77,7 @@ export default function Header() {
                 content="text"
                 text="Войти"
                 size="large"
-                onClick={handleLoginClick}
+                onClick={openLoginPopup}
               />
 
               <Button
@@ -92,7 +85,7 @@ export default function Header() {
                 content="text"
                 text="Зарегистрироваться"
                 size="large"
-                onClick={handleRegisterClick}
+                onClick={openRegisterPopup}
               />
             </div>
           </div>

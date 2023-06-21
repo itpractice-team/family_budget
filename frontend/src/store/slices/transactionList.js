@@ -1,12 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getTransactionListAPI, addSpendAPI } from '../../utils/api';
+import { getTransactionListAPI, addTransactionAPI, deleteTransactionAPI } from '../../utils/api';
 
 export const getTransactionList = createAsyncThunk('transaction/list', async () => {
   return getTransactionListAPI();
 });
 
-export const addSpend = createAsyncThunk('transaction/spend', async (formData) => {
-  return addSpendAPI(formData);
+export const addTransaction = createAsyncThunk('transaction/add', async (formData) => {
+  return addTransactionAPI(formData);
+});
+
+export const deleteTransaction = createAsyncThunk('transaction/delete', async (id) => {
+  return deleteTransactionAPI(id);
 });
 
 const initialState = {
@@ -33,15 +37,27 @@ export const transactionListSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(addSpend.pending, (state) => {
+      .addCase(addTransaction.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addSpend.fulfilled, (state, action) => {
+      .addCase(addTransaction.fulfilled, (state, action) => {
         state.loading = false;
         state.transactionList.push(action.payload);
       })
-      .addCase(addSpend.rejected, (state, action) => {
+      .addCase(addTransaction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteTransaction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteTransaction.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteTransaction.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

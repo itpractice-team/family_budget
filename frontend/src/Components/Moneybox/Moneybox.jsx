@@ -1,43 +1,40 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  toggleEditMoneyboxPopup,
-  toggleDoneMoneyboxPopup,
-} from '../../store/slices/togglePopupSlice';
 import MoneyboxItem from '../MoneyboxItem/MoneyboxItem';
 import moneybox from '../../Images/moneybox.svg';
 import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 import EditMoneyboxPopup from '../EditMoneyboxPopup/EditMoneyboxPopup';
 import DoneMoneyboxPopup from '../DoneMoneyboxPopup/DoneMoneyboxPopup';
 import { getMoneybox } from '../../store/slices/moneybox';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Moneybox() {
   const dispatch = useDispatch();
+
+  const {
+    isOpen: isEditMoneyboxPopupOpen,
+    openPopup: openEditMoneyboxPopup,
+    closePopup: closeEditMoneyboxPopup,
+  } = usePopup('editMoneybox');
+  const {
+    isOpen: isDoneMoneyboxPopupOpen,
+    openPopup: openDoneMoneyboxPopup,
+    closePopup: closeDoneMoneyboxPopup,
+  } = usePopup('doneMoneybox');
+  const moneyboxList = useSelector((state) => state.moneybox.moneybox);
 
   useEffect(() => {
     dispatch(getMoneybox());
   }, []);
 
-  const { isEditMoneyboxPopupOpen, isDoneMoneyboxPopupOpen } = useSelector((state) => state.popup);
-  const moneyboxList = useSelector((state) => state.moneybox.moneybox);
-
   const handleItemClick = (isDone) => {
     if (isDone && !isDoneMoneyboxPopupOpen) {
-      dispatch(toggleDoneMoneyboxPopup(true));
+      openDoneMoneyboxPopup();
     } else if (!isDone && !isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(true));
+      openEditMoneyboxPopup();
     }
   };
 
-  const handleEditPopupClose = () => {
-    if (isEditMoneyboxPopupOpen) {
-      dispatch(toggleEditMoneyboxPopup(false));
-    }
-  };
-
-  const handleDonePopupClose = () => {
-    dispatch(toggleDoneMoneyboxPopup(false));
-  };
   return (
     <section className="moneybox">
       {moneyboxList.length === 0 ? (
@@ -55,10 +52,10 @@ export default function Moneybox() {
       )}
 
       {isEditMoneyboxPopupOpen && (
-        <EditMoneyboxPopup onClose={handleEditPopupClose} title="На отпуск" />
+        <EditMoneyboxPopup onClose={closeEditMoneyboxPopup} title="На отпуск" />
       )}
       {isDoneMoneyboxPopupOpen && (
-        <DoneMoneyboxPopup onClose={handleDonePopupClose} title="На cпонсирование космонавтики" />
+        <DoneMoneyboxPopup onClose={closeDoneMoneyboxPopup} title="На cпонсирование космонавтики" />
       )}
     </section>
   );

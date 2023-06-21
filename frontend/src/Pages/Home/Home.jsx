@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './Home.scss';
 import InfoPopup from '../../Components/InfoPopup/InfoPopup';
-import { toggleInfoPopup, toggleRegisterPopup } from '../../store/slices/togglePopupSlice';
 import СonfirmationPasswordChange from '../../Components/СonfirmationPasswordChange/СonfirmationPasswordChange';
 import { getUser } from '../../store/slices/userSlice';
 import Footer from '../../Components/Footer/Footer';
@@ -12,11 +11,14 @@ import CardQuestion from '../../Components/CardQuestion/CardQuestion';
 import Advantages from './Advantages/Advantages';
 import CardWork from './CardWork/CardWork';
 import main from '../../Images/main.svg';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Main() {
   const dispatch = useDispatch();
 
-  const isInfoPopupOpen = useSelector((state) => state.popup.isInfoPopupOpen);
+  const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
+  const { openPopup: openRegisterPopup } = usePopup('register');
+
   const isFetched = useSelector((state) => state.user.isFetched);
 
   useEffect(() => {
@@ -25,11 +27,7 @@ export default function Main() {
     }
   }, [dispatch, isFetched]);
 
-  const closeInfoPopup = () => dispatch(toggleInfoPopup(false));
-
-  const handleRegisterClick = () => {
-    dispatch(toggleRegisterPopup(true));
-  };
+  const handleRegisterClick = () => openRegisterPopup;
 
   return (
     <section className="home-page">

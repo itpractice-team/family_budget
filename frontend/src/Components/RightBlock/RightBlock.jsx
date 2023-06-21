@@ -1,25 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './RightBlock.scss';
-import {
-  toggleRepeatExpensesPopup,
-  toggleAddMoneyboxPopup,
-} from '../../store/slices/togglePopupSlice';
 import Moneybox from '../Moneybox/Moneybox';
 import Template from '../Template/Template';
 import RepeatSpend from '../RepeatSpend/RepeatSpend';
 import RepeatExpensesPopup from '../RepeatExpensesPopup/RepeatExpensesPopup';
 import AddMoneyboxPopup from '../AddMoneyboxPopup/AddMoneyboxPopup';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function RightBlock() {
-  const dispatch = useDispatch();
+  const {
+    isOpen: isRepeatExpensesPopupOpen,
+    openPopup: openRepeatExpensesPopup,
+    closePopup: closeRepeatExpensesPopup,
+  } = usePopup('repeatExpenses');
+  const {
+    isOpen: isAddMoneyboxPopupOpen,
+    openPopup: openAddMoneyboxPopup,
+    closePopup: closeAddMoneyboxPopup,
+  } = usePopup('addMoneybox');
 
-  const { isRepeatExpensesPopupOpen, isAddMoneyboxPopupOpen } = useSelector((state) => state.popup);
-
-  const handleRepeatExpensesClick = () => dispatch(toggleRepeatExpensesPopup(true));
-  const closeRepeatExpensesPopup = () => dispatch(toggleRepeatExpensesPopup(false));
-
-  const handleAddMoneyboxClick = () => dispatch(toggleAddMoneyboxPopup(true));
-  const closeAddMoneyboxPopup = () => dispatch(toggleAddMoneyboxPopup(false));
+  const handleRepeatExpensesClick = () => openRepeatExpensesPopup();
+  const handleAddMoneyboxClick = () => openAddMoneyboxPopup();
 
   return (
     <section className="right-block">

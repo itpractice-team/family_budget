@@ -2,15 +2,14 @@ import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { deleteUser, resetUser } from '../../store/slices/userSlice';
-import { toggleConfirmationPopup } from '../../store/slices/togglePopupSlice';
 import { setLogin } from '../../store/slices/loginSlice';
 
 export default function ConfirmationPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  function handleСancel(evt) {
+  function handleCancel(evt) {
     evt.preventDefault();
-    dispatch(toggleConfirmationPopup(false));
+    onClose();
   }
 
   const handleDeleteProfile = () => {
@@ -29,7 +28,7 @@ export default function ConfirmationPopup({ onClose }) {
             content="text"
             text="Отменить"
             size="medium"
-            onClick={handleСancel}
+            onClick={handleCancel}
           />
           <Button
             type="submit"

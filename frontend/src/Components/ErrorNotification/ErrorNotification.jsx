@@ -1,16 +1,17 @@
-import { useDispatch } from 'react-redux';
 import './ErrorNotification.scss';
 import Button from '../../ui/Button/Button';
-import { toggleInfoPopup, togglePasswordChangePopup } from '../../store/slices/togglePopupSlice';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function ErrorNotification() {
-  const dispatch = useDispatch();
+  const { openPopup: openPasswordChangePopup } = usePopup('passwordChange');
+  const { closePopup: closeInfoPopup } = usePopup('info');
 
   function handleRetryClick(evt) {
     evt.preventDefault();
-    dispatch(togglePasswordChangePopup(true));
-    dispatch(toggleInfoPopup(false));
+    openPasswordChangePopup();
+    closeInfoPopup();
   }
+
   return (
     <Button
       variant="primary"

@@ -33,7 +33,7 @@ export default function Categories() {
       <div className="categories__list">
         {categories.map((category) => (
           <article key={category.id} className="categories__item">
-            <img src={category.image_url} alt={category.name} className="categories__item-image" />
+            <img src={category.image} alt={category.name} className="categories__item-image" />
             <p className="categories__item-name">{category.name}</p>
           </article>
         ))}
