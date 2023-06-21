@@ -11,8 +11,8 @@ export default function TransactionForm({
   onClose,
   categoryType,
 }) {
-  const categoryLabel = categoryType === 'expense' ? 'Категория расхода' : 'Категория дохода';
-  const financeLabel = categoryType === 'expense' ? 'Счёт списания' : 'Счёт зачисления';
+  const categoryLabel = categoryType === 1 ? 'Категория расхода' : 'Категория дохода';
+  const financeLabel = categoryType === 1 ? 'Счёт списания' : 'Счёт зачисления';
   return (
     <form className="form form_add-operation" onSubmit={handleSubmit}>
       <div className="form__input-block">

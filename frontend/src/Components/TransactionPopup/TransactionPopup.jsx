@@ -4,7 +4,7 @@ import TransactionForm from '../TransactionForm/TransactionForm';
 import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
 import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
-export default function SpendPopup({ onClose, popupSize, title, categoryType }) {
+export default function TransactionPopup({ onClose, popupSize, title, categoryType }) {
   const dispatch = useDispatch();
   const { formData, handleChange, categoryOptions, financeOptions } =
     useTransactionForm(categoryType);

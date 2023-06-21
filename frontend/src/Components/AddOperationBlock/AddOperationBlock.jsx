@@ -1,7 +1,6 @@
 import './AddOperationBlock.scss';
 import usePopup from '../../utils/hooks/usePopup';
-import SpendPopup from '../SpendPopup/SpendPopup';
-import IncomePopup from '../IncomePopup/IncomePopup';
+import TransactionPopup from '../TransactionPopup/TransactionPopup';
 import TransferPopup from '../TransferPopup/TransferPopup';
 import Button from '../../ui/Button/Button';
 import plus from '../../Images/icons/plus.svg';
@@ -50,14 +49,21 @@ export default function AddOperationBlock() {
         onClick={openTransferPopup}
       />
       {isSpendPopupOpen && (
-        <SpendPopup
+        <TransactionPopup
           onClose={closeSpendPopup}
           popupSize="popup_s"
           title="Добавить расход"
           categoryType={1}
         />
       )}
-      {isIncomePopupOpen && <IncomePopup onClose={closeIncomePopup} />}
+      {isIncomePopupOpen && (
+        <TransactionPopup
+          onClose={closeIncomePopup}
+          popupSize="popup_s"
+          title="Добавить доход"
+          categoryType={2}
+        />
+      )}
       {isTransferPopupOpen && <TransferPopup onClose={closeTransferPopup} />}
     </section>
   );
