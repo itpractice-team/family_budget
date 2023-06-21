@@ -12,7 +12,10 @@ const useTransactionForm = (initialTransaction, categoryType) => {
   const financeDropdown = useDropdown(initialTransaction?.finance?.id || '', finance);
 
   const [formData, setFormData] = useState({
-    created: initialTransaction?.created || '',
+    created: initialTransaction?.created
+      ? new Date(initialTransaction.created).toLocaleDateString('ru-RU')
+      : '',
+
     category: initialTransaction?.category?.id || '',
     name: initialTransaction?.name || '',
     amount: initialTransaction?.amount || '',
