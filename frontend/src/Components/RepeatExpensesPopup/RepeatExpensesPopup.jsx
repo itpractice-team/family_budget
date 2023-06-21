@@ -6,22 +6,39 @@ import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
+import Radio from '../../ui/Radio/Radio';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
+  const [selected, setSelected] = useState('До');
+  const [startDate, setStartDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [valueDate, setValueDate] = useState('');
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  }
+    setValueDate('');
+  };
 
-  function handleСancel(evt) {
+  const handleСancel = (evt) => {
     evt.preventDefault();
     onClose();
-  }
+  };
+
+  const handleRadio = ({ target }) => {
+    const { value } = target;
+    setSelected(value);
+  };
+
+  const isOpen = () => {
+    setValueDate(startDate.toLocaleDateString());
+    setOpen(true);
+  };
 
   return (
     <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
@@ -98,15 +115,62 @@ export default function RepeatExpensesPopup({ onClose }) {
         </div>
 
         <div className="repeat-expenses__activeTab">
-          {activeDate === 'День' && <DayBtn inputName="dayBtn" />}
+          {activeDate === 'День' && <DayBtn activeDate={activeDate} inputName="dayBtn" />}
           {activeDate === 'Неделя' && (
             <div className="repeat-expenses__container">
               <WeekBtn />
-              <DayBtn ending="ую" period="неделю" inputName="weekBtn" />
+              <DayBtn activeDate={activeDate} inputName="weekBtn" />
             </div>
           )}
-          {activeDate === 'Месяц' && <DayBtn period="месяц" inputName="monthBtn" />}
-          {activeDate === 'Год' && <DayBtn period="год" inputName="yearBtn" />}
+          {activeDate === 'Месяц' && <DayBtn activeDate={activeDate} inputName="monthBtn" />}
+          {activeDate === 'Год' && <DayBtn activeDate={activeDate} inputName="yearBtn" />}
+        </div>
+
+        <div className="repeat-expenses__container">
+          <p className="repeat-expenses__text-bold">Длительность</p>
+          <Radio
+            value="Бесконечно"
+            isChecked={selected === 'Бесконечно'}
+            onChange={handleRadio}
+            text="Бесконечно"
+          />
+          <Radio
+            value="Заданное кол-во раз"
+            isChecked={selected === 'Заданное кол-во раз'}
+            onChange={handleRadio}
+            text="Заданное количество раз"
+          />
+          <Radio value="До" isChecked={selected === 'До'} onChange={handleRadio} text="До" />
+          {selected === 'До' && (
+            <>
+              <div className="form__input-block">
+                <label className="form__input-label" htmlFor="RepeatExpensesPopup-date">
+                  Дата
+                  <input
+                    className="form__input"
+                    type="text"
+                    name="RepeatExpensesPopup-date"
+                    id="RepeatExpensesPopup-date"
+                    value={valueDate}
+                    onChange={(e) => setValueDate(e.target.value)}
+                    placeholder="дд.мм.гггг"
+                    onClick={isOpen}
+                  />
+                </label>
+              </div>
+              {open && (
+                <CustomDatePicker
+                  type="date"
+                  onChange={(date) => {
+                    setStartDate(date);
+                    setValueDate(date.toLocaleDateString());
+                    setOpen(false);
+                  }}
+                  startDate={startDate}
+                />
+              )}
+            </>
+          )}
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_add-operation">
