@@ -2,7 +2,7 @@
 
 .template {
   padding: 12px;
-  background: #ffffff;
+  background: $clearWhite;
   border-radius: 16px;
   height: min-content;
   display: flex;
@@ -12,4 +12,9 @@
 
 .template__title {
   @include text-large-web-bold;
+}
+
+// extraClass
+.template__button {
+  justify-content: center;
 }

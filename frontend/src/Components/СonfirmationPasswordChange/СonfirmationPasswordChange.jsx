@@ -1,22 +1,22 @@
-import { useDispatch } from 'react-redux';
 import Button from '../../ui/Button/Button';
-import { toggleInfoPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function СonfirmationPasswordChange() {
-  const dispatch = useDispatch();
+  const { openPopup: openLoginPopup } = usePopup('login');
+  const { closePopup: closeInfoPopup } = usePopup('info');
 
   function handleLoginClick(evt) {
     evt.preventDefault();
-    dispatch(toggleLoginPopup(true));
-    dispatch(toggleInfoPopup(false));
+    closeInfoPopup();
+    openLoginPopup();
   }
+
   return (
     <Button
-      variant="fiat"
-      type="text"
+      variant="secondary"
+      content="text"
       text="Войти"
       size="medium"
-      extraClass="button_confirm"
       onClick={handleLoginClick}
     />
   );

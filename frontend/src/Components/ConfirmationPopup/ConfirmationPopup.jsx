@@ -1,22 +1,21 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { deleteUser } from '../../store/slices/userSlice';
-import { toggleConfirmationPopup } from '../../store/slices/togglePopupSlice';
-// import { logoutUser } from '../../store/slices/loginSlice';
+import { deleteUser, resetUser } from '../../store/slices/userSlice';
+import { setLogin } from '../../store/slices/loginSlice';
 
 export default function ConfirmationPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  function handleСancel(evt) {
+  function handleCancel(evt) {
     evt.preventDefault();
-    dispatch(toggleConfirmationPopup(false));
+    onClose();
   }
 
   const handleDeleteProfile = () => {
     dispatch(deleteUser());
-    // dispatch(logoutUser());
+    dispatch(resetUser());
+    dispatch(setLogin(false));
   };
 
   return (
@@ -26,14 +25,15 @@ export default function ConfirmationPopup({ onClose }) {
         <div className="form__button-wrapper">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
-            onClick={handleСancel}
+            onClick={handleCancel}
           />
           <Button
+            type="submit"
             variant="primary"
-            type="text"
+            content="text"
             text="Удалить профиль"
             size="medium"
             onClick={handleDeleteProfile}

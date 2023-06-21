@@ -1,5 +1,4 @@
 @import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
 
 .data-picker {
   @include h3-web;
@@ -9,7 +8,7 @@
 
 .data-picker__time {
   padding: 10px;
-  border: 0.5px solid $bg-color-primary;
+  border: 0.5px solid $black;
   width: 96px;
   height: 34px;
   border-radius: 10px;

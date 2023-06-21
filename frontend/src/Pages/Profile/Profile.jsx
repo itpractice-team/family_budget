@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
@@ -7,11 +5,6 @@ import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
-import {
-  togglePasswordChangePopup,
-  toggleAvatarUploaderPopup,
-  toggleConfirmationPopup,
-} from '../../store/slices/togglePopupSlice';
 import { getUser, updateUser } from '../../store/slices/userSlice';
 import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUploaderPopup';
 import {
@@ -20,9 +13,13 @@ import {
   RequirementsNameAndSurname,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
+import Footer from '../../Components/Footer/Footer';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
 import ConfirmationPopup from '../../Components/ConfirmationPopup/ConfirmationPopup';
 import profileValidation from '../../utils/validations/profileValidation';
+import InfoPopup from '../../Components/InfoPopup/InfoPopup';
+import ErrorNotification from '../../Components/ErrorNotification/ErrorNotification';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -30,8 +27,23 @@ export default function Profile() {
   const [disable, setDisable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { isPasswordChangePopupOpen, isAvatarUploaderPopupOpen, isConfirmationPopupOpen } =
-    useSelector((state) => state.popup);
+  const {
+    isOpen: isPasswordChangePopupOpen,
+    openPopup: openPasswordChangePopup,
+    closePopup: closePasswordChangePopup,
+  } = usePopup('passwordChange');
+  const {
+    isOpen: isAvatarUploaderPopupOpen,
+    openPopup: openAvatarUploaderPopup,
+    closePopup: closeAvatarUploaderPopup,
+  } = usePopup('avatarUploader');
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
+  const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
+
   const { user: userData, isFetched } = useSelector((state) => state.user);
 
   const [disableButton, setDisableButton] = useState(true);
@@ -45,35 +57,25 @@ export default function Profile() {
   const handleAvatarUploaderClick = useCallback(
     (evt) => {
       evt.preventDefault();
-      dispatch(toggleAvatarUploaderPopup(true));
+      openAvatarUploaderPopup();
     },
     [dispatch],
   );
 
-  const closeAvatarUploaderPopup = () => {
-    dispatch(toggleAvatarUploaderPopup(false));
-  };
-
   const handlePasswordChangeClick = (evt) => {
     evt.preventDefault();
-    dispatch(togglePasswordChangePopup(true));
-  };
-  const closePasswordChangePopup = () => {
-    dispatch(togglePasswordChangePopup(false));
+    openPasswordChangePopup();
   };
 
-  const handleConfirmationPopupClick = (evt) => {
+  const handleDeleteProfileClick = (evt) => {
     evt.preventDefault();
-    dispatch(toggleConfirmationPopup(true));
-  };
-
-  const closeConfirmationPopup = () => {
-    dispatch(toggleConfirmationPopup(false));
+    openConfirmationPopup();
   };
 
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     setValue,
     control,
   } = useForm({
@@ -135,13 +137,13 @@ export default function Profile() {
           />
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Изменить фото"
             size="medium"
             onClick={handleAvatarUploaderClick}
           />
         </div>
-        <form className="form form_profile" onSubmit={handleUpdateProfile}>
+        <form className="form form_profile" onSubmit={handleSubmit(handleUpdateProfile)}>
           <div className="form__input-block">
             <label className="form__input-label" htmlFor="Profile-login">
               Логин
@@ -226,7 +228,7 @@ export default function Profile() {
 
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Сменить пароль"
             size="medium"
             extraClass="button__change-password"
@@ -309,7 +311,7 @@ export default function Profile() {
             {!isEditing ? (
               <Button
                 variant="primary"
-                type="text"
+                content="text"
                 text="Изменить данные"
                 size="medium"
                 onClick={handleEnableInputs}
@@ -317,30 +319,36 @@ export default function Profile() {
             ) : (
               <Button
                 disabled={!isValid || disableButton}
+                type="submit"
                 variant="primary"
-                type="text"
+                content="text"
                 text="Сохранить данные"
                 size="medium"
               />
             )}
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Удалить профиль"
               size="medium"
-              onClick={handleConfirmationPopupClick}
+              onClick={handleDeleteProfileClick}
             />
             {isEditing && message && <span className="profile__error-message">{message}</span>}
           </div>
         </form>
       </div>
-      <div className="footer__content footer__content_profile">
-        <p className="footer__title">Правильные финансовые решения каждый день</p>
-        <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
-      </div>
       {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
       {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
       {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+      {isInfoPopupOpen && (
+        <InfoPopup
+          onClose={closeInfoPopup}
+          content={<ErrorNotification />}
+          title="Ошибка"
+          subtitle="Что-то пошло не так"
+        />
+      )}
+      <Footer extraClass="footer-absolute" />
     </section>
   );
 }

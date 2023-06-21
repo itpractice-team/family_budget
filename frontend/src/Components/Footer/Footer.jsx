@@ -1,12 +1,10 @@
 import './Footer.scss';
+import FooterContent from './FooterContent/FooterContent';
 
-export default function Footer() {
+export default function Footer({ extraClass }) {
   return (
-    <footer className="footer">
-      <div className="footer__content">
-        <p className="footer__title">Правильные финансовые решения каждый день</p>
-        <p className="footer__copyrights">&copy; {new Date().getFullYear()} Copyrights</p>
-      </div>
+    <footer className={`footer ${extraClass}`}>
+      <FooterContent />
     </footer>
   );
 }

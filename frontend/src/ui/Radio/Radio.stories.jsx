@@ -2,7 +2,7 @@ import React from 'react';
 import Radio from './Radio';
 import './Radio.scss';
 
-import testIcon from '../../Images/envelope.svg';
+import testIcon from '../../Images/envelope-done.svg';
 
 export default {
   title: 'Radio',
