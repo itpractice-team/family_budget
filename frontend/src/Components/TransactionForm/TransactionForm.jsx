@@ -1,16 +1,17 @@
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import Button from '../../ui/Button/Button';
+import CancelButton from '../CancelButton/CancelButton';
 
-export default function SpendForm({
+export default function TransactionForm({
   formData,
   handleChange,
-  handleAddSpend,
-  handleCancel,
+  handleSubmit,
   categoryOptions,
   financeOptions,
+  onClose,
 }) {
   return (
-    <form className="form form_add-operation" onSubmit={handleAddSpend}>
+    <form className="form form_add-operation" onSubmit={handleSubmit}>
       <div className="form__input-block">
         <label className="form__input-label" htmlFor="SpendPopup-date">
           Дата
@@ -76,13 +77,7 @@ export default function SpendForm({
       />
 
       <div className="form__button-wrapper form__button-wrapper_add-operation">
-        <Button
-          variant="secondary"
-          content="text"
-          text="Отменить"
-          size="medium"
-          onClick={handleCancel}
-        />
+        <CancelButton onClose={onClose} />
         <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
       </div>
     </form>
