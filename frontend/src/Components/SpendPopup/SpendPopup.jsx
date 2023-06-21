@@ -26,6 +26,7 @@ export default function SpendPopup({ onClose, popupSize, title, categoryType }) 
         onClose={onClose}
         categoryOptions={categoryOptions}
         financeOptions={financeOptions}
+        categoryType={categoryType}
       />
     </Popup>
   );

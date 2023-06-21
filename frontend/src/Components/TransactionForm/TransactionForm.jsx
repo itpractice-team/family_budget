@@ -9,7 +9,10 @@ export default function TransactionForm({
   categoryOptions,
   financeOptions,
   onClose,
+  categoryType,
 }) {
+  const categoryLabel = categoryType === 'expense' ? 'Категория расхода' : 'Категория дохода';
+  const financeLabel = categoryType === 'expense' ? 'Счёт списания' : 'Счёт зачисления';
   return (
     <form className="form form_add-operation" onSubmit={handleSubmit}>
       <div className="form__input-block">
@@ -27,7 +30,7 @@ export default function TransactionForm({
       </div>
 
       <SelectButtonWrapper
-        label="Категория расхода"
+        label={categoryLabel}
         options={categoryOptions}
         initialValue={formData.category}
         imageKey="image"
@@ -67,7 +70,7 @@ export default function TransactionForm({
       </div>
 
       <SelectButtonWrapper
-        label="Счёт списания"
+        label={financeLabel}
         options={financeOptions}
         initialValue={formData.finance}
         imageKey="image"
