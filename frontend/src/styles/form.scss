@@ -13,7 +13,7 @@
 .form_confirmation {
   gap: 32px;
 
-  .form__text_confirmation {
+  &__text_confirmation {
     @include text-large-web;
   }
 }
