@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
-import { deleteTransaction, getTransactionList } from '../../../store/slices/transactionList';
+import {
+  addTransaction,
+  deleteTransaction,
+  getTransactionList,
+} from '../../../store/slices/transactionList';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
@@ -45,6 +49,22 @@ export default function TransactionCard({ transaction }) {
     closeEditTransactionPopup();
   };
 
+  const handleRepeatTransaction = () => {
+    // Создайте объект с данными для добавления новой транзакции, используя значения из выбранной транзакции
+    const newTransactionData = {
+      created: transaction.created,
+      category: transaction.category.id,
+      name: transaction.name,
+      amount: transaction.amount,
+      finance: transaction.finance.id,
+      category_type: transaction.category_type,
+    };
+
+    dispatch(addTransaction(newTransactionData)).then(() => {
+      dispatch(getTransactionList());
+    });
+  };
+
   return (
     <li className="card">
       <div className="card__block">
@@ -80,7 +100,12 @@ export default function TransactionCard({ transaction }) {
           className="card__button card__button_delete"
           onClick={handleDelete}
         />
-        <button type="button" aria-label="Повторить" className="card__button card__button_copy" />
+        <button
+          type="button"
+          aria-label="Повторить"
+          className="card__button card__button_copy"
+          onClick={handleRepeatTransaction}
+        />
       </div>
 
       {isEditTransactionPopupOpen && (
