@@ -50,7 +50,6 @@ export default function TransactionCard({ transaction }) {
   };
 
   const handleRepeatTransaction = () => {
-    // Создайте объект с данными для добавления новой транзакции, используя значения из выбранной транзакции
     const newTransactionData = {
       created: transaction.created,
       category: transaction.category.id,
