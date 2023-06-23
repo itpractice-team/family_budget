@@ -234,3 +234,18 @@ export const deleteTransactionAPI = async (id) => {
     throw new Error(`Delete transaction failed: ${error.message}`);
   }
 };
+
+export const editTransactionAPI = async (id, formData) => {
+  const url = `${baseUrl}/transaction/${id}/`;
+  const options = {
+    method: 'PATCH',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
