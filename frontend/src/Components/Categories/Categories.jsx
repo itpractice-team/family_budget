@@ -16,10 +16,32 @@ export default function Categories() {
   }, []);
 
   const [activeDate, setActiveDate] = useState('Общие');
+  const [filteredCategories, setFilteredCategories] = useState(categories);
+
+  const filterCategories = (tab) => {
+    if (tab === 'Общие') {
+      setFilteredCategories(categories);
+    } else {
+      const filtered = categories.filter(
+        (category) => category.category_type === 1 && tab === 'Расходы',
+      );
+      if (tab === 'Доходы') {
+        const incomeFiltered = categories.filter((category) => category.category_type === 2);
+        setFilteredCategories([...filtered, ...incomeFiltered]);
+      } else {
+        setFilteredCategories(filtered);
+      }
+    }
+  };
+
+  useEffect(() => {
+    filterCategories(activeDate);
+  }, [categories, activeDate]);
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
   };
+
   return (
     <section className="categories">
       <h2 className="categories__title">Отображать категории</h2>
@@ -31,7 +53,7 @@ export default function Categories() {
       />
       <p className="categories__all-text">Выбрать все</p>
       <div className="categories__list">
-        {categories.map((category) => (
+        {filteredCategories.map((category) => (
           <article key={category.id} className="categories__item">
             <img src={category.image} alt={category.name} className="categories__item-image" />
             <p className="categories__item-name">{category.name}</p>
