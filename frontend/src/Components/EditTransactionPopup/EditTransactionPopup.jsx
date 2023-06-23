@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import TransactionForm from '../TransactionForm/TransactionForm';
-import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
+import { getTransactionList, editTransaction } from '../../store/slices/transactionList';
 import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
 export default function EditTransactionPopup({ onClose, transaction, categoryType }) {
@@ -22,20 +22,18 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
     (option) => option.id === transaction.finance.id,
   );
 
-  const handleAddSpend = (evt) => {
+  const handleEditTransaction = (evt) => {
     evt.preventDefault();
-    dispatch(addTransaction({ ...formData, category_type: transaction.category_type })).then(() => {
+    dispatch(
+      editTransaction({
+        id: transaction.id,
+        formData: { ...formData, category_type: transaction.category_type },
+      }),
+    ).then(() => {
       dispatch(getTransactionList());
       onClose();
     });
   };
-
-  const inputDate = transaction.created;
-  const date = new Date(inputDate);
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-  const formattedDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month}.${year}`;
 
   return (
     <Popup
@@ -46,14 +44,14 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
     >
       <TransactionForm
         formData={{
-          created: formattedDate,
+          created: formData.created,
           category: selectedCategoryOption ? selectedCategoryOption.id : '',
-          name: transaction.name,
-          amount: transaction.amount,
+          name: formData.name,
+          amount: formData.amount,
           finance: selectedFinanceOption ? selectedFinanceOption.id : '',
         }}
         handleChange={handleChange}
-        handleSubmit={handleAddSpend}
+        handleSubmit={handleEditTransaction}
         categoryOptions={categoryOptions}
         financeOptions={financeOptions}
         onClose={onClose}

@@ -18,7 +18,7 @@ export const deleteTransaction = createAsyncThunk('transaction/delete', async (i
   return deleteTransactionAPI(id);
 });
 
-export const editTransaction = createAsyncThunk('transaction/edit', async (id, formData) => {
+export const editTransaction = createAsyncThunk('transaction/edit', async ({ id, formData }) => {
   return editTransactionAPI(id, formData);
 });
 

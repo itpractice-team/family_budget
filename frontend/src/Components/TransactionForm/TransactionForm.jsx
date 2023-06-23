@@ -16,10 +16,10 @@ export default function TransactionForm({
   return (
     <form className="form form_add-operation" onSubmit={handleSubmit}>
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor="SpendPopup-date">
+        <label className="form__input-label" htmlFor="form-date">
           Дата
           <input
-            id="SpendPopup-date"
+            id="form-date"
             name="created"
             className="form__input"
             type="date"
@@ -40,10 +40,10 @@ export default function TransactionForm({
       />
 
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor="SpendPopup-name">
+        <label className="form__input-label" htmlFor="form-name">
           Название
           <input
-            id="SpendPopup-name"
+            id="form-name"
             name="name"
             className="form__input"
             type="text"
@@ -55,10 +55,10 @@ export default function TransactionForm({
       </div>
 
       <div className="form__input-block">
-        <label className="form__input-label form__input-label_divider" htmlFor="SpendPopup-amount">
+        <label className="form__input-label form__input-label_divider" htmlFor="form-amount">
           Сумма
           <input
-            id="SpendPopup-amount"
+            id="form-amount"
             name="amount"
             className="form__input form__input_sum"
             type="number"
