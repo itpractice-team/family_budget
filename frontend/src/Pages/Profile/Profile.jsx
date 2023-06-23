@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm, useWatch } from 'react-hook-form';
@@ -54,13 +54,10 @@ export default function Profile() {
     }
   }, [isFetched]);
 
-  const handleAvatarUploaderClick = useCallback(
-    (evt) => {
-      evt.preventDefault();
-      openAvatarUploaderPopup();
-    },
-    [dispatch],
-  );
+  const handleAvatarUploaderClick = (evt) => {
+    evt.preventDefault();
+    openAvatarUploaderPopup();
+  };
 
   const handlePasswordChangeClick = (evt) => {
     evt.preventDefault();

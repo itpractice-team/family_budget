@@ -4,11 +4,15 @@ import './UserFinance.scss';
 import UserFinanceSelect from '../UserFinanceSelect/UserFinanceSelect';
 import Overlay from '../Overlay/Overlay';
 import { getUserFinance } from '../../store/slices/userFinance';
+import usePopup from '../../utils/hooks/usePopup';
+import AddFinancePopup from '../AddFinancePopup/AddFinancePopup';
 
 export default function UserFinance() {
   const dispatch = useDispatch();
 
   const accounts = useSelector((state) => state.userFinance.finance);
+
+  const { isOpen: isAddItemPopupOpen, closePopup: closeAddItemPopup } = usePopup('addItem');
 
   useEffect(() => {
     dispatch(getUserFinance());
@@ -60,8 +64,10 @@ export default function UserFinance() {
           handleOptionChange={handleOptionChange}
           selectedOption={selectedOption}
           accounts={accounts}
+          onCloseList={closeList}
         />
       </Overlay>
+      {isAddItemPopupOpen && <AddFinancePopup onClose={closeAddItemPopup} itemType="finance" />}
     </section>
   );
 }

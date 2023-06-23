@@ -214,3 +214,30 @@ $max-width-m: 784px;
     }
   }
 }
+
+// добавить счет
+.popup_add {
+  max-width: $max-width-m;
+
+  .form {
+    .button-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 32px;
+      justify-content: end;
+    }
+  }
+
+  & .add-finance__content {
+    display: flex;
+    gap: 88px;
+
+    .add-finance__list {
+      width: 100%;
+    }
+
+    .form__button-wrapper_account {
+      display: none;
+    }
+  }
+}

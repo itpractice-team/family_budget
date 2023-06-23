@@ -4,15 +4,28 @@ import './Categories.scss';
 import Tabs from '../Tabs/Tabs';
 import Button from '../../ui/Button/Button';
 import { arrCategoriesСommon } from '../../utils/consts';
-import { getCategories } from '../../store/slices/categories';
+import { getUserCategories } from '../../store/slices/categories';
+import usePopup from '../../utils/hooks/usePopup';
+import AddItemPopup from '../AddFinancePopup/AddFinancePopup';
 
 export default function Categories() {
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.categories.categories);
 
+  const {
+    isOpen: isAddCategoryPopupOpen,
+    openPopup: openAddCategoryPopup,
+    closePopup: closeAddCategoryPopup,
+  } = usePopup('addCategory');
+
+  const handleAddCategoryClick = (evt) => {
+    evt.preventDefault();
+    openAddCategoryPopup();
+  };
+
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getUserCategories());
   }, []);
 
   const [activeDate, setActiveDate] = useState('Общие');
@@ -66,7 +79,11 @@ export default function Categories() {
         text="Добавить/Редактировать"
         size="medium"
         extraClass="categories__button"
+        onClick={handleAddCategoryClick}
       />
+      {isAddCategoryPopupOpen && (
+        <AddItemPopup onClose={closeAddCategoryPopup} itemType="categories" />
+      )}
     </section>
   );
 }

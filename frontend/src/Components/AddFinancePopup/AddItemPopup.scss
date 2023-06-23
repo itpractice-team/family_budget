@@ -1,0 +1,52 @@
+@import '../../styles/consts.scss';
+
+.popup_s {
+  .popup__title {
+    margin-left: 10px;
+  }
+  & .add-item__content {
+    flex-direction: column;
+  }
+}
+
+.add-item__content {
+  display: flex;
+
+  .add-item__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .add-item__list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .list-item__info {
+      display: flex;
+      gap: 12px;
+
+      .item__image {
+      }
+
+      .item__name {
+        @include text-medium-web;
+        text-align: start;
+      }
+    }
+
+    .list-item__button-delete {
+      width: 40px;
+      height: 40px;
+      background: url(../../Images/delete.svg) no-repeat center;
+      align-self: flex-end;
+    }
+  }
+}
+
+// ExtraClass
+.add-item__button-add {
+  max-width: 242px;
+  margin-top: 24px;
+}

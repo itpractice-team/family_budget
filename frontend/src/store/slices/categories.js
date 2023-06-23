@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getCategoriesAPI } from '../../utils/api';
+import { getUserCategoriesAPI } from '../../utils/api';
 
-export const getCategories = createAsyncThunk('categories', async () => {
-  return getCategoriesAPI();
+export const getUserCategories = createAsyncThunk('categories', async () => {
+  return getUserCategoriesAPI();
 });
 
 const initialState = {
@@ -17,15 +17,15 @@ export const categoriesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.pending, (state) => {
+      .addCase(getUserCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getCategories.fulfilled, (state, action) => {
+      .addCase(getUserCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories = action.payload.results;
       })
-      .addCase(getCategories.rejected, (state, action) => {
+      .addCase(getUserCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

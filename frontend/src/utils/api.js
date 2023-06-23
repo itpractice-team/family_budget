@@ -149,7 +149,7 @@ export const getFinanceListAPI = async () => {
   return data;
 };
 
-export const getCategoriesAPI = async () => {
+export const getUserCategoriesAPI = async () => {
   const url = `${baseUrl}/category/`;
   const options = {
     method: 'GET',
