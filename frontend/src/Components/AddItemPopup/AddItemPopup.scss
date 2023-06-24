@@ -1,9 +1,6 @@
 @import '../../styles/consts.scss';
 
 .popup_s {
-  .popup__title {
-    margin-left: 10px;
-  }
   & .add-item__content {
     flex-direction: column;
   }
@@ -45,8 +42,37 @@
   }
 }
 
+.icon-list {
+  display: grid;
+  grid-template-columns: repeat(7, 36px);
+  grid-gap: 14px 8px;
+  max-width: 336px;
+}
+
 // ExtraClass
 .add-item__button-add {
-  max-width: 242px;
+  max-width: fit-content;
   margin-top: 24px;
+}
+
+.form {
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 32px;
+    justify-content: end;
+  }
+}
+
+.add-finance__content {
+  display: flex;
+  gap: 88px;
+
+  .add-finance__list {
+    width: 100%;
+  }
+
+  .form__button-wrapper_account {
+    display: none;
+  }
 }

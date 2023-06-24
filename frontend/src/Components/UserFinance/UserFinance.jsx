@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import './UserFinance.scss';
 import UserFinanceSelect from '../UserFinanceSelect/UserFinanceSelect';
 import Overlay from '../Overlay/Overlay';
-import { getUserFinance } from '../../store/slices/userFinance';
+import { getUserFinance } from '../../store/slices/userFinanceAndCategoriesSlice';
 import usePopup from '../../utils/hooks/usePopup';
-import AddFinancePopup from '../AddFinancePopup/AddFinancePopup';
+import AddItemPopup from '../AddItemPopup/AddItemPopup';
 
 export default function UserFinance() {
   const dispatch = useDispatch();
 
-  const accounts = useSelector((state) => state.userFinance.finance);
+  const userFinance = useSelector((state) => state.userFinanceAndCategories.userFinance);
 
   const { isOpen: isAddItemPopupOpen, closePopup: closeAddItemPopup } = usePopup('addItem');
 
@@ -22,12 +22,12 @@ export default function UserFinance() {
   const [isListOpen, setIsListOpen] = useState(false);
 
   useEffect(() => {
-    if (accounts.length > 0) {
-      setSelectedOption(accounts[0].id);
+    if (userFinance.length > 0) {
+      setSelectedOption(userFinance[0].id);
     }
-  }, [accounts]);
+  }, [userFinance]);
 
-  const selectedAccount = accounts.find((account) => account.id === selectedOption);
+  const selectedAccount = userFinance.find((account) => account.id === selectedOption);
 
   const handleOptionChange = (value) => {
     setSelectedOption((option) => (option === value ? option : value));
@@ -63,11 +63,11 @@ export default function UserFinance() {
         <UserFinanceSelect
           handleOptionChange={handleOptionChange}
           selectedOption={selectedOption}
-          accounts={accounts}
+          accounts={userFinance}
           onCloseList={closeList}
         />
       </Overlay>
-      {isAddItemPopupOpen && <AddFinancePopup onClose={closeAddItemPopup} itemType="finance" />}
+      {isAddItemPopupOpen && <AddItemPopup onClose={closeAddItemPopup} itemType="finance" />}
     </section>
   );
 }

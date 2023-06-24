@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import TransactionForm from '../TransactionForm/TransactionForm';
-import { addTransaction, getTransactionList } from '../../store/slices/transactionList';
+import { addTransaction, fetchTransactionList } from '../../store/slices/transactionListSlice';
 import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
 export default function TransactionPopup({ onClose, popupSize, title, categoryType }) {
@@ -12,7 +12,7 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
   const handleAddSpend = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: categoryType })).then(() => {
-      dispatch(getTransactionList());
+      dispatch(fetchTransactionList());
       onClose();
     });
   };

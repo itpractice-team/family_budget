@@ -28,6 +28,7 @@ const request = async (url, options) => {
   }
 };
 
+// регистрация
 export const registerUserAPI = async (userData) => {
   const url = `${baseUrl}/users/`;
   const options = {
@@ -41,6 +42,7 @@ export const registerUserAPI = async (userData) => {
   return request(url, options);
 };
 
+// авторизация
 export const loginUserAPI = async (userData) => {
   const url = `${baseUrl}/auth/token/login/`;
   const options = {
@@ -59,6 +61,7 @@ export const loginUserAPI = async (userData) => {
   return data;
 };
 
+// выход
 export const logoutUserAPI = async () => {
   const url = `${baseUrl}/auth/token/logout/`;
   const options = {
@@ -77,6 +80,7 @@ export const logoutUserAPI = async () => {
   }
 };
 
+// данные пользователя
 export const getUserAPI = async () => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -90,6 +94,7 @@ export const getUserAPI = async () => {
   return data;
 };
 
+// изменение данных пользователя
 export const updateUserAPI = async (userData) => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -105,6 +110,7 @@ export const updateUserAPI = async (userData) => {
   return data;
 };
 
+// удаление профиля
 export const deleteUserAPI = async () => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -123,6 +129,7 @@ export const deleteUserAPI = async () => {
   }
 };
 
+// получение счетов пользователя
 export const getUserFinanceAPI = async () => {
   const url = `${baseUrl}/finance/`;
   const options = {
@@ -136,7 +143,8 @@ export const getUserFinanceAPI = async () => {
   return data;
 };
 
-export const getFinanceListAPI = async () => {
+// получение доступных для создания счетов
+export const getFinanceOptionsAPI = async () => {
   const url = `${baseUrl}/finance/handbook/`;
   const options = {
     method: 'GET',
@@ -149,6 +157,7 @@ export const getFinanceListAPI = async () => {
   return data;
 };
 
+// получение категорий пользователя
 export const getUserCategoriesAPI = async () => {
   const url = `${baseUrl}/category/`;
   const options = {
@@ -162,8 +171,10 @@ export const getUserCategoriesAPI = async () => {
   return data;
 };
 
-export const getMoneyboxAPI = async () => {
-  const url = `${baseUrl}/moneybox/`;
+// получение иконок для создания новой категории
+
+export const getCategoryIconsAPI = async () => {
+  const url = `${baseUrl}/category/icons/?limit=100`;
   const options = {
     method: 'GET',
     headers: {
@@ -175,21 +186,7 @@ export const getMoneyboxAPI = async () => {
   return data;
 };
 
-export const addMoneyboxAPI = async (formData) => {
-  const url = `${baseUrl}/moneybox/`;
-  const options = {
-    method: 'POST',
-    headers: {
-      ...defaultHeaders,
-      authorization: `Token ${getCookie('token')}`,
-    },
-    body: JSON.stringify(formData),
-  };
-
-  const data = await request(url, options);
-  return data;
-};
-
+// получение списка транзакций
 export const getTransactionListAPI = async () => {
   const url = `${baseUrl}/transaction/`;
   const options = {
@@ -203,6 +200,7 @@ export const getTransactionListAPI = async () => {
   return data;
 };
 
+// добавление транзакции
 export const addTransactionAPI = async (formData) => {
   const url = `${baseUrl}/transaction/`;
   const options = {
@@ -218,6 +216,7 @@ export const addTransactionAPI = async (formData) => {
   return data;
 };
 
+// удлаение транзакции
 export const deleteTransactionAPI = async (id) => {
   const url = `${baseUrl}/transaction/${id}/`;
   const options = {
@@ -235,10 +234,41 @@ export const deleteTransactionAPI = async (id) => {
   }
 };
 
+// редактирование транзакции
 export const editTransactionAPI = async (id, formData) => {
   const url = `${baseUrl}/transaction/${id}/`;
   const options = {
     method: 'PATCH',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
+
+// получение копилок пользователя
+export const getMoneyboxAPI = async () => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// добавление новой копилки
+export const addMoneyboxAPI = async (formData) => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'POST',
     headers: {
       ...defaultHeaders,
       authorization: `Token ${getCookie('token')}`,

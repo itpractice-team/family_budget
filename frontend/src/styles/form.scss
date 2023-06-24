@@ -175,6 +175,10 @@
   @include text-medium-web;
 }
 
+.form__text_confirmation {
+  @include text-large-web;
+}
+
 // выпадающий список
 
 .form__input_select {

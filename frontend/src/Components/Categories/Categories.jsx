@@ -4,14 +4,14 @@ import './Categories.scss';
 import Tabs from '../Tabs/Tabs';
 import Button from '../../ui/Button/Button';
 import { arrCategoriesСommon } from '../../utils/consts';
-import { getUserCategories } from '../../store/slices/categories';
+import { getUserCategories } from '../../store/slices/userFinanceAndCategoriesSlice';
 import usePopup from '../../utils/hooks/usePopup';
-import AddItemPopup from '../AddFinancePopup/AddFinancePopup';
+import AddItemPopup from '../AddItemPopup/AddItemPopup';
 
 export default function Categories() {
   const dispatch = useDispatch();
 
-  const categories = useSelector((state) => state.categories.categories);
+  const userCategories = useSelector((state) => state.userFinanceAndCategories.userCategories);
 
   const {
     isOpen: isAddCategoryPopupOpen,
@@ -29,17 +29,17 @@ export default function Categories() {
   }, []);
 
   const [activeDate, setActiveDate] = useState('Общие');
-  const [filteredCategories, setFilteredCategories] = useState(categories);
+  const [filteredCategories, setFilteredCategories] = useState(userCategories);
 
   const filterCategories = (tab) => {
     if (tab === 'Общие') {
-      setFilteredCategories(categories);
+      setFilteredCategories(userCategories);
     } else {
-      const filtered = categories.filter(
+      const filtered = userCategories.filter(
         (category) => category.category_type === 1 && tab === 'Расходы',
       );
       if (tab === 'Доходы') {
-        const incomeFiltered = categories.filter((category) => category.category_type === 2);
+        const incomeFiltered = userCategories.filter((category) => category.category_type === 2);
         setFilteredCategories([...filtered, ...incomeFiltered]);
       } else {
         setFilteredCategories(filtered);
@@ -49,7 +49,7 @@ export default function Categories() {
 
   useEffect(() => {
     filterCategories(activeDate);
-  }, [categories, activeDate]);
+  }, [userCategories, activeDate]);
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);

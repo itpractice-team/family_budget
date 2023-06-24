@@ -4,8 +4,8 @@ import useDropdown from './useDropdown';
 
 const useTransactionForm = (initialTransaction, categoryType) => {
   const { finance, categories } = useSelector((state) => ({
-    finance: state.userFinance.finance,
-    categories: state.categories.categories,
+    finance: state.userFinanceAndCategories.userFinance,
+    categories: state.userFinanceAndCategories.userCategories,
   }));
 
   const categoryDropdown = useDropdown(initialTransaction?.category?.id || '', categories);

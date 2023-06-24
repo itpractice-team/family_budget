@@ -8,8 +8,8 @@ import { changePassword } from '../../store/slices/passwordSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import { RequirementsPassword } from '../../utils/consts';
-import { resetUser } from '../../store/slices/userSlice';
-import { setLogin } from '../../store/slices/loginSlice';
+import { resetUser } from '../../store/slices/accountSlice';
+import { setAuthentication } from '../../store/slices/authSlice';
 import changePasswordValidation from '../../utils/validations/changePasswordValidation';
 import Eye from '../../ui/Eye/Eye';
 import usePopup from '../../utils/hooks/usePopup';
@@ -38,7 +38,7 @@ export default function PasswordChangePopup({ onClose }) {
       .then((action) => {
         if (!action.error) {
           dispatch(resetUser());
-          dispatch(setLogin(false));
+          dispatch(setAuthentication(false));
           openInfoPopup();
         }
       })

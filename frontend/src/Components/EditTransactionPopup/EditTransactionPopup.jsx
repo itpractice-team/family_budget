@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import TransactionForm from '../TransactionForm/TransactionForm';
-import { getTransactionList, editTransaction } from '../../store/slices/transactionList';
+import { fetchTransactionList, editTransaction } from '../../store/slices/transactionListSlice';
 import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
 export default function EditTransactionPopup({ onClose, transaction, categoryType }) {
@@ -30,7 +30,7 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
         formData: { ...formData, category_type: transaction.category_type },
       }),
     ).then(() => {
-      dispatch(getTransactionList());
+      dispatch(fetchTransactionList());
       onClose();
     });
   };

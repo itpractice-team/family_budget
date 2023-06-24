@@ -4,8 +4,8 @@ import './TransactionCard.scss';
 import {
   addTransaction,
   deleteTransaction,
-  getTransactionList,
-} from '../../../store/slices/transactionList';
+  fetchTransactionList,
+} from '../../../store/slices/transactionListSlice';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
@@ -35,7 +35,7 @@ export default function TransactionCard({ transaction }) {
 
   const handleDelete = () => {
     dispatch(deleteTransaction(id)).then(() => {
-      dispatch(getTransactionList());
+      dispatch(fetchTransactionList());
     });
   };
 
@@ -60,7 +60,7 @@ export default function TransactionCard({ transaction }) {
     };
 
     dispatch(addTransaction(newTransactionData)).then(() => {
-      dispatch(getTransactionList());
+      dispatch(fetchTransactionList());
     });
   };
 

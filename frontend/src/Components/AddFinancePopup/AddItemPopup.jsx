@@ -1,21 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import './AddItemPopup.scss';
+import { useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import CancelButton from '../CancelButton/CancelButton';
 import plus from '../../Images/icons/plus.svg';
 import useDropdown from '../../utils/hooks/useDropdown';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
-import { getFinanceList } from '../../store/slices/finance';
 
 export default function AddItemPopup({ onClose, itemType }) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getFinanceList());
-  }, []);
-
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
 
