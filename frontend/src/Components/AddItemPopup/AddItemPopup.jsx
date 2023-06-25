@@ -13,7 +13,9 @@ import {
   getUserFinance,
   getUserCategories,
   addFinance,
+  deleteFinance,
   addCategory,
+  deleteCategory,
 } from '../../store/slices/userFinanceAndCategoriesSlice';
 import { getFinanceOptions, getCategoryOptions } from '../../store/slices/itemOptions';
 
@@ -136,6 +138,18 @@ export default function AddItemPopup({ onClose, itemType }) {
     }));
   };
 
+  const handleDeleteItemClick = (id, type) => {
+    if (type === 'categories') {
+      dispatch(deleteCategory(id)).then(() => {
+        dispatch(getUserCategories());
+      });
+    } else if (type === 'finance') {
+      dispatch(deleteFinance(id)).then(() => {
+        dispatch(getUserFinance());
+      });
+    }
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (itemType === 'finance') {
@@ -177,7 +191,11 @@ export default function AddItemPopup({ onClose, itemType }) {
                 <img src={item.image} alt={item.name} className="add-item-popup__list-item-image" />
                 <p className="add-item-popup__list-item-name">{item.name}</p>
               </div>
-              <button className="add-item-popup__list-item-button-delete" aria-label="Удалить" />
+              <button
+                className="add-item-popup__list-item-button-delete"
+                aria-label="Удалить"
+                onClick={() => handleDeleteItemClick(item.id, itemType)}
+              />
             </article>
           ))}
         </div>
