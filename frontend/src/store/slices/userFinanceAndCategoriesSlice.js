@@ -4,6 +4,8 @@ import {
   getUserFinanceAPI,
   addFinanceAPI,
   addCategoryAPI,
+  deleteFinanceAPI,
+  deleteCategoryAPI,
 } from '../../utils/api';
 
 export const getUserCategories = createAsyncThunk(
@@ -27,10 +29,24 @@ export const addFinance = createAsyncThunk(
   },
 );
 
+export const deleteFinance = createAsyncThunk(
+  'userFinanceAndCategories/deleteFinance',
+  async (id) => {
+    return deleteFinanceAPI(id);
+  },
+);
+
 export const addCategory = createAsyncThunk(
   'userFinanceAndCategories/addCategory',
   async (formData) => {
     return addCategoryAPI(formData);
+  },
+);
+
+export const deleteCategory = createAsyncThunk(
+  'userFinanceAndCategories/deleteCategory',
+  async (id) => {
+    return deleteCategoryAPI(id);
   },
 );
 
@@ -84,6 +100,18 @@ export const userFinanceAndCategoriesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(deleteFinance.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteFinance.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteFinance.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(addCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -93,6 +121,18 @@ export const userFinanceAndCategoriesSlice = createSlice({
         state.userCategories.push(action.payload);
       })
       .addCase(addCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteCategory.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
