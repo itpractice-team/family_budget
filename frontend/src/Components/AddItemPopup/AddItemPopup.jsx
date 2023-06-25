@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import './AddItemPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
+import Radio from '../../ui/Radio/Radio';
 import CancelButton from '../CancelButton/CancelButton';
 import plus from '../../Images/icons/plus.svg';
 import useDropdown from '../../utils/hooks/useDropdown';
@@ -11,12 +12,21 @@ import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import {
   getUserFinance,
   getUserCategories,
+  addFinance,
+  addCategory,
 } from '../../store/slices/userFinanceAndCategoriesSlice';
 import { getFinanceOptions, getCategoryOptions } from '../../store/slices/itemOptions';
 
 export default function AddItemPopup({ onClose, itemType }) {
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [popupSize, setPopupSize] = useState('popup_s');
+  const [showAllIcons, setShowAllIcons] = useState(false);
+  const [selectedOptionId, setSelectedOptionId] = useState(null);
+
+  const handleToggleIcons = (evt) => {
+    evt.preventDefault();
+    setShowAllIcons((prevShowAllIcons) => !prevShowAllIcons);
+  };
 
   const dispatch = useDispatch();
 
@@ -32,6 +42,8 @@ export default function AddItemPopup({ onClose, itemType }) {
     item: '',
     categoryName: '',
     categoryIcon: '',
+    categoryType: 'spend',
+    balance: '',
   });
 
   useEffect(() => {
@@ -56,6 +68,10 @@ export default function AddItemPopup({ onClose, itemType }) {
       ...prevData,
       [name]: value,
     }));
+
+    if (name === 'item') {
+      setSelectedOptionId(value);
+    }
   };
 
   useEffect(() => {
@@ -103,17 +119,65 @@ export default function AddItemPopup({ onClose, itemType }) {
     options = categoryOptions;
   }
 
+  const handleCategoryNameChange = (evt) => {
+    evt.preventDefault();
+    const { value } = evt.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      categoryName: value,
+    }));
+  };
+
+  const handleCategoryIconChange = (evt, icon) => {
+    evt.preventDefault();
+    setFormData((prevData) => ({
+      ...prevData,
+      categoryIcon: icon,
+    }));
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    if (itemType === 'finance') {
+      const selectedFinance = options.find((finance) => finance.id === selectedOptionId);
+      const financeData = {
+        id: selectedFinance.id,
+        balance: parseFloat(formData.balance),
+      };
+      dispatch(addFinance(financeData)).then(() => {
+        setIsAddingItem(false);
+        setPopupSize('popup_s');
+        onClose();
+      });
+    } else if (itemType === 'categories') {
+      const categoryData = {
+        name: formData.categoryName,
+        icon: formData.categoryIcon,
+        category_type: formData.categoryType === 'spend' ? 1 : 2,
+      };
+      dispatch(addCategory(categoryData)).then(() => {
+        setIsAddingItem(false);
+        setPopupSize('popup_s');
+        onClose();
+      });
+    }
+  };
+
   return (
     <Popup onClose={onClose} popupSize={popupSize} title={popupTitle}>
-      <section className="add-item__content">
-        <div className="add-item__list">
+      <section
+        className={`add-item-popup__content_${
+          popupSize === 'popup_s' ? 'one-column' : 'two-columns'
+        }`}
+      >
+        <div className="add-item-popup__list">
           {itemList.map((item) => (
-            <article key={item.id} className="add-item__list-item">
-              <div className="list-item__info">
-                <img src={item.image} alt={item.name} className="item__image" />
-                <p className="item__name">{item.name}</p>
+            <article key={item.id} className="add-item-popup__list-item">
+              <div className="add-item-popup__list-item-info">
+                <img src={item.image} alt={item.name} className="add-item-popup__list-item-image" />
+                <p className="add-item-popup__list-item-name">{item.name}</p>
               </div>
-              <button className="list-item__button-delete" aria-label="Удалить" />
+              <button className="add-item-popup__list-item-button-delete" aria-label="Удалить" />
             </article>
           ))}
         </div>
@@ -125,11 +189,11 @@ export default function AddItemPopup({ onClose, itemType }) {
             image={plus}
             text={`Добавить ${itemType === 'finance' ? 'счет' : 'категорию'}`}
             size="medium"
-            extraClass="add-item__button-add"
+            extraClass="add-item-popup__button-add"
             onClick={handleAddItemClick}
           />
         ) : (
-          <form className="form">
+          <form className="add-item-popup__form" onSubmit={handleSubmit}>
             {itemType === 'finance' ? (
               <>
                 <SelectButtonWrapper
@@ -142,7 +206,7 @@ export default function AddItemPopup({ onClose, itemType }) {
                   handleOptionChange={(value) => handleChange({ name: 'item', value })}
                 />
                 <label
-                  className="form__input-label form__input-label_arr"
+                  className="add-item-popup__form-input-label add-item-popup__form-input-label_divider"
                   htmlFor="SpendingPopup-amount"
                 >
                   Текущий баланс
@@ -150,59 +214,87 @@ export default function AddItemPopup({ onClose, itemType }) {
                     type="number"
                     name="SpendingPopup-amount"
                     id="SpendingPopup-amount"
-                    className="form__input form__input_number"
+                    className="add-item-popup__form-input form__input_sum"
+                    value={formData.balance}
+                    onChange={(evt) => handleChange({ name: 'balance', value: evt.target.value })}
                   />
                 </label>
               </>
             ) : (
               <>
-                <div className="form__input-block">
-                  <label className="form__input-label" htmlFor="categoryName">
+                <div className="add-item-popup__form-input-block">
+                  <label className="add-item-popup__form-input-label" htmlFor="categoryName">
                     Название категории
                     <input
                       id="categoryName"
                       name="categoryName"
-                      className="form__input"
+                      className="add-item-popup__form-input"
                       type="text"
                       placeholder="Введите название"
                       value={formData.categoryName}
-                      onChange={(evt) =>
-                        handleChange({ name: 'categoryName', value: evt.target.value })
-                      }
+                      onChange={handleCategoryNameChange}
                     />
                   </label>
                 </div>
 
-                <div className="form__input-block">
-                  <label className="form__input-label" htmlFor="selectIcon">
+                <div className="add-item-popup__form-input-block">
+                  <label className="add-item-popup__form-input-label" htmlFor="selectIcon">
                     Выберите иконку
-                    <div className="icon-list">
-                      {categoryOptions.map((option) => (
-                        <button
-                          key={option.id}
-                          className={`icon-button ${
-                            option.image === formData.categoryIcon ? 'selected' : ''
-                          }`}
-                          onClick={() =>
-                            handleChange({ name: 'categoryIcon', value: option.image })
-                          }
-                        >
-                          <img
-                            src={option.image}
-                            alt="Иконка категории"
-                            className={`icon item__icon ${
-                              option.image === formData.categoryIcon ? 'selected' : ''
+                    <div className="add-item-popup__icon-list">
+                      {categoryOptions
+                        .slice(0, showAllIcons ? categoryOptions.length : 7)
+                        .map((option) => (
+                          <button
+                            key={option.id}
+                            className={`add-item-popup__icon-button ${
+                              option.id === formData.categoryIcon ? 'selected' : ''
                             }`}
-                          />
-                        </button>
-                      ))}
+                            onClick={(evt) => handleCategoryIconChange(evt, option.id)}
+                          >
+                            <img src={option.image} alt="Иконка категории" />
+                          </button>
+                        ))}
+                    </div>
+                    <button
+                      className={`add-item-popup__toggle-icons-button ${
+                        showAllIcons ? 'add-item-popup__toggle-icons-button--open' : ''
+                      }`}
+                      onClick={handleToggleIcons}
+                    >
+                      Показать все
+                    </button>
+                  </label>
+                </div>
+
+                <div className="add-item-popup__form-input-block">
+                  <label className="add-item-popup__form-input-label">
+                    Где показывать?
+                    <div className="add-item-popup__radio-buttons">
+                      <Radio
+                        text="В расходе"
+                        value="spend"
+                        isChecked={formData.categoryType === 'spend'}
+                        onChange={(evt) =>
+                          handleChange({ name: 'categoryType', value: evt.target.value })
+                        }
+                        extraClass="add-item-popup__radio-button"
+                      />
+                      <Radio
+                        text="В доходе"
+                        value="income"
+                        isChecked={formData.categoryType === 'income'}
+                        onChange={(evt) =>
+                          handleChange({ name: 'categoryType', value: evt.target.value })
+                        }
+                        extraClass="add-item-popup__radio-button"
+                      />
                     </div>
                   </label>
                 </div>
               </>
             )}
 
-            <div className="button-wrapper">
+            <div className="add-item-popup__form-button-wrapper">
               <Button
                 variant="secondary"
                 content="text"
@@ -221,7 +313,7 @@ export default function AddItemPopup({ onClose, itemType }) {
           </form>
         )}
 
-        <div className="form__button-wrapper form__button-wrapper_account">
+        <div className="add-item-popup__button-wrapper">
           {!isAddingItem && (
             <>
               <CancelButton onClose={onClose} />
