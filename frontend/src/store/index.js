@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { dateReducer } from './slices/dateSlice';
 import { popupReducer } from './slices/togglePopupSlice';
+import { infoReducer } from './slices/infoSlice';
 import { authReducer } from './slices/authSlice';
 import { accountReducer } from './slices/accountSlice';
 import { passwordReducer } from './slices/passwordSlice';
@@ -13,6 +14,7 @@ const store = configureStore({
   reducer: {
     dates: dateReducer,
     popup: popupReducer,
+    info: infoReducer,
     account: accountReducer,
     auth: authReducer,
     password: passwordReducer,
