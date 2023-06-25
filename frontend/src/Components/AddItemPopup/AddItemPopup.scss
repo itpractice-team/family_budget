@@ -1,78 +1,177 @@
 @import '../../styles/consts.scss';
 
-.popup_s {
-  & .add-item__content {
-    flex-direction: column;
+.add-item-popup__content_one-column {
+  flex-direction: column;
+}
+
+.add-item-popup__content_two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 336px);
+  gap: 32px;
+
+  .form__input-block {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .add-item-popup__form-input-label_divider {
+    margin-top: 16px;
+  }
+
+  .select {
+    left: 344px;
+    top: 0;
+  }
+  // не удалять!
+  // .button-select {
+  //   &--open {
+  //     .button-select__arrow {
+  //       transform: rotate(180deg);
+  //     }
+  //   }
+  // }
+
+  // .button-select__arrow {
+  //   transform: rotate(0deg);
+  // }
+
+  .add-item-popup__button-wrapper {
+    display: none;
   }
 }
 
-.add-item__content {
+.add-item-popup__list {
   display: flex;
-
-  .add-item__list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .add-item__list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .list-item__info {
-      display: flex;
-      gap: 12px;
-
-      .item__image {
-      }
-
-      .item__name {
-        @include text-medium-web;
-        text-align: start;
-      }
-    }
-
-    .list-item__button-delete {
-      width: 40px;
-      height: 40px;
-      background: url(../../Images/delete.svg) no-repeat center;
-      align-self: flex-end;
-    }
-  }
+  flex-direction: column;
+  gap: 12px;
 }
 
-.icon-list {
+.add-item-popup__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-item-popup__list-item-info {
+  display: flex;
+  gap: 12px;
+}
+
+.add-item-popup__list-item-image {
+}
+
+.add-item-popup__list-item-name {
+  @include text-medium-web;
+  text-align: start;
+}
+
+.add-item-popup__list-item-button-delete {
+  width: 40px;
+  height: 40px;
+  background: url(../../Images/delete.svg) no-repeat center;
+  align-self: flex-end;
+}
+
+.add-item-popup__form .add-item-popup__form-input-block:nth-child(2),
+.add-item-popup__form .add-item-popup__form-input-block:nth-child(3) {
+  margin-top: 16px;
+}
+
+.add-item-popup__form-input-block {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.add-item-popup__form-input-label {
+  @include text-small-web;
+  color: $black;
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.add-item-popup__form-input {
+  @include text-medium-web;
+  padding: 16px 20px;
+  margin: 8px 8px 0 0;
+  width: 100%;
+  border: 1px solid $midGrey;
+  border-radius: 100px;
+  color: $black;
+}
+
+.add-item-popup__icon-list {
   display: grid;
   grid-template-columns: repeat(7, 36px);
-  grid-gap: 14px 8px;
+  grid-gap: 8px 14px;
   max-width: 336px;
+  margin-top: 8px;
+}
+
+.add-item-popup__toggle-icons-button {
+  cursor: pointer;
+  @include text-small-web;
+  display: flex;
+  align-items: center;
+  width: 118px;
+  border: none;
+  margin-top: 8px;
+  background: url(../../Images/chevron-down.svg) no-repeat right center / 20px;
+  transition: 0.2s ease-in;
+}
+
+.add-item-popup__icon-button {
+  position: relative;
+}
+
+.add-item-popup__icon-button.selected::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid $heavyBlue;
+  border-radius: 8px;
+  pointer-events: none;
+  width: 32px;
+  height: 32px;
+}
+
+.add-item-popup__toggle-icons-button--open {
+  background-image: url(../../Images/chevron-up-black.svg);
+}
+
+.add-item-popup__radio-buttons {
+  display: flex;
+  margin-top: 8px;
+  gap: 35px;
+}
+
+.add-item-popup__form-button-wrapper {
+  margin-top: 32px;
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  justify-content: end;
+}
+
+.add-item-popup__button-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 29px;
 }
 
 // ExtraClass
-.add-item__button-add {
+.add-item-popup__button-add {
   max-width: fit-content;
   margin-top: 24px;
 }
 
-.form {
-  .button-wrapper {
-    width: 100%;
-    display: flex;
-    gap: 32px;
-    justify-content: end;
-  }
-}
-
-.add-finance__content {
-  display: flex;
-  gap: 88px;
-
-  .add-finance__list {
-    width: 100%;
-  }
-
-  .form__button-wrapper_account {
-    display: none;
-  }
+.add-item-popup__radio-button {
+  padding-right: 10px;
 }
