@@ -37,7 +37,8 @@
   position: relative;
 }
 
-.form__input-label_divider::after {
+.form__input-label_divider::after,
+.add-item-popup__form-input-label_divider::after {
   content: '';
   display: block;
   width: 1px;
@@ -56,18 +57,6 @@
   border: 1px solid $midGrey;
   border-radius: 100px;
   color: $black;
-
-  &[type='number']::-webkit-outer-spin-button,
-  &[type='number']::-webkit-inner-spin-button {
-    display: none;
-  }
-
-  &[type='date']::-webkit-calendar-picker-indicator {
-    display: inline-block;
-    background: url(../Images/calendar.svg) center / 20px no-repeat;
-    vertical-align: middle;
-    cursor: pointer;
-  }
 }
 
 .form__input-small {

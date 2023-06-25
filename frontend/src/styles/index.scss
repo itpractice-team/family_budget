@@ -56,6 +56,18 @@ input:focus {
   outline: none;
 }
 
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: inline-block;
+  background: url(../Images/calendar.svg) center / 20px no-repeat;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 textarea::-webkit-scrollbar,
 textarea::-webkit-resizer {
   display: none;
