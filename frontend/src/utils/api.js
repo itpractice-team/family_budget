@@ -129,6 +129,20 @@ export const deleteUserAPI = async () => {
   }
 };
 
+// инфо-запрос
+export const infoAPI = async () => {
+  const url = `${baseUrl}/info/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
 // получение счетов пользователя
 export const getUserFinanceAPI = async () => {
   const url = `${baseUrl}/finance/`;
@@ -139,6 +153,22 @@ export const getUserFinanceAPI = async () => {
       authorization: `Token ${getCookie('token')}`,
     },
   };
+  const data = await request(url, options);
+  return data;
+};
+
+// добавление счёта
+export const addFinanceAPI = async (formData) => {
+  const url = `${baseUrl}/finance/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
   const data = await request(url, options);
   return data;
 };
@@ -171,8 +201,22 @@ export const getUserCategoriesAPI = async () => {
   return data;
 };
 
-// получение иконок для создания новой категории
+// создание новой категории
+export const addCategoryAPI = async (formData) => {
+  const url = `${baseUrl}/category/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+  const data = await request(url, options);
+  return data;
+};
 
+// получение иконок для создания новой категории
 export const getCategoryIconsAPI = async () => {
   const url = `${baseUrl}/category/icons/?limit=100`;
   const options = {
