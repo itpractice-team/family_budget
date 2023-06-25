@@ -173,6 +173,24 @@ export const addFinanceAPI = async (formData) => {
   return data;
 };
 
+// удаление счёта
+export const deleteFinanceAPI = async (id) => {
+  const url = `${baseUrl}/finance/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete transaction failed: ${error.message}`);
+  }
+};
+
 // получение доступных для создания счетов
 export const getFinanceOptionsAPI = async () => {
   const url = `${baseUrl}/finance/handbook/`;
@@ -189,7 +207,7 @@ export const getFinanceOptionsAPI = async () => {
 
 // получение категорий пользователя
 export const getUserCategoriesAPI = async () => {
-  const url = `${baseUrl}/category/`;
+  const url = `${baseUrl}/category/?limit=100`;
   const options = {
     method: 'GET',
     headers: {
@@ -214,6 +232,24 @@ export const addCategoryAPI = async (formData) => {
   };
   const data = await request(url, options);
   return data;
+};
+
+// удаление категории
+export const deleteCategoryAPI = async (id) => {
+  const url = `${baseUrl}/category/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete transaction failed: ${error.message}`);
+  }
 };
 
 // получение иконок для создания новой категории
