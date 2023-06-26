@@ -10,7 +10,7 @@ const initialState = {
     avatarUploader: false,
     confirmation: false,
     info: false,
-    account: false,
+    addItem: false,
     editTransaction: false,
     repeatExpenses: false,
     editMoneybox: false,

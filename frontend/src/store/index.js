@@ -1,29 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { popupReducer } from './slices/togglePopupSlice';
-import { registrationReducer } from './slices/registerSlice';
-import { loginReducer } from './slices/loginSlice';
-import { userReducer } from './slices/userSlice';
-import { passwordReducer } from './slices/passwordSlice';
 import { dateReducer } from './slices/dateSlice';
-import { userFinanceReducer } from './slices/userFinance';
-import { financeReducer } from './slices/finance';
-import { categoriesReducer } from './slices/categories';
+import { popupReducer } from './slices/togglePopupSlice';
+import { infoReducer } from './slices/infoSlice';
+import { authReducer } from './slices/authSlice';
+import { accountReducer } from './slices/accountSlice';
+import { passwordReducer } from './slices/passwordSlice';
+import { userFinanceAndCategoriesReducer } from './slices/userFinanceAndCategoriesSlice';
+import { itemOptionsReducer } from './slices/itemOptions';
+import { transactionListReducer } from './slices/transactionListSlice';
 import { moneyboxReducer } from './slices/moneybox';
-import { transactionListReducer } from './slices/transactionList';
 
 const store = configureStore({
   reducer: {
-    popup: popupReducer,
-    registration: registrationReducer,
-    login: loginReducer,
-    user: userReducer,
-    password: passwordReducer,
     dates: dateReducer,
-    userFinance: userFinanceReducer,
-    finance: financeReducer,
-    categories: categoriesReducer,
-    moneybox: moneyboxReducer,
+    popup: popupReducer,
+    info: infoReducer,
+    account: accountReducer,
+    auth: authReducer,
+    password: passwordReducer,
+    userFinanceAndCategories: userFinanceAndCategoriesReducer,
+    itemOptions: itemOptionsReducer,
     transactionList: transactionListReducer,
+    moneybox: moneyboxReducer,
   },
 });
 

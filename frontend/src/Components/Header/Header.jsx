@@ -27,8 +27,8 @@ export default function Header() {
     closePopup: closeLoginPopup,
   } = usePopup('login');
 
-  const isLogin = useSelector((state) => state.login.login);
-  const { avatar } = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { avatar } = useSelector((state) => state.account.user);
 
   const isBudget = useMatch({ path: '/budget', exact: true });
   const isStatistic = useMatch({ path: '/statistic', exact: true });
@@ -53,8 +53,8 @@ export default function Header() {
   };
 
   return (
-    <header className={`header ${isLogin ? 'header-login' : ''}`}>
-      {!isLogin ? (
+    <header className={`header ${isAuthenticated ? 'header-login' : ''}`}>
+      {!isAuthenticated ? (
         <>
           <Logo src={logo} />
           <div className="header__content">

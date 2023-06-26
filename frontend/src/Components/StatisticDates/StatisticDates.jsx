@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import StatisticFilter from '../StatisticFilter/StatisticFilter';
 import TimeIntervalSelect from '../TimeIntervalSelect/TimeIntervalSelect';
 import { setDateEnd, setDateStart } from '../../store/slices/dateSlice';
 
-export default function StatisticDates({dinamicChartShow}) {
-    const dispatch = useDispatch();
+export default function StatisticDates({ dinamicChartShow }) {
+  const dispatch = useDispatch();
   const [selectedTimeInterval, setSelectedTimeInterval] = useState('Неделя');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -19,7 +19,6 @@ export default function StatisticDates({dinamicChartShow}) {
 
   const handleTimeIntervalChange = (value) => {
     setSelectedTimeInterval(value);
-
   };
 
   const getTodayDate = (event) => {
@@ -64,7 +63,7 @@ export default function StatisticDates({dinamicChartShow}) {
         startDate={startDate}
         endDate={endDate}
         dateFormatter={dateFormatter}
-        dinamicChartShow = {dinamicChartShow}
+        dinamicChartShow={dinamicChartShow}
       >
         <TimeIntervalSelect
           selectedTimeInterval={selectedTimeInterval}

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './TransactionCard.scss';
-import { deleteTransaction } from '../../../store/slices/transactionList';
+import {
+  addTransaction,
+  deleteTransaction,
+  fetchTransactionList,
+} from '../../../store/slices/transactionListSlice';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
-function TransactionCard({ transaction }) {
+export default function TransactionCard({ transaction }) {
   const dispatch = useDispatch();
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -14,6 +18,10 @@ function TransactionCard({ transaction }) {
     openPopup: openEditTransactionPopup,
     closePopup: closeEditTransactionPopup,
   } = usePopup('editTransaction');
+
+  if (!transaction) {
+    return null;
+  }
 
   const { id, name, finance, amount, category } = transaction;
 
@@ -26,7 +34,9 @@ function TransactionCard({ transaction }) {
     categoryTypeStyles[transaction.category_type] || categoryTypeStyles[2];
 
   const handleDelete = () => {
-    dispatch(deleteTransaction(id));
+    dispatch(deleteTransaction(id)).then(() => {
+      dispatch(fetchTransactionList());
+    });
   };
 
   const handleEdit = () => {
@@ -37,6 +47,21 @@ function TransactionCard({ transaction }) {
   const handleEditTransactionPopupClose = () => {
     setSelectedTransaction(null);
     closeEditTransactionPopup();
+  };
+
+  const handleRepeatTransaction = () => {
+    const newTransactionData = {
+      created: transaction.created,
+      category: transaction.category.id,
+      name: transaction.name,
+      amount: transaction.amount,
+      finance: transaction.finance.id,
+      category_type: transaction.category_type,
+    };
+
+    dispatch(addTransaction(newTransactionData)).then(() => {
+      dispatch(fetchTransactionList());
+    });
   };
 
   return (
@@ -74,17 +99,21 @@ function TransactionCard({ transaction }) {
           className="card__button card__button_delete"
           onClick={handleDelete}
         />
-        <button type="button" aria-label="Повторить" className="card__button card__button_copy" />
+        <button
+          type="button"
+          aria-label="Повторить"
+          className="card__button card__button_copy"
+          onClick={handleRepeatTransaction}
+        />
       </div>
 
       {isEditTransactionPopupOpen && (
         <EditTransactionPopup
           onClose={handleEditTransactionPopupClose}
           transaction={selectedTransaction}
+          categoryType={transaction.category_type}
         />
       )}
     </li>
   );
 }
-
-export default React.memo(TransactionCard);

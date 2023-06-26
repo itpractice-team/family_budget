@@ -13,7 +13,7 @@
 .form_confirmation {
   gap: 32px;
 
-  .form__text_confirmation {
+  &__text_confirmation {
     @include text-large-web;
   }
 }
@@ -37,7 +37,8 @@
   position: relative;
 }
 
-.form__input-label_divider::after {
+.form__input-label_divider::after,
+.add-item-popup__form-input-label_divider::after {
   content: '';
   display: block;
   width: 1px;
@@ -56,18 +57,6 @@
   border: 1px solid $midGrey;
   border-radius: 100px;
   color: $black;
-
-  &[type='number']::-webkit-outer-spin-button,
-  &[type='number']::-webkit-inner-spin-button {
-    display: none;
-  }
-
-  &[type='date']::-webkit-calendar-picker-indicator {
-    display: inline-block;
-    background: url(../Images/calendar.svg) center / 20px no-repeat;
-    vertical-align: middle;
-    cursor: pointer;
-  }
 }
 
 .form__input-small {
@@ -96,6 +85,7 @@
 
 .form__input_date {
   background: url(../Images/calendar.svg) calc(100% - 18px) center/20px no-repeat;
+  min-width: 300px;
 }
 
 .tooltip {
@@ -163,7 +153,7 @@
 }
 
 .form__button-wrapper_account {
-  margin-top: 24px;
+  margin-top: 29px;
 }
 
 .form__text_confirm-register {
@@ -172,6 +162,10 @@
 
 .form__text {
   @include text-medium-web;
+}
+
+.form__text_confirmation {
+  @include text-large-web;
 }
 
 // выпадающий список

@@ -2,8 +2,8 @@
 /* eslint-disable camelcase */
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { logoutUser } from '../../store/slices/loginSlice';
-import { resetUser } from '../../store/slices/userSlice';
+import { logoutUser } from '../../store/slices/authSlice';
+import { resetUser } from '../../store/slices/accountSlice';
 import './ProfileTooltip.scss';
 import Button from '../../ui/Button/Button';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
@@ -11,7 +11,7 @@ import exit from '../../Images/icons/exit.svg';
 
 export default function ProfileTooltip({ onClose }) {
   const dispatch = useDispatch();
-  const { avatar, first_name, last_name } = useSelector((state) => state.user.user);
+  const { avatar, first_name, last_name } = useSelector((state) => state.account.user);
 
   const handleLogout = () => {
     dispatch(logoutUser());

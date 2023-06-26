@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import './Home.scss';
 import InfoPopup from '../../Components/InfoPopup/InfoPopup';
 import СonfirmationPasswordChange from '../../Components/СonfirmationPasswordChange/СonfirmationPasswordChange';
-import { getUser } from '../../store/slices/userSlice';
+import { getUser } from '../../store/slices/accountSlice';
 import Footer from '../../Components/Footer/Footer';
 import Button from '../../ui/Button/Button';
 import { arrAdvantages, arrCardWorks, arrInitFQAHome } from '../../utils/consts';
@@ -19,7 +19,7 @@ export default function Main() {
   const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
   const { openPopup: openRegisterPopup } = usePopup('register');
 
-  const isFetched = useSelector((state) => state.user.isFetched);
+  const isFetched = useSelector((state) => state.account.isFetched);
 
   useEffect(() => {
     if (!isFetched) {

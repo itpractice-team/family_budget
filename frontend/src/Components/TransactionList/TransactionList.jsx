@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './TransactionList.scss';
 import TransactionCard from './TransactionCard/TransactionCard';
-import { getTransactionList } from '../../store/slices/transactionList';
+import { fetchTransactionList } from '../../store/slices/transactionListSlice';
 
 function groupTransactionsByDate(transactions) {
   const groupedTransactions = {};
@@ -33,7 +33,7 @@ export default function TransactionList() {
   const transactionsByDate = groupTransactionsByDate(transactions);
 
   useEffect(() => {
-    dispatch(getTransactionList());
+    dispatch(fetchTransactionList());
   }, []);
 
   return (
