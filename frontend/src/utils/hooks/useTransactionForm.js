@@ -28,10 +28,10 @@ const useTransactionForm = (initialTransaction, categoryType) => {
   }, [categoryDropdown.selectedOption, financeDropdown.selectedOption]);
 
   useEffect(() => {
-    if (categories.length > 0 && !formData.category) {
+    if (categories.length > 0 && !formData.category && categoryType === 2) {
       setFormData((prevData) => ({ ...prevData, category: categories[0].id }));
     }
-  }, [categories, formData.category]);
+  }, [categories, formData.category, categoryType]);
 
   useEffect(() => {
     if (finance.length > 0 && !formData.finance) {

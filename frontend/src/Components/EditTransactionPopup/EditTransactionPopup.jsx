@@ -22,6 +22,10 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
     (option) => option.id === transaction.finance.id,
   );
 
+  const filteredCategoryOptions = categoryOptions.filter(
+    (category) => category.category_type === categoryType,
+  );
+
   const handleEditTransaction = (evt) => {
     evt.preventDefault();
     dispatch(
@@ -52,7 +56,7 @@ export default function EditTransactionPopup({ onClose, transaction, categoryTyp
         }}
         handleChange={handleChange}
         handleSubmit={handleEditTransaction}
-        categoryOptions={categoryOptions}
+        categoryOptions={filteredCategoryOptions}
         financeOptions={financeOptions}
         onClose={onClose}
         categoryType={transaction.category_type}

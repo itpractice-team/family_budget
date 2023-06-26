@@ -17,6 +17,10 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
     });
   };
 
+  const filteredCategoryOptions = categoryOptions.filter(
+    (category) => category.category_type === categoryType,
+  );
+
   return (
     <Popup onClose={onClose} popupSize={popupSize} title={title}>
       <TransactionForm
@@ -24,7 +28,7 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
         handleChange={handleChange}
         handleSubmit={handleAddSpend}
         onClose={onClose}
-        categoryOptions={categoryOptions}
+        categoryOptions={filteredCategoryOptions}
         financeOptions={financeOptions}
         categoryType={categoryType}
       />

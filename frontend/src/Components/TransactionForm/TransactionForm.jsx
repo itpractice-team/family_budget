@@ -32,7 +32,7 @@ export default function TransactionForm({
       <SelectButtonWrapper
         label={categoryLabel}
         options={categoryOptions}
-        initialValue={formData.category}
+        initialValue={formData.category || categoryOptions[0].id}
         imageKey="image"
         nameKey="name"
         altText="Иконка категории"
