@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
-import { getUser, updateUser } from '../../store/slices/userSlice';
+import { getUser, updateUser } from '../../store/slices/accountSlice';
 import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUploaderPopup';
 import {
   RequirementsLogin,
@@ -44,7 +44,7 @@ export default function Profile() {
   } = usePopup('confirmation');
   const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
 
-  const { user: userData, isFetched } = useSelector((state) => state.user);
+  const { user, isFetched } = useSelector((state) => state.account);
 
   const [disableButton, setDisableButton] = useState(true);
   const [message, setMessage] = useState('');
@@ -54,13 +54,10 @@ export default function Profile() {
     }
   }, [isFetched]);
 
-  const handleAvatarUploaderClick = useCallback(
-    (evt) => {
-      evt.preventDefault();
-      openAvatarUploaderPopup();
-    },
-    [dispatch],
-  );
+  const handleAvatarUploaderClick = (evt) => {
+    evt.preventDefault();
+    openAvatarUploaderPopup();
+  };
 
   const handlePasswordChangeClick = (evt) => {
     evt.preventDefault();
@@ -80,28 +77,28 @@ export default function Profile() {
     control,
   } = useForm({
     mode: 'onChange',
-    defaultValue: userData,
+    defaultValue: user,
     resolver: yupResolver(profileValidation),
   });
 
   /// /// default values ///////////
   useEffect(() => {
-    if (userData) {
-      setValue('username', userData.username || '');
-      setValue('email', userData.email || '');
-      setValue('first_name', userData.first_name || '');
-      setValue('last_name', userData.last_name || '');
+    if (user) {
+      setValue('username', user.username || '');
+      setValue('email', user.email || '');
+      setValue('first_name', user.first_name || '');
+      setValue('last_name', user.last_name || '');
     }
-  }, [userData, setValue]);
+  }, [user, setValue]);
 
   const watchedValues = useWatch({ control });
   useEffect(() => {
     // Проверка изменений полей
     if (
-      userData.username === watchedValues.username &&
-      userData.email === watchedValues.email &&
-      userData.first_name === watchedValues.first_name &&
-      userData.last_name === watchedValues.last_name
+      user.username === watchedValues.username &&
+      user.email === watchedValues.email &&
+      user.first_name === watchedValues.first_name &&
+      user.last_name === watchedValues.last_name
     ) {
       setMessage('Для сохранения необходимо внести изменения');
       setDisableButton(true);
@@ -109,7 +106,7 @@ export default function Profile() {
       setMessage('');
       setDisableButton(false);
     }
-  }, [userData, watchedValues]);
+  }, [user, watchedValues]);
 
   const handleEnableInputs = (evt) => {
     evt.preventDefault();
@@ -131,7 +128,7 @@ export default function Profile() {
         <h1 className="profile-settings__title">Настройки профиля</h1>
         <div className="profile-settings__avatar-block">
           <img
-            src={userData.avatar === null ? defaultAvatar : userData.avatar}
+            src={user.avatar === null ? defaultAvatar : user.avatar}
             className="profile-settings__avatar"
             alt="Аватар"
           />
@@ -149,7 +146,7 @@ export default function Profile() {
               Логин
               <input
                 {...register('username', {
-                  value: userData.username || '',
+                  value: user.username || '',
                   shouldUnregister: true,
                 })}
                 id="Profile-login"
@@ -184,7 +181,7 @@ export default function Profile() {
             <label className="form__input-label" htmlFor="Profile-email">
               E-mail
               <input
-                {...register('email', { value: userData.email || '', shouldUnregister: true })}
+                {...register('email', { value: user.email || '', shouldUnregister: true })}
                 id="Profile-email"
                 name="email"
                 className={`form__input ${errors.email ? 'error' : ''}`}
@@ -240,7 +237,7 @@ export default function Profile() {
               Имя
               <input
                 {...register('first_name', {
-                  value: userData.first_name || '',
+                  value: user.first_name || '',
                   shouldUnregister: true,
                 })}
                 id="Profile-name"
@@ -276,7 +273,7 @@ export default function Profile() {
               Фамилия
               <input
                 {...register('last_name', {
-                  value: userData.last_name || '',
+                  value: user.last_name || '',
                   shouldUnregister: true,
                 })}
                 id="Profile-surname"

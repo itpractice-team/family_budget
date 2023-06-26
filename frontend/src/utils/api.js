@@ -28,6 +28,7 @@ const request = async (url, options) => {
   }
 };
 
+// регистрация
 export const registerUserAPI = async (userData) => {
   const url = `${baseUrl}/users/`;
   const options = {
@@ -41,6 +42,7 @@ export const registerUserAPI = async (userData) => {
   return request(url, options);
 };
 
+// авторизация
 export const loginUserAPI = async (userData) => {
   const url = `${baseUrl}/auth/token/login/`;
   const options = {
@@ -59,6 +61,7 @@ export const loginUserAPI = async (userData) => {
   return data;
 };
 
+// выход
 export const logoutUserAPI = async () => {
   const url = `${baseUrl}/auth/token/logout/`;
   const options = {
@@ -77,6 +80,7 @@ export const logoutUserAPI = async () => {
   }
 };
 
+// данные пользователя
 export const getUserAPI = async () => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -90,6 +94,7 @@ export const getUserAPI = async () => {
   return data;
 };
 
+// изменение данных пользователя
 export const updateUserAPI = async (userData) => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -105,6 +110,7 @@ export const updateUserAPI = async (userData) => {
   return data;
 };
 
+// удаление профиля
 export const deleteUserAPI = async () => {
   const url = `${baseUrl}/users/me/`;
   const options = {
@@ -123,6 +129,21 @@ export const deleteUserAPI = async () => {
   }
 };
 
+// инфо-запрос
+export const infoAPI = async () => {
+  const url = `${baseUrl}/info/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// получение счетов пользователя
 export const getUserFinanceAPI = async () => {
   const url = `${baseUrl}/finance/`;
   const options = {
@@ -136,47 +157,9 @@ export const getUserFinanceAPI = async () => {
   return data;
 };
 
-export const getFinanceListAPI = async () => {
-  const url = `${baseUrl}/finance/handbook/`;
-  const options = {
-    method: 'GET',
-    headers: {
-      ...defaultHeaders,
-      authorization: `Token ${getCookie('token')}`,
-    },
-  };
-  const data = await request(url, options);
-  return data;
-};
-
-export const getCategoriesAPI = async () => {
-  const url = `${baseUrl}/category/`;
-  const options = {
-    method: 'GET',
-    headers: {
-      ...defaultHeaders,
-      authorization: `Token ${getCookie('token')}`,
-    },
-  };
-  const data = await request(url, options);
-  return data;
-};
-
-export const getMoneyboxAPI = async () => {
-  const url = `${baseUrl}/moneybox/`;
-  const options = {
-    method: 'GET',
-    headers: {
-      ...defaultHeaders,
-      authorization: `Token ${getCookie('token')}`,
-    },
-  };
-  const data = await request(url, options);
-  return data;
-};
-
-export const addMoneyboxAPI = async (formData) => {
-  const url = `${baseUrl}/moneybox/`;
+// добавление счёта
+export const addFinanceAPI = async (formData) => {
+  const url = `${baseUrl}/finance/`;
   const options = {
     method: 'POST',
     headers: {
@@ -190,6 +173,100 @@ export const addMoneyboxAPI = async (formData) => {
   return data;
 };
 
+// удаление счёта
+export const deleteFinanceAPI = async (id) => {
+  const url = `${baseUrl}/finance/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete transaction failed: ${error.message}`);
+  }
+};
+
+// получение доступных для создания счетов
+export const getFinanceOptionsAPI = async () => {
+  const url = `${baseUrl}/finance/handbook/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// получение категорий пользователя
+export const getUserCategoriesAPI = async () => {
+  const url = `${baseUrl}/category/?limit=100`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// создание новой категории
+export const addCategoryAPI = async (formData) => {
+  const url = `${baseUrl}/category/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// удаление категории
+export const deleteCategoryAPI = async (id) => {
+  const url = `${baseUrl}/category/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete transaction failed: ${error.message}`);
+  }
+};
+
+// получение иконок для создания новой категории
+export const getCategoryIconsAPI = async () => {
+  const url = `${baseUrl}/category/icons/?limit=100`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// получение списка транзакций
 export const getTransactionListAPI = async () => {
   const url = `${baseUrl}/transaction/`;
   const options = {
@@ -203,6 +280,7 @@ export const getTransactionListAPI = async () => {
   return data;
 };
 
+// добавление транзакции
 export const addTransactionAPI = async (formData) => {
   const url = `${baseUrl}/transaction/`;
   const options = {
@@ -218,6 +296,7 @@ export const addTransactionAPI = async (formData) => {
   return data;
 };
 
+// удлаение транзакции
 export const deleteTransactionAPI = async (id) => {
   const url = `${baseUrl}/transaction/${id}/`;
   const options = {
@@ -233,4 +312,50 @@ export const deleteTransactionAPI = async (id) => {
   } catch (error) {
     throw new Error(`Delete transaction failed: ${error.message}`);
   }
+};
+
+// редактирование транзакции
+export const editTransactionAPI = async (id, formData) => {
+  const url = `${baseUrl}/transaction/${id}/`;
+  const options = {
+    method: 'PATCH',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
+
+// получение копилок пользователя
+export const getMoneyboxAPI = async () => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// добавление новой копилки
+export const addMoneyboxAPI = async (formData) => {
+  const url = `${baseUrl}/moneybox/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
 };

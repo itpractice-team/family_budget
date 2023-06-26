@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
 import Popup from '../Popup/Popup';
-import { loginUser } from '../../store/slices/loginSlice';
+import { loginUser } from '../../store/slices/authSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import Eye from '../../ui/Eye/Eye';
@@ -25,8 +25,8 @@ export default function LoginPopup({ onClose }) {
     setEyes(newEyesValues);
   };
 
-  const isLogin = useSelector((state) => state.login.login);
-  const isLoading = useSelector((store) => store.login.loading);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((store) => store.auth.loading);
 
   const handleRegistrationClick = () => {
     onClose();
@@ -38,10 +38,10 @@ export default function LoginPopup({ onClose }) {
   };
 
   useEffect(() => {
-    if (isLogin) {
+    if (isAuthenticated) {
       onClose();
     }
-  }, [isLogin, dispatch]);
+  }, [isAuthenticated, dispatch]);
 
   const {
     register,
@@ -52,7 +52,7 @@ export default function LoginPopup({ onClose }) {
     resolver: yupResolver(loginValidation),
   });
 
-  if (isLogin) {
+  if (isAuthenticated) {
     return <Navigate to="/budget" />;
   }
   return (

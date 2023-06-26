@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Popup from '../Popup/Popup';
-import { registerUser } from '../../store/slices/registerSlice';
+import { registerUser } from '../../store/slices/accountSlice';
 import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
 import Eye from '../../ui/Eye/Eye';
@@ -30,8 +30,7 @@ export default function RegisterPopup({ onClose }) {
     setEyes(newEyesValues);
   };
 
-  const isRegistration = useSelector((state) => state.registration.data);
-  const isLoading = useSelector((store) => store.registration.loading);
+  const { data: isRegistration, loading: isLoading } = useSelector((state) => state.account);
 
   const handleLoginClick = () => {
     onClose();

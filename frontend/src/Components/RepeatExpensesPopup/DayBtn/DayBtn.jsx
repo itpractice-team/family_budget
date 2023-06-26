@@ -1,14 +1,21 @@
 import '../RepeatExpensesPopup.scss';
 import { useState } from 'react';
-import Radio from '../../../ui/Radio/Radio';
-import CustomDatePicker from '../../CustomDatePicker/CustomDatePicker';
 
-export default function DayBtn({ ending = 'ый', period = 'день', inputName }) {
-  const [selected, setSelected] = useState('До');
+export default function DayBtn({ activeDate }) {
   const [count, setCount] = useState('1');
-  const [startDate, setStartDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [valueDate, setValueDate] = useState('');
+  let ending = 'ый';
+  let period = 'день';
+
+  if (activeDate === 'Неделя') {
+    ending = 'ую';
+    period = 'неделю';
+  }
+  if (activeDate === 'Месяц') {
+    period = 'месяц';
+  }
+  if (activeDate === 'Год') {
+    period = 'год';
+  }
 
   const handleCount = ({ target }) => {
     const re = /^[0-9\b]+$/;
@@ -16,16 +23,6 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
     if (value === '' || re.test(value)) {
       setCount(value);
     }
-  };
-
-  const handle = ({ target }) => {
-    const { value } = target;
-    setSelected(value);
-  };
-
-  const isOpen = () => {
-    setValueDate(startDate.toLocaleDateString());
-    setOpen(true);
   };
 
   return (
@@ -41,50 +38,6 @@ export default function DayBtn({ ending = 'ый', period = 'день', inputName
         />{' '}
         {period}
       </p>
-      <p className="repeat-expenses__text-bold">Длительность</p>
-      <div className="repeat-expenses__container">
-        <Radio
-          value="Бесконечно"
-          isChecked={selected === 'Бесконечно'}
-          onChange={handle}
-          text="Бесконечно"
-        />
-        <Radio
-          value="Заданное кол-во раз"
-          isChecked={selected === 'Заданное кол-во раз'}
-          onChange={handle}
-          text={`Заданное количество раз ${count}`}
-        />
-        <Radio value="До" isChecked={selected === 'До'} onChange={handle} text="До" />
-        {selected === 'До' && (
-          <>
-            <div className="form__input-block">
-              <label className="form__input-label" htmlFor={`${inputName}-date`}>
-                Дата
-                <input
-                  className="form__input"
-                  type="text"
-                  name={`${inputName}-date`}
-                  id={`${inputName}-date`}
-                  value={valueDate}
-                  placeholder="дд.мм.гггг"
-                  onClick={isOpen}
-                />
-              </label>
-            </div>
-            {open && (
-              <CustomDatePicker
-                type="date"
-                onChange={(date) => {
-                  setStartDate(date);
-                  setOpen(false);
-                }}
-                startDate={startDate}
-              />
-            )}
-          </>
-        )}
-      </div>
     </div>
   );
 }

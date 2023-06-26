@@ -1,19 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserAPI, updateUserAPI, deleteUserAPI } from '../../utils/api';
+import { registerUserAPI, getUserAPI, updateUserAPI, deleteUserAPI } from '../../utils/api';
 
-export const getUser = createAsyncThunk('user/getData', async () => {
+export const registerUser = createAsyncThunk('account/registerUser', async (userData) => {
+  return registerUserAPI(userData);
+});
+
+export const getUser = createAsyncThunk('account/getData', async () => {
   return getUserAPI();
 });
 
-export const updateUser = createAsyncThunk('user/updateData', async (userData) => {
+export const updateUser = createAsyncThunk('account/updateData', async (userData) => {
   return updateUserAPI(userData);
 });
 
-export const deleteUser = createAsyncThunk('user/deleteData', async () => {
+export const deleteUser = createAsyncThunk('account/deleteData', async () => {
   return deleteUserAPI();
 });
 
 const initialState = {
+  data: null,
   user: {
     id: '',
     username: '',
@@ -27,8 +32,8 @@ const initialState = {
   error: null,
 };
 
-const userSlice = createSlice({
-  name: 'user',
+const accountSlice = createSlice({
+  name: 'account',
   initialState,
   reducers: {
     resetUser: (state) => {
@@ -38,6 +43,18 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(getUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -79,6 +96,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser } = accountSlice.actions;
 
-export const userReducer = userSlice.reducer;
+export const accountReducer = accountSlice.reducer;

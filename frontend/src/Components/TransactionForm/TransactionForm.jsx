@@ -1,21 +1,25 @@
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import Button from '../../ui/Button/Button';
+import CancelButton from '../CancelButton/CancelButton';
 
-export default function SpendForm({
+export default function TransactionForm({
   formData,
   handleChange,
-  handleAddSpend,
-  handleCancel,
+  handleSubmit,
   categoryOptions,
   financeOptions,
+  onClose,
+  categoryType,
 }) {
+  const categoryLabel = categoryType === 1 ? 'Категория расхода' : 'Категория дохода';
+  const financeLabel = categoryType === 1 ? 'Счёт списания' : 'Счёт зачисления';
   return (
-    <form className="form form_add-operation" onSubmit={handleAddSpend}>
+    <form className="form form_add-operation" onSubmit={handleSubmit}>
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor="SpendPopup-date">
+        <label className="form__input-label" htmlFor="form-date">
           Дата
           <input
-            id="SpendPopup-date"
+            id="form-date"
             name="created"
             className="form__input"
             type="date"
@@ -26,9 +30,9 @@ export default function SpendForm({
       </div>
 
       <SelectButtonWrapper
-        label="Категория расхода"
+        label={categoryLabel}
         options={categoryOptions}
-        initialValue={formData.category}
+        initialValue={formData.category || categoryOptions[0].id}
         imageKey="image"
         nameKey="name"
         altText="Иконка категории"
@@ -36,10 +40,10 @@ export default function SpendForm({
       />
 
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor="SpendPopup-name">
+        <label className="form__input-label" htmlFor="form-name">
           Название
           <input
-            id="SpendPopup-name"
+            id="form-name"
             name="name"
             className="form__input"
             type="text"
@@ -51,10 +55,10 @@ export default function SpendForm({
       </div>
 
       <div className="form__input-block">
-        <label className="form__input-label form__input-label_divider" htmlFor="SpendPopup-amount">
+        <label className="form__input-label form__input-label_divider" htmlFor="form-amount">
           Сумма
           <input
-            id="SpendPopup-amount"
+            id="form-amount"
             name="amount"
             className="form__input form__input_sum"
             type="number"
@@ -66,7 +70,7 @@ export default function SpendForm({
       </div>
 
       <SelectButtonWrapper
-        label="Счёт списания"
+        label={financeLabel}
         options={financeOptions}
         initialValue={formData.finance}
         imageKey="image"
@@ -76,13 +80,7 @@ export default function SpendForm({
       />
 
       <div className="form__button-wrapper form__button-wrapper_add-operation">
-        <Button
-          variant="secondary"
-          content="text"
-          text="Отменить"
-          size="medium"
-          onClick={handleCancel}
-        />
+        <CancelButton onClose={onClose} />
         <Button type="submit" variant="primary" content="text" text="Готово" size="medium" />
       </div>
     </form>

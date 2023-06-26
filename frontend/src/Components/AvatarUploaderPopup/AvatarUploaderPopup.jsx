@@ -5,7 +5,7 @@ import Popup from '../Popup/Popup';
 import AvatarUploader from '../AvatarUploader/AvatarUploader';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
-import { updateUser } from '../../store/slices/userSlice';
+import { updateUser } from '../../store/slices/accountSlice';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
 import trash from '../../Images/icons/trash.svg';
 
@@ -13,8 +13,8 @@ export default function AvatarUploaderPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const [recipeFile, setRecipeFile] = useState(null);
-  const { avatar } = useSelector((state) => state.user.user);
-  const isLoading = useSelector((state) => state.user.loading);
+  const { avatar } = useSelector((state) => state.account.user);
+  const isLoading = useSelector((state) => state.account.loading);
 
   function handleChangeAvatar(evt) {
     evt.preventDefault();

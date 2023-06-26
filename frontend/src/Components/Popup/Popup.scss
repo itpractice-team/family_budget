@@ -127,10 +127,6 @@ $max-width-m: 784px;
   .popup__title {
     margin-bottom: 8px;
   }
-
-  .popup__subtitle {
-    margin-bottom: 0px;
-  }
 }
 
 // редактирование конверта
@@ -217,4 +213,9 @@ $max-width-m: 784px;
       margin-top: 20px;
     }
   }
+}
+
+// добавить счет
+.popup_add {
+  max-width: $max-width-m;
 }
