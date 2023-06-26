@@ -359,3 +359,19 @@ export const addMoneyboxAPI = async (formData) => {
   const data = await request(url, options);
   return data;
 };
+
+// редактирование копилки
+export const editMoneyboxAPI = async (id, formData) => {
+  const url = `${baseUrl}/moneybox/${id}/`;
+  const options = {
+    method: 'PATCH',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
