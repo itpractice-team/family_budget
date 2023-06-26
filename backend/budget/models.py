@@ -16,7 +16,7 @@ from core.fields import ImageAndSvgField
 from core.validators import (
     validate_color_hex_code,
     validate_letter_or_blank_space,
-    validate_only_letters,
+    validate_only_letters_or_space,
 )
 from dateutil.relativedelta import relativedelta
 
@@ -301,7 +301,7 @@ class BaseFinance(models.Model):
     name = models.CharField(
         _("name"),
         max_length=15,
-        validators=[validate_only_letters, MinLengthValidator(2)],
+        validators=[validate_only_letters_or_space, MinLengthValidator(2)],
     )
     created = models.DateTimeField(
         _("created"),
