@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// В компоненте Moneybox
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MoneyboxItem from '../MoneyboxItem/MoneyboxItem';
 import moneybox from '../../Images/moneybox.svg';
@@ -22,15 +23,18 @@ export default function Moneybox() {
     closePopup: closeDoneMoneyboxPopup,
   } = usePopup('doneMoneybox');
   const moneyboxList = useSelector((state) => state.moneybox.moneybox);
+  const [selectedMoneybox, setSelectedMoneybox] = useState(null);
 
   useEffect(() => {
     dispatch(getMoneybox());
   }, []);
 
-  const handleItemClick = (isDone) => {
-    if (isDone && !isDoneMoneyboxPopupOpen) {
+  const handleItemClick = (item) => {
+    setSelectedMoneybox(item);
+
+    if (item.accumulated === item.amount && !isDoneMoneyboxPopupOpen) {
       openDoneMoneyboxPopup();
-    } else if (!isDone && !isEditMoneyboxPopupOpen) {
+    } else if (!isEditMoneyboxPopupOpen) {
       openEditMoneyboxPopup();
     }
   };
@@ -46,16 +50,16 @@ export default function Moneybox() {
             title={item.name}
             balance={item.accumulated}
             target={item.amount}
-            onClick={() => handleItemClick(item.accumulated === item.amount)}
+            onClick={() => handleItemClick(item)}
           />
         ))
       )}
 
-      {isEditMoneyboxPopupOpen && (
-        <EditMoneyboxPopup onClose={closeEditMoneyboxPopup} title="На отпуск" />
+      {isEditMoneyboxPopupOpen && selectedMoneybox && (
+        <EditMoneyboxPopup onClose={closeEditMoneyboxPopup} moneybox={selectedMoneybox} />
       )}
-      {isDoneMoneyboxPopupOpen && (
-        <DoneMoneyboxPopup onClose={closeDoneMoneyboxPopup} title="На cпонсирование космонавтики" />
+      {isDoneMoneyboxPopupOpen && selectedMoneybox && (
+        <DoneMoneyboxPopup onClose={closeDoneMoneyboxPopup} moneybox={selectedMoneybox} />
       )}
     </section>
   );

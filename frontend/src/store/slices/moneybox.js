@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getMoneyboxAPI, addMoneyboxAPI } from '../../utils/api';
+import { getMoneyboxAPI, addMoneyboxAPI, editMoneyboxAPI } from '../../utils/api';
 
 export const getMoneybox = createAsyncThunk('moneybox', async () => {
   return getMoneyboxAPI();
@@ -7,6 +7,10 @@ export const getMoneybox = createAsyncThunk('moneybox', async () => {
 
 export const addMoneybox = createAsyncThunk('moneybox/add', async (formData) => {
   return addMoneyboxAPI(formData);
+});
+
+export const editMoneybox = createAsyncThunk('moneybox/edit', async ({ id, formData }) => {
+  return editMoneyboxAPI(id, formData);
 });
 
 const initialState = {
@@ -42,6 +46,25 @@ export const moneyboxSlice = createSlice({
         state.moneybox.push(action.payload);
       })
       .addCase(addMoneybox.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(editMoneybox.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editMoneybox.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        const editedMoneybox = action.payload;
+        state.moneybox = state.moneybox.map((item) => {
+          if (item.id === editedMoneybox.id) {
+            return editedMoneybox;
+          }
+          return item;
+        });
+      })
+      .addCase(editMoneybox.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
