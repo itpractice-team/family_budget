@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 
-function Charts({ amount, income, created, lineData, lineChart }) {
+function LineCharts({ amount, income, created, lineData, lineChart }) {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const data = {
     labels: created,
@@ -80,4 +80,4 @@ function Charts({ amount, income, created, lineData, lineChart }) {
     <Bar data={differrenceData} options={options} />
   );
 }
-export default Charts;
+export default LineCharts;
