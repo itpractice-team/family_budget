@@ -54,6 +54,10 @@
   display: flex;
   gap: 32px;
 }
+.statistic-filter__button-wrapper--open {
+  background-color: $heavyBlue;
+  color: $clearWhite;
+}
 
 .statistic-filter__calendar-block {
   position: relative;

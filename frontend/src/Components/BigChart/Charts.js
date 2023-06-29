@@ -1,6 +1,7 @@
 import { Line, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-zoom';
 import 'chart.js/auto';
+import './Charts.scss';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +13,7 @@ import {
   Legend,
 } from 'chart.js';
 
-function Charts({ amount, income, created, lineData, lineChart }) {
+function LineCharts({ amount, income, created, lineData, lineChart }) {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const data = {
     labels: created,
@@ -20,12 +21,13 @@ function Charts({ amount, income, created, lineData, lineChart }) {
       {
         data: lineData,
         fill: false,
-        borderColor: 'blue',
-        tension: 0.6,
+        borderColor: '#797B9B',
+        borderWidth: 5,
+        tension: 0.5,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
-  }; 
+  };
   const differrenceData = {
     labels: created,
     datasets: [
@@ -33,7 +35,7 @@ function Charts({ amount, income, created, lineData, lineChart }) {
         data: amount,
         fill: false,
         borderColor: 'blue',
-        tension: 0.6,
+        tension: 1,
         backgroundColor: 'rgba(255,111,111,0.5)',
       },
       {
@@ -48,7 +50,30 @@ function Charts({ amount, income, created, lineData, lineChart }) {
 
   const options = {
     responsive: true,
+    labels: false,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+          display: false, // false to disable Y
+      },
+    },
+    elements: {
+      point: {
+        radius: 1, // change point radius
+        hoverRadius: 8, 
+        borderWidth: 0, 
+        hoverBorderWidth: 3,
+        pointHoverBorderColor: 'rgb(0,0,0)',
+      },
+      
+    },
     plugins: {
+      title: {
+        display: false, 
+      },
+      legend: {
+        display: false, 
+      },
       zoom: {
         pan: {
           enabled: true,
@@ -62,22 +87,29 @@ function Charts({ amount, income, created, lineData, lineChart }) {
         },
       },
       tooltip: {
+        bodySpacing: 10, 
+  bodyFontSize: 16,
         callbacks: {
           label: (context) => {
             const { dataIndex } = context;
             const incomeValue = income[dataIndex];
             const amountValue = amount[dataIndex];
-            return `Доход: ${incomeValue}, Расход: ${amountValue}`;
+            return `${incomeValue}, Расход: ${amountValue}`;
           },
+          title: () => null,
         },
       },
     },
   };
 
-  return lineChart ? (
-    <Line data={data} options={options} plugins={['zoom']} />
-  ) : (
-    <Bar data={differrenceData} options={options} />
+  return (
+    <div className="chart">
+      {lineChart ? (
+        <Line data={data} options={options} plugins={['zoom']} />
+      ) : (
+        <Bar data={differrenceData} options={options} />
+      )}
+    </div>
   );
 }
-export default Charts;
+export default LineCharts;

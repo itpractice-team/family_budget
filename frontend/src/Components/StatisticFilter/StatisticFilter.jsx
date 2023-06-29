@@ -13,15 +13,13 @@ export default function StatisticFilter({
   startDate,
   endDate,
   dateFormatter,
-  dinamicChartShow
+  dinamicChartShow,
 }) {
-
   const [isTimeIntervalSelectOpen, setIsTimeIntervalSelectOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  
+
   const handleDinamicOn = () => dinamicChartShow(true);
   const handleDifferenceOn = () => dinamicChartShow(false);
-
 
   const toggleTimeIntervalSelect = () => {
     setIsTimeIntervalSelectOpen(!isTimeIntervalSelectOpen);
@@ -95,18 +93,29 @@ export default function StatisticFilter({
         <Button
           variant="secondary"
           content="text"
+          type="button"
           text="Показывать динамику"
-          size="medium"
+          size="small"
           onClick={handleDinamicOn}
         />
         <Button
           variant="secondary"
+          type="button"
           content="text"
           text="Показывать разницу"
-          size="medium"
+          size="small"
           onClick={handleDifferenceOn}
         />
+        
       </div>
+      <Button
+          variant="primary"
+          type="button"
+          content="text"
+          text="Выгрузить данные"
+          size="medium"
+          // onClick={handleDifferenceOn}
+        />
     </div>
   );
 }
