@@ -21,6 +21,7 @@ export default function Statistic() {
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [percentageAmount, setPercentageAmount] = useState([]);
   const [percentageIncome, setPercentageIncome] = useState([]);
+  const [chartAIData, setChartAIData] = useState([]);
 
   const isStartDate = useSelector((state) => state.dates.startDate);
   const isEndDate = useSelector((state) => state.dates.endDate);
@@ -53,6 +54,11 @@ export default function Statistic() {
     setPercentageIncome(incomePercentage);
   }, [isStartDate, isEndDate]);
 
+  useEffect(() => {
+    if (amountTotal && incomeTotal) {
+      setChartAIData([amountTotal * -1, incomeTotal]);
+    }
+  }, [amountTotal, incomeTotal]);
   const dinamicChartShow = (state) => {
     setLineChart(state);
   };
@@ -60,7 +66,6 @@ export default function Statistic() {
   /// /data for amount/income chart ///////
   const chartAIName = '';
   const chartAIcolors = ['rgba(111, 221, 142, 1)', 'rgba(255, 111, 111, 1)'];
-  const chartAIData = [amountTotal * -1, incomeTotal];
 
   return (
     <section className="statistic">
@@ -69,12 +74,7 @@ export default function Statistic() {
           Общее состояние по
           {/* adds select */}
         </p>
-        <RoundCharts
-          percentage={chartAIData}
-          backColors={chartAIcolors}
-          // totals={incomeTotal}
-          chartName={chartAIName}
-        />
+        <RoundCharts percentage={chartAIData} backColors={chartAIcolors} chartName={chartAIName} />
       </div>
 
       <div className="statistic__periods statistic__block">

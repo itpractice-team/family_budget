@@ -1,14 +1,19 @@
 @import '../../styles/consts.scss';
 
 .statistic {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 400px));
+  grid-template-rows: 400px;
   flex-grow: 1;
   justify-content: center;
   align-items: center;
-  gap: 32px 60px;
+  gap: 3px 0px;
+  padding-top: 3%;
   flex-wrap: wrap;
 }
-
+.statistic__chart-block{
+  max-width: 1280px;
+}
 .statistic__block {
   display: flex;
   flex-wrap: wrap;
@@ -23,22 +28,28 @@
 }
 
 .statistic__periods {
-  max-width: 1192px;
+  grid-column: 2/5;
   width: 100%;
-
+  height: 100%;
   background-color: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  height: fit-content;
+  // padding: 24px;
+  // border-radius: 16px;
+  // box-sizing: border-box;
+  // height: fit-content;
+  margin: 0;
 }
 
 .statistic__incoms {
+  grid-column-start: 3;
+  grid-column-end: 5;
   background-color: green;
   max-width: 784px;
   width: 100%;
 }
 
 .statistic__spending {
+  grid-column-start: 1;
+  grid-column-end: 3;
   background-color: yellow;
   max-width: 784px;
   width: 100%;
@@ -61,7 +72,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 16px;
+  // padding: 16px;
   background-color: #f4f4f4;
   border-radius: 16px;
   height: fit-content;

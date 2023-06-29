@@ -52,7 +52,7 @@ export default function StatisticDates({ dinamicChartShow }) {
   };
 
   return (
-    <section className="main-block">
+    <section className="main-block statistic__chart-block">
       <StatisticFilter
         selectedTimeInterval={selectedTimeInterval}
         handleTimeIntervalChange={handleTimeIntervalChange}
