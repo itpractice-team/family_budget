@@ -18,8 +18,7 @@ function RoundCharts({ uniqueCategories, percentage, backColors, totals, chartNa
   const options = {
     responsive: true,
     redraw: true,
-    cutout: '65%', // размер внутреннего круга
-    cutoutPercentage: 90,
+    cutout: '69%', // размер внутреннего круга
     plugins: {
       tooltip: {
         fontSize: 30,
@@ -40,7 +39,7 @@ function RoundCharts({ uniqueCategories, percentage, backColors, totals, chartNa
   console.log(percentage)
 
   return (
-    <div className="round-chart">
+    <div className={`round-chart ${chartName && "round-chart_down"}`}>
       {percentage.length !== 0 ? (
         <>
           <Doughnut data={data} options={options} />

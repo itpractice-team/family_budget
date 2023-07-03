@@ -91,8 +91,8 @@ export default function Statistic() {
         />
       </div>
 
-      <div className="statistic__block">
-        <h2 className="statistic__header statistic__spending ">Расходы по категориям</h2>
+      <div className="statistic__block statistic__block_round">
+        <h2 className="statistic__header">Расходы по категориям</h2>
         <RoundCharts
           // uniqueCategories={uniqueCategorie}
           percentage={percentageAmount}
@@ -102,8 +102,8 @@ export default function Statistic() {
         />
       </div>
 
-      <div className="statistic__block">
-        <h2 className="statistic__header statistic__incoms">Доходы по категориям</h2>
+      <div className="statistic__block statistic__block_round">
+        <h2 className="statistic__header">Доходы по категориям</h2>
         <RoundCharts
           // uniqueCategories={uniqueCategorie}
           percentage={percentageIncome}
