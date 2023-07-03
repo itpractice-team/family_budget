@@ -7,6 +7,7 @@ import {
   fetchTransactionList,
 } from '../../../store/slices/transactionListSlice';
 import EditTransactionPopup from '../../EditTransactionPopup/EditTransactionPopup';
+import ConfirmationPopup from '../../ConfirmationPopup/ConfirmationPopup';
 import usePopup from '../../../utils/hooks/usePopup';
 
 export default function TransactionCard({ transaction }) {
@@ -19,6 +20,12 @@ export default function TransactionCard({ transaction }) {
     closePopup: closeEditTransactionPopup,
   } = usePopup('editTransaction');
 
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
+
   if (!transaction) {
     return null;
   }
@@ -26,12 +33,17 @@ export default function TransactionCard({ transaction }) {
   const { id, name, finance, amount, category } = transaction;
 
   const categoryTypeStyles = {
-    1: { mathSign: '-', amountStyle: 'card__amount_spending' },
-    2: { mathSign: '+', amountStyle: 'card__amount_earn' },
+    1: { mathSign: '-', amountStyle: 'card__amount_spending', text: 'расход' },
+    2: { mathSign: '+', amountStyle: 'card__amount_earn', text: 'доход' },
   };
 
-  const { mathSign, amountStyle } =
+  const { mathSign, amountStyle, text } =
     categoryTypeStyles[transaction.category_type] || categoryTypeStyles[2];
+
+  const handleDeleteTransactionClick = (evt) => {
+    evt.preventDefault();
+    openConfirmationPopup();
+  };
 
   const handleDelete = () => {
     dispatch(deleteTransaction(id)).then(() => {
@@ -97,7 +109,7 @@ export default function TransactionCard({ transaction }) {
           type="button"
           aria-label="Удалить"
           className="card__button card__button_delete"
-          onClick={handleDelete}
+          onClick={handleDeleteTransactionClick}
         />
         <button
           type="button"
@@ -112,6 +124,14 @@ export default function TransactionCard({ transaction }) {
           onClose={handleEditTransactionPopupClose}
           transaction={selectedTransaction}
           categoryType={transaction.category_type}
+        />
+      )}
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          onClose={closeConfirmationPopup}
+          onSubmit={handleDelete}
+          confirmationText={`Вы действительно хотите удалить ${text} «${transaction.name}» ?`}
+          buttonText={text}
         />
       )}
     </li>

@@ -5,14 +5,22 @@ import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
-import { editMoneybox, getMoneybox } from '../../store/slices/moneybox';
+import { editMoneybox, getMoneybox, deleteMoneybox } from '../../store/slices/moneybox';
+import usePopup from '../../utils/hooks/usePopup';
+import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 
 export default function EditMoneyboxPopup({ onClose, moneybox }) {
   const dispatch = useDispatch();
 
-  const { amount, accumulated, description, name } = moneybox;
+  const { id, amount, accumulated, description, name } = moneybox;
 
   const userFinance = useSelector((state) => state.userFinanceAndCategories.userFinance);
+
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
 
   const [formData, setFormData] = useState({
     amount,
@@ -40,13 +48,18 @@ export default function EditMoneyboxPopup({ onClose, moneybox }) {
     evt.preventDefault();
     dispatch(
       editMoneybox({
-        id: moneybox.id,
+        id,
         formData,
       }),
     ).then(() => {
       dispatch(getMoneybox());
       onClose();
     });
+  };
+
+  const handleDeleteMoneyboxClick = (evt) => {
+    evt.preventDefault();
+    openConfirmationPopup();
   };
 
   return (
@@ -149,10 +162,29 @@ export default function EditMoneyboxPopup({ onClose, moneybox }) {
           />
         </label>
         <div className="form__button-wrapper">
-          <Button variant="fiat" content="text" text="Удалить конверт" size="medium" />
+          <Button
+            variant="fiat"
+            content="text"
+            text="Удалить конверт"
+            size="medium"
+            onClick={handleDeleteMoneyboxClick}
+          />
           <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          onClose={closeConfirmationPopup}
+          onSubmit={() => {
+            dispatch(deleteMoneybox(id)).then(() => {
+              dispatch(getMoneybox());
+              onClose();
+            });
+          }}
+          confirmationText={`Вы действительно хотите удалить конверт «${moneybox.name}» ?`}
+          buttonText="конверт"
+        />
+      )}
     </Popup>
   );
 }
