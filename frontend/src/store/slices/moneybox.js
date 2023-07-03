@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getMoneyboxAPI, addMoneyboxAPI, editMoneyboxAPI } from '../../utils/api';
+import {
+  getMoneyboxAPI,
+  addMoneyboxAPI,
+  editMoneyboxAPI,
+  deleteMoneyboxAPI,
+} from '../../utils/api';
 
 export const getMoneybox = createAsyncThunk('moneybox', async () => {
   return getMoneyboxAPI();
@@ -11,6 +16,10 @@ export const addMoneybox = createAsyncThunk('moneybox/add', async (formData) => 
 
 export const editMoneybox = createAsyncThunk('moneybox/edit', async ({ id, formData }) => {
   return editMoneyboxAPI(id, formData);
+});
+
+export const deleteMoneybox = createAsyncThunk('moneybox/delete', async (id) => {
+  return deleteMoneyboxAPI(id);
 });
 
 const initialState = {
@@ -65,6 +74,18 @@ export const moneyboxSlice = createSlice({
         });
       })
       .addCase(editMoneybox.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteMoneybox.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteMoneybox.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteMoneybox.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

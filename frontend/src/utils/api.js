@@ -8,7 +8,7 @@ const defaultHeaders = {
 const handleResponse = async (response) => {
   if (!response.ok) {
     const data = await response.json();
-    throw new Error(data.detail || 'Request failed');
+    throw new Error(data.message || 'Request failed');
   }
 
   if (response.status === 204) {
@@ -374,4 +374,22 @@ export const editMoneyboxAPI = async (id, formData) => {
 
   const data = await request(url, options);
   return data;
+};
+
+// удаление копилки
+export const deleteMoneyboxAPI = async (id) => {
+  const url = `${baseUrl}/moneybox/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete moneybox failed: ${error.message}`);
+  }
 };
