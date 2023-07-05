@@ -37,7 +37,6 @@ function RoundCharts({ uniqueCategories, percentage, backColors, totals, chartNa
       },
     },
   };
-  console.log(percentage)
 
   return (
     <div className="round-chart">
