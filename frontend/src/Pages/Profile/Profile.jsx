@@ -5,7 +5,8 @@ import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './Profile.scss';
 import PasswordChangePopup from '../../Components/PasswordChangePopup/PasswordChangePopup';
-import { getUser, updateUser } from '../../store/slices/accountSlice';
+import { getUser, updateUser, deleteUser, resetUser } from '../../store/slices/accountSlice';
+import { setAuthentication } from '../../store/slices/authSlice';
 import AvatarUploaderPopup from '../../Components/AvatarUploaderPopup/AvatarUploaderPopup';
 import {
   RequirementsLogin,
@@ -336,7 +337,18 @@ export default function Profile() {
       </div>
       {isAvatarUploaderPopupOpen && <AvatarUploaderPopup onClose={closeAvatarUploaderPopup} />}
       {isPasswordChangePopupOpen && <PasswordChangePopup onClose={closePasswordChangePopup} />}
-      {isConfirmationPopupOpen && <ConfirmationPopup onClose={closeConfirmationPopup} />}
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          onClose={closeConfirmationPopup}
+          onSubmit={() => {
+            dispatch(deleteUser());
+            dispatch(resetUser());
+            dispatch(setAuthentication(false));
+          }}
+          confirmationText="Вы действительно хотите удалить профиль?"
+          buttonText="профиль"
+        />
+      )}
       {isInfoPopupOpen && (
         <InfoPopup
           onClose={closeInfoPopup}

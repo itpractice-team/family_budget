@@ -6,11 +6,13 @@ import moneybox from '../../Images/moneybox.svg';
 import PlugRightBlock from '../PlugRightBlock/PlugRightBlock';
 import EditMoneyboxPopup from '../EditMoneyboxPopup/EditMoneyboxPopup';
 import DoneMoneyboxPopup from '../DoneMoneyboxPopup/DoneMoneyboxPopup';
+import InfoPopup from '../InfoPopup/InfoPopup';
 import { getMoneybox } from '../../store/slices/moneybox';
 import usePopup from '../../utils/hooks/usePopup';
 
 export default function Moneybox() {
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.moneybox);
 
   const {
     isOpen: isEditMoneyboxPopupOpen,
@@ -22,6 +24,9 @@ export default function Moneybox() {
     openPopup: openDoneMoneyboxPopup,
     closePopup: closeDoneMoneyboxPopup,
   } = usePopup('doneMoneybox');
+  const { isOpen: isInfoPopupOpen, closePopup: closeInfoPopup } = usePopup('info');
+  const { openPopup: openAddMoneyboxPopup } = usePopup('addMoneybox');
+
   const moneyboxList = useSelector((state) => state.moneybox.moneybox);
   const [selectedMoneybox, setSelectedMoneybox] = useState(null);
 
@@ -37,6 +42,11 @@ export default function Moneybox() {
     } else if (!isEditMoneyboxPopupOpen) {
       openEditMoneyboxPopup();
     }
+  };
+
+  const tryAgainClick = () => {
+    closeInfoPopup();
+    openAddMoneyboxPopup();
   };
 
   return (
@@ -60,6 +70,14 @@ export default function Moneybox() {
       )}
       {isDoneMoneyboxPopupOpen && selectedMoneybox && (
         <DoneMoneyboxPopup onClose={closeDoneMoneyboxPopup} moneybox={selectedMoneybox} />
+      )}
+      {isInfoPopupOpen && (
+        <InfoPopup
+          onClose={closeInfoPopup}
+          content={error || 'Конверт успешно создан'}
+          type={error ? 'error' : 'success'}
+          onClick={tryAgainClick}
+        />
       )}
     </section>
   );

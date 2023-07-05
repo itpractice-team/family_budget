@@ -1,42 +1,25 @@
-import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { deleteUser, resetUser } from '../../store/slices/accountSlice';
-import { setAuthentication } from '../../store/slices/authSlice';
+import CancelButton from '../CancelButton/CancelButton';
 
-export default function ConfirmationPopup({ onClose }) {
-  const dispatch = useDispatch();
-
-  function handleCancel(evt) {
-    evt.preventDefault();
+export default function ConfirmationPopup({ onClose, onSubmit, confirmationText, buttonText }) {
+  const handleConfirmation = () => {
+    onSubmit();
     onClose();
-  }
-
-  const handleDeleteProfile = () => {
-    dispatch(deleteUser());
-    dispatch(resetUser());
-    dispatch(setAuthentication(false));
   };
 
   return (
     <Popup onClose={onClose} popupSize="popup_s" title="Подтверждение удаления">
-      <form className="form form_confirmation" onSubmit={handleDeleteProfile}>
-        <p className="form__text_confirmation">Вы действительно хотите удалить профиль?</p>
+      <form className="form form_confirmation" onSubmit={handleConfirmation}>
+        <p className="form__text_confirmation">{confirmationText}</p>
         <div className="form__button-wrapper">
-          <Button
-            variant="secondary"
-            content="text"
-            text="Отменить"
-            size="medium"
-            onClick={handleCancel}
-          />
+          <CancelButton onClose={onClose} />
           <Button
             type="submit"
             variant="primary"
             content="text"
-            text="Удалить профиль"
+            text={`Удалить ${buttonText}`}
             size="medium"
-            onClick={handleDeleteProfile}
           />
         </div>
       </form>

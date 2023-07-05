@@ -9,7 +9,7 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
   const { formData, handleChange, categoryOptions, financeOptions } =
     useTransactionForm(categoryType);
 
-  const handleAddSpend = (evt) => {
+  const handleAddTransaction = (evt) => {
     evt.preventDefault();
     dispatch(addTransaction({ ...formData, category_type: categoryType })).then(() => {
       dispatch(fetchTransactionList());
@@ -26,7 +26,7 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
       <TransactionForm
         formData={formData}
         handleChange={handleChange}
-        handleSubmit={handleAddSpend}
+        handleSubmit={handleAddTransaction}
         onClose={onClose}
         categoryOptions={filteredCategoryOptions}
         financeOptions={financeOptions}
