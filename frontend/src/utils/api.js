@@ -8,7 +8,7 @@ const defaultHeaders = {
 const handleResponse = async (response) => {
   if (!response.ok) {
     const data = await response.json();
-    throw new Error(data.message || 'Request failed');
+    throw new Error(data.message || 'Произошла ошибка');
   }
 
   if (response.status === 204) {
@@ -24,7 +24,7 @@ const request = async (url, options) => {
     const response = await fetch(url, options);
     return handleResponse(response);
   } catch (error) {
-    throw new Error(`Request failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -76,7 +76,7 @@ export const logoutUserAPI = async () => {
     await request(url, options);
     deleteCookie('token');
   } catch (error) {
-    throw new Error(`Logout failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -125,7 +125,7 @@ export const deleteUserAPI = async () => {
     await request(url, options);
     deleteCookie('token');
   } catch (error) {
-    throw new Error(`Delete user failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -187,7 +187,7 @@ export const deleteFinanceAPI = async (id) => {
   try {
     await request(url, options);
   } catch (error) {
-    throw new Error(`Delete transaction failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -248,7 +248,7 @@ export const deleteCategoryAPI = async (id) => {
   try {
     await request(url, options);
   } catch (error) {
-    throw new Error(`Delete transaction failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -310,7 +310,7 @@ export const deleteTransactionAPI = async (id) => {
   try {
     await request(url, options);
   } catch (error) {
-    throw new Error(`Delete transaction failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
 
@@ -346,6 +346,8 @@ export const getMoneyboxAPI = async () => {
 
 // добавление новой копилки
 export const addMoneyboxAPI = async (formData) => {
+  formData.accumulated = 0;
+
   const url = `${baseUrl}/moneybox/`;
   const options = {
     method: 'POST',
@@ -390,6 +392,6 @@ export const deleteMoneyboxAPI = async (id) => {
   try {
     await request(url, options);
   } catch (error) {
-    throw new Error(`Delete moneybox failed: ${error.message}`);
+    throw new Error(`${error.message}`);
   }
 };
