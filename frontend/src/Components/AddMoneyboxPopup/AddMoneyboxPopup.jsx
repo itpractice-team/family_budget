@@ -1,86 +1,89 @@
-import { useState } from 'react';
+/* eslint-disable no-shadow */
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import { addMoneybox } from '../../store/slices/moneybox';
+import CancelButton from '../CancelButton/CancelButton';
+import usePopup from '../../utils/hooks/usePopup';
+import addMoneyboxValidation from '../../utils/validations/addMoneyboxValidation';
 
 export default function AddMoneyboxPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    amount: '',
-    accumulated: 0,
-    description: '',
+  const { openPopup: openInfoPopup } = usePopup('info');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(addMoneyboxValidation),
+    mode: 'onChange',
   });
 
-  const { name, amount, description } = formData;
-
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleAddMoneybox = (evt) => {
-    evt.preventDefault();
+  const onSubmit = (formData) => {
     dispatch(addMoneybox(formData)).then(() => {
       onClose();
+      openInfoPopup();
     });
   };
 
-  const handleCancel = (evt) => {
-    evt.preventDefault();
-    onClose();
-  };
-
   return (
-    <Popup onClose={onClose} popupSize="popup_s" title="Задайте свою цель для накопления">
-      <form className="form" onSubmit={handleAddMoneybox}>
+    <Popup onClose={onClose} popupSize="popup_s" title="Задайте свою цель для накопления">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <label className="form__input-label" htmlFor="Moneybox-name">
           Название конверта
           <input
             id="Moneybox-name"
-            name="name"
-            className="form__input"
+            {...register('name')}
+            className={`form__input ${errors.name ? 'error' : ''}`}
             type="text"
             placeholder="Введите название"
-            value={name}
-            onChange={handleChange}
           />
+          {errors.name && (
+            <span className="form__valid-message form__valid-message_active">
+              {errors.name.message}
+            </span>
+          )}
         </label>
         <div className="form__input-block">
           <label className="form__input-label form__input-label_divider" htmlFor="Moneybox-amount">
             Итоговая сумма
             <input
               id="Moneybox-amount"
-              name="amount"
-              className="form__input form__input_sum"
+              {...register('amount')}
+              className={`form__input form__input_sum ${errors.amount ? 'error' : ''}`}
               type="number"
               placeholder="Введите сумму для накопления"
-              value={amount}
-              onChange={handleChange}
             />
+            {errors.amount && (
+              <span className="form__valid-message form__valid-message_active">
+                {errors.amount.message}
+              </span>
+            )}
           </label>
         </div>
         <label className="form__input-label form__input-label_textarea" htmlFor="Moneybox-comment">
           Комментарий
           <textarea
             id="Moneybox-comment"
-            name="description"
+            {...register('description')}
             className="form__input form__input_textarea"
             placeholder="Заметка о цели"
-            value={description}
-            onChange={handleChange}
           />
         </label>
         <div className="form__button-wrapper form__button-wrapper_add-operation">
+          <CancelButton onClose={onClose} />
           <Button
-            variant="secondary"
+            type="submit"
+            variant="primary"
             content="text"
-            text="Отменить"
+            text="Сохранить"
             size="medium"
-            onClick={handleCancel}
+            disabled={!isValid}
           />
-          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>
