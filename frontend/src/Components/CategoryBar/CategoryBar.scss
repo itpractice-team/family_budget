@@ -1,0 +1,32 @@
+@import '../../styles/consts.scss';
+
+.category-bar {
+  width: 480px;
+  height: 50px;
+  margin: 0;
+}
+.category-bar__circle {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  background-color: none;
+  border-radius: 50%;
+  margin: 0;
+}
+.category-bar__persent {
+  position: absolute;
+  @include text-small-web;
+  top: 50%;
+  left: 50%;
+}
+.category-bar__icon {
+  width: 36px;
+  margin: 0;
+}
+.category-bar__name {
+  @include text-large-web;
+}
+.category-bar__value {
+  color: $spendRed;
+  @include text-large-web;
+}
