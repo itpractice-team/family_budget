@@ -375,3 +375,67 @@ export const editMoneyboxAPI = async (id, formData) => {
   const data = await request(url, options);
   return data;
 };
+
+// получение повторных расходов пользователя
+export const getRepeatSpendBoxAPI = async () => {
+  const url = `${baseUrl}/reapeatspend/`;
+  const options = {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+  const data = await request(url, options);
+  return data;
+};
+
+// добавление повторных расходов
+export const addRepeatSpendBoxAPI = async (formData) => {
+  const url = `${baseUrl}/reapeatspend/`;
+  const options = {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
+
+// редактирование повторных расходов
+export const editRepeatSpendBoxAPI = async (id, formData) => {
+  const url = `${baseUrl}/reapeatspend/${id}/`;
+  const options = {
+    method: 'PATCH',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const data = await request(url, options);
+  return data;
+};
+
+// удлаение  повторных расходов
+export const deleteRepeatSpendBoxAPI = async (id) => {
+  const url = `${baseUrl}/reapeatspend/${id}/`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      ...defaultHeaders,
+      authorization: `Token ${getCookie('token')}`,
+    },
+  };
+
+  try {
+    await request(url, options);
+  } catch (error) {
+    throw new Error(`Delete reapeatspend failed: ${error.message}`);
+  }
+};

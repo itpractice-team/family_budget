@@ -1,18 +1,49 @@
 import './RepeatExpensesPopup.scss';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
 import Radio from '../../ui/Radio/Radio';
 import InputData from '../InputData/InputDate';
+import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
+import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 
 export default function RepeatExpensesPopup({ onClose }) {
-  const [activeDate, setActiveDate] = useState('День');
-  const [selected, setSelected] = useState('До');
-  const [valueDate, setValueDate] = useState('');
+  const dispatch = useDispatch();
+
+  const [activeDate, setActiveDate] = useState('Ежедневно');
+  const [selected, setSelected] = useState('Указать дату окончания');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
+  const [formData, setFormData] = useState({
+    name: '',
+    amount: '',
+    description: '',
+    category: '',
+    created: '',
+
+    // 0 Day, 1 Week, 2 Month, 3 Year
+    repeat_type: 0,
+    repeat_count: 1,
+
+    // 0-Endlessy 1-Count 2-Date
+    repeat_period: 0,
+    to_date: '',
+  });
+
+  const {
+    name,
+    amount,
+    category,
+    // repeat_type, repeat_period
+  } = formData;
+
+  const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
+  const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
@@ -20,8 +51,17 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValueDate('');
-    onClose();
+    dispatch(
+      addRepeatSpendBox({
+        ...formData,
+        // eslint-disable-next-line no-nested-ternary
+        repeat_type: activeDate === 'Ежемесячно' ? 2 : activeDate === 'Еженедельно' ? 1 : 0,
+        repeat_period: selected === 'Указать дату окончания' ? 2 : 0,
+      }),
+    ).then(() => {
+      console.log('q', formData);
+      onClose();
+    });
   };
 
   const handleСancel = (evt) => {
@@ -34,58 +74,89 @@ export default function RepeatExpensesPopup({ onClose }) {
     setSelected(value);
   };
 
+  const handleChange = (evt) => {
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  };
+
+  const handleDateChange = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      created: value,
+    }));
+  };
+
+  const handleToDateChange = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      to_date: value,
+    }));
+  };
+
+  const handleCategoryChange = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      category: value,
+    }));
+  };
+
   return (
-    <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
+    <Popup onClose={onClose} popupSize="popup_repeat" title="Создать повторяющийся расход">
       <form className="form repeat-expenses" onSubmit={handleSubmit}>
-        <InputData labelTitle="Дата" inputName="RepeatExpenses-date" value={valueDate} />
+        <div className="form__input-block">
+          <label className="form__input-label" htmlFor="repeat-expenses-name">
+            Название
+            <input
+              className="form__input"
+              type="text"
+              name="name"
+              id="repeat-expenses-name"
+              placeholder="Название транзакции"
+              value={name}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+
+        <SelectButtonWrapper
+          label="Категория"
+          options={expenseCategories}
+          value={category}
+          name="category"
+          imageKey="image"
+          nameKey="name"
+          altText="Иконка категории"
+          handleOptionChange={handleCategoryChange}
+        />
+
+        <InputData
+          labelTitle="Дата"
+          inputStyleName="repeat-expenses-startDate"
+          inputName="created"
+          value={startDate}
+          onChange={handleDateChange}
+          setValueDate={setStartDate}
+        />
+
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
-            htmlFor="RepeatExpenses-amount"
+            htmlFor="repeat-expenses-amount"
           >
             Сумма
             <input
               className="form__input form__input_sum"
               type="number"
-              name="RepeatExpenses-amount"
-              id="RepeatExpenses-amount"
+              name="amount"
+              id="repeat-expenses-amount"
               placeholder="0"
-            />
-          </label>
-        </div>
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="RepeatExpenses-category">
-            Какая категория расхода?
-            <select
-              className="form__input form__input_select"
-              type="select"
-              name="RepeatExpenses-category"
-              id="RepeatExpenses-category"
-            >
-              <option value="" className="form__input_option">
-                Выбрать категорию
-              </option>
-            </select>
-          </label>
-        </div>
-
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="RepeatExpenses-name">
-            Описание
-            <input
-              className="form__input"
-              type="text"
-              name="RepeatExpenses-name"
-              id="RepeatExpenses-name"
-              placeholder="Название транзакции"
+              value={amount}
+              onChange={handleChange}
             />
           </label>
         </div>
 
         <div className="form__text-content">
-          <p className="form__text-bold">Сделать повторяющуюся запись?</p>
-          <p className="form__text">Это событие будет повторяться каждый 1 день</p>
+          <p className="form__text-bold">Как часто повторять расход?</p>
         </div>
 
         <div className="repeat-expenses__tab">
@@ -96,21 +167,10 @@ export default function RepeatExpensesPopup({ onClose }) {
             onClick={handleDateClick}
           />
         </div>
-
-        <div className="repeat-expenses__activeTab">
-          {activeDate === 'День' && <DayBtn activeDate={activeDate} inputName="dayBtn" />}
-          {activeDate === 'Неделя' && (
-            <div className="repeat-expenses__container">
-              <WeekBtn />
-              <DayBtn activeDate={activeDate} inputName="weekBtn" />
-            </div>
-          )}
-          {activeDate === 'Месяц' && <DayBtn activeDate={activeDate} inputName="monthBtn" />}
-          {activeDate === 'Год' && <DayBtn activeDate={activeDate} inputName="yearBtn" />}
-        </div>
+        {activeDate === 'Еженедельно' && <WeekBtn />}
 
         <div className="repeat-expenses__container">
-          <p className="repeat-expenses__text-bold">Длительность</p>
+          <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
           <Radio
             value="Бесконечно"
             isChecked={selected === 'Бесконечно'}
@@ -118,14 +178,20 @@ export default function RepeatExpensesPopup({ onClose }) {
             text="Бесконечно"
           />
           <Radio
-            value="Заданное кол-во раз"
-            isChecked={selected === 'Заданное кол-во раз'}
+            value="Указать дату окончания"
+            isChecked={selected === 'Указать дату окончания'}
             onChange={handleRadio}
-            text="Заданное количество раз"
+            text="Указать дату окончания"
           />
-          <Radio value="До" isChecked={selected === 'До'} onChange={handleRadio} text="До" />
-          {selected === 'До' && (
-            <InputData labelTitle="Дата" inputName="RepeatExpensesPopup-date" value={valueDate} />
+          {selected === 'Указать дату окончания' && (
+            <InputData
+              labelTitle="Дата"
+              inputStyleName="repeat-expenses-endDate"
+              inputName="to_date"
+              value={endDate}
+              onChange={handleToDateChange}
+              setValueDate={setEndDate}
+            />
           )}
         </div>
 

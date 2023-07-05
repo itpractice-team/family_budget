@@ -43,20 +43,19 @@ export const arrCategoriesСommon = [
 
 export const arrCategoriesDate = [
   {
-    title: 'День',
+    title: 'Ежедневно',
+    number: 0,
     id: '1',
   },
   {
-    title: 'Неделя',
+    title: 'Еженедельно',
+    number: 1,
     id: '2',
   },
   {
-    title: 'Месяц',
+    title: 'Ежемесячно',
+    number: 2,
     id: '3',
-  },
-  {
-    title: 'Год',
-    id: '4',
   },
 ];
 

@@ -13,6 +13,7 @@ const initialState = {
     addItem: false,
     editTransaction: false,
     repeatExpenses: false,
+    editRepeatSpend: false,
     editMoneybox: false,
     doneMoneybox: false,
     addMoneybox: false,
