@@ -6,6 +6,7 @@ import './Statistic.scss';
 import collectData from '../../utils/chartSettings/collectData';
 import LineCharts from '../../Components/BigChart/Charts';
 import RoundCharts from '../../Components/RoundChart/RoundChart';
+import CategoryBar from '../../Components/CategoryBar/CategoryBar';
 
 export default function Statistic() {
   const [lineChart, setLineChart] = useState(true);
@@ -99,6 +100,11 @@ export default function Statistic() {
           backColors={backColor}
           totals={amountTotal}
           chartName="Расход"
+        />
+        <CategoryBar 
+        persent='20'
+        categoryName='Category' 
+        categoryValue= '2000'
         />
       </div>
 

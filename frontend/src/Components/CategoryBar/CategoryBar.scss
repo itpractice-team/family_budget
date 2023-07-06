@@ -1,32 +1,56 @@
 @import '../../styles/consts.scss';
 
 .category-bar {
-  width: 480px;
+  width: 450px;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
   margin: 0;
+}
+.category-bar_position {
+  margin: 76px 0 0 74px;
 }
 .category-bar__circle {
   position: relative;
   width: 46px;
   height: 46px;
-  background-color: none;
   border-radius: 50%;
+  background: conic-gradient(gray 0 82%, blue 0 18%);
+  transform: rotate(250deg);
+  z-index: 1;
   margin: 0;
 }
+.category-bar__circle-center {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  right: 7px;
+  bottom: 7px;
+  border-radius: 50%;
+  background: $main;
+  z-index: 2;
+  margin: 0;
+}
+
 .category-bar__persent {
   position: absolute;
   @include text-small-web;
-  top: 50%;
-  left: 50%;
+  top: 14px;
+  left: 16px;
+  transform: rotate(110deg);
+  z-index: 3;
 }
 .category-bar__icon {
   width: 36px;
-  margin: 0;
+  margin: 0 0 0 14px;
 }
 .category-bar__name {
   @include text-large-web;
+  margin: 0 0 0 8px;
 }
 .category-bar__value {
   color: $spendRed;
   @include text-large-web;
+  margin: 0 0 0 144px;
 }
