@@ -264,8 +264,16 @@ class TransactionWriteSerializer(BaseTransactionSerializer):
         queryset=BudgetCategory.objects.all(),
     )
     finance = PrimaryKey404RelatedField(
-        queryset=BudgetFinance.objects.all(),
+        queryset=Finance.objects.all(), source="budget.finances.finance"
     )
+
+    # def validate(self, data):
+    #     """Валидация источника финансирования."""
+    #     print(data["budget"].finances.all())
+    #     data["finance"] = get_object_or_404(
+    #         data["budget"].finances, finance=data["finance"].finance
+    #     )
+    #     return data
 
 
 class BaseReapeatSpendSerializer(DefaultBudgetDataSerializer):

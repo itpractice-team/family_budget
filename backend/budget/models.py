@@ -292,7 +292,7 @@ class BudgetFinance(models.Model):
 
     def __str__(self):
         """Метод возвращает информацию по источникам финансирования."""
-        return f"{self.budget} ({self.finance} баланс {self.balance})"
+        return f"{self.budget} ({self.finance} => баланс {self.balance})"
 
 
 class BaseFinance(models.Model):
