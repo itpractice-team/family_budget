@@ -12,7 +12,7 @@ validate_simple_name = RegexValidator(
     simple_name_re,
     _(
         "Enter a valid `name` value consisting of only letters "
-        "and symbols `-`."
+        "and symbols `-`. —"
     ),
     "invalid",
 )
