@@ -71,14 +71,38 @@ export default function Statistic() {
   return (
     <section className="statistic">
       <div className="statistic__block">
-        <p className="statistic__text statistic__overview">
-          Общее состояние по
-          {/* adds select */}
-        </p>
-        <RoundCharts percentage={chartAIData} backColors={chartAIcolors} chartName={chartAIName} />
+        <p className="statistic__text statistic__overview">Общее состояние по</p>
+        {percentageAmount.length !== 0 ? (
+          <RoundCharts
+            percentage={chartAIData}
+            backColors={chartAIcolors}
+            chartName={chartAIName}
+          />
+        ) : (
+          <RoundCharts percentage={[100]} backColors="#EAEBF5" chartName={chartAIName} />
+        )}
+        <div className="statistic__info-block">
+          <p className="statistic__info-label">Доход</p>
+          <p className="statistic__info-value">{`+${incomeTotal}`} &#8381;</p>
+          <p className="statistic__info-label">Расход</p>
+          <p className="statistic__info-value">{`-${amountTotal}`} &#8381;</p>
+          <p className="statistic__info-sum">
+            {incomeTotal - amountTotal > 0
+              ? `+${incomeTotal - amountTotal}`
+              : incomeTotal - amountTotal}
+          </p>
+        </div>
+        {incomeTotal - amountTotal >= 0 ? (
+          <div className="statistic__information">
+            <p className="statistic__inform-text">В категориях всё идёт по плану</p>
+          </div>
+        ) : (
+          <div className="statistic__information statistic__information_fail">
+            <p className="statistic__inform-text">Продавай почку!</p>
+          </div>
+        )}
       </div>
-
-      <div className="statistic__periods statistic__block">
+      <div className="statistic__periods">
         <div className="statistic__filtration">
           <StatisticDates dinamicChartShow={dinamicChartShow} />
         </div>
@@ -94,29 +118,59 @@ export default function Statistic() {
 
       <div className="statistic__block statistic__block_round">
         <h2 className="statistic__header">Расходы по категориям</h2>
-        <RoundCharts
-          // uniqueCategories={uniqueCategorie}
-          percentage={percentageAmount}
-          backColors={backColor}
-          totals={amountTotal}
-          chartName="Расход"
-        />
-        <CategoryBar 
-        persent='20'
-        categoryName='Category' 
-        categoryValue= '2000'
-        />
+        {percentageAmount.length !== 0 ? (
+          <RoundCharts
+            percentage={percentageAmount}
+            backColors={backColor}
+            totals={amountTotal}
+            chartName="Расход"
+          />
+        ) : (
+          <RoundCharts percentage={[100]} backColors="#EAEBF5" totals="0" chartName="Расход" />
+        )}
+        <ul className="statistic__category-ul">
+          {Object.keys(uniqueCategorie).map((item, index) => {
+            return (
+              <li>
+                <CategoryBar
+                  persent={percentageAmount[index]}
+                  categoryName={item}
+                  categoryValue={amount[index]}
+                  color={backColor[index]}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
       <div className="statistic__block statistic__block_round">
         <h2 className="statistic__header">Доходы по категориям</h2>
-        <RoundCharts
-          // uniqueCategories={uniqueCategorie}
-          percentage={percentageIncome}
-          backColors={backColor}
-          totals={incomeTotal}
-          chartName="Доход"
-        />
+
+        {percentageIncome.length !== 0 ? (
+          <RoundCharts
+            percentage={percentageIncome}
+            backColors={backColor}
+            totals={incomeTotal}
+            chartName="Доход"
+          />
+        ) : (
+          <RoundCharts percentage={[100]} backColors="#EAEBF5" totals="0" chartName="Доход" />
+        )}
+        <ul className="statistic__category-ul">
+          {Object.keys(uniqueCategorie).map((item, index) => {
+            return (
+              <li>
+                <CategoryBar
+                  persent={percentageIncome[index]}
+                  categoryName={item}
+                  categoryValue={income[index]}
+                  color={backColor[index]}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

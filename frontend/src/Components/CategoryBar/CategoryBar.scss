@@ -2,21 +2,19 @@
 
 .category-bar {
   width: 450px;
-  height: 50px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content:flex-start;
+  border-bottom: 1px solid $midGrey;
   margin: 0;
-}
-.category-bar_position {
-  margin: 76px 0 0 74px;
 }
 .category-bar__circle {
   position: relative;
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: conic-gradient(gray 0 82%, blue 0 18%);
+  // background: conic-gradient(gray 0 82%, blue 0 18%);
   transform: rotate(250deg);
   z-index: 1;
   margin: 0;
@@ -52,5 +50,14 @@
 .category-bar__value {
   color: $spendRed;
   @include text-large-web;
-  margin: 0 0 0 144px;
+  margin: 0 28px 0 auto;
+}
+.category-bar__arrow{
+  width: 50px;
+  height: 50px;
+  background-image: url(../../Images/chevron-down.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: center;
+  margin: 0;
 }

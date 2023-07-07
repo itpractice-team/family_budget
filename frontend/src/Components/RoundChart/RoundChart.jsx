@@ -39,19 +39,13 @@ function RoundCharts({ uniqueCategories, percentage, backColors, totals, chartNa
   console.log(percentage)
 
   return (
-    <div className={`round-chart ${chartName && "round-chart_down"}`}>
-      {percentage.length !== 0 ? (
-        <>
+    <div className={`round-chart ${chartName && "round-chart_down"}`}> 
           <Doughnut data={data} options={options} />
           {chartName ? (
-            <p className="round-chart__title">{`${chartName}: ${totals}`}</p>
+            <p className="round-chart__title">{`${chartName}: ${totals}`}&nbsp;&#8381;</p>
           ) : (
             <div className="round-chart__img" />
           )}
-        </>
-      ) : (
-        <h2 className="round-chart__no-data">Нет данных для отображения графика.</h2>
-      )}
     </div>
   );
 }
