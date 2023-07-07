@@ -32,28 +32,25 @@ class LookupBugetRelatedField(serializers.RelatedField):
     """Lookup поле бюджета."""
 
     default_error_messages = {
-        'does_not_exist': _(
-            'Object with {lookup_name}={value} does not exist.'
+        "does_not_exist": _(
+            "Object with {lookup_name}={value} does not exist."
         ),
-        'invalid': _('Invalid value.'),
+        "invalid": _("Invalid value."),
     }
 
     def __init__(
-            self,
-            budget=CurrentBudgetDefault(),
-            lookup_field=None,
-            **kwargs
+        self, budget=CurrentBudgetDefault(), lookup_field=None, **kwargs
     ):
-        assert lookup_field is not None, (
-            'The `lookup_field` argument is required.'
-        )
+        assert (
+            lookup_field is not None
+        ), "The `lookup_field` argument is required."
         self.budget = budget
         self.lookup_field = lookup_field
         super().__init__(**kwargs)
 
     def get_budget(self):
         if callable(self.budget):
-            if getattr(self.budget, 'requires_context', False):
+            if getattr(self.budget, "requires_context", False):
                 return self.budget(self)
             else:
                 return self.budget()
@@ -64,16 +61,14 @@ class LookupBugetRelatedField(serializers.RelatedField):
         try:
             budget = self.get_budget()
             return queryset.get(
-                **{'budget': budget.pk, self.lookup_field: data}
+                **{"budget": budget.pk, self.lookup_field: data}
             )
         except ObjectDoesNotExist:
             self.fail(
-                'does_not_exist',
-                lookup_name=self.lookup_field,
-                value=data
+                "does_not_exist", lookup_name=self.lookup_field, value=data
             )
         except (TypeError, ValueError):
-            self.fail('invalid')
+            self.fail("invalid")
 
     def to_representation(self, obj):
         return getattr(obj, self.lookup_field).pk

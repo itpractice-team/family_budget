@@ -13,7 +13,11 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField, LookupBugetRelatedField
+from api.fields import (
+    CurrentBudgetDefault,
+    LookupBugetRelatedField,
+    PrimaryKey404RelatedField,
+)
 from budget.models import (
     Budget,
     BudgetCategory,
@@ -264,8 +268,7 @@ class TransactionWriteSerializer(BaseTransactionSerializer):
         queryset=BudgetCategory.objects.all(),
     )
     finance = LookupBugetRelatedField(
-        queryset=BudgetFinance.objects.all(),
-        lookup_field="finance"
+        queryset=BudgetFinance.objects.all(), lookup_field="finance"
     )
 
 
