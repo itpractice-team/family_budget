@@ -7,12 +7,12 @@ from django.utils.translation import ngettext
 PASSWORD_CHARS_RE = _lazy_re_compile(r"^[a-zA-Z\d!\"#$%&., ]+\Z")
 
 
-simple_name_re = _lazy_re_compile(r"^([^\W\d_]|[\s-])+$")
+simple_name_re = _lazy_re_compile(r"^([^\W\d_]|[\s\-—])+")
 validate_simple_name = RegexValidator(
     simple_name_re,
     _(
         "Enter a valid `name` value consisting of only letters "
-        "and symbols `-`."
+        "and symbols `-`. —"
     ),
     "invalid",
 )
