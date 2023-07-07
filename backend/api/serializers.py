@@ -13,7 +13,7 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField
+from api.fields import CurrentBudgetDefault, PrimaryKey404RelatedField, LookupBugetRelatedField
 from budget.models import (
     Budget,
     BudgetCategory,
@@ -188,7 +188,7 @@ class TransferFinanceSerializer(serializers.Serializer):
 
     def validate(self, data):
         """Валидация трансфера счетов."""
-        if data["amount"] < 0:
+        if data["amount"] <= 0:
             raise serializers.ValidationError(
                 _("The amount for the transfer must be greater than zero!")
             )
@@ -263,17 +263,10 @@ class TransactionWriteSerializer(BaseTransactionSerializer):
     category = PrimaryKey404RelatedField(
         queryset=BudgetCategory.objects.all(),
     )
-    finance = PrimaryKey404RelatedField(
-        queryset=Finance.objects.all(), source="budget.finances.finance"
+    finance = LookupBugetRelatedField(
+        queryset=BudgetFinance.objects.all(),
+        lookup_field="finance"
     )
-
-    # def validate(self, data):
-    #     """Валидация источника финансирования."""
-    #     print(data["budget"].finances.all())
-    #     data["finance"] = get_object_or_404(
-    #         data["budget"].finances, finance=data["finance"].finance
-    #     )
-    #     return data
 
 
 class BaseReapeatSpendSerializer(DefaultBudgetDataSerializer):
