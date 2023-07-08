@@ -1,8 +1,13 @@
 @import '../../styles/consts.scss';
 
 .round-chart {
-    width: 50%;
+    width: 37%;
     position: relative;
+    margin: 10% 0 0 3%;
+}
+.round-chart_down{
+    width: 26%;
+    margin: 35px 0 0 3%;
 }
 .round-chart__title {
     position: absolute;
@@ -19,11 +24,11 @@
 }
 .round-chart__img{
     position: absolute;
-    top: 26%;
-    left: 26%;
+    top: 34%;
+    left: 32%;
     background-image: url(../../Images/smile.svg);
-    width: 50%;
-    height: 50%;
+    width: 34%;
+    height: 34%;
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;

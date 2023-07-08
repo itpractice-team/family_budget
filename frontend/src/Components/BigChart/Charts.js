@@ -54,25 +54,27 @@ function LineCharts({ amount, income, created, lineData, lineChart }) {
     maintainAspectRatio: false,
     scales: {
       y: {
-          display: false, // false to disable Y
+        grid:{
+          display: false}, // false to disable Y grid
       },
     },
     elements: {
       point: {
-        radius: 1, // change point radius
-        hoverRadius: 8, 
-        borderWidth: 0, 
+        radius: 10, // change point radius
+        pointBackgroundColor: "transparent",
+        pointBorderColor: "transparent",
+        hoverRadius: 8,
+        borderWidth: 0,
         hoverBorderWidth: 3,
         pointHoverBorderColor: 'rgb(0,0,0)',
       },
-      
     },
     plugins: {
       title: {
-        display: false, 
+        display: false,
       },
       legend: {
-        display: false, 
+        display: false,
       },
       zoom: {
         pan: {
@@ -87,17 +89,19 @@ function LineCharts({ amount, income, created, lineData, lineChart }) {
         },
       },
       tooltip: {
-        bodySpacing: 10, 
-  bodyFontSize: 16,
+        bodySpacing: 15,
+        bodyFontSize: 20,
+        enabled: true,
         callbacks: {
           label: (context) => {
             const { dataIndex } = context;
             const incomeValue = income[dataIndex];
             const amountValue = amount[dataIndex];
-            return `${incomeValue}, Расход: ${amountValue}`;
+            return [`Доход: ${incomeValue}`, `Расход: ${amountValue}`];
           },
           title: () => null,
         },
+        multiKeyBackground: () => 'rgba(255, 255, 255, 0.8)', 
       },
     },
   };
