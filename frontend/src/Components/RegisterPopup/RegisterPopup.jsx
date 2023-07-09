@@ -38,6 +38,10 @@ export default function RegisterPopup({ onClose }) {
   };
 
   const handleRegistration = (userData) => {
+    userData.username = userData.username.trim();
+    userData.email = userData.email.trim();
+    userData.first_name = userData.first_name.trim();
+    userData.last_name = userData.last_name.trim();
     dispatch(registerUser(userData));
   };
 
@@ -49,6 +53,7 @@ export default function RegisterPopup({ onClose }) {
   const {
     register,
     formState: { errors, isValid },
+    setValue,
     handleSubmit,
     watch,
   } = useForm({
@@ -56,6 +61,11 @@ export default function RegisterPopup({ onClose }) {
     resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
   });
 
+  const onBlur = (evt) =>{
+    const fieldName = evt.target.name;
+    const trimmedValue = evt.target.value.trim();
+    setValue(fieldName, trimmedValue);
+  }
   const password = useRef({});
   password.current = watch('password', '');
 
@@ -67,6 +77,7 @@ export default function RegisterPopup({ onClose }) {
             Логин
             <input
               {...register('username')}
+              onBlur={onBlur}
               id="RegisterPopup-login"
               name="username"
               className="form__input"
@@ -99,6 +110,7 @@ export default function RegisterPopup({ onClose }) {
             E-mail
             <input
               {...register('email')}
+              onBlur={onBlur}
               id="RegisterPopup-email"
               name="email"
               className="form__input"
@@ -131,6 +143,7 @@ export default function RegisterPopup({ onClose }) {
             Имя
             <input
               {...register('first_name')}
+              onBlur={onBlur}
               id="RegisterPopup-name"
               name="first_name"
               className="form__input"
@@ -163,6 +176,7 @@ export default function RegisterPopup({ onClose }) {
             Фамилия
             <input
               {...register('last_name')}
+              onBlur={onBlur}
               id="RegisterPopup-surname"
               name="last_name"
               className="form__input"

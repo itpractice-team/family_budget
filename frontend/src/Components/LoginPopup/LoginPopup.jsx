@@ -34,6 +34,7 @@ export default function LoginPopup({ onClose }) {
   };
 
   const handleLogin = (formData) => {
+    formData.username = formData.username.trim();
     dispatch(loginUser(formData));
   };
 
@@ -47,10 +48,17 @@ export default function LoginPopup({ onClose }) {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    setValue,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(loginValidation),
   });
+
+  const onBlur = (evt) =>{
+    const fieldName = evt.target.name;
+    const trimmedValue = evt.target.value.trim();
+    setValue(fieldName, trimmedValue);
+  }
 
   if (isAuthenticated) {
     return <Navigate to="/budget" />;
@@ -63,6 +71,7 @@ export default function LoginPopup({ onClose }) {
             Логин
             <input
               {...register('username')}
+              onBlur={onBlur}
               id="LoginPopup-login"
               name="username"
               className={`form__input ${errors.username ? 'error' : ''}`}

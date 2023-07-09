@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
@@ -92,6 +94,23 @@ export default function Profile() {
     }
   }, [user, setValue]);
 
+// отказ от изменения по esc
+const onKeyDown = (evt) => {
+  if (evt.key === 'Escape') {
+    setIsEditing(false);
+    setDisable(true);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }
+}
+useEffect(() => {
+  if (isEditing){
+    document.addEventListener('keydown', onKeyDown);
+  }   
+}, [isEditing]);
+
+
   const watchedValues = useWatch({ control });
   useEffect(() => {
     // Проверка изменений полей
@@ -115,8 +134,18 @@ export default function Profile() {
     setIsEditing(true);
   };
 
+  const onBlur = (evt) =>{
+    const fieldName = evt.target.name;
+    const trimmedValue = evt.target.value.trim();
+    setValue(fieldName, trimmedValue);
+  }
+  
   function handleUpdateProfile(formData) {
     if (isEditing) {
+      formData.username = formData.username.trim();
+      formData.email = formData.email.trim();
+      formData.first_name = formData.first_name.trim();
+      formData.last_name = formData.last_name.trim();
       dispatch(updateUser(formData));
       setDisable(true);
       setIsEditing(false);
@@ -150,6 +179,7 @@ export default function Profile() {
                   value: user.username || '',
                   shouldUnregister: true,
                 })}
+                onBlur={onBlur}
                 id="Profile-login"
                 name="username"
                 className={`form__input ${errors.username ? 'error' : ''}`}
@@ -183,6 +213,7 @@ export default function Profile() {
               E-mail
               <input
                 {...register('email', { value: user.email || '', shouldUnregister: true })}
+                onBlur={onBlur}
                 id="Profile-email"
                 name="email"
                 className={`form__input ${errors.email ? 'error' : ''}`}
@@ -241,6 +272,7 @@ export default function Profile() {
                   value: user.first_name || '',
                   shouldUnregister: true,
                 })}
+                onBlur={onBlur}
                 id="Profile-name"
                 name="first_name"
                 className={`form__input ${errors.first_name ? 'error' : ''}`}
@@ -277,6 +309,7 @@ export default function Profile() {
                   value: user.last_name || '',
                   shouldUnregister: true,
                 })}
+                onBlur={onBlur}
                 id="Profile-surname"
                 name="last_name"
                 className={`form__input ${errors.last_name ? 'error' : ''}`}
