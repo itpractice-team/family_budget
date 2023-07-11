@@ -46,6 +46,7 @@ export default function Tabs({ arr, size, activeInit, onClick }) {
             </Tab>
           );
         }
+
         return null;
       })}
     </div>

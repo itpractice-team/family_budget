@@ -63,30 +63,37 @@ export const arrCategoriesWeek = [
   {
     title: 'Пн',
     id: '1',
+    isActive: false,
   },
   {
     title: 'Вт',
     id: '2',
+    isActive: false,
   },
   {
     title: 'Ср',
     id: '3',
+    isActive: false,
   },
   {
     title: 'Чт',
     id: '4',
+    isActive: false,
   },
   {
     title: 'Пт',
     id: '5',
+    isActive: false,
   },
   {
     title: 'Сб',
     id: '6',
+    isActive: false,
   },
   {
     title: 'Вс',
     id: '7',
+    isActive: false,
   },
 ];
 

@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import WeekBtn from './WeekBtn/WeekBtn';
 import Tabs from '../Tabs/Tabs';
-import { arrCategoriesDate } from '../../utils/consts';
+import { arrCategoriesDate, arrCategoriesWeek } from '../../utils/consts';
 import Radio from '../../ui/Radio/Radio';
 import InputData from '../InputData/InputDate';
 import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
+import Checkbox from './checkbox';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -167,7 +167,17 @@ export default function RepeatExpensesPopup({ onClose }) {
             onClick={handleDateClick}
           />
         </div>
-        {activeDate === 'Еженедельно' && <WeekBtn />}
+        {activeDate === 'Еженедельно' && (
+          <div className="repeat-expenses__tab">
+            {arrCategoriesWeek.map((item) => {
+              return (
+                <li className="repeat-expenses__week-day" key={item.id}>
+                  <Checkbox>{item.title}</Checkbox>
+                </li>
+              );
+            })}
+          </div>
+        )}
 
         <div className="repeat-expenses__container">
           <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
