@@ -168,13 +168,30 @@ $max-width-m: 784px;
 // повторяющиеся расходы
 .popup_repeat {
   max-width: $max-width-m;
-
+  
   .popup__title {
     margin-bottom: 24px;
   }
 
   .form {
     gap: 12px 32px;
+
+    padding: 0 10px 0 0;
+    max-height: 720px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  
+    &::-webkit-scrollbar {
+      border-radius: 8px;
+      width: 4px;
+      background-color: $lightGrey;
+      border: 3px solid $lightGrey;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: $heavyBlue;
+    }
 
     &__input-block {
       width: 100%;

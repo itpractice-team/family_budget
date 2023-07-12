@@ -1,6 +1,6 @@
 @import '../../styles/consts.scss';
 
-.repeatSpend-item {
+.repeat-spend-item {
   padding: 8px;
 
   &:hover {
@@ -14,6 +14,7 @@
     align-items: center;
     gap: 5px;
     max-width: 100%;
+    cursor: pointer;
 
     > :first-child {
       flex-grow: 1;

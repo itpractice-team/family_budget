@@ -146,7 +146,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_repeat" title="Создать повторяющийся расход">
+    <Popup onClose={onClose} popupSize="popup_repeat" title={name}>
       <form className="form repeat-expenses" onSubmit={handleRepeatSpendBox}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="repeat-expenses-name">
