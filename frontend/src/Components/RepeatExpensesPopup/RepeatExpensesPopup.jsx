@@ -1,5 +1,5 @@
 import './RepeatExpensesPopup.scss';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
@@ -14,54 +14,71 @@ import Checkbox from './checkbox';
 export default function RepeatExpensesPopup({ onClose }) {
   const dispatch = useDispatch();
 
-  const [activeDate, setActiveDate] = useState('Ежедневно');
-  const [selected, setSelected] = useState('Указать дату окончания');
+  const [arrActiveDay, setArrActiveDay] = useState([]);
+  const [activeType, setActiveType] = useState('Ежедневно');
+  const [selected, setSelected] = useState('Бесконечно');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
   const [formData, setFormData] = useState({
     name: '',
     amount: '',
-    description: '',
     category: '',
     created: '',
-
-    // 0 Day, 1 Week, 2 Month, 3 Year
+    // 0 Day, 1 Week, 2 Month
     repeat_type: 0,
-    repeat_count: 1,
-
-    // 0-Endlessy 1-Count 2-Date
+    // 0-Endlessy 1-Date
     repeat_period: 0,
+    type_week: [],
     to_date: '',
   });
 
-  const {
-    name,
-    amount,
-    category,
-    // repeat_type, repeat_period
-  } = formData;
+  const { name, amount, category } = formData;
 
+  // выбираем только расходные
   const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
   const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
 
-  const handleDateClick = (tab) => {
-    setActiveDate(tab);
-  };
+  useMemo(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
+    const type = activeType === 'Ежедневно' ? 0 : activeType === 'Еженедельно' ? 1 : 2;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const period = selected === 'Указать дату окончания' ? 1 : 0;
+
+    if (type === 1) {
+      setFormData({
+        ...formData,
+        repeat_type: type,
+        repeat_period: period,
+        type_week: arrActiveDay,
+      });
+      console.log(arrActiveDay);
+    } else {
+      setFormData({ ...formData, repeat_type: type, repeat_period: period });
+    }
+  }, [activeType, selected, arrActiveDay]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addRepeatSpendBox({
-        ...formData,
-        // eslint-disable-next-line no-nested-ternary
-        repeat_type: activeDate === 'Ежемесячно' ? 2 : activeDate === 'Еженедельно' ? 1 : 0,
-        repeat_period: selected === 'Указать дату окончания' ? 2 : 0,
-      }),
-    ).then(() => {
-      console.log('q', formData);
+    setFormData(formData);
+    dispatch(addRepeatSpendBox(formData)).then(() => {
+      console.log('2', formData);
       onClose();
     });
+  };
+
+  const handleChangeDay = (e) => {
+    const { checked } = e.target;
+    const checkedName = e.target.name;
+    if (checked === true) {
+      setArrActiveDay((prev) => [...prev, checkedName]);
+    } else {
+      setArrActiveDay(arrActiveDay?.filter((i) => i !== checkedName));
+    }
+  };
+
+  const handleDateClick = (tab) => {
+    setActiveType(tab);
   };
 
   const handleСancel = (evt) => {
@@ -69,9 +86,8 @@ export default function RepeatExpensesPopup({ onClose }) {
     onClose();
   };
 
-  const handleRadio = ({ target }) => {
-    const { value } = target;
-    setSelected(value);
+  const handleRadio = (evt) => {
+    setSelected(evt.target.value);
   };
 
   const handleChange = (evt) => {
@@ -163,16 +179,18 @@ export default function RepeatExpensesPopup({ onClose }) {
           <Tabs
             arr={arrCategoriesDate}
             size="tab-size_l"
-            activeInit={activeDate}
+            activeInit={activeType}
             onClick={handleDateClick}
           />
         </div>
-        {activeDate === 'Еженедельно' && (
+        {activeType === 'Еженедельно' && (
           <div className="repeat-expenses__tab">
             {arrCategoriesWeek.map((item) => {
               return (
                 <li className="repeat-expenses__week-day" key={item.id}>
-                  <Checkbox>{item.title}</Checkbox>
+                  <Checkbox name={item.title} handleChangeDay={handleChangeDay}>
+                    {item.title}
+                  </Checkbox>
                 </li>
               );
             })}

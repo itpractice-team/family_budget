@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
-export default function InputData({ labelTitle, inputName, inputStyleName, value, onChange }) {
+export default function InputData({
+  labelTitle,
+  inputName,
+  inputStyleName,
+  value,
+  onChange,
+  disabled = false,
+}) {
   const [startDate, setStartDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [valueDate, setValueDate] = useState(value);
@@ -27,6 +34,7 @@ export default function InputData({ labelTitle, inputName, inputStyleName, value
             }}
             placeholder="дд.мм.гггг"
             onClick={isOpen}
+            disabled={disabled}
           />
         </label>
       </div>
