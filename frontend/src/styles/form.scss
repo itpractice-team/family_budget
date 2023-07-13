@@ -168,6 +168,9 @@
   @include text-large-web;
 }
 
+.form__text-content {
+  width: 100%;
+}
 // выпадающий список
 
 .form__input_select {

@@ -10,6 +10,7 @@ import InputData from '../InputData/InputDate';
 import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import Checkbox from './checkbox';
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -34,6 +35,12 @@ export default function RepeatExpensesPopup({ onClose }) {
   });
 
   const { name, amount, category } = formData;
+
+  // const [open, setOpen] = useState(false);
+
+  // const isOpen = () => {
+  //   setOpen(true);
+  // };
 
   // выбираем только расходные
   const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
@@ -144,15 +151,6 @@ export default function RepeatExpensesPopup({ onClose }) {
           handleOptionChange={handleCategoryChange}
         />
 
-        <InputData
-          labelTitle="Дата"
-          inputStyleName="repeat-expenses-startDate"
-          inputName="created"
-          value={startDate}
-          onChange={handleDateChange}
-          setValueDate={setStartDate}
-        />
-
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
@@ -171,6 +169,15 @@ export default function RepeatExpensesPopup({ onClose }) {
           </label>
         </div>
 
+        <InputData
+          labelTitle="Дата"
+          inputStyleName="repeat-expenses-startDate"
+          inputName="created"
+          value={startDate}
+          onChange={handleDateChange}
+          setValueDate={setStartDate}
+        />
+
         <div className="form__text-content">
           <p className="form__text-bold">Как часто повторять расход?</p>
         </div>
@@ -183,6 +190,7 @@ export default function RepeatExpensesPopup({ onClose }) {
             onClick={handleDateClick}
           />
         </div>
+
         {activeType === 'Еженедельно' && (
           <div className="repeat-expenses__tab">
             {arrCategoriesWeek.map((item) => {
@@ -197,6 +205,16 @@ export default function RepeatExpensesPopup({ onClose }) {
           </div>
         )}
 
+        {activeType === 'Ежемесячно' && (
+          <CustomDatePicker
+            type="date"
+            onChange={(date) => {
+              setStartDate(date);
+            }}
+            startDate={startDate}
+            dateFormat="dd"
+          />
+        )}
         <div className="repeat-expenses__container">
           <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
           <Radio

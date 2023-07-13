@@ -17,11 +17,12 @@ import Checkbox from '../RepeatExpensesPopup/checkbox';
 import Radio from '../../ui/Radio/Radio';
 import usePopup from '../../utils/hooks/usePopup';
 import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
+import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
 export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const dispatch = useDispatch();
 
-  const { amount, dataStart = '19.06.2023', name, category, id } = repeatSpend;
+  const { id } = repeatSpend;
 
   // выбираем только расходные
   const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
@@ -30,21 +31,10 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const [arrActiveDay, setArrActiveDay] = useState([]);
   const [activeType, setActiveType] = useState('Ежедневно');
   const [selected, setSelected] = useState('Бесконечно');
-  // const [startDate, setStartDate] = useState('');
+  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const [formData, setFormData] = useState({
-    name: '',
-    amount: '',
-    category: '',
-    created: '',
-    // 0 Day, 1 Week, 2 Month
-    repeat_type: 0,
-    // 0-Endlessy 1-Date
-    repeat_period: 0,
-    type_week: [],
-    to_date: '',
-  });
+  const [formData, setFormData] = useState(repeatSpend);
 
   useMemo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
@@ -59,20 +49,11 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
-      console.log(arrActiveDay);
+      // console.log(arrActiveDay);
     } else {
       setFormData({ ...formData, repeat_type: type, repeat_period: period });
     }
   }, [activeType, selected, arrActiveDay]);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setFormData(formData);
-  //   dispatch(addRepeatSpendBox(formData)).then(() => {
-  //     console.log('2', formData);
-  //     onClose();
-  //   });
-  // };
 
   const {
     isOpen: isConfirmationPopupOpen,
@@ -111,11 +92,6 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
     setActiveType(tab);
   };
 
-  // const handleСancel = (evt) => {
-  //   evt.preventDefault();
-  //   onClose();
-  // };
-
   const handleRadio = (evt) => {
     setSelected(evt.target.value);
   };
@@ -123,13 +99,6 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
-
-  // const handleDateChange = (value) => {
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     created: value,
-  //   }));
-  // };
 
   const handleToDateChange = (value) => {
     setFormData((prevFormData) => ({
@@ -146,7 +115,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_repeat" title={name}>
+    <Popup onClose={onClose} popupSize="popup_repeat" title={repeatSpend.name}>
       <form className="form repeat-expenses" onSubmit={handleRepeatSpendBox}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="repeat-expenses-name">
@@ -157,8 +126,8 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
               name="name"
               id="repeat-expenses-name"
               placeholder="Название транзакции"
-              value={name}
-              onChange={handleChange}
+              value={formData.name}
+              onChange={(e) => handleChange(e)}
             />
           </label>
         </div>
@@ -166,22 +135,12 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         <SelectButtonWrapper
           label="Категория"
           options={expenseCategories}
-          value={category}
+          value={formData.category}
           name="category"
           imageKey="image"
           nameKey="name"
           altText="Иконка категории"
           handleOptionChange={handleCategoryChange}
-        />
-
-        <InputData
-          labelTitle="Дата"
-          inputStyleName="repeat-expenses-startDate"
-          inputName="created"
-          value={dataStart}
-          // onChange={handleDateChange}
-          // setValueDate={setStartDate}
-          disabled={true}
         />
 
         <div className="form__input-block">
@@ -196,11 +155,19 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
               name="amount"
               id="repeat-expenses-amount"
               placeholder="0"
-              value={amount}
+              value={formData.amount}
               onChange={handleChange}
             />
           </label>
         </div>
+
+        <InputData
+          labelTitle="Дата"
+          inputStyleName="repeat-expenses-startDate"
+          inputName="created"
+          value={formData.created}
+          disabled={true}
+        />
 
         <div className="form__text-content">
           <p className="form__text-bold">Как часто повторять расход?</p>
@@ -227,7 +194,16 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
             })}
           </div>
         )}
-
+        {activeType === 'Ежемесячно' && (
+          <CustomDatePicker
+            type="date"
+            onChange={(date) => {
+              setStartDate(date);
+            }}
+            startDate={startDate}
+            dateFormat="dd"
+          />
+        )}
         <div className="repeat-expenses__container">
           <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
           <Radio
@@ -274,8 +250,8 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
               onClose();
             });
           }}
-          confirmationText={`Вы действительно хотите удалить повторный расход «${name}» ?`}
-          buttonText={name}
+          confirmationText={`Вы действительно хотите удалить повторный расход «${repeatSpend.name}» ?`}
+          buttonText={repeatSpend.name}
         />
       )}
     </Popup>
