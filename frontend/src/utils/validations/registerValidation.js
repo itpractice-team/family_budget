@@ -1,16 +1,18 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
-
-
 import * as yup from 'yup';
 
+const emailRegex = /^[a-zA-Z0-9_-](\.?[a-zA-Z0-9_-]){0,}@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
 const registerValidation = yup.object().shape({
   email: yup
     .string()
     .required('Поле E-mail не пустое')
     .min(6, 'Поле E-mail не короче 6 символов')
     .max(130, 'Поле E-mail не длиннее 130 символов')
-    .email('Введите корректный E-mail'),
+    .matches(emailRegex, 'Введите корректный E-mail')
+    .test('no-leading-trailing-dot', 'E-mail не должен начинаться или заканчиваться точкой', (value) => {
+      return value && !value.startsWith('.') && !value.endsWith('.');
+    }),
   username: yup
     .string()
     .required('Поле Логин не пустое')
@@ -49,7 +51,7 @@ const registerValidation = yup.object().shape({
       }
       return value.length > 0;
     })
-    .max(25, 'Поле Фамилия не длиннее 25 символов'),
+    .max(25, 'Фамилия не более 25 символов'),
   password: yup
     .string()
     .required('Поле Пароль не пустое')
@@ -65,7 +67,7 @@ const registerValidation = yup.object().shape({
     )
     .test(
       'latin',
-      'Пароль не может содержать кирилицу',
+      'Пароль не может содержать кириллицу',
       function (value) {
         const pattern = /[А-Яа-я]+$/;
         return !pattern.test(value);

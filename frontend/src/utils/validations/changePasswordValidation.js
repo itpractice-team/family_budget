@@ -20,7 +20,7 @@ const changePasswordValidation = yup.object().shape({
     )
     .test(
       'latin',
-      'Пароль не может содержать кирилицу',
+      'Пароль не может содержать кириллицу',
       function (value) {
         const pattern = /[А-Яа-я]+$/;
         return !pattern.test(value);
@@ -44,7 +44,7 @@ const changePasswordValidation = yup.object().shape({
     )
     .test(
       'latin',
-      'Пароль не может содержать кирилицу',
+      'Пароль не может содержать кириллицу',
       function (value) {
         const pattern = /[А-Яа-я]+$/;
         return !pattern.test(value);
