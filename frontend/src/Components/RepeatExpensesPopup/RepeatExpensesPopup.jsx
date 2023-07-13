@@ -1,48 +1,43 @@
 import './RepeatExpensesPopup.scss';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
-import { toggleRepeatExpensesPopup } from '../../store/slices/togglePopupSlice';
 import DayBtn from './DayBtn/DayBtn';
 import WeekBtn from './WeekBtn/WeekBtn';
-import Categories from '../Categories/Categories';
+import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate } from '../../utils/consts';
+import Radio from '../../ui/Radio/Radio';
+import InputData from '../InputData/InputDate';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const [activeDate, setActiveDate] = useState('День');
-
-  const dispatch = useDispatch();
+  const [selected, setSelected] = useState('До');
+  const [valueDate, setValueDate] = useState('');
 
   const handleDateClick = (tab) => {
     setActiveDate(tab);
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
-  }
+    setValueDate('');
+    onClose();
+  };
 
-  function handleСancel(evt) {
+  const handleСancel = (evt) => {
     evt.preventDefault();
-    dispatch(toggleRepeatExpensesPopup(false));
-  }
+    onClose();
+  };
+
+  const handleRadio = ({ target }) => {
+    const { value } = target;
+    setSelected(value);
+  };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_m" title="Повторяющиеся расходы">
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="RepeatExpenses-date">
-            Дата
-            <input
-              className="form__input"
-              type="date"
-              name="RepeatExpenses-date"
-              id="RepeatExpenses-date"
-            />
-          </label>
-        </div>
-
+    <Popup onClose={onClose} popupSize="popup_repeat" title="Повторяющиеся расходы">
+      <form className="form repeat-expenses" onSubmit={handleSubmit}>
+        <InputData labelTitle="Дата" inputName="RepeatExpenses-date" value={valueDate} />
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
@@ -88,10 +83,13 @@ export default function RepeatExpensesPopup({ onClose }) {
           </label>
         </div>
 
-        <h3 className="form__text-bold">Сделать повторяющуюся запись?</h3>
-        <p className="form__input-label">Это событие будет повторяться каждый 1 день</p>
+        <div className="form__text-content">
+          <p className="form__text-bold">Сделать повторяющуюся запись?</p>
+          <p className="form__text">Это событие будет повторяться каждый 1 день</p>
+        </div>
+
         <div className="repeat-expenses__tab">
-          <Categories
+          <Tabs
             arr={arrCategoriesDate}
             size="tab-size_l"
             activeInit={activeDate}
@@ -100,26 +98,46 @@ export default function RepeatExpensesPopup({ onClose }) {
         </div>
 
         <div className="repeat-expenses__activeTab">
-          {activeDate === 'День' && <DayBtn inputName="dayBtn" />}
+          {activeDate === 'День' && <DayBtn activeDate={activeDate} inputName="dayBtn" />}
           {activeDate === 'Неделя' && (
             <div className="repeat-expenses__container">
               <WeekBtn />
-              <DayBtn ending="ую" period="неделю" inputName="weekBtn" />
+              <DayBtn activeDate={activeDate} inputName="weekBtn" />
             </div>
           )}
-          {activeDate === 'Месяц' && <DayBtn period="месяц" inputName="monthBtn" />}
-          {activeDate === 'Год' && <DayBtn period="год" inputName="yearBtn" />}
+          {activeDate === 'Месяц' && <DayBtn activeDate={activeDate} inputName="monthBtn" />}
+          {activeDate === 'Год' && <DayBtn activeDate={activeDate} inputName="yearBtn" />}
+        </div>
+
+        <div className="repeat-expenses__container">
+          <p className="repeat-expenses__text-bold">Длительность</p>
+          <Radio
+            value="Бесконечно"
+            isChecked={selected === 'Бесконечно'}
+            onChange={handleRadio}
+            text="Бесконечно"
+          />
+          <Radio
+            value="Заданное кол-во раз"
+            isChecked={selected === 'Заданное кол-во раз'}
+            onChange={handleRadio}
+            text="Заданное количество раз"
+          />
+          <Radio value="До" isChecked={selected === 'До'} onChange={handleRadio} text="До" />
+          {selected === 'До' && (
+            <InputData labelTitle="Дата" inputName="RepeatExpensesPopup-date" value={valueDate} />
+          )}
         </div>
 
         <div className="form__button-wrapper form__button-wrapper_add-operation">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
             onClick={handleСancel}
           />
-          <Button variant="primary" type="text" text="Готово" size="medium" />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
     </Popup>

@@ -11,9 +11,9 @@
 }
 
 .form_confirmation {
-  gap: 24px;
+  gap: 32px;
 
-  .form__text_confirmation {
+  &__text_confirmation {
     @include text-large-web;
   }
 }
@@ -31,23 +31,19 @@
 
 .form__input-label {
   @include text-small-web;
-  color: #1e1d24;
+  color: $black;
   width: 100%;
   display: block;
   position: relative;
 }
 
-.form__input-label_colum {
-  display: flex;
-  flex-direction: column;
-}
-
-.form__input-label_divider::after {
+.form__input-label_divider::after,
+.add-item-popup__form-input-label_divider::after {
   content: '';
   display: block;
   width: 1px;
   height: 24px;
-  background-color: #bdbdbd;
+  background-color: $midGrey;
   position: absolute;
   top: 46px;
   right: 46px;
@@ -58,21 +54,9 @@
   padding: 16px 20px;
   margin: 8px 8px 0 0;
   width: 100%;
-  border: 1px solid #d2d5db;
+  border: 1px solid $midGrey;
   border-radius: 100px;
-  color: #1e1d24;
-
-  &[type='number']::-webkit-outer-spin-button,
-  &[type='number']::-webkit-inner-spin-button {
-    display: none;
-  }
-
-  &[type='date']::-webkit-calendar-picker-indicator {
-    display: inline-block;
-    background: url(../Images/calendar.svg) center / 20px no-repeat;
-    vertical-align: middle;
-    cursor: pointer;
-  }
+  color: $black;
 }
 
 .form__input-small {
@@ -88,11 +72,7 @@
 }
 
 .form__input.error {
-  border-color: #f05a2b;
-}
-
-.form__input:focus {
-  outline: none;
+  border-color: $alertRed;
 }
 
 .form__input_password-new {
@@ -101,6 +81,11 @@
 
 .form__input_sum {
   background: url(../Images/rub.svg) calc(100% - 18px) center/20px no-repeat;
+}
+
+.form__input_date {
+  background: url(../Images/calendar.svg) calc(100% - 18px) center/20px no-repeat;
+  min-width: 300px;
 }
 
 .tooltip {
@@ -125,7 +110,7 @@
 
 .form__input-block .react-tooltip {
   @include text-small-web;
-  background-color: #303360;
+  background-color: $heavyBlue;
   padding: 16px 16px;
   max-width: 340px;
   border-radius: 8px;
@@ -168,7 +153,7 @@
 }
 
 .form__button-wrapper_account {
-  margin-top: 24px;
+  margin-top: 29px;
 }
 
 .form__text_confirm-register {
@@ -179,23 +164,36 @@
   @include text-medium-web;
 }
 
-.form__text-bold {
-  @include text-medium-web-bold;
+.form__text_confirmation {
+  @include text-large-web;
 }
 
 // выпадающий список
 
 .form__input_select {
-  appearance: none;
-  background: url(../Images/chevron-down.svg) no-repeat calc(100% - 16px) center / 20px;
+  position: relative;
+  display: flex;
+
+  &--open {
+    .form__input_select__arrow {
+      transform: rotate(90deg);
+    }
+  }
 }
 
-.form__input_option {
-  color: #828282;
+.form__input_select__arrow {
+  position: absolute;
+  left: calc(100% - 38px);
+  width: 24px;
+  height: 24px;
+  background: url('../Images/chevron-down.svg') no-repeat center / contain;
+  transform: rotate(-90deg);
 }
 
-.form__input_option[selected] {
-  color: #333333;
+.form__input_select__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 
 // сообщения об ошибках ввода
@@ -205,7 +203,7 @@
   display: flex;
   align-items: center;
   background: url(../Images/alert-triangle.svg) left 8px top 50% / 20px no-repeat;
-  color: #f05a2b;
+  color: $alertRed;
   opacity: 0;
   left: 9px;
   text-align: left;
@@ -249,9 +247,9 @@
   content: '';
   width: 20px;
   height: 20px;
-  background-color: white;
+  background-color: $clearWhite;
   display: inline-block;
-  border: 2px solid #303360;
+  border: 2px solid $heavyBlue;
   border-radius: 6px;
 }
 

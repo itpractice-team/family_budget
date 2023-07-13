@@ -8,10 +8,10 @@ export default function Template({ title, children, onClick }) {
       {children}
       <Button
         variant="secondary"
-        type="text"
+        content="text"
         text="Добавить"
         size="medium"
-        extraClass="moneybox__button"
+        extraClass="template__button"
         onClick={onClick}
       />
     </section>

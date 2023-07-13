@@ -1,60 +1,123 @@
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import './EditMoneyboxPopup.scss';
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
+import { editMoneybox, getMoneybox, deleteMoneybox } from '../../store/slices/moneybox';
+import usePopup from '../../utils/hooks/usePopup';
+import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 
-export default function EditMoneyboxPopup({ onClose, title }) {
-  const balance = 20000;
-  const target = 50000;
+export default function EditMoneyboxPopup({ onClose, moneybox }) {
+  const dispatch = useDispatch();
+
+  const { id, amount, accumulated, description, name } = moneybox;
+
+  const userFinance = useSelector((state) => state.userFinanceAndCategories.userFinance);
+
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
+
+  const [formData, setFormData] = useState({
+    amount,
+    accumulated,
+    description,
+    name,
+  });
+
+  const handleInputChange = (evt) => {
+    const { name: fieldName, value } = evt.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleAccountChange = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      account: value,
+    }));
+  };
+
+  const handleEditMoneybox = (evt) => {
+    evt.preventDefault();
+    dispatch(
+      editMoneybox({
+        id,
+        formData,
+      }),
+    ).then(() => {
+      dispatch(getMoneybox());
+      onClose();
+    });
+  };
+
+  const handleDeleteMoneyboxClick = (evt) => {
+    evt.preventDefault();
+    openConfirmationPopup();
+  };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_edit-moneybox" title={title} subtitle="Конверт">
+    <Popup
+      onClose={onClose}
+      popupSize="popup_edit-moneybox"
+      title={moneybox.name}
+      subtitle="Конверт"
+    >
       <p className="total">
-        <span className="total-balance">{balance}</span> /
-        <span className="total-target">{target}</span>
+        <span className="total-balance">{accumulated}</span> /
+        <span className="total-target">{amount}</span>
       </p>
 
-      <ProgressBar balance={balance} target={target} />
-      <form className="form">
+      <ProgressBar balance={accumulated} target={amount} />
+      <form className="form" onSubmit={handleEditMoneybox}>
         <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-name">
+          <label className="form__input-label" htmlFor="moneybox-name">
             Название конверта
             <input
+              id="moneybox-name"
               className="form__input"
               type="text"
-              name="SpendingPopup-name"
-              id="SpendingPopup-name"
+              name="name"
               placeholder="Введите название"
+              value={formData.name}
+              onChange={handleInputChange}
             />
           </label>
         </div>
         <div className="form__input-block">
-          <label
-            className="form__input-label form__input-label_divider"
-            htmlFor="SpendingPopup-amount"
-          >
+          <label className="form__input-label form__input-label_divider" htmlFor="moneybox-amount">
             Итоговая сумма
             <input
+              id="moneybox-amount"
               className="form__input form__input_sum"
               type="number"
-              name="SpendingPopup-amount"
-              id="SpendingPopup-amount"
+              name="amount"
               placeholder="Введите сумму для накопления"
+              value={formData.amount}
+              onChange={handleInputChange}
             />
           </label>
         </div>
         <div className="form__input-block">
           <label
             className="form__input-label form__input-label_divider"
-            htmlFor="SpendingPopup-amount"
+            htmlFor="moneybox-accumulated"
           >
             Пополнить конверт
             <input
+              id="moneybox-accumulated"
               className="form__input form__input_sum"
               type="number"
-              name="SpendingPopup-amount"
-              id="SpendingPopup-amount"
+              name="accumulated"
               placeholder="Введите сумму"
+              value={formData.accumulated}
+              onChange={handleInputChange}
             />
           </label>
         </div>
@@ -73,35 +136,55 @@ export default function EditMoneyboxPopup({ onClose, title }) {
             />
           </label>
         </div>
-        <div className="form__input-block">
-          <label className="form__input-label" htmlFor="SpendingPopup-name">
-            Название счёта
-            <input
-              className="form__input"
-              type="text"
-              name="SpendingPopup-name"
-              id="SpendingPopup-name"
-              placeholder="Выберите счёт"
-            />
-          </label>
-        </div>
+
+        <SelectButtonWrapper
+          label="Выберите счет"
+          options={userFinance}
+          initialValue={userFinance.length > 0 ? userFinance[0].id : ''}
+          imageKey="image"
+          nameKey="name"
+          altText="Иконка счёта"
+          handleOptionChange={handleAccountChange}
+        />
+
         <label
           className="form__input-label form__input-label_textarea"
-          htmlFor="EarningPopup-comment"
+          htmlFor="moneybox-description"
         >
           Комментарий
           <textarea
-            name="EarningPopup-comment"
-            id="EarningPopup-comment"
+            id="moneybox-description"
             className="form__input form__input_textarea"
+            name="description"
             placeholder="Заметка о цели"
+            value={formData.description}
+            onChange={handleInputChange}
           />
         </label>
         <div className="form__button-wrapper">
-          <Button variant="fiat" type="text" text="Удалить конверт" size="medium" />
-          <Button variant="primary" type="text" text="Сохранить" size="medium" />
+          <Button
+            variant="fiat"
+            content="text"
+            text="Удалить конверт"
+            size="medium"
+            onClick={handleDeleteMoneyboxClick}
+          />
+          <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          onClose={closeConfirmationPopup}
+          onSubmit={() => {
+            dispatch(deleteMoneybox(id)).then(() => {
+              dispatch(getMoneybox());
+              onClose();
+            });
+          }}
+          confirmationText={`Вы действительно хотите удалить конверт «${moneybox.name}» ?`}
+          buttonText="конверт"
+        />
+      )}
     </Popup>
   );
 }

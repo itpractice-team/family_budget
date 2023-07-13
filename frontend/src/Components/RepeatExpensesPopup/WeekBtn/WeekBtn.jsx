@@ -1,6 +1,6 @@
 import '../RepeatExpensesPopup.scss';
 import { useState } from 'react';
-import Categories from '../../Categories/Categories';
+import Tabs from '../../Tabs/Tabs';
 import { arrCategoriesWeek } from '../../../utils/consts';
 
 export default function WeekBtn() {
@@ -12,7 +12,7 @@ export default function WeekBtn() {
 
   return (
     <div className="repeat-expenses__tab">
-      <Categories
+      <Tabs
         arr={arrCategoriesWeek}
         size="tab-size_xs"
         activeInit={activeWeek}

@@ -8,8 +8,8 @@ $max-width-m: 784px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #e5e5e5;
+  background-color: $clearWhite;
+  border: 1px solid $lightGrey;
   border-radius: 16px;
   padding: 40px;
   width: 100%;
@@ -21,7 +21,7 @@ $max-width-m: 784px;
 
   .popup__subtitle {
     @include text-small-web;
-    color: #1e1d24;
+    color: $black;
     margin-bottom: 24px;
   }
 }
@@ -76,6 +76,16 @@ $max-width-m: 784px;
 
   .popup__title {
     text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .popup__subtitle {
+    text-align: center;
+    @include text-large-web;
+  }
+
+  .button {
+    margin: 32px 0 0 auto;
   }
 }
 
@@ -88,7 +98,7 @@ $max-width-m: 784px;
   }
 
   .popup__subtitle {
-    color: #8c8d91;
+    color: $grey;
   }
 }
 
@@ -102,7 +112,7 @@ $max-width-m: 784px;
 
   .popup__subtitle {
     @include text-medium-web;
-    color: #8c8d91;
+    color: $grey;
   }
 }
 
@@ -116,10 +126,6 @@ $max-width-m: 784px;
 
   .popup__title {
     margin-bottom: 8px;
-  }
-
-  .popup__subtitle {
-    margin-bottom: 0px;
   }
 }
 
@@ -157,4 +163,59 @@ $max-width-m: 784px;
   .popup__subtitle {
     margin-bottom: 0px;
   }
+}
+
+// повторяющиеся расходы
+.popup_repeat {
+  max-width: $max-width-m;
+
+  .popup__title {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 12px 32px;
+
+    &__input-block {
+      width: 100%;
+      max-width: calc((100% - 32px) / 2);
+    }
+
+    &__text-content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    &__text-bold {
+      margin-top: 12px;
+      @include text-medium-web-bold;
+    }
+
+    &__text {
+      @include text-small-web;
+    }
+  }
+}
+
+// перевод
+.popup_transfer {
+  max-width: $max-width-s;
+
+  .popup__title {
+    margin-bottom: 24px;
+  }
+
+  .form {
+    gap: 13px;
+
+    .form__button-wrapper {
+      margin-top: 20px;
+    }
+  }
+}
+
+// добавить счет
+.popup_add {
+  max-width: $max-width-m;
 }

@@ -8,10 +8,18 @@ const loginValidation = yup.object().shape({
     .string()
     .required('Поле Логин не пустое')
     .min(2, 'Поле Логин не короче 2 символов')
-    .max(40, 'Поле Логин не длиннее 25 символов')
+    .max(25, 'Поле Логин не длиннее 25 символов')
     .test('username', 'Введите правильный логин', (value) => {
       // Check if it is login
-      const isLogin = /^[a-zA-Z0-9_./+-]+$/.test(value);
+      const isLogin = /^[a-zA-Z0-9_./+-\s]+$/.test(value);
+      if (!isLogin) {
+        return false;
+      }
+      return true;
+    })
+    .test('noSpace', 'Логин не состоит из пробелов', (value) => {
+      // Check if it is login
+      const isLogin = value.trim();
       if (!isLogin) {
         return false;
       }
@@ -30,9 +38,20 @@ const loginValidation = yup.object().shape({
         return pattern.test(value);
       },
     )
+    .test(
+      'latin',
+      'Пароль не может содержать кирилицу',
+      function (value) {
+        const pattern = /[А-Яа-я]+$/;
+        return !pattern.test(value);
+      },
+    )
     .test('not-all-digits', 'Пароль не состоит из цифр', function (value) {
       return !/^\d+$/.test(value);
     }),
+    // .test('del-space', function(value) {
+    //   return value.trim();
+    // }),
 });
 
 export default loginValidation;

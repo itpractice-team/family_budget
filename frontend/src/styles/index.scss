@@ -1,7 +1,6 @@
 @import '../vendor/normalize.css';
 @import '../vendor/fonts/fonts.css';
 
-@import 'colors';
 @import './consts.scss';
 @import './form.scss';
 @import './react-datepicker.scss';
@@ -14,7 +13,7 @@
   font-family: 'NotoSans', sans-serif;
   max-width: 1920px;
   min-width: 320px;
-  background-color: $bg-color-fiat-pressed;
+  background-color: $lightGrey;
 }
 
 * {
@@ -42,11 +41,31 @@ button {
   cursor: pointer;
 }
 
+button:focus {
+  outline: none;
+}
+
 p,
 h1,
 h2,
 h3 {
   margin: 0;
+}
+
+input:focus {
+  outline: none;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: inline-block;
+  background: url(../Images/calendar.svg) center / 20px no-repeat;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 textarea::-webkit-scrollbar,

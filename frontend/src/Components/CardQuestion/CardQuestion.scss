@@ -1,20 +1,25 @@
 @import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
 
 .card-question {
   display: flex;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid $color-border-light;
-  justify-content: space-between;
+  flex-direction: column;
+  padding: 30px 0 12px 0;
+  border-bottom: 1px solid $midGrey;
 
   &:last-child {
     margin: 0;
   }
 
+  &__title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__question-text {
     @include h3-web;
-    color: #1e1d24;
+    color: $black;
   }
 
   &__answer-text {

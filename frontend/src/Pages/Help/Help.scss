@@ -1,8 +1,7 @@
 @import '../../styles/consts.scss';
-@import '../../styles/colors.scss';
+@import '../../styles/consts.scss';
 
 .help {
-  @include text-medium-web;
   display: flex;
   flex-grow: 1;
   margin: 0 160px;
@@ -11,7 +10,6 @@
 
   &__title {
     @include h1-web;
-    margin-bottom: 24px;
   }
 
   &__text-small {
@@ -21,36 +19,22 @@
   &__container {
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
-    background: $bg-color-fiat;
+    background: $clearWhite;
     border-radius: 16px;
     width: 100%;
     padding: 40px;
   }
 
-  &__container-left {
-    width: 376px;
-    height: 204px;
-    background: $bg-color-secondary;
+  &__container-right {
+    max-width: 376px;
+    height: fit-content;
+    background: $blueishGrey;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     justify-content: center;
     align-items: center;
     padding: 20px;
-  }
-
-  &__question-button {
-    width: 20px;
-    height: 20px;
-    background-image: url(../../Images/question.svg);
-    background-size: 10px;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-bottom: 20px;
-
-    &:hover {
-      opacity: 0.5;
-    }
   }
 }

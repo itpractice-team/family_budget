@@ -1,37 +1,37 @@
 @import '../../styles/consts.scss';
 
 // Button primary
-$color-primary: #ffffff;
-$color-primary-hover: #ffffff;
-$color-primary-pressed: #ffffff;
+$color-primary: $clearWhite;
+$color-primary-hover: $clearWhite;
+$color-primary-pressed: $clearWhite;
 
-$bg-color-primary: #13164a;
-$bg-color-primary-hover: #4a4e92;
-$bg-color-primary-pressed: #393f97;
+$bg-color-primary: $heavyBlue;
+$bg-color-primary-hover: $blueHover;
+$bg-color-primary-pressed: $bluePressed;
 
 // Button secondary
-$color-secondary: #303360;
-$color-secondary-hover: #4a4e92;
-$color-secondary-pressed: #303360;
+$color-secondary: $heavyBlue;
+$color-secondary-hover: $blueHover;
+$color-secondary-pressed: $heavyBlue;
 
-$bg-color-secondary: #eaebf5;
-$bg-color-secondary-hover: #dcdefb;
-$bg-color-secondary-pressed: #babeff;
+$bg-color-secondary: $blueishGrey;
+$bg-color-secondary-hover: $blueishGreyHover;
+$bg-color-secondary-pressed: $blueishGreyPressed;
 
 // Button fiat
-$color-fiat: #303360;
-$color-fiat-hover: #4a4e92;
-$color-fiat-pressed: #303360;
+$color-fiat: $heavyBlue;
+$color-fiat-hover: $blueHover;
+$color-fiat-pressed: $heavyBlue;
 
-$bg-color-fiat: #fff;
-$bg-color-fiat-hover: #fff;
-$bg-color-fiat-pressed: #f4f4f4;
+$bg-color-fiat: $clearWhite;
+$bg-color-fiat-hover: $clearWhite;
+$bg-color-fiat-pressed: $lightGrey;
 
 .button {
   // Common button styles
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   cursor: pointer;
   transition: all 0.5s;
@@ -136,7 +136,7 @@ $bg-color-fiat-pressed: #f4f4f4;
   &.medium {
     // Styles for medium size
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 50px;
   }
 
   &.medium.rounded {
@@ -169,8 +169,6 @@ $bg-color-fiat-pressed: #f4f4f4;
   }
 
   .button-image {
-    width: 100%;
-    height: auto;
     object-fit: contain;
   }
 
@@ -183,29 +181,4 @@ $bg-color-fiat-pressed: #f4f4f4;
   }
 }
 
-// extraClass
-// Дополнительнные стили нужно прописывать в стилях компонента, в котором используется компонент из UI
-
-.button_account-select {
-  margin-top: 24px;
-  width: 100%;
-  justify-content: center;
-}
-
-.button_single {
-  width: 100%;
-}
-
-.button_confirm {
-  width: 100%;
-}
-
-.button__change-password {
-  height: 44px;
-  margin-top: 39px;
-}
-
-.button__save-avatar {
-  margin: 32px auto 0 auto;
-  justify-content: center;
-}
+// Дополнительнные стили (extraClass) нужно прописывать в стилях компонента, в котором используется компонент из UI

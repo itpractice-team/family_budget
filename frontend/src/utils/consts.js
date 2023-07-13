@@ -1,7 +1,11 @@
-import buttonIconPrimary from '../Images/icons/btn-primary-icon.svg';
-import buttonIconSecondary from '../Images/icons/btn-secondary-icon.svg';
-import buttonIconFiat from '../Images/icons/btn-fiat-icon.svg';
-import buttonIconMinus from '../Images/icons/btn-minus-icon.svg';
+import imgProfile from '../Images/image-profile.svg';
+import imgBudget from '../Images/image-budget.svg';
+import imgStatistics from '../Images/image-statistics.svg';
+
+import categories from '../Images/categories.svg';
+import statistics from '../Images/statistics.svg';
+import money from '../Images/money.svg';
+import moneyenvelope from '../Images/moneyenvelope.svg';
 
 export const RegExLogin = '[da-zA-Zа-яА-ЯЁё/_.+-]+';
 export const RegExEmail = '[da-zA-Z_.@-]+';
@@ -132,8 +136,87 @@ export const arrInitFQA = [
   },
 ];
 
-// Button icons 
-export const BUTTON_ICON_PRIMARY = buttonIconPrimary;
-export const BUTTON_ICON_SECONDARY = buttonIconSecondary;
-export const BUTTON_ICON_FIAT = buttonIconFiat;
-export const BUTTON_ICON_MINUS = buttonIconMinus;
+export const arrInitFQAHome = [
+  {
+    id: '1',
+    question: 'Как учитывать бюджет, если у меня несколько карт или я использую наличку?',
+    answer: 'Будет значок с общим приходом и расходом',
+  },
+  {
+    id: '2',
+    question: 'Зарплату надо заносить каждый месяц вручную?',
+    answer:
+      'В отображаемых категориях нужно нажать на кнопку «Добавить/Редактировать», после чего можно будет добавить свою категорию. Задайте ей название, выберите иконку и к чему она будет прикреплена, к расходам или доходам.',
+  },
+  {
+    id: '3',
+    question: 'Можно ли отслеживать статистику расходов?',
+    answer:
+      'Отслеживать соотношение расходов и доходов можно на странице «Бюджет» исходя из вашего баланса. На странице «Статистика» предоставлено полное отслеживание динамики ваших расходов и доходов на разных графиках.',
+  },
+];
+
+export const arrAdvantages = [
+  {
+    id: '1',
+    title: 'Категории',
+    description:
+      'Используй стандартные категории, такие как транспорт, продукты, здоровье и другие, или создавай свои',
+    icon: categories,
+  },
+  {
+    id: '2',
+    title: 'Статистика',
+    description:
+      'Отслеживай статистику и определяй, какие категории занимают большую часть в твоем бюджете',
+    icon: statistics,
+  },
+  {
+    id: '3',
+    title: 'Повторяющиеся расходы',
+    description:
+      'Настрой повторние расходов и приложение будет автоматически добавлять расходы и доходы',
+    icon: money,
+  },
+  {
+    id: '4',
+    title: 'Конверт накоплений',
+    description: 'Создавай и достигай цели накоплений с помощью InCoin',
+    icon: moneyenvelope,
+  },
+];
+
+export const arrCardWorks = [
+  {
+    id: '1',
+    title: 'Создай аккаунт',
+    description:
+      'Процесс регистрации у нас максимально простой -  всего несколько полей, чтобы создать вашу учетную запись. Вы сразу сможете начать использовать все функции приложения. Одно из главных преимуществ регистрации заключается в том, что ваши финансовые данные становятся доступными с любого устройства, где бы вы ни находились.',
+    img: imgProfile,
+    number: '01',
+  },
+  {
+    id: '2',
+    title: 'Заполняй расходы и доходы по категориям',
+    description:
+      'Система категоризации расходов помогает вам классифицировать траты по различным областям, таким как питание, транспорт, развлечения, медицина и многие другие. Благодаря этому, вы сможете отследить, на что именно уходят ваши деньги и какие категории занимают большую долю в вашем бюджете.',
+    img: imgBudget,
+    number: '02',
+  },
+  {
+    id: '3',
+    title: 'Следи за динамикой',
+    description:
+      'Кроме того, анализ расходов по категориям помогает вам установить финансовые цели и следить за их достижением. Например, если вашей целью является сокращение расходов на развлечения, вы сможете отслеживать, насколько успешно вы справляетесь с этой задачей и насколько близко вы подходите к достижению желаемого уровня трат.',
+    img: imgStatistics,
+    number: '03',
+  },
+];
+
+export const timeIntervals = [
+  { id: 'today', name: 'Сегодня' },
+  { id: 'week', name: 'Неделя' },
+  { id: 'month', name: 'Месяц' },
+  { id: 'year', name: 'Год' },
+  { id: 'all', name: 'Вся история' },
+];

@@ -1,0 +1,35 @@
+@import '../../styles/consts.scss';
+
+.round-chart {
+    width: 37%;
+    position: relative;
+    margin: 10% 0 0 3%;
+}
+.round-chart_down{
+    width: 26%;
+    margin: 35px 0 0 3%;
+}
+.round-chart__title {
+    position: absolute;
+    top: 41%;
+    left: 31%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    width: 40%;
+}
+.round-chart__no-data  {
+    @include h2-web;
+    text-align: center;
+}
+.round-chart__img{
+    position: absolute;
+    top: 34%;
+    left: 32%;
+    background-image: url(../../Images/smile.svg);
+    width: 34%;
+    height: 34%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}

@@ -1,12 +1,10 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
-import { registerUser } from '../../store/slices/registerSlice';
+import { registerUser } from '../../store/slices/accountSlice';
 import registerValidation from '../../utils/validations/registerValidation';
 import Loader from '../Loader/Loader';
 import Eye from '../../ui/Eye/Eye';
@@ -17,9 +15,12 @@ import {
   RequirementsPassword,
 } from '../../utils/consts';
 import Button from '../../ui/Button/Button';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function RegisterPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const { openPopup: openLoginPopup } = usePopup('login');
 
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
@@ -29,26 +30,30 @@ export default function RegisterPopup({ onClose }) {
     setEyes(newEyesValues);
   };
 
-  const isRegistration = useSelector((state) => state.registration.data);
-  const isLoading = useSelector((store) => store.registration.loading);
+  const { data: isRegistration, loading: isLoading } = useSelector((state) => state.account);
 
   const handleLoginClick = () => {
-    dispatch(toggleRegisterPopup(false));
-    dispatch(toggleLoginPopup(true));
+    onClose();
+    openLoginPopup();
   };
 
   const handleRegistration = (userData) => {
+    userData.username = userData.username.trim();
+    userData.email = userData.email.trim();
+    userData.first_name = userData.first_name.trim();
+    userData.last_name = userData.last_name.trim();
     dispatch(registerUser(userData));
   };
 
   if (isRegistration) {
-    dispatch(toggleRegisterPopup(false));
-    dispatch(toggleLoginPopup(true));
+    onClose();
+    openLoginPopup();
   }
 
   const {
     register,
     formState: { errors, isValid },
+    setValue,
     handleSubmit,
     watch,
   } = useForm({
@@ -56,6 +61,11 @@ export default function RegisterPopup({ onClose }) {
     resolver: yupResolver(registerValidation, { criteriaMode: 'all' }),
   });
 
+  const onBlur = (evt) =>{
+    const fieldName = evt.target.name;
+    const trimmedValue = evt.target.value.trim();
+    setValue(fieldName, trimmedValue);
+  }
   const password = useRef({});
   password.current = watch('password', '');
 
@@ -67,6 +77,7 @@ export default function RegisterPopup({ onClose }) {
             Логин
             <input
               {...register('username')}
+              onBlur={onBlur}
               id="RegisterPopup-login"
               name="username"
               className="form__input"
@@ -99,6 +110,7 @@ export default function RegisterPopup({ onClose }) {
             E-mail
             <input
               {...register('email')}
+              onBlur={onBlur}
               id="RegisterPopup-email"
               name="email"
               className="form__input"
@@ -131,6 +143,7 @@ export default function RegisterPopup({ onClose }) {
             Имя
             <input
               {...register('first_name')}
+              onBlur={onBlur}
               id="RegisterPopup-name"
               name="first_name"
               className="form__input"
@@ -163,6 +176,7 @@ export default function RegisterPopup({ onClose }) {
             Фамилия
             <input
               {...register('last_name')}
+              onBlur={onBlur}
               id="RegisterPopup-surname"
               name="last_name"
               className="form__input"
@@ -198,6 +212,7 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-password"
               name="password"
               className="form__input"
+              placeholder="Введите пароль"
               type={eyes[0] ? 'text' : 'password'}
             />
             <Eye index={0} opened={eyes[0]} setOpenState={handleEyeChange} />
@@ -230,7 +245,7 @@ export default function RegisterPopup({ onClose }) {
               id="RegisterPopup-repeatPassword"
               name="confirmPassword"
               className="form__input"
-              placeholder="Повторить пароль"
+              placeholder="Повторите пароль"
               type={eyes[1] ? 'text' : 'password'}
             />
             <Eye index={1} opened={eyes[1]} setOpenState={handleEyeChange} />
@@ -262,7 +277,7 @@ export default function RegisterPopup({ onClose }) {
             <p className="form__text">У вас уже есть аккаунт?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Войти"
               size="small"
               onClick={handleLoginClick}
@@ -272,8 +287,9 @@ export default function RegisterPopup({ onClose }) {
             <Loader extraClass="loader-register" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="large"
               disabled={!isValid}

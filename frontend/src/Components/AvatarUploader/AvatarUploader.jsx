@@ -1,7 +1,7 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect, useRef } from 'react';
 import './AvatarUploader.scss';
+import Button from '../../ui/Button/Button';
+import camera from '../../Images/icons/camera.svg';
 
 export default function AvatarUploader({ onChange, defaultImage }) {
   const [currentImage, setCurrentImage] = useState(defaultImage);
@@ -35,7 +35,13 @@ export default function AvatarUploader({ onChange, defaultImage }) {
   return (
     <div className="uploader">
       <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
-      <button className="button-download" type="button" onClick={handleChooseFile} />
+      <Button
+        variant="secondary"
+        content="icon"
+        image={camera}
+        size="medium"
+        onClick={handleChooseFile}
+      />
       {currentImage && <img className="uploaded-avatar" src={currentImage} alt="Аватар" />}
     </div>
   );

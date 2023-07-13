@@ -1,21 +1,21 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import './LoginPopup.scss';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import loginValidation from '../../utils/validations/loginValidation';
-import { toggleRegisterPopup, toggleLoginPopup } from '../../store/slices/togglePopupSlice';
 import Popup from '../Popup/Popup';
-import { loginUser } from '../../store/slices/loginSlice';
+import { loginUser } from '../../store/slices/authSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
 import Eye from '../../ui/Eye/Eye';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function LoginPopup({ onClose }) {
   const dispatch = useDispatch();
+
+  const { openPopup: openRegisterPopup } = usePopup('register');
 
   // Configuration to add Eye component
   const [eyes, setEyes] = useState([false, false, false]);
@@ -25,34 +25,42 @@ export default function LoginPopup({ onClose }) {
     setEyes(newEyesValues);
   };
 
-  const isLogin = useSelector((state) => state.login.login);
-  const isLoading = useSelector((store) => store.login.loading);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((store) => store.auth.loading);
 
   const handleRegistrationClick = () => {
-    dispatch(toggleLoginPopup(false));
-    dispatch(toggleRegisterPopup(true));
+    onClose();
+    openRegisterPopup();
   };
 
   const handleLogin = (formData) => {
+    formData.username = formData.username.trim();
     dispatch(loginUser(formData));
   };
 
   useEffect(() => {
-    if (isLogin) {
-      dispatch(toggleLoginPopup(false));
+    if (isAuthenticated) {
+      onClose();
     }
-  }, [isLogin, dispatch]);
+  }, [isAuthenticated, dispatch]);
 
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
+    setValue,
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(loginValidation),
   });
 
-  if (isLogin) {
+  const onBlur = (evt) =>{
+    const fieldName = evt.target.name;
+    const trimmedValue = evt.target.value.trim();
+    setValue(fieldName, trimmedValue);
+  }
+
+  if (isAuthenticated) {
     return <Navigate to="/budget" />;
   }
   return (
@@ -63,6 +71,7 @@ export default function LoginPopup({ onClose }) {
             Логин
             <input
               {...register('username')}
+              onBlur={onBlur}
               id="LoginPopup-login"
               name="username"
               className={`form__input ${errors.username ? 'error' : ''}`}
@@ -104,8 +113,9 @@ export default function LoginPopup({ onClose }) {
             <Loader extraClass="loader-login" />
           ) : (
             <Button
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Войти"
               size="large"
               extraClass="button_single"
@@ -116,7 +126,7 @@ export default function LoginPopup({ onClose }) {
             <p className="form__text">У вас ещё нет аккаунта?</p>
             <Button
               variant="fiat"
-              type="text"
+              content="text"
               text="Зарегистрироваться"
               size="small"
               onClick={handleRegistrationClick}

@@ -4,10 +4,6 @@ export default function Radio({nameProp, text, icon, value, isChecked, onChange,
   const radioClasses = `radio ${disabled ? 'disabled' : ''} ${extraClass}`;
   const inputId = `radio-input-${Math.random().toString(36).slice(2, 9)}`; // Генерация уникального идентификатора
 
-  const handleChange = () => {
-    onChange(value);
-  };
-
   return (
     <label className={radioClasses} htmlFor={inputId}>
       <input

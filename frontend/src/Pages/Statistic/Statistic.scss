@@ -1,6 +1,115 @@
+@import '../../styles/consts.scss';
+
 .statistic {
-  display: flex;
-  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 400px));
+  grid-template-rows: 490px;
   justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 92px;
+}
+.statistic__chart-block {
+  max-width: 1280px;
+  flex-wrap: wrap;
+}
+.statistic__block {
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+align-items: center;
+margin-top: 56px;
+}
+
+.statistic__block_round {
+  display: flex;
   align-items: center;
+  justify-content: flex-start;
+  grid-column: span 2;
+  max-height: 400px;
+  box-sizing: border-box;
+  margin-bottom: 110px;
+}
+.statistic__category-ul{
+  max-height: 231px;
+  overflow: hidden; 
+  overflow-y:scroll;
+  scrollbar-width: 10px;
+  list-style: none;
+  margin: 0 0 0 74px;
+}
+
+.statistic__overview {
+  max-width: 376px;
+  width: 100%;
+}
+
+.statistic__periods {
+  grid-column: span 3;
+  width: 100%;
+  height: 86%;
+background-color: $clearWhite;
+margin-top: 55px;
+}
+
+
+.statistic__text {
+  @include text-large-web;
+  color: #1e1d24;
+  width: 100%;
+}
+
+.statistic__header {
+  @include text-large-web-bold;
+  color: #1e1d24;
+  width: 100%;
+}
+
+.statistic__filtration {
+  width: 100%;
+  background-color: #f4f4f4;
+  border-radius: 16px;
+}
+.statistic__info-block{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 202px;
+  margin: 55px 0px 0 21px;
+}
+.statistic__info-label{
+  @include text-large-web-bold;
+}
+.statistic__info-value{
+  @include text-large-web;
+}
+.statistic__info-sum{
+  background-image: url(../../Images/chart-line-ic.svg);
+  background-repeat: no-repeat;
+  background-position: left;
+  text-indent: 30px;
+  @include h3-web;
+}
+.statistic__information{
+  width: 94%;
+  height: 100px;
+  background-color: $blueishGrey;
+  background-image: url(../../Images/rocket-ic-24.svg);
+  background-repeat: no-repeat;
+  background-position:  center 8px;
+  border-radius: 16px;
+  margin-top: 38px;
+}
+.statistic__information_fail{
+  background-image: url(../../Images/rocket-ic-down.svg);
+}
+.statistic__inform-text{
+  width: 100%;
+  text-align: center;
+  @include text-large-web;
+  margin-top: 60px;
 }

@@ -1,0 +1,37 @@
+@import '../../styles/consts.scss';
+
+.spending-list__wrapper {
+  height: 689px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & .spending-list__list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 24px;
+  }
+
+  & .spending-list__date {
+    margin-bottom: 12px;
+  }
+
+  & .spending-list__header,
+  & .spending-list__text {
+    width: 100%;
+    color: $black;
+  }
+
+  & .spending-list__header {
+    @include text-medium-web;
+    margin-bottom: 2px;
+  }
+
+  & .spending-list__text {
+    @include text-small-web;
+  }
+}

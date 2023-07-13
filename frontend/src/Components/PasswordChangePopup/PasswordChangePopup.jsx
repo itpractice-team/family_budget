@@ -1,19 +1,18 @@
-/* eslint-disable react/jsx-props-no-spreading */
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Popup from '../Popup/Popup';
 import { changePassword } from '../../store/slices/passwordSlice';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
-import { togglePasswordChangePopup, toggleInfoPopup } from '../../store/slices/togglePopupSlice';
 import { RequirementsPassword } from '../../utils/consts';
-import { clearUser } from '../../store/slices/userSlice';
-import { setLogin } from '../../store/slices/loginSlice';
+import { resetUser } from '../../store/slices/accountSlice';
+import { setAuthentication } from '../../store/slices/authSlice';
 import changePasswordValidation from '../../utils/validations/changePasswordValidation';
 import Eye from '../../ui/Eye/Eye';
+import usePopup from '../../utils/hooks/usePopup';
 
 export default function PasswordChangePopup({ onClose }) {
   const dispatch = useDispatch();
@@ -27,22 +26,32 @@ export default function PasswordChangePopup({ onClose }) {
     setEyes(newEyesValues);
   };
 
-  function handleСancel(evt) {
+  const { openPopup: openInfoPopup } = usePopup('info');
+
+  function handleCancel(evt) {
     evt.preventDefault();
-    dispatch(togglePasswordChangePopup(false));
+    onClose();
   }
 
   function handleChangePassword(formData) {
-    dispatch(changePassword(formData)).then(() => {
-      dispatch(clearUser());
-      dispatch(setLogin(false));
-      dispatch(toggleInfoPopup(true));
-      dispatch(togglePasswordChangePopup(false));
-    });
+    dispatch(changePassword(formData))
+      .then((action) => {
+        if (!action.error) {
+          dispatch(resetUser());
+          dispatch(setAuthentication(false));
+          openInfoPopup();
+        }
+      })
+      .finally(() => {
+        onClose();
+        openInfoPopup();
+      });
   }
+
   const {
     register,
     formState: { errors, isValid },
+    handleSubmit,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -59,7 +68,7 @@ export default function PasswordChangePopup({ onClose }) {
       title="Изменение пароля"
       subtitle="После изменения пароля, все активные сеансы на всех устройствах, сайтах и приложениях будут автоматически завершены"
     >
-      <form className="form" onSubmit={handleChangePassword}>
+      <form className="form" onSubmit={handleSubmit(handleChangePassword)}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="PasswordChangePopup-oldPassword">
             Текущий пароль
@@ -145,18 +154,19 @@ export default function PasswordChangePopup({ onClose }) {
         <div className="form__button-wrapper form__button-wrapper_password-new">
           <Button
             variant="secondary"
-            type="text"
+            content="text"
             text="Отменить"
             size="medium"
-            onClick={handleСancel}
+            onClick={handleCancel}
           />
           {isLoading ? (
             <Loader />
           ) : (
             <Button
               disabled={!isValid || !errors}
+              type="submit"
               variant="primary"
-              type="text"
+              content="text"
               text="Изменить пароль"
               size="medium"
             />

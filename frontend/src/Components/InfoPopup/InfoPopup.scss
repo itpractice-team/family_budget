@@ -1,0 +1,25 @@
+@import '../../styles/consts.scss';
+
+.info-popup__status {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.info-popup__text {
+  @include h3-web;
+}
+
+.info-popup__text_error {
+  color: $alertRed;
+}
+
+.info-popup__text_success {
+  color: $incomeGreen;
+}
+
+.info-popup__content {
+  @include text-large-web;
+  color: $grey;
+}

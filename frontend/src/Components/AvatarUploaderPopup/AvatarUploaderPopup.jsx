@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './AvatarUploaderPopup.scss';
@@ -6,15 +5,16 @@ import Popup from '../Popup/Popup';
 import AvatarUploader from '../AvatarUploader/AvatarUploader';
 import Loader from '../Loader/Loader';
 import Button from '../../ui/Button/Button';
-import { updateUser } from '../../store/slices/userSlice';
+import { updateUser } from '../../store/slices/accountSlice';
 import defaultAvatar from '../../Images/profile-default-avatar.svg';
+import trash from '../../Images/icons/trash.svg';
 
 export default function AvatarUploaderPopup({ onClose }) {
   const dispatch = useDispatch();
 
   const [recipeFile, setRecipeFile] = useState(null);
-  const { avatar } = useSelector((state) => state.user.user);
-  const isLoading = useSelector((state) => state.user.loading);
+  const { avatar } = useSelector((state) => state.account.user);
+  const isLoading = useSelector((state) => state.account.loading);
 
   function handleChangeAvatar(evt) {
     evt.preventDefault();
@@ -40,14 +40,22 @@ export default function AvatarUploaderPopup({ onClose }) {
               setRecipeFile(file);
             }}
           />
-          <button className="delete-avatar" type="button" onClick={handleDeleteAvatar} />
+          <Button
+            type="submit"
+            variant="secondary"
+            content="icon"
+            image={trash}
+            size="medium"
+            onClick={handleDeleteAvatar}
+          />
         </div>
         {isLoading ? (
           <Loader extraClass="loader-avatar" />
         ) : (
           <Button
+            type="submit"
             variant="primary"
-            type="text"
+            content="text"
             text="Cохранить"
             size="medium"
             extraClass="button__save-avatar"

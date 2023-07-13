@@ -2,6 +2,7 @@ import React from 'react';
 import CardQuestion from '../../Components/CardQuestion/CardQuestion';
 import './Help.scss';
 import { arrInitFQA } from '../../utils/consts';
+import question from '../../Images/question.svg';
 
 export default function Help() {
   return (
@@ -14,11 +15,11 @@ export default function Help() {
           })}
         </ul>
       </div>
-      <div className="help__container-left">
-        <button type="button" aria-label="вопрос" className="help__question-button" />
+      <div className="help__container-right">
+        <img src={question} alt="Иконка вопрос" />
         <p className="help__text-small">
-          Здесь можно найти ответы, которые помогут пользоваться приложением. Если здесь нет
-          подходящего ответа, напишите нам на почту и мы с радостью ответим.
+          Здесь можно найти ответы, которые помогут пользоваться приложением. Если&nbsp;вы не нашли
+          ответа на ваш вопрос, напишите нам на почту и мы с радостью ответим.
         </p>
       </div>
     </section>
