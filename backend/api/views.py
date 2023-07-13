@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -209,6 +210,11 @@ class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return queryset
 
 
+@extend_schema_view(
+    list=extend_schema(
+        responses=StatisticsTransactionSerializer,
+    )
+)
 class StatisticsTransactionViewSet(
     mixins.ListModelMixin,
     BudgetBaseViewSet,
