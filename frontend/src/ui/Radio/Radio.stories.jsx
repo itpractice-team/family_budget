@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Radio from './Radio';
 import './Radio.scss';
 
@@ -10,7 +10,7 @@ export default {
   argTypes: {
     disabled: {
       type: 'boolean',
-      description: 'Вариант активности кнопки',
+      description: 'Вариант активности радио инпута',
       defaultValue: false,
       options: [false, true],
       control: {
@@ -20,7 +20,15 @@ export default {
   },
 };
 
-function Template({ text, icon, value, onChange, disabled, extraClass }) {
+function Template({ nameProp, text, icon, value, isChecked, onChange, disabled, extraClass }) {
+  const [selectedValue, setSelectedValue] = useState(isChecked ? value : '');
+
+  const handleChange = (selected) => {
+    if (onChange) {
+      onChange(selected);
+    }
+    setSelectedValue(selected);
+  };
   return (
     <div
       style={{
@@ -30,18 +38,22 @@ function Template({ text, icon, value, onChange, disabled, extraClass }) {
       }}
     >
       <Radio
+        nameProp={nameProp}
         text={text}
         icon={icon}
         value={value}
-        onChange={onChange}
+        isChecked={selectedValue === value || (!selectedValue && isChecked)}
+        onChange={handleChange}
         disabled={disabled}
         extraClass={extraClass}
       />
       <Radio
+        nameProp={nameProp}
         text={text}
         icon={icon}
         value={value}
-        onChange={onChange}
+        isChecked={selectedValue === value || (!selectedValue && isChecked)}
+        onChange={handleChange}
         disabled={disabled}
         extraClass={extraClass}
       />
@@ -51,15 +63,21 @@ function Template({ text, icon, value, onChange, disabled, extraClass }) {
 
 export const Default = Template.bind({});
 Default.args = {
+  nameProp: 'radio-group',
   text: 'Radio',
   icon: testIcon,
+  isChecked: true,
 };
 
 export const RadioText = Template.bind({});
-Default.args = {
+RadioText.args = {
+  nameProp: 'radio-group',
   text: 'Radio',
+  isChecked: true,
 };
 export const RadioIcon = Template.bind({});
-Default.args = {
+RadioIcon.args = {
+  nameProp: 'radio-group',
   icon: testIcon,
+  isChecked: true,
 };
