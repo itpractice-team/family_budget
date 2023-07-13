@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.utils.translation import gettext_lazy as _
+from drf_spectacular.utils import OpenApiTypes, extend_schema_field
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -28,6 +29,7 @@ class CurrentBudgetDefault:
         return "%s()" % self.__class__.__name__
 
 
+@extend_schema_field(OpenApiTypes.INT)
 class LookupBugetRelatedField(serializers.RelatedField):
     """Lookup поле бюджета."""
 
@@ -47,9 +49,6 @@ class LookupBugetRelatedField(serializers.RelatedField):
         self.budget = budget
         self.lookup_field = lookup_field
         super().__init__(**kwargs)
-
-    def use_pk_only_optimization(self):
-        return True
 
     def get_budget(self):
         if callable(self.budget):
@@ -73,5 +72,5 @@ class LookupBugetRelatedField(serializers.RelatedField):
         except (TypeError, ValueError):
             self.fail("invalid")
 
-    def to_representation(self, obj) -> int:
+    def to_representation(self, obj):
         return getattr(obj, self.lookup_field).pk

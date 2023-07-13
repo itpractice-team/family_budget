@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
+from api.filters import TransactionDateFromToRangeFilter
 from api.serializers import (
     BudgetCategorySerializer,
     BudgetFinanceSerializer,
@@ -31,6 +32,7 @@ from budget.models import (
     MoneyBox,
     ReapeatSpend,
 )
+from django_filters.rest_framework import DjangoFilterBackend
 
 User = get_user_model()
 
@@ -216,3 +218,5 @@ class StatisticsTransactionViewSet(
     queryset = FinanceTransaction.objects.all()
     serializer_class = StatisticsTransactionSerializer
     pagination_class = None
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionDateFromToRangeFilter
