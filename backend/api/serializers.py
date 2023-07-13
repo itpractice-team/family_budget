@@ -355,3 +355,29 @@ class BudgetParamsSerializer(serializers.Serializer):
     categories = PrimaryKey404RelatedField(
         queryset=BudgetCategory.objects.all(), required=False, many=True
     )
+
+
+class StatisticsTransactionSerializer(BaseTransactionSerializer):
+    """Сериализатор статистики транзакций."""
+
+    def to_representation(self, transaction):
+        """Возвращает информацию по транзакции."""
+        category = BudgetCategorySerializer(
+            instance=transaction.category, context=self.context
+        ).data
+        transaction_info = {
+            "color": category["color"],
+            "icon": category["image"],
+            "created": transaction.created,
+        }
+        if transaction.amount < 0:
+            transaction_info["amount"] = -transaction.amount
+            transaction_info["income"] = 0
+            transaction_info["amountcategory"] = category["name"]
+            transaction_info["incomecategory"] = None
+        else:
+            transaction_info["amount"] = 0
+            transaction_info["income"] = transaction.amount
+            transaction_info["amountcategory"] = None
+            transaction_info["incomecategory"] = category["name"]
+        return transaction_info

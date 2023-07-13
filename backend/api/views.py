@@ -15,6 +15,7 @@ from api.serializers import (
     MoneyBoxSerializer,
     ReapeatSpendReadSerializer,
     ReapeatSpendWriteSerializer,
+    StatisticsTransactionSerializer,
     TotalBudgetInfoSerializer,
     TransactionReadSerializer,
     TransactionWriteSerializer,
@@ -204,3 +205,14 @@ class TotalBudgetInfoViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 ]
             ).distinct()
         return queryset
+
+
+class StatisticsTransactionViewSet(
+    mixins.ListModelMixin,
+    BudgetBaseViewSet,
+):
+    """Статистика по транзакциям."""
+
+    queryset = FinanceTransaction.objects.all()
+    serializer_class = StatisticsTransactionSerializer
+    pagination_class = None

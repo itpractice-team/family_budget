@@ -48,6 +48,9 @@ class LookupBugetRelatedField(serializers.RelatedField):
         self.lookup_field = lookup_field
         super().__init__(**kwargs)
 
+    def use_pk_only_optimization(self):
+        return True
+
     def get_budget(self):
         if callable(self.budget):
             if getattr(self.budget, "requires_context", False):
@@ -70,5 +73,5 @@ class LookupBugetRelatedField(serializers.RelatedField):
         except (TypeError, ValueError):
             self.fail("invalid")
 
-    def to_representation(self, obj):
+    def to_representation(self, obj) -> int:
         return getattr(obj, self.lookup_field).pk
