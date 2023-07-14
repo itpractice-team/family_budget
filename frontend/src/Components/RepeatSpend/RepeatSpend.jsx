@@ -12,29 +12,7 @@ export default function RepeatSpend() {
   const [repeatSpend, setRepeatSpend] = useState(null);
 
   const repeatSpendList = useSelector((state) => state.repeatSpendBox.repeatSpendBox);
-  console.log('repeatSpendList', repeatSpendList);
-  const arr = [
-    {
-      name: 'Моб',
-      amount: 5000,
-      category: 228,
-      created: '12.07.2023',
-      repeat_type: 0,
-      repeat_period: 1,
-      type_week: [],
-      to_date: '12.08.2023',
-    },
-    {
-      name: 'Гулянки',
-      amount: 15000,
-      category: 228,
-      created: '12.07.2023',
-      repeat_type: 0,
-      repeat_period: 0,
-      type_week: [],
-      to_date: '',
-    },
-  ];
+
   const {
     isOpen: isEditRepeatSpendPopupOpen,
     openPopup: openEditRepeatSpendPopup,
@@ -52,12 +30,10 @@ export default function RepeatSpend() {
 
   return (
     <section className="repeat-spend">
-      {/* {repeatSpendList.length === 0 ? ( */}
-      {arr.length === 0 ? (
+      {repeatSpendList.length === 0 ? (
         <PlugRightBlock icon={moneybag} subtitle="Занести расходы, которые происходят регулярно" />
       ) : (
-        // repeatSpendList?.map((item) => (
-        arr?.map((item) => (
+        repeatSpendList?.map((item) => (
           <RepeatSpendItem
             key={item.id}
             title={item.name}

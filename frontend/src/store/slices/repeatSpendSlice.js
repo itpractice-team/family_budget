@@ -10,8 +10,7 @@ export const getRepeatSpendBox = createAsyncThunk('repeatSpendBox', async () => 
   return getRepeatSpendBoxAPI();
 });
 
-export const addRepeatSpendBox = createAsyncThunk('repeatSpendBox/add', async ({ formData }) => {
-  console.log('api', formData);
+export const addRepeatSpendBox = createAsyncThunk('repeatSpendBox/add', async (formData) => {
   return addRepeatSpendBoxAPI(formData);
 });
 
@@ -22,7 +21,7 @@ export const editRepeatSpendBox = createAsyncThunk(
   },
 );
 
-export const deleteRepeatSpendBox = createAsyncThunk('repeatSpendBox/delete', async ({ id }) => {
+export const deleteRepeatSpendBox = createAsyncThunk('repeatSpendBox/delete', async (id) => {
   return deleteRepeatSpendBoxAPI(id);
 });
 
@@ -56,7 +55,6 @@ export const repeatSpendBoxSlice = createSlice({
       })
       .addCase(addRepeatSpendBox.fulfilled, (state, action) => {
         state.loading = false;
-        console.log('pay', action.payload);
         state.repeatSpendBox.push(action.payload);
       })
       .addCase(addRepeatSpendBox.rejected, (state, action) => {

@@ -56,7 +56,6 @@ export default function RepeatExpensesPopup({ onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addRepeatSpendBox(formData)).then(() => {
-      console.log('2', formData);
       onClose();
     });
   };
