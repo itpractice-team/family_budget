@@ -11,6 +11,7 @@ import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import Checkbox from './checkbox';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
+import toISOString from '../../utils/helpers';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -21,30 +22,18 @@ export default function RepeatExpensesPopup({ onClose }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  // выбираем только расходные
+  const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
+  const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
+
   const [formData, setFormData] = useState({
-    name: '',
-    amount: '',
-    category: '',
+    category: expenseCategories[0].id,
     created: '',
-    // 0 Day, 1 Week, 2 Month
     repeat_type: 0,
-    // 0-Endlessy 1-Date
     repeat_period: 0,
     type_week: [],
     to_date: '',
   });
-
-  const { name, amount, category } = formData;
-
-  // const [open, setOpen] = useState(false);
-
-  // const isOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // выбираем только расходные
-  const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
-  const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
 
   useMemo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
@@ -59,7 +48,6 @@ export default function RepeatExpensesPopup({ onClose }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
-      console.log(arrActiveDay);
     } else {
       setFormData({ ...formData, repeat_type: type, repeat_period: period });
     }
@@ -67,7 +55,6 @@ export default function RepeatExpensesPopup({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData(formData);
     dispatch(addRepeatSpendBox(formData)).then(() => {
       console.log('2', formData);
       onClose();
@@ -102,23 +89,18 @@ export default function RepeatExpensesPopup({ onClose }) {
   };
 
   const handleDateChange = (value) => {
+    const date = Date(value);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      created: value,
+      created: toISOString(date),
     }));
   };
 
   const handleToDateChange = (value) => {
+    const date = Date(value);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      to_date: value,
-    }));
-  };
-
-  const handleCategoryChange = (value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      category: value,
+      to_date: toISOString(date),
     }));
   };
 
@@ -134,7 +116,6 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="name"
               id="repeat-expenses-name"
               placeholder="Название транзакции"
-              value={name}
               onChange={handleChange}
             />
           </label>
@@ -143,12 +124,16 @@ export default function RepeatExpensesPopup({ onClose }) {
         <SelectButtonWrapper
           label="Категория"
           options={expenseCategories}
-          value={category}
-          name="category"
+          initialValue={formData.category}
           imageKey="image"
           nameKey="name"
           altText="Иконка категории"
-          handleOptionChange={handleCategoryChange}
+          handleOptionChange={(value) =>
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              category: value,
+            }))
+          }
         />
 
         <div className="form__input-block">
@@ -163,7 +148,6 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="amount"
               id="repeat-expenses-amount"
               placeholder="0"
-              value={amount}
               onChange={handleChange}
             />
           </label>
