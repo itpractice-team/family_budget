@@ -4,6 +4,8 @@ import TransactionPopup from '../TransactionPopup/TransactionPopup';
 import TransferPopup from '../TransferPopup/TransferPopup';
 import Button from '../../ui/Button/Button';
 import plus from '../../Images/icons/plus.svg';
+import minus from '../../Images/icons/minus.svg';
+import arrow from '../../Images/icons/icon-arrow-right.svg';
 
 export default function AddOperationBlock() {
   const {
@@ -27,7 +29,7 @@ export default function AddOperationBlock() {
       <Button
         variant="secondary"
         content="icon-text"
-        image={plus}
+        image={minus}
         text="Расход"
         size="medium"
         onClick={openSpendPopup}
@@ -43,7 +45,7 @@ export default function AddOperationBlock() {
       <Button
         variant="secondary"
         content="icon-text"
-        image={plus}
+        image={arrow}
         text="Перевод"
         size="medium"
         onClick={openTransferPopup}
