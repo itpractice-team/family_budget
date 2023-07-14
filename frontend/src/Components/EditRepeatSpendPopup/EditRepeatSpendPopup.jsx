@@ -1,19 +1,32 @@
-import './RepeatExpensesPopup.scss';
 import { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Popup from '../Popup/Popup';
 import Button from '../../ui/Button/Button';
+import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
+import InputData from '../InputData/InputDate';
+import {
+  // addRepeatSpendBox,
+  deleteRepeatSpendBox,
+  editRepeatSpendBox,
+  getRepeatSpendBox,
+} from '../../store/slices/repeatSpendSlice';
 import Tabs from '../Tabs/Tabs';
 import { arrCategoriesDate, arrCategoriesWeek } from '../../utils/consts';
+import Checkbox from '../RepeatExpensesPopup/checkbox';
 import Radio from '../../ui/Radio/Radio';
-import InputData from '../InputData/InputDate';
-import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
-import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
-import Checkbox from './checkbox';
+import usePopup from '../../utils/hooks/usePopup';
+import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
-export default function RepeatExpensesPopup({ onClose }) {
+export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const dispatch = useDispatch();
+
+  const { id } = repeatSpend;
+
+  // выбираем только расходные
+  const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
+  const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
 
   const [arrActiveDay, setArrActiveDay] = useState([]);
   const [activeType, setActiveType] = useState('Ежедневно');
@@ -21,30 +34,7 @@ export default function RepeatExpensesPopup({ onClose }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  const [formData, setFormData] = useState({
-    name: '',
-    amount: '',
-    category: '',
-    created: '',
-    // 0 Day, 1 Week, 2 Month
-    repeat_type: 0,
-    // 0-Endlessy 1-Date
-    repeat_period: 0,
-    type_week: [],
-    to_date: '',
-  });
-
-  const { name, amount, category } = formData;
-
-  // const [open, setOpen] = useState(false);
-
-  // const isOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // выбираем только расходные
-  const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
-  const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
+  const [formData, setFormData] = useState(repeatSpend);
 
   useMemo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
@@ -59,19 +49,33 @@ export default function RepeatExpensesPopup({ onClose }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
-      console.log(arrActiveDay);
+      // console.log(arrActiveDay);
     } else {
       setFormData({ ...formData, repeat_type: type, repeat_period: period });
     }
   }, [activeType, selected, arrActiveDay]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData(formData);
-    dispatch(addRepeatSpendBox(formData)).then(() => {
-      console.log('2', formData);
+  const {
+    isOpen: isConfirmationPopupOpen,
+    openPopup: openConfirmationPopup,
+    closePopup: closeConfirmationPopup,
+  } = usePopup('confirmation');
+
+  const handleRepeatSpendBox = (evt) => {
+    evt.preventDefault();
+    dispatch(
+      editRepeatSpendBox({
+        id: repeatSpend.id,
+        formData,
+      }),
+    ).then(() => {
+      dispatch(getRepeatSpendBox());
       onClose();
     });
+  };
+  const handleDeleteRepeatSpendBox = (evt) => {
+    evt.preventDefault();
+    openConfirmationPopup();
   };
 
   const handleChangeDay = (e) => {
@@ -88,24 +92,12 @@ export default function RepeatExpensesPopup({ onClose }) {
     setActiveType(tab);
   };
 
-  const handleСancel = (evt) => {
-    evt.preventDefault();
-    onClose();
-  };
-
   const handleRadio = (evt) => {
     setSelected(evt.target.value);
   };
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
-  const handleDateChange = (value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      created: value,
-    }));
   };
 
   const handleToDateChange = (value) => {
@@ -123,8 +115,8 @@ export default function RepeatExpensesPopup({ onClose }) {
   };
 
   return (
-    <Popup onClose={onClose} popupSize="popup_repeat" title="Создать повторяющийся расход">
-      <form className="form repeat-expenses" onSubmit={handleSubmit}>
+    <Popup onClose={onClose} popupSize="popup_repeat" title={repeatSpend.name}>
+      <form className="form repeat-expenses" onSubmit={handleRepeatSpendBox}>
         <div className="form__input-block">
           <label className="form__input-label" htmlFor="repeat-expenses-name">
             Название
@@ -134,8 +126,8 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="name"
               id="repeat-expenses-name"
               placeholder="Название транзакции"
-              value={name}
-              onChange={handleChange}
+              value={formData.name}
+              onChange={(e) => handleChange(e)}
             />
           </label>
         </div>
@@ -143,7 +135,7 @@ export default function RepeatExpensesPopup({ onClose }) {
         <SelectButtonWrapper
           label="Категория"
           options={expenseCategories}
-          value={category}
+          value={formData.category}
           name="category"
           imageKey="image"
           nameKey="name"
@@ -163,7 +155,7 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="amount"
               id="repeat-expenses-amount"
               placeholder="0"
-              value={amount}
+              value={formData.amount}
               onChange={handleChange}
             />
           </label>
@@ -173,9 +165,8 @@ export default function RepeatExpensesPopup({ onClose }) {
           labelTitle="Дата"
           inputStyleName="repeat-expenses-startDate"
           inputName="created"
-          value={startDate}
-          onChange={handleDateChange}
-          setValueDate={setStartDate}
+          value={formData.created}
+          disabled={true}
         />
 
         <div className="form__text-content">
@@ -190,7 +181,6 @@ export default function RepeatExpensesPopup({ onClose }) {
             onClick={handleDateClick}
           />
         </div>
-
         {activeType === 'Еженедельно' && (
           <div className="repeat-expenses__tab">
             {arrCategoriesWeek.map((item) => {
@@ -204,7 +194,6 @@ export default function RepeatExpensesPopup({ onClose }) {
             })}
           </div>
         )}
-
         {activeType === 'Ежемесячно' && (
           <CustomDatePicker
             type="date"
@@ -245,13 +234,26 @@ export default function RepeatExpensesPopup({ onClose }) {
           <Button
             variant="secondary"
             content="text"
-            text="Отменить"
+            text="Удалить повторяющийся расход"
             size="medium"
-            onClick={handleСancel}
+            onClick={handleDeleteRepeatSpendBox}
           />
           <Button type="submit" variant="primary" content="text" text="Сохранить" size="medium" />
         </div>
       </form>
+      {isConfirmationPopupOpen && (
+        <ConfirmationPopup
+          onClose={closeConfirmationPopup}
+          onSubmit={() => {
+            dispatch(deleteRepeatSpendBox(id)).then(() => {
+              dispatch(getRepeatSpendBox());
+              onClose();
+            });
+          }}
+          confirmationText={`Вы действительно хотите удалить повторный расход «${repeatSpend.name}» ?`}
+          buttonText={repeatSpend.name}
+        />
+      )}
     </Popup>
   );
 }

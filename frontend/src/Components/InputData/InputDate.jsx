@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
 
-export default function InputData({ labelTitle, inputName, value }) {
+export default function InputData({
+  labelTitle,
+  inputName,
+  inputStyleName,
+  value,
+  onChange,
+  disabled = false,
+}) {
   const [startDate, setStartDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [valueDate, setValueDate] = useState(value);
@@ -14,17 +21,20 @@ export default function InputData({ labelTitle, inputName, value }) {
   return (
     <>
       <div className="form__input-block">
-        <label className="form__input-label" htmlFor={inputName}>
+        <label className="form__input-label" htmlFor={inputStyleName}>
           {labelTitle}
           <input
             className="form__input form__input_date"
             type="text"
             name={inputName}
-            id={inputName}
+            id={inputStyleName}
             value={valueDate}
-            onChange={(e) => setValueDate(e.target.value)}
+            onChange={(e) => {
+              setValueDate(e.target.value);
+            }}
             placeholder="дд.мм.гггг"
             onClick={isOpen}
+            disabled={disabled}
           />
         </label>
       </div>
@@ -34,6 +44,7 @@ export default function InputData({ labelTitle, inputName, value }) {
           onChange={(date) => {
             setStartDate(date);
             setValueDate(date.toLocaleDateString());
+            onChange(date.toLocaleDateString());
             setOpen(false);
           }}
           startDate={startDate}

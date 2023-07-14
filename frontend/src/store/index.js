@@ -9,6 +9,7 @@ import { userFinanceAndCategoriesReducer } from './slices/userFinanceAndCategori
 import { itemOptionsReducer } from './slices/itemOptions';
 import { transactionListReducer } from './slices/transactionListSlice';
 import { moneyboxReducer } from './slices/moneybox';
+import { repeatSpendBoxReducer } from './slices/repeatSpendSlice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     itemOptions: itemOptionsReducer,
     transactionList: transactionListReducer,
     moneybox: moneyboxReducer,
+    repeatSpendBox: repeatSpendBoxReducer,
   },
 });
 

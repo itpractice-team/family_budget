@@ -20,8 +20,9 @@
     background: $lightGrey;
     border-radius: 16px;
     display: flex;
-    padding: 4px;
-    gap: 8px;
+    justify-content: space-around;
+    min-height: 52px;
+    align-items: center;
   }
 
   &__activeTab {
@@ -41,5 +42,19 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+  }
+
+  &__week-day {
+    box-sizing: border-box;
+    display: block;
+    padding: 4px;
+  }
+
+  &__label {
+    border: 1px solid black;
+    padding: 8px;
+    background: white;
+    border-radius: 10px;
   }
 }
