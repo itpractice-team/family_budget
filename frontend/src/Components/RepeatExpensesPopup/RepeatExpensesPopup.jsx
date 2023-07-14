@@ -39,7 +39,7 @@ export default function RepeatExpensesPopup({ onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
     const type = activeType === 'Ежедневно' ? 0 : activeType === 'Еженедельно' ? 1 : 2;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const period = selected === 'Указать дату окончания' ? 1 : 0;
+    const period = selected === 'Указать дату окончания' ? 2 : 0;
 
     if (type === 1) {
       setFormData({
@@ -83,10 +83,6 @@ export default function RepeatExpensesPopup({ onClose }) {
     setSelected(evt.target.value);
   };
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
   const handleDateChange = (value) => {
     const date = Date(value);
     setFormData((prevFormData) => ({
@@ -115,7 +111,9 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="name"
               id="repeat-expenses-name"
               placeholder="Название транзакции"
-              onChange={handleChange}
+              onChange={(evt) => {
+                setFormData({ ...formData, [evt.target.name]: evt.target.value });
+              }}
             />
           </label>
         </div>
@@ -147,7 +145,7 @@ export default function RepeatExpensesPopup({ onClose }) {
               name="amount"
               id="repeat-expenses-amount"
               placeholder="0"
-              onChange={handleChange}
+              onChange={(evt) => setFormData({ ...formData, [evt.target.name]: +evt.target.value })}
             />
           </label>
         </div>

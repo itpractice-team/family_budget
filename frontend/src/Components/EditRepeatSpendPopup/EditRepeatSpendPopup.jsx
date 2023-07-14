@@ -23,6 +23,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const dispatch = useDispatch();
 
   const { id } = repeatSpend;
+  const dateInputDisabled = repeatSpend.created.slice(0, 10).split('-').reverse().join('.');
 
   // выбираем только расходные
   const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
@@ -40,7 +41,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
     const type = activeType === 'Ежедневно' ? 0 : activeType === 'Еженедельно' ? 1 : 2;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const period = selected === 'Указать дату окончания' ? 1 : 0;
+    const period = selected === 'Указать дату окончания' ? 2 : 0;
 
     if (type === 1) {
       setFormData({
@@ -95,22 +96,12 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
     setSelected(evt.target.value);
   };
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
-  };
-
   const handleToDateChange = (value) => {
     const date = Date(value);
     setFormData((prevFormData) => ({
       ...prevFormData,
       to_date: toISOString(date),
     }));
-  };
-
-  const handleChangeCategory = (data) => {
-    // eslint-disable-next-line no-shadow
-    const { name, value } = data;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -126,7 +117,9 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
               id="repeat-expenses-name"
               placeholder="Название транзакции"
               value={formData.name}
-              onChange={(e) => handleChange(e)}
+              onChange={(evt) => {
+                setFormData({ ...formData, [evt.target.name]: evt.target.value });
+              }}
             />
           </label>
         </div>
@@ -134,11 +127,16 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         <SelectButtonWrapper
           label="Категория"
           options={expenseCategories}
-          initialValue={formData.category || expenseCategories[0].id}
+          initialValue={formData?.category?.id || ''}
           imageKey="image"
           nameKey="name"
           altText="Иконка категории"
-          handleOptionChange={(value) => handleChangeCategory({ name: 'category', value })}
+          handleOptionChange={(value) =>
+            setFormData({
+              ...formData,
+              category: value,
+            })
+          }
         />
 
         <div className="form__input-block">
@@ -154,7 +152,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
               id="repeat-expenses-amount"
               placeholder="0"
               value={formData.amount}
-              onChange={handleChange}
+              onChange={(evt) => setFormData({ ...formData, [evt.target.name]: +evt.target.value })}
             />
           </label>
         </div>
@@ -163,7 +161,7 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
           labelTitle="Дата"
           inputStyleName="repeat-expenses-startDate"
           inputName="created"
-          value={formData.created}
+          value={dateInputDisabled}
           disabled={true}
         />
 
