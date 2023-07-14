@@ -5,7 +5,9 @@ import useDropdown from './useDropdown';
 const useTransactionForm = (initialTransaction, categoryType) => {
   const { finance, categories } = useSelector((state) => ({
     finance: state.userFinanceAndCategories.userFinance,
-    categories: state.userFinanceAndCategories.userCategories,
+    categories: state.userFinanceAndCategories.userCategories.filter(
+      (category) => category.category_type === categoryType,
+    ),
   }));
 
   const categoryDropdown = useDropdown(initialTransaction?.category?.id || '', categories);
@@ -28,10 +30,10 @@ const useTransactionForm = (initialTransaction, categoryType) => {
   }, [categoryDropdown.selectedOption, financeDropdown.selectedOption]);
 
   useEffect(() => {
-    if (categories.length > 0 && !formData.category && categoryType === 2) {
+    if (categories.length > 0 && !formData.category) {
       setFormData((prevData) => ({ ...prevData, category: categories[0].id }));
     }
-  }, [categories, formData.category, categoryType]);
+  }, [categories, formData.category]);
 
   useEffect(() => {
     if (finance.length > 0 && !formData.finance) {
