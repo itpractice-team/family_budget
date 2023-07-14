@@ -6,8 +6,10 @@ import useTransactionForm from '../../utils/hooks/useTransactionForm';
 
 export default function TransactionPopup({ onClose, popupSize, title, categoryType }) {
   const dispatch = useDispatch();
-  const { formData, handleChange, categoryOptions, financeOptions } =
-    useTransactionForm(categoryType);
+  const { formData, handleChange, categoryOptions, financeOptions } = useTransactionForm(
+    null,
+    categoryType,
+  );
 
   const handleAddTransaction = (evt) => {
     evt.preventDefault();
@@ -17,10 +19,6 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
     });
   };
 
-  const filteredCategoryOptions = categoryOptions.filter(
-    (category) => category.category_type === categoryType,
-  );
-
   return (
     <Popup onClose={onClose} popupSize={popupSize} title={title}>
       <TransactionForm
@@ -28,7 +26,7 @@ export default function TransactionPopup({ onClose, popupSize, title, categoryTy
         handleChange={handleChange}
         handleSubmit={handleAddTransaction}
         onClose={onClose}
-        categoryOptions={filteredCategoryOptions}
+        categoryOptions={categoryOptions}
         financeOptions={financeOptions}
         categoryType={categoryType}
       />
