@@ -6,7 +6,6 @@ import Button from '../../ui/Button/Button';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import InputData from '../InputData/InputDate';
 import {
-  // addRepeatSpendBox,
   deleteRepeatSpendBox,
   editRepeatSpendBox,
   getRepeatSpendBox,
@@ -18,6 +17,7 @@ import Radio from '../../ui/Radio/Radio';
 import usePopup from '../../utils/hooks/usePopup';
 import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
 import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
+import toISOString from '../../utils/helpers';
 
 export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const dispatch = useDispatch();
@@ -49,7 +49,6 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
-      // console.log(arrActiveDay);
     } else {
       setFormData({ ...formData, repeat_type: type, repeat_period: period });
     }
@@ -101,17 +100,17 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   };
 
   const handleToDateChange = (value) => {
+    const date = Date(value);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      to_date: value,
+      to_date: toISOString(date),
     }));
   };
 
-  const handleCategoryChange = (value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      category: value,
-    }));
+  const handleChangeCategory = (data) => {
+    // eslint-disable-next-line no-shadow
+    const { name, value } = data;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -135,12 +134,11 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         <SelectButtonWrapper
           label="Категория"
           options={expenseCategories}
-          value={formData.category}
-          name="category"
+          initialValue={formData.category || expenseCategories[0].id}
           imageKey="image"
           nameKey="name"
           altText="Иконка категории"
-          handleOptionChange={handleCategoryChange}
+          handleOptionChange={(value) => handleChangeCategory({ name: 'category', value })}
         />
 
         <div className="form__input-block">

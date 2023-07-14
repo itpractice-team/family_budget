@@ -68,7 +68,11 @@ export default function RepeatSpend() {
       )}
 
       {isEditRepeatSpendPopupOpen && (
-        <EditRepeatSpendPopup onClose={closeEditRepeatSpendPopup} repeatSpend={repeatSpend} />
+        <EditRepeatSpendPopup
+          onClose={closeEditRepeatSpendPopup}
+          repeatSpend={repeatSpend}
+          categoryType={1}
+        />
       )}
     </section>
   );
