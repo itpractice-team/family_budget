@@ -1,24 +1,60 @@
 @import '../../../styles/consts.scss';
 
+.checkbox {
+  box-sizing: border-box;
+  display: block;
+  padding: 4px;
+  width: 90px;
+  text-align: center;
 
-.checkbox_invisible {
-  @include text-medium-web;
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  margin: 0;
+  &__active {
+    background: $clearWhite;
+    border: 2px solid $black;
+    border-radius: 10px;
+    padding: 6px;
+  }
 
-  &:checked {
-    &+.checkbox_visible {
-      background-color: grey;
-      border: 1px solid black;
-      background-image: url(../../../Images/bank.svg);
-      background-repeat: no-repeat;
-      background-position: center;
-      border-radius: 4px;
+  &_calendar {
+    box-sizing: border-box;
+    display: block;
+    padding: 4px;
+    margin: 6px;
+    width: 36px;
+    text-align: center;
+
+    &__active {
+    border-radius: 50%;
+    color: white;
+    background-color: #13164a;
+    border-color: #13164a;
     }
+  }
 
+  &_invisible {
+    @include text-medium-web;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    margin: 0;
+  
+    &:checked {
+      &+.checkbox_visible {
+        background-color: $grey;
+        border: 1px solid $black;
+        background-image: url(../../../Images/bank.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 4px;
+      }
+  
+      &:disabled {
+        &+.checkbox_visible {
+          opacity: 0.4;
+        }
+      }
+    }
+  
     &:disabled {
       &+.checkbox_visible {
         opacity: 0.4;
@@ -26,33 +62,20 @@
     }
   }
 
-  &:disabled {
-    &+.checkbox_visible {
-      opacity: 0.4;
-    }
+  &_visible {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    border: 2px solid $midGrey;
+    margin-right: 12px;
+    border-radius: 4px;
   }
-}
 
-.checkbox_visible {
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: middle;
-  border: 2px solid #b8c1cc;
-  margin-right: 12px;
-  border-radius: 4px;
-}
-
-.checkbox_label {
-  @include text-medium-web;
-  cursor: pointer;
-}
-
-.checkbox_active {
-  background: #fff;
-  border: 2px solid #000;
-  border-radius: 10px;
-  padding: 6px;
+  &_label {
+    @include text-medium-web;
+    cursor: pointer;
+  }
 }

@@ -16,8 +16,7 @@ import Checkbox from '../RepeatExpensesPopup/checkbox';
 import Radio from '../../ui/Radio/Radio';
 import usePopup from '../../utils/hooks/usePopup';
 import ConfirmationPopup from '../ConfirmationPopup/ConfirmationPopup';
-import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
-import toISOString from '../../utils/helpers';
+import { arrCalendar, toISOString } from '../../utils/helpers';
 
 export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const dispatch = useDispatch();
@@ -32,17 +31,16 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
   const [arrActiveDay, setArrActiveDay] = useState([]);
   const [activeType, setActiveType] = useState('Ежедневно');
   const [selected, setSelected] = useState('Бесконечно');
-  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const arrDay = arrCalendar();
 
   const [formData, setFormData] = useState(repeatSpend);
+  // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
+  const type = activeType === 'Ежедневно' ? 0 : activeType === 'Еженедельно' ? 1 : 2;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const period = selected === 'Указать дату окончания' ? 2 : 0;
 
   useMemo(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps, no-nested-ternary
-    const type = activeType === 'Ежедневно' ? 0 : activeType === 'Еженедельно' ? 1 : 2;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const period = selected === 'Указать дату окончания' ? 2 : 0;
-
     if (type === 1) {
       setFormData({
         ...formData,
@@ -50,8 +48,19 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
+    } else if (type === 2) {
+      setFormData({
+        ...formData,
+        repeat_type: type,
+        repeat_period: period,
+        type_day: arrActiveDay,
+      });
     } else {
-      setFormData({ ...formData, repeat_type: type, repeat_period: period });
+      setFormData({
+        ...formData,
+        repeat_type: type,
+        repeat_period: period,
+      });
     }
   }, [activeType, selected, arrActiveDay]);
 
@@ -177,29 +186,47 @@ export default function EditRepeatSpendPopup({ onClose, repeatSpend }) {
             onClick={handleDateClick}
           />
         </div>
+
         {activeType === 'Еженедельно' && (
           <div className="repeat-expenses__tab">
             {arrCategoriesWeek.map((item) => {
               return (
-                <li className="repeat-expenses__week-day" key={item.id}>
-                  <Checkbox name={item.title} handleChangeDay={handleChangeDay}>
-                    {item.title}
-                  </Checkbox>
-                </li>
+                <Checkbox name={item.title} handleChangeDay={handleChangeDay}>
+                  {item.title}
+                </Checkbox>
               );
             })}
           </div>
         )}
+
         {activeType === 'Ежемесячно' && (
-          <CustomDatePicker
-            type="date"
-            onChange={(date) => {
-              setStartDate(date);
-            }}
-            startDate={startDate}
-            dateFormat="dd"
-          />
+          <>
+            <div className="form__text-content">
+              <p className="form__text-bold">Укажите дни месяца:</p>
+            </div>
+            <div className="repeat-expenses__monthly-box">
+              {arrDay.map((item) => {
+                return (
+                  <div className="repeat-expenses__monthly-week">
+                    {item.map((elem) => {
+                      return (
+                        <Checkbox name={elem} handleChangeDay={handleChangeDay} title="caledar">
+                          {elem}
+                        </Checkbox>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="form__text-content">
+              <p className="form__text_confirm-register">
+                *При отсутствии в месяце крайних дат, платежи переносятся на последний день месяца.
+              </p>
+            </div>
+          </>
         )}
+
         <div className="repeat-expenses__container">
           <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
           <Radio

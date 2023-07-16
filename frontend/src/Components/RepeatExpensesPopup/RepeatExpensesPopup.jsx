@@ -10,8 +10,7 @@ import InputData from '../InputData/InputDate';
 import { addRepeatSpendBox } from '../../store/slices/repeatSpendSlice';
 import SelectButtonWrapper from '../SelectButtonWrapper/SelectButtonWrapper';
 import Checkbox from './checkbox';
-import CustomDatePicker from '../CustomDatePicker/CustomDatePicker';
-import toISOString from '../../utils/helpers';
+import { arrCalendar, toISOString } from '../../utils/helpers';
 
 export default function RepeatExpensesPopup({ onClose }) {
   const dispatch = useDispatch();
@@ -25,6 +24,7 @@ export default function RepeatExpensesPopup({ onClose }) {
   // выбираем только расходные
   const { userCategories } = useSelector((state) => state.userFinanceAndCategories);
   const expenseCategories = userCategories.filter((cat) => cat.category_type === 1);
+  const arrDay = arrCalendar();
 
   const [formData, setFormData] = useState({
     category: expenseCategories[0].id,
@@ -48,14 +48,26 @@ export default function RepeatExpensesPopup({ onClose }) {
         repeat_period: period,
         type_week: arrActiveDay,
       });
+    } else if (type === 2) {
+      setFormData({
+        ...formData,
+        repeat_type: type,
+        repeat_period: period,
+        type_day: arrActiveDay,
+      });
     } else {
-      setFormData({ ...formData, repeat_type: type, repeat_period: period });
+      setFormData({
+        ...formData,
+        repeat_type: type,
+        repeat_period: period,
+      });
     }
   }, [activeType, selected, arrActiveDay]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addRepeatSpendBox(formData)).then(() => {
+      // console.log(formData);
       onClose();
     });
   };
@@ -176,26 +188,42 @@ export default function RepeatExpensesPopup({ onClose }) {
           <div className="repeat-expenses__tab">
             {arrCategoriesWeek.map((item) => {
               return (
-                <li className="repeat-expenses__week-day" key={item.id}>
-                  <Checkbox name={item.title} handleChangeDay={handleChangeDay}>
-                    {item.title}
-                  </Checkbox>
-                </li>
+                <Checkbox name={item.title} handleChangeDay={handleChangeDay}>
+                  {item.title}
+                </Checkbox>
               );
             })}
           </div>
         )}
 
         {activeType === 'Ежемесячно' && (
-          <CustomDatePicker
-            type="date"
-            onChange={(date) => {
-              setStartDate(date);
-            }}
-            startDate={startDate}
-            dateFormat="dd"
-          />
+          <>
+            <div className="form__text-content">
+              <p className="form__text-bold">Укажите дни месяца:</p>
+            </div>
+            <div className="repeat-expenses__monthly-box">
+              {arrDay.map((item) => {
+                return (
+                  <div className="repeat-expenses__monthly-week">
+                    {item.map((elem) => {
+                      return (
+                        <Checkbox name={elem} handleChangeDay={handleChangeDay} title="caledar">
+                          {elem}
+                        </Checkbox>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="form__text-content">
+              <p className="form__text_confirm-register">
+                *При отсутствии в месяце крайних дат, платежи переносятся на последний день месяца.
+              </p>
+            </div>
+          </>
         )}
+
         <div className="repeat-expenses__container">
           <p className="repeat-expenses__text-bold">Как долго повторять расход?</p>
           <Radio
